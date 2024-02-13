@@ -1,20 +1,25 @@
 import bcrypt from "bcrypt";
-import userModel from "../models/UserModel.js";
+import UserModel from "../models/UserModel.js"
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 
-export const register = async (req, res) => {
+export const getUserInfo = async (req, res) => {
 
+    try {
+        if (!req.userId) {
+            return res.status(401).send("Unauthorized"); 
+        }
+        const loggedUser = await UserModel.findById(req.userId);
 
+        if (!loggedUser) {
+            return res.status(404).send("User not found"); 
+        }
+        res.send(`User email: ${loggedUser.email}`);
+
+    } catch (error) {
+        console.error("Error retrieving user information:", error);
+        res.status(500).send("Internal Server Error"); 
+    }
 }
 
-export const login = async (req, res) => {
-
-
-}
-
-export const logout = async (req, res) => {
-
-
-}
 

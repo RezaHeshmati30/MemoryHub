@@ -9,6 +9,13 @@ const AuthContextProvider = ({ children }) => {
     const [msg, setMsg] = useState("");
     const [user, setUser] = useState({});
     const [error, setError] = useState("");
+    const [showLoginForm, setShowLoginForm] = useState(false);
+    const [showSignUpForm, setShowSignUpForm] = useState(false);
+    const [emailSignUp, setEmailSignUp] = useState("");
+    const [emailLogin, setEmailLogin] = useState("");
+    const [passwordSignUp, setPasswordSignUp] = useState("");
+    const [passwordLogin, setPasswordLogin] = useState("");
+
 
     
     const backendApiUrl = "http://localhost:3001";
@@ -30,9 +37,11 @@ const AuthContextProvider = ({ children }) => {
       const signUpHandler = async (e) => {
         e.preventDefault();
     
-        const form = e.target; // hier steckt jetzt das gesamte Formular drin
-        const email = form.email.value;
-        const password = form.password.value;
+        // const form = e.target; // hier steckt jetzt das gesamte Formular drin
+        // const email = form.email.value;
+        // const password = form.password.value;
+        const email = emailSignUp;
+        const password = passwordSignUp;
         // console.log({email, password})
     
         // Entferne vorherige (Error)Nachrichten
@@ -44,6 +53,8 @@ const AuthContextProvider = ({ children }) => {
           // kein if(resp.data.success) notwendig, da das Backend uns im Fehlerfall
           // statucode ungleich 200 schickt und somit catch ausgelöst wird
           console.log("Erfolgreich registriert:", resp.data);
+          setEmailSignUp("");
+          setPasswordSignUp("");
           setMsg("Du hast dich erfolgreich registriert.")
     
         } catch (error) {
@@ -59,9 +70,11 @@ const AuthContextProvider = ({ children }) => {
 
     const loginHandler = async (e) => {
         e.preventDefault();
-        const form = e.target;
-        const email = form.email.value;
-        const password = form.password.value;
+        // const form = e.target;
+        // const email = form.email.value;
+        // const password = form.password.value;
+        const email = emailLogin;
+        const password = passwordLogin;
         resetMessages();
         
     
@@ -82,7 +95,9 @@ const AuthContextProvider = ({ children }) => {
           // User State auf eingeloggt setzen
           // (hier sollten wir eigentlich überprüfen, ob das JWTinfo Cookie tatsächlich angekommen ist)
           setHasToken(true);
-          setUser({ email }); // So können wir auch in der UI anzeigen, wer eingeloggt ist
+          setUser({ email });
+          setEmailLogin("");
+          setPasswordLogin(""); // So können wir auch in der UI anzeigen, wer eingeloggt ist
     
     
     
@@ -97,15 +112,16 @@ const AuthContextProvider = ({ children }) => {
 
       const logoutHandler = async (e) => {
         e.preventDefault();
-    
         resetMessages();
-    
         try {
           const resp = await axios.post(`${backendApiUrl}/logout`, {}, { withCredentials: true });
     
           console.log("Erfolgreich ausgeloggt", resp.data);
           setMsg("Erfolgreich ausgeloggt.")
           setHasToken(false);
+          setShowLoginForm(false);
+          setShowSignUpForm(false);
+
     
         } catch (error) {
           setErrorMessages(error);
@@ -170,7 +186,8 @@ const AuthContextProvider = ({ children }) => {
         <AuthContext.Provider
             value={{
                 hasToken, setHasToken, msg, setMsg,user, setUser, 
-                error, setError, loginHandler, signUpHandler, logoutHandler, userInfoHandler
+                error, setError, loginHandler, signUpHandler, logoutHandler, userInfoHandler, showLoginForm, setShowLoginForm,
+                showSignUpForm, setShowSignUpForm, emailSignUp, setEmailSignUp,emailLogin, setEmailLogin, passwordSignUp, setPasswordSignUp, passwordLogin, setPasswordLogin
             }}
         >
             {children}

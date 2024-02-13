@@ -1,14 +1,14 @@
 import React from 'react'
 import LoginForm from '../components/LoginForm'
 import SignUpForm from '../components/SignUpForm'
-import LogoutForm from '../components/LogoutForm'
+import NavBar from '../components/NavBar'
 
 function Home() {
   return (
     <>
-        <LoginForm />
-        <SignUpForm />
-        <LogoutForm />
+      <NavBar />
+      <LoginForm />
+      <SignUpForm />
     </>
   )
 }
