@@ -18,7 +18,7 @@ export const postLoginController = async (req, res) => {
             return res.status(404).send({success: false, error: 'User/Password Combination not found'})
         } 
 
-        const expiresInMs = 5 * 60 * 1000; 
+        const expiresInMs = 500 * 60 * 1000; 
         const expiresInDate = new Date( Date.now() + expiresInMs ); 
 
         const token = jwt.sign(

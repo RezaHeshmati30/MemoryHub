@@ -15,6 +15,8 @@ const AuthContextProvider = ({ children }) => {
     const [emailLogin, setEmailLogin] = useState("");
     const [passwordSignUp, setPasswordSignUp] = useState("");
     const [passwordLogin, setPasswordLogin] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
 
 
     
@@ -36,22 +38,11 @@ const AuthContextProvider = ({ children }) => {
 
       const signUpHandler = async (e) => {
         e.preventDefault();
-    
-        // const form = e.target; // hier steckt jetzt das gesamte Formular drin
-        // const email = form.email.value;
-        // const password = form.password.value;
-        const email = emailSignUp;
-        const password = passwordSignUp;
-        // console.log({email, password})
-    
-        // Entferne vorherige (Error)Nachrichten
+       
         resetMessages();
     
         try {
-          const resp = await axios.post(`${backendApiUrl}/register`, { email, password });
-    
-          // kein if(resp.data.success) notwendig, da das Backend uns im Fehlerfall
-          // statucode ungleich 200 schickt und somit catch ausgelöst wird
+          const resp = await axios.post(`${backendApiUrl}/register`, { email:emailSignUp, password:passwordSignUp, firstName, lastName });
           console.log("Erfolgreich registriert:", resp.data);
           setEmailSignUp("");
           setPasswordSignUp("");
@@ -70,9 +61,6 @@ const AuthContextProvider = ({ children }) => {
 
     const loginHandler = async (e) => {
         e.preventDefault();
-        // const form = e.target;
-        // const email = form.email.value;
-        // const password = form.password.value;
         const email = emailLogin;
         const password = passwordLogin;
         resetMessages();
@@ -86,28 +74,19 @@ const AuthContextProvider = ({ children }) => {
               password
             },
             {
-              withCredentials: true //  empfange (und sende) cookies
+              withCredentials: true 
             }
           );
           setMsg(`Erfolgreich eingeloggt: ${email}. JWT erhalten.`);
           console.log(`Erfolgreich eingeloggt: ${email}. JWT erhalten.`)
-    
-          // User State auf eingeloggt setzen
-          // (hier sollten wir eigentlich überprüfen, ob das JWTinfo Cookie tatsächlich angekommen ist)
           setHasToken(true);
-          setUser({ email });
+          // setUser({ email });
           setEmailLogin("");
-          setPasswordLogin(""); // So können wir auch in der UI anzeigen, wer eingeloggt ist
-    
-    
-    
+          setPasswordLogin(""); 
         } catch (error) {
-    
           setErrorMessages(error);
           console.log("error while logging in:", error);
-    
         }
-    
       }
 
       const logoutHandler = async (e) => {
@@ -115,14 +94,11 @@ const AuthContextProvider = ({ children }) => {
         resetMessages();
         try {
           const resp = await axios.post(`${backendApiUrl}/logout`, {}, { withCredentials: true });
-    
           console.log("Erfolgreich ausgeloggt", resp.data);
           setMsg("Erfolgreich ausgeloggt.")
           setHasToken(false);
           setShowLoginForm(false);
           setShowSignUpForm(false);
-
-    
         } catch (error) {
           setErrorMessages(error);
         }
@@ -178,7 +154,15 @@ const AuthContextProvider = ({ children }) => {
         handleIfUserHasToken();
       }, [])
     
-    
+    const getUserInfo = async () => {
+      try {
+        const response = await axios.get(`${backendApiUrl}/userInfo`, { withCredentials: true });
+        setUser(response.data);
+        console.log(response.data);
+      } catch (error) {
+        setErrorMessages(error)
+      }
+    }
 
     
 
@@ -187,7 +171,8 @@ const AuthContextProvider = ({ children }) => {
             value={{
                 hasToken, setHasToken, msg, setMsg,user, setUser, 
                 error, setError, loginHandler, signUpHandler, logoutHandler, userInfoHandler, showLoginForm, setShowLoginForm,
-                showSignUpForm, setShowSignUpForm, emailSignUp, setEmailSignUp,emailLogin, setEmailLogin, passwordSignUp, setPasswordSignUp, passwordLogin, setPasswordLogin
+                showSignUpForm, setShowSignUpForm, emailSignUp, setEmailSignUp,emailLogin, setEmailLogin, passwordSignUp, setPasswordSignUp, passwordLogin, setPasswordLogin,
+                firstName, setFirstName, lastName, setLastName, getUserInfo
             }}
         >
             {children}

@@ -11,10 +11,10 @@ function LoginForm() {
           <h2 className='mb-[20px] w-[30%]'>Login</h2>
             <form onSubmit={loginHandler} className='flex flex-col gap-[10px] w-[30%] '>
               <label htmlFor="email">Email: </label>
-              <input onChange={(e) => setEmailLogin(e.target.value) } type="email" name="email" value={emailLogin} />
+              <input className='border-[1px] border-gray-400' onChange={(e) => setEmailLogin(e.target.value) } type="email" name="email" value={emailLogin} />
               <br />
               <label htmlFor="password">Password: </label>
-              <input onChange={(e) => setPasswordLogin(e.target.value) } type="password" name="password" value={passwordLogin} />
+              <input className='border-[1px] border-gray-400' onChange={(e) => setPasswordLogin(e.target.value) } type="password" name="password" value={passwordLogin} />
               <br />
               <button  className='bg-[#b6b2b2] py-[5px] px-[10px] rounded-[10px] w-[30%]' type="submit">Log In</button>
             </form>

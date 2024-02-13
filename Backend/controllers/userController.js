@@ -6,6 +6,7 @@ import "dotenv/config";
 export const getUserInfo = async (req, res) => {
 
     try {
+        
         if (!req.userId) {
             return res.status(401).send("Unauthorized"); 
         }
@@ -14,7 +15,13 @@ export const getUserInfo = async (req, res) => {
         if (!loggedUser) {
             return res.status(404).send("User not found"); 
         }
-        res.send(`User email: ${loggedUser.email}`);
+        // res.send(`User email: ${loggedUser.email}`);
+        res.send({
+            firstName: loggedUser.firstName,
+            lastName: loggedUser.lastName,
+            _id: loggedUser._id,
+            email: loggedUser.email
+          });
 
     } catch (error) {
         console.error("Error retrieving user information:", error);

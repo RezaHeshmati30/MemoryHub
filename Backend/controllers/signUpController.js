@@ -4,12 +4,12 @@ import "dotenv/config";
 import UserModel from "../models/UserModel.js"
 
 export const postSignupController = async (req, res) => { 
-    const {email, password } = req.body;
+    const {email, password, firstName, lastName } = req.body;
 
     try {
         const saltedHashedPassword = await bcrypt.hash(password, 14);
         const newUser = new UserModel({
-            email, password: saltedHashedPassword
+            email, password: saltedHashedPassword, firstName, lastName
         });
         await newUser.save();
         res.status(201).send({success:true, insertedData: newUser});
