@@ -2,10 +2,9 @@ import React from 'react'
 
 function UserProfile() {
   return (
-    <div>
-    {/* Studysets and new set */}
-    </div>
+    <div>UserProfile</div>
   )
 }
 
 export default UserProfile
+

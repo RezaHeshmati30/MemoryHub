@@ -3,6 +3,7 @@ import "dotenv/config";
 import { connectMongoose } from "./utils/connectMongoose.js";
 import cookieParser from "cookie-parser"
 import cors from "cors"
+import authRouter from "./routes/authRouter.js";
 
 
 
@@ -10,11 +11,15 @@ const PORT = process.env.PORT || 3001;
 
 await connectMongoose();
 const app = express();
+app.use( cors({
+    origin: "http://localhost:5173", // URL unseres Frontends
+    credentials: true // erlaube Cookie-Austausch
+  }) );
 app.use(express.json());
 app.use( cookieParser() );
-app.use( cors({}) );
 
-// app.use("/", router)
+
+app.use("/", authRouter)
 
 
 app.listen(PORT, () => {
