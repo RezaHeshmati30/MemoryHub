@@ -4,6 +4,7 @@ import { connectMongoose } from "./utils/connectMongoose.js";
 import cookieParser from "cookie-parser"
 import cors from "cors"
 import authRouter from "./routes/authRouter.js";
+import studySetRouter from "./routes/studySetRouter.js"
 
 
 
@@ -20,6 +21,7 @@ app.use( cookieParser() );
 
 
 app.use("/", authRouter)
+app.use("/", studySetRouter)
 
 
 app.listen(PORT, () => {

@@ -2,7 +2,7 @@ import {useContext} from 'react'
 import { AuthContext } from '../context/AuthContext'
 
 function LoginForm() {
-  const {loginHandler, showLoginForm, hasToken,emailLogin, setEmailLogin, passwordLogin, setPasswordLogin} = useContext(AuthContext);  
+  const {loginHandler, showLoginForm, hasToken,emailLogin, setEmailLogin, passwordLogin, setPasswordLogin, setShowSignUpForm} = useContext(AuthContext);  
 
 
   return (
@@ -16,7 +16,7 @@ function LoginForm() {
               <label htmlFor="password">Password: </label>
               <input className='border-[1px] border-gray-400' onChange={(e) => setPasswordLogin(e.target.value) } type="password" name="password" value={passwordLogin} />
               <br />
-              <button  className='bg-[#b6b2b2] py-[5px] px-[10px] rounded-[10px] w-[30%]' type="submit">Log In</button>
+              <button className='bg-[#b6b2b2] py-[5px] px-[10px] rounded-[10px] w-[30%]' type="submit">Log In</button>
             </form>
     </div>
 

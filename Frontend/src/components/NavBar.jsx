@@ -8,10 +8,12 @@ function NavBar() {
     const onClickLoginHandler = () => {
         // showLoginForm ? setShowLoginForm(false) : setShowLoginForm(true);
         setShowLoginForm(true);
+        setShowSignUpForm(false);
     }
 
     const onClickSignUpHandler = () => {
         setShowSignUpForm(true);
+        setShowLoginForm(false);
     }
 
   return (
