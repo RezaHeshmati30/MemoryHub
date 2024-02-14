@@ -56,3 +56,22 @@ export const addNewTopic = async(req, res) => {
         res.status(500).json({ success: false, error: "Internal Server Error" });
     }
 }
+
+export const getStudySetInfo = async(req, res) => {
+    const studySetId = req.params.id;
+
+    if (!studySetId) {
+       return res.status(404).send("There is no styde set with your id");
+    }
+
+    try {
+        const studySet = await StudySetModel.findById(studySetId).populate({
+            path: 'topics.studySets',
+            model: 'Cards'
+        });
+        res.status(200).send(studySet);
+    } catch (error) {
+        console.error("Error getting study sets with topics:", error);
+        res.status(500).json({ success: false, error: "Internal Server Error" });
+    }
+}

@@ -1,5 +1,5 @@
 import express from "express";
-import { addCards, addCardsToSet, addNewTopic, addStudySet } from "../controllers/studySetControllers.js";
+import { addCards, addCardsToSet, addNewTopic, addStudySet, getStudySetInfo } from "../controllers/studySetControllers.js";
 
 const router = express.Router();
 
@@ -8,6 +8,7 @@ router
     .post("/addCards", addCards)
     .patch("/addCardsToSet/:id", addCardsToSet)
     .post("/addNewTopic/:id", addNewTopic)
+    .get("/studySet/:id", getStudySetInfo)
 
 
 export default router;    

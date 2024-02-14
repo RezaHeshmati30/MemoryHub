@@ -5,6 +5,7 @@ import Home from "../pages/Home";
 import UserProfile from "../pages/UserProfile"
 import StudySets from "../pages/StudySets";
 import CreateSets from "../pages/CreateSets";
+import StudySet from "../pages/StudySet";
 
 
 
@@ -16,6 +17,7 @@ const router = createBrowserRouter([
       { path: '/', element: <Home /> },
       { path: '/userProfile', element: <UserProfile />},
       { path: '/studySets', element: <StudySets />},
+      { path: '/studySet', element: <StudySet />},
       { path: '/createSet', element: <CreateSets />},
       { path: '*', element: <PageNotFound />},
     ],
