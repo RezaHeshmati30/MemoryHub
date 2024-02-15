@@ -1,9 +1,12 @@
 import React, { useContext, useEffect } from 'react'
 import { StudySetsContext } from '../context/StudySetsContext'
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
 function StudySets() {
   const {getStudySetData, studySet, setCardsId, setTopicId} = useContext(StudySetsContext);
+  const {hasToken} = useContext(AuthContext);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,6 +33,7 @@ function StudySets() {
               {topic?.studySets.map(studySet => (
                 <li key={studySet._id}>
                   <p onClick={() => onClickHandler(topic._id, studySet._id)}>Subtopic: {studySet.title}</p>
+                  <button className={`${hasToken ? "block" : "hidden"} bg-[#b6b2b2] py-[5px] px-[10px] rounded-[10px]`}>Add to your set</button>
                 </li>
               ))}
             </ul>
