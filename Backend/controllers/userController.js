@@ -15,7 +15,6 @@ export const getUserInfo = async (req, res) => {
         if (!loggedUser) {
             return res.status(404).send("User not found"); 
         }
-        // res.send(`User email: ${loggedUser.email}`);
         res.send({
             firstName: loggedUser.firstName,
             lastName: loggedUser.lastName,
