@@ -60,12 +60,12 @@ function Cards() {
                   isFlipped ? "flipped" : ""
                 } w-[60vw] h-[50vh]`}
               >
-                <div className='flip-content flex flex-row'>
-                  Question
+                <div className='flip-content'>
+                  <strong>Question</strong>
                   <p> {currentCard.question}</p>
                 </div>
-                <div className='flip-content flex flex-row bg-red-500'>
-                  <span className='text-2xl'>Answer</span>
+                <div className='flip-content'>
+                  <strong>Answer</strong>
                   <p>{currentCard.answer}</p>
                 </div>
               </div>
@@ -88,9 +88,15 @@ function Cards() {
         )}
         <button
           className='bg-blue-400 p-[10px] rounded-md'
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/studySets")}
         >
-          back
+          back to Study Sets
+        </button>
+        <button
+          className='bg-blue-400 p-[10px] rounded-md'
+          onClick={() => navigate("/studySets")}
+        >
+          add to your Study Sets
         </button>
       </section>
     </section>

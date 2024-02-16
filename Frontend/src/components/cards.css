@@ -20,14 +20,19 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 18px;  -webkit-box-shadow: 1px 0px 7px -2px #000000; 
-box-shadow: 1px 0px 7px -2px #000000;
-border-radius: 10px;
+  font-size: 18px;
+  -webkit-box-shadow: 1px 0px 7px -2px #000000;
+  box-shadow: 1px 0px 7px -2px #000000;
+  border-radius: 10px;
 }
-
+.flip-content{
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+}
 .flip-card .flip-content:nth-child(1) {
   background-color: #ffffff;
-  color: #000000;
+  color: #020000;
   transform: rotateX(0deg);
 
 }
@@ -36,5 +41,5 @@ border-radius: 10px;
   background-color: #f7f7ff;
   color: #000000;
   transform: rotateX(180deg);
-  
+
 }
