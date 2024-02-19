@@ -7,6 +7,7 @@ import StudySets from "../pages/StudySets";
 import CreateSets from "../pages/CreateSets";
 import StudySet from "../pages/StudySet";
 import Contact from "../pages/Contact";
+import UserStudySets from "../pages/UserStudySets";
 
 
 
@@ -17,6 +18,7 @@ const router = createBrowserRouter([
     children: [
       { path: '/', element: <Home /> },
       { path: '/userProfile', element: <UserProfile />},
+      { path: '/user/studySets', element: <UserStudySets />},
       { path: '/studySets', element: <StudySets />},
       { path: '/studySet', element: <StudySet />},
       { path: '/createSet', element: <CreateSets />},

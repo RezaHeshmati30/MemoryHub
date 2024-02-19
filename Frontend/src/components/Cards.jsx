@@ -23,7 +23,9 @@ function Cards() {
   const currentCardsSet =
     moduleData?.topics
       ?.filter((topic) => topic._id === topicId)[0]
-      ?.studySets.filter((set) => set._id === studySetId)[0];
+      ?.studySets.filter((set) => set._id === studySetId)[0];   
+      
+  const topicTitle = moduleData?.topics?.filter((topic) => topic._id === topicId)[0].title;    
 
   const currentCard = currentCardsSet?.cards[currentIndex];
 
@@ -97,7 +99,7 @@ function Cards() {
         </button>
         <button
           className={`${hasToken ? "block" : "hidden"} bg-[#b6b2b2] py-[5px] px-[10px] rounded-[10px]`}
-          onClick={() => {addStudySetToUser(user._id, currentCardsSet._id, currentCardsSet.title); navigate("/userProfile"); } }
+          onClick={() => {addStudySetToUser(user._id, currentCardsSet._id, topicTitle); navigate("/userProfile"); } }
         >
           Add to your set
         </button>

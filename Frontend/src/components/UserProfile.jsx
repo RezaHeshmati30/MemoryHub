@@ -8,8 +8,8 @@ function UserProfile() {
 
   useEffect(() => {
     getUserInfo();
-    // setIsSetAddedToUser(false);
-    console.log("isSetAddedToUser: ",isSetAddedToUser)
+   
+    
   }, [])
 
   return (

@@ -11,7 +11,7 @@ const router = express.Router();
 router
   .post("/register", postSignupController)
   .post("/login", postLoginController)
-  .get("/userInfo", isAuth, getUserInfo)
+  // .get("/userInfo", isAuth, getUserInfo)
   .post("/logout", postLogoutController)
   .post("/contact",sendContactForm)
 

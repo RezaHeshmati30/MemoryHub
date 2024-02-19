@@ -121,7 +121,7 @@ const AuthContextProvider = ({ children }) => {
         resetMessages();
     
         try {
-          const resp = await axios.get(`${backendApiUrl}/userInfo`, {withCredentials:true})
+          const resp = await axios.get(`${backendApiUrl}/user`, {withCredentials:true})
           console.log("resp.data:", resp.data)
           setMsg(resp.data)
         } catch (error) {
@@ -135,7 +135,7 @@ const AuthContextProvider = ({ children }) => {
     
     const getUserInfo = async () => {
       try {
-        const response = await axios.get(`${backendApiUrl}/userInfo`, { withCredentials: true });
+        const response = await axios.get(`${backendApiUrl}/user`, { withCredentials: true });
         setUser(response.data);
         console.log(response.data);
       } catch (error) {

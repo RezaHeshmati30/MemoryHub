@@ -11,7 +11,14 @@ export const getUserInfo = async (req, res) => {
         if (!req.userId) {
             return res.status(401).send("Unauthorized"); 
         }
-        const loggedUser = await UserModel.findById(req.userId);
+        const loggedUser = await UserModel.findById(req.userId).populate({
+            path: 'savedStudySets.studySet', // Populate the 'studySet' field within the 'savedStudySets' array
+            model: 'StudySet',
+        })
+        .populate({
+            path: 'savedStudySets.cards.card', // Populate the 'card' field within the 'cards' array
+            model: 'Card'
+        });
 
         if (!loggedUser) {
             return res.status(404).send("User not found"); 
@@ -20,7 +27,8 @@ export const getUserInfo = async (req, res) => {
             firstName: loggedUser.firstName,
             lastName: loggedUser.lastName,
             _id: loggedUser._id,
-            email: loggedUser.email
+            email: loggedUser.email,
+            savedStudySets: loggedUser.savedStudySets
           });
 
     } catch (error) {
