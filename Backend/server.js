@@ -5,7 +5,7 @@ import cookieParser from "cookie-parser"
 import cors from "cors"
 import authRouter from "./routes/authRouter.js";
 import studyDataRouter from "./routes/studyDataRouter.js"
-
+import userRouter from "./routes/userRouter.js";
 
 
 
@@ -23,6 +23,7 @@ app.use( cookieParser() );
 
 app.use("/", authRouter)
 app.use("/", studyDataRouter)
+app.use("/", userRouter)
 
 
 app.listen(PORT, () => {

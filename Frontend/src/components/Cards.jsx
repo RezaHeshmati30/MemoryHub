@@ -7,15 +7,15 @@ import "./cards.css";
 function Cards() {
   const [isFlipped, setIsFlipped] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const {user} = useContext(AuthContext);
 
-  const { getModuleData, topicId, studySetId, moduleData } = useContext(
-    StudySetsContext
-  );
-  const { hasToken } = useContext(AuthContext);
+  const { getModuleData, topicId, studySetId, moduleData, addStudySetToUser, isSetAddedToUser, setIsSetAddedToUser} = useContext(StudySetsContext);
+  const { hasToken, getUserInfo } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
     getModuleData();
+    getUserInfo();
     console.log("Topic Id:", topicId);
     console.log("StudySet Id:", studySetId);
   }, []);
@@ -44,6 +44,7 @@ function Cards() {
   const handleFlip = () => {
     setIsFlipped(!isFlipped);
   };
+    
 
   return (
     <div>
@@ -96,7 +97,7 @@ function Cards() {
         </button>
         <button
           className={`${hasToken ? "block" : "hidden"} bg-[#b6b2b2] py-[5px] px-[10px] rounded-[10px]`}
-          onClick={() => navigate("/userProfile")}
+          onClick={() => {addStudySetToUser(user._id, currentCardsSet._id, currentCardsSet.title); navigate("/userProfile"); } }
         >
           Add to your set
         </button>

@@ -11,7 +11,7 @@ const UserSchema = new mongoose.Schema({
   firstName: {type: String},
   lastName: {type: String},
   savedStudySets: [{
-    topicTitle: { type: String, default: "Default topic" },
+    topicTitle: { type: String, default: "Your topic" },
     studySet: { type: mongoose.Schema.Types.ObjectId, ref: "StudySet" },
     savedAt: { type: Date, default: Date.now },
     cards: [{

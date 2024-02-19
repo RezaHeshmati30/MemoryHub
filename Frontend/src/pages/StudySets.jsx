@@ -4,21 +4,20 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
 function StudySets() {
-  const {getModuleData, moduleData, setStudySetId, setTopicId} = useContext(StudySetsContext);
-  const {hasToken} = useContext(AuthContext);
+  const {getModuleData, moduleData, setStudySetId, setTopicId, addStudySetToUser} = useContext(StudySetsContext);
+  const {hasToken, getUserInfo, user} = useContext(AuthContext);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     getModuleData();
+    getUserInfo();
   }, [])
 
   const onClickHandler = (topicId, studySetId) => {
    navigate("/studySet");
    setTopicId(topicId); 
    setStudySetId(studySetId);
-
-
   }
 
   return (
@@ -33,7 +32,9 @@ function StudySets() {
               {topic?.studySets.map(studySet => (
                 <li key={studySet._id}>
                   <p className='cursor-pointer' onClick={() => onClickHandler(topic._id, studySet._id)}>Subtopic: {studySet.title}</p>
-                  <button className={`${hasToken ? "block" : "hidden"} bg-[#b6b2b2] py-[5px] px-[10px] rounded-[10px]`}>Add to your set</button>
+                  <button className={`${hasToken ? "block" : "hidden"} bg-[#b6b2b2] py-[5px] px-[10px] rounded-[10px]`}
+                   onClick={() => {addStudySetToUser(user._id, studySet._id, topic.title); navigate("/userProfile"); } }
+                  >Add to your set</button>
                 </li>
               ))}
             </ul>
