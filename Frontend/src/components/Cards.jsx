@@ -1,8 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { StudySetsContext } from "../context/StudySetsContext";
-import ReactCardFlip from "react-card-flip";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext"; // Import AuthContext if not already done
+import { AuthContext } from "../context/AuthContext"; 
 import "./cards.css";
 
 function Cards() {
