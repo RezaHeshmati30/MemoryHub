@@ -2,32 +2,34 @@ import React, { useContext, useEffect, useState } from "react";
 import { StudySetsContext } from "../context/StudySetsContext";
 import ReactCardFlip from "react-card-flip";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext"; // Import AuthContext if not already done
 import "./cards.css";
 
 function Cards() {
   const [isFlipped, setIsFlipped] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  const { getModuleData, topicId, studySetId, moduleData } = useContext(
+    StudySetsContext
+  );
+  const { hasToken } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const { getStudySetData, topicId, cardsId, studySet } =
-    useContext(StudySetsContext);
-
   useEffect(() => {
-    getStudySetData();
+    getModuleData();
     console.log("Topic Id:", topicId);
-    console.log("Cards Id:", cardsId);
+    console.log("StudySet Id:", studySetId);
   }, []);
 
-  const currentCardsSet = studySet?.topics
-    ?.filter((topic) => topic._id === topicId)[0]
-    ?.studySets.filter((set) => set._id === cardsId)[0];
+  const currentCardsSet =
+    moduleData?.topics
+      ?.filter((topic) => topic._id === topicId)[0]
+      ?.studySets.filter((set) => set._id === studySetId)[0];
 
   const currentCard = currentCardsSet?.cards[currentIndex];
 
   const handleNextCard = () => {
-    setCurrentIndex(
-      (prevIndex) => (prevIndex + 1) % currentCardsSet?.cards.length
-    );
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % currentCardsSet?.cards.length);
     setIsFlipped(false);
   };
 
@@ -45,12 +47,13 @@ function Cards() {
   };
 
   return (
-    <section>
+    <div>
       <section className='w-[80vw] h-[90vh] bg-gray-200 mx-auto my-5 px-10 py-10'>
-        {currentCard && (
-          <div>
-            <p className='text-2xl'>Title: {currentCardsSet.title}</p>
-            <p className='my-5'>Description: {currentCardsSet.description}</p>
+        {currentCardsSet && (
+          <div key={currentCardsSet._id}>
+            {console.log("CARDS:", currentCardsSet)}
+            <p>Title: {currentCardsSet.title}</p>
+            <p>Description: {currentCardsSet.description}</p>
             <div
               className='flip-container flex justify-center'
               onClick={handleFlip}
@@ -62,11 +65,11 @@ function Cards() {
               >
                 <div className='flip-content'>
                   <strong>Question</strong>
-                  <p> {currentCard.question}</p>
+                  <p> {currentCard?.question}</p>
                 </div>
                 <div className='flip-content'>
                   <strong>Answer</strong>
-                  <p>{currentCard.answer}</p>
+                  <p>{currentCard?.answer}</p>
                 </div>
               </div>
             </div>
@@ -93,13 +96,13 @@ function Cards() {
           back to Study Sets
         </button>
         <button
-          className='bg-blue-400 p-[10px] rounded-md'
+          className={`${hasToken ? "block" : "hidden"} bg-[#b6b2b2] py-[5px] px-[10px] rounded-[10px]`}
           onClick={() => navigate("/userProfile")}
         >
-          add to your Study Sets
+          Add to your set
         </button>
       </section>
-    </section>
+    </div>
   );
 }
 

@@ -27,6 +27,31 @@ export const addTopicToModule = async (req, res) => {
     }
   }
 
+  export const getModuleInfo = async (req, res) => {
+    const moduleId = req.params.id;
+    if (!moduleId) {
+        return res.status(404).send("There is no module with your id");
+     }
+    try {
+        const module = await ModuleModel.findById(moduleId).populate({
+            path: 'topics',
+            model: 'Topic',
+            populate: {
+              path: 'studySets',
+              model: 'StudySet',
+              populate: {
+                path: 'cards',
+                model: 'Card',
+              },
+            },
+          });
+        res.status(200).send(module);
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+    
+  }
+
 // Diese Funktion fügt alle Topics zu einem Modul hinzu
 export const addAllTopicsToModule = async (req, res) => {
     const moduleId = req.params.id;
