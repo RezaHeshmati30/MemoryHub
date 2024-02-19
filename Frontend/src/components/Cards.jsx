@@ -3,20 +3,20 @@ import { StudySetsContext } from '../context/StudySetsContext'
 import { AuthContext } from '../context/AuthContext';
 
 function Cards() {
-  const {getStudySetData, topicId, cardsId, studySet } = useContext(StudySetsContext);
+  const {getModuleData, topicId, studySetId, moduleData } = useContext(StudySetsContext);
   const {hasToken} = useContext(AuthContext);
 
   useEffect(() => {
-    getStudySetData();
+    getModuleData();
     console.log("Topic Id:", topicId)
-    console.log("Cards Id:", cardsId)
+    console.log("StudySet Id:", studySetId)
   }, []);
 
 
   return (
     <section>
       <ul>
-        {studySet?.topics?.filter(topic => topic._id === topicId)[0]?.studySets.filter(studySet => studySet._id === cardsId).map(cards => (
+        {moduleData?.topics?.filter(topic => topic._id === topicId)[0]?.studySets.filter(studySet => studySet._id === studySetId).map(cards => (
           <li key={cards._id}>
             {console.log("CARDS:", cards)}
             <p>Title: {cards.title}</p>
