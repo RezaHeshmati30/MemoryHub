@@ -49,9 +49,6 @@ const AuthContextProvider = ({ children }) => {
           setMsg("Du hast dich erfolgreich registriert.")
     
         } catch (error) {
-          // setError(error.message)
-    
-          // oder etwas komplexer und genauer
           setErrorMessages(error);
           console.log("error while signing up:", error);
         }
@@ -65,9 +62,7 @@ const AuthContextProvider = ({ children }) => {
         const password = passwordLogin;
         resetMessages();
         
-    
         try {
-          
           const resp = await axios.post(`${backendApiUrl}/login`,
             {
               email,
@@ -80,7 +75,6 @@ const AuthContextProvider = ({ children }) => {
           setMsg(`Erfolgreich eingeloggt: ${email}. JWT erhalten.`);
           console.log(`Erfolgreich eingeloggt: ${email}. JWT erhalten.`)
           setHasToken(true);
-          // setUser({ email });
           setEmailLogin("");
           setPasswordLogin(""); 
         } catch (error) {
@@ -105,25 +99,13 @@ const AuthContextProvider = ({ children }) => {
     
       }
     
-      // schauen, ob User nicht abgelaufenes Token hat
       const handleIfUserHasToken = () => {
-        console.log("handleIfUserHasToken aufgerufen");
-        // folgendes würde undefines zurückgeben, da das JWT Cookie "httpOnly" ist
-        // const JWTcookie = cookie.get("JWT");
-    
-        // 1. Wert von JWTinfo Cookie auslesen und den darin enthaltenen JSON-String parsen
         let JWTinfocookie = cookie.get("JWTinfo");
-    
         console.log("JWTinfo cookie", JWTinfocookie);// => j:{"expires":"2024-01-25T09:26:05.444Z","email":"Anna@dci.org"}
         if (!JWTinfocookie) return;
-    
-        // ":j" aus dem String in JWTinfo cookie entfernen und String parsen
         JWTinfocookie = JWTinfocookie.replace("j:", "");
         const cookieValueObj = JSON.parse(JWTinfocookie);
         console.log("cookieValueObj", cookieValueObj)
-    
-        // 2. Ist das Token schon abgelaufen 
-        // bzw. wie lange ist es noch gültig (zeitlich betrachtet)?
         const expirationInMs = new Date(cookieValueObj.expires) - new Date();
         console.log("JWT läuft ab in", expirationInMs / 1000, "Sekunden")
     
@@ -143,12 +125,9 @@ const AuthContextProvider = ({ children }) => {
           console.log("resp.data:", resp.data)
           setMsg(resp.data)
         } catch (error) {
-      
           setErrorMessages(error)
         }
-    
       }
-    
     
       useEffect(() => {
         handleIfUserHasToken();

@@ -38,8 +38,8 @@ export const postLoginController = async (req, res) => {
             maxAge: expiresInMs
         };
         const payload = {
-            expires: expiresInDate.toISOString(), // Info, wann (Datum) läuft JWT ab
-            email: loggedUser.email // Info, welcher User is eingeloggt (wir könnten auch ID benutzen, wäre sogar etwas besser)
+            expires: expiresInDate.toISOString(), 
+            email: loggedUser.email 
         }
         res.cookie('JWTinfo', payload, options);
 
