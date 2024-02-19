@@ -52,7 +52,7 @@ function Cards() {
             <p className='text-2xl'>Title: {currentCardsSet.title}</p>
             <p className='my-5'>Description: {currentCardsSet.description}</p>
             <div
-              className='flip-container flex justify-center '
+              className='flip-container flex justify-center'
               onClick={handleFlip}
             >
               <div
@@ -94,7 +94,7 @@ function Cards() {
         </button>
         <button
           className='bg-blue-400 p-[10px] rounded-md'
-          onClick={() => navigate("/studySets")}
+          onClick={() => navigate("/userProfile")}
         >
           add to your Study Sets
         </button>
