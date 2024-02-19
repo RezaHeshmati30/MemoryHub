@@ -10,6 +10,15 @@ const UserSchema = new mongoose.Schema({
   },
   firstName: {type: String},
   lastName: {type: String},
+  savedStudySets: [{
+    topicTitle: { type: String, default: "Default topic" },
+    studySet: { type: mongoose.Schema.Types.ObjectId, ref: "StudySet" },
+    savedAt: { type: Date, default: Date.now },
+    cards: [{
+      card: { type: mongoose.Schema.Types.ObjectId, ref: "Card" },
+      status: { type: String, enum: ["not studied", "need practice", "mastered"], default: "not studied" }
+    }]
+  }]
 });
 const UserModel = mongoose.model("User", UserSchema);
 export default UserModel;
