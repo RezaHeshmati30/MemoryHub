@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { StudySetsContext } from "../context/StudySetsContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext"; 
 import "./cards.css";
 
@@ -9,15 +9,16 @@ function Cards() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const {user} = useContext(AuthContext);
 
-  const { getModuleData, topicId, studySetId, moduleData, addStudySetToUser, isSetAddedToUser, setIsSetAddedToUser} = useContext(StudySetsContext);
+  const { getModuleData,  moduleData, addStudySetToUser} = useContext(StudySetsContext);
   const { hasToken, getUserInfo } = useContext(AuthContext);
   const navigate = useNavigate();
+  const {topicId} = useParams();
+  const {studySetId} = useParams();
+
 
   useEffect(() => {
     getModuleData();
     getUserInfo();
-    console.log("Topic Id:", topicId);
-    console.log("StudySet Id:", studySetId);
   }, []);
 
   const currentCardsSet =
