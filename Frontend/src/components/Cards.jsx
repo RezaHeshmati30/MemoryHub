@@ -111,22 +111,20 @@ function Cards() {
             </div>
           </div>
         )}
-        <div className='flex justify-end pt-10'>
-          <button
-            className='bg-gray-400 p-[10px] rounded-md'
-            onClick={() => navigate("/studySets")}
-          >
-            back to Study Sets
-          </button>
-          <button
-            className={`${
-              hasToken ? "block" : "hidden"
-            } bg-gray-400 py-[5px] px-[10px] rounded-md ml-5 `}
-            onClick={() => navigate("/userProfile")}
-          >
-            Add to your set
-          </button>
-        </div>
+
+        <button
+          className='bg-blue-400 p-[10px] rounded-md'
+          onClick={() => navigate("/studySets")}
+        >
+          back to Study Sets
+        </button>
+        <button
+          className={`${hasToken ? "block" : "hidden"} bg-[#b6b2b2] py-[5px] px-[10px] rounded-[10px]`}
+          onClick={() => {addStudySetToUser(user._id, currentCardsSet._id, topicTitle)} }
+        >
+          Add to your set
+        </button>
+
       </section>
     </div>
   );

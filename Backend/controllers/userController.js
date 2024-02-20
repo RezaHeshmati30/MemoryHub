@@ -3,6 +3,7 @@ import UserModel from "../models/UserModel.js";
 import StudySetModel from "../models/StudySetModel.js"
 import jwt from "jsonwebtoken";
 import "dotenv/config";
+import mongoose from "mongoose";
 
 export const getUserInfo = async (req, res) => {
 
@@ -62,6 +63,7 @@ export const addStudySetToUser = async (req, res) => {
                 studySet: studySetId,
                 savedAt: Date.now(),
                 cards: studySet.cards.map(card => ({ card: card._id })),
+                edit: req.body.status
               };
           
               user.savedStudySets.push(savedStudySet);
@@ -75,3 +77,31 @@ export const addStudySetToUser = async (req, res) => {
         }
       };
 
+      
+      export const deleteSavedStudySet = async (req, res) => {
+        const userId = req.params.userId;
+        const studySetId = req.params.setId;
+
+        try {
+          const user = await UserModel.findById(userId);
+      
+          if (!user) {
+           res.status(404).send("User not found");
+          }
+      
+          const studySetIndex = user.savedStudySets.findIndex(set => set._id.toString() === studySetId);
+      
+          if (studySetIndex === -1) {
+            res.status(404).send("Study set not found in saved study sets");
+          }
+      
+          user.savedStudySets.splice(studySetIndex, 1); 
+      
+          await user.save();
+          
+          res.status(200).send("Study set deleted successfully" );
+        } catch (error) {
+          throw error;
+        }
+      }
+      

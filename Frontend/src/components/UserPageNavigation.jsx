@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom'
 
 function UserPageNavigation() {
   return (
-    <section className='flex flex-col'>
-        <Link to="/user/studySets">Study sets</Link>
-        <Link to="/createSet" className=' bg-gray-400 py-[5px] px-[10px] rounded-md ml-5 '>Create new set</Link>
+    <section className='flex flex-col gap-[30px] border-[1px] border-gray-400 p-[20px]'>
+        <h2>Account navigation:</h2>
+        <Link to="/user/studySets">Study sets page</Link>
+        <Link to="/createSet">Create new set page</Link>
     </section>
   )
 }

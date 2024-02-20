@@ -1,9 +1,10 @@
 import React, { useContext } from 'react'
 import { AuthContext } from '../context/AuthContext'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function NavBar() {
     const {showLoginForm, setShowLoginForm,showSignUpForm, setShowSignUpForm, hasToken, logoutHandler} = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const onClickLoginHandler = () => {
         // showLoginForm ? setShowLoginForm(false) : setShowLoginForm(true);
@@ -30,7 +31,7 @@ function NavBar() {
                 <Link to="/userProfile" className='block bg-[#a39a9a] py-[10px] px-[20px] rounded-[10px]'>My Account</Link>
             </li>
             <li className={!hasToken ? "hidden" : "block"}>
-                <button className='bg-[#a39a9a] py-[10px] px-[20px] rounded-[10px]' onClick={logoutHandler} type='submit'>Logout</button>
+                <button className='bg-[#a39a9a] py-[10px] px-[20px] rounded-[10px]' onClick={(e) => {logoutHandler(e); navigate("/");}} type='submit'>Logout</button>
             </li>
         </ul>
     </nav>
