@@ -27,12 +27,12 @@ function StudySets() {
       <ul>
         {moduleData?.topics?.map(topic => (
           <li key={topic._id} className='border-[1px] border-gray-400 p-[20px]'>
-            <p className=''> Topic: {topic.title}</p>
+            <p  className='bg-gray-200 rounded-md p-1 text-center m-2'> Topic: {topic.title}</p>
             <ul className=''>
               {topic?.studySets.map(studySet => (
-                <li key={studySet._id}>
-                  <p className='cursor-pointer' onClick={() => onClickHandler(topic._id, studySet._id)}>Subtopic: {studySet.title}</p>
-                  <button className={`${hasToken ? "block" : "hidden"} bg-[#b6b2b2] py-[5px] px-[10px] rounded-[10px]`}
+                <li key={studySet._id} className="border-2 border-gray-500 m-2 p-2 rounded-md">
+                  <p Name='cursor-pointer bg-gray-100 rounded-md p-1 m-2' onClick={() => onClickHandler(topic._id, studySet._id)}>Subtopic: {studySet.title}</p>
+                  <button className={`${hasToken ? "block" : "hidden"} bg-gray-200 py-[5px] px-[10px] rounded-[10px]`}
                    onClick={() => {addStudySetToUser(user._id, studySet._id, topic.title); navigate("/userProfile"); } }
                   >Add to your set</button>
                 </li>
