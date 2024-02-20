@@ -31,11 +31,10 @@ function StudySets() {
             <ul className=''>
               {topic?.studySets.map(studySet => (
 
-                <li key={studySet._id}>
+                <li key={studySet._id} className="border-2 border-gray-500 m-2 p-2 rounded-md">
                   <p className='cursor-pointer' onClick={() => onClickHandler(topic._id, studySet._id)}>Subtopic: {studySet.title}</p>
                   <button className={`${hasToken ? "block" : "hidden"} bg-[#b6b2b2] py-[5px] px-[10px] rounded-[10px]`}
                    onClick={() => {addStudySetToUser(user._id, studySet._id, topic.title)} }
-
                   >Add to your set</button>
                 </li>
               ))}
