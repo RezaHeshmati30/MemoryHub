@@ -22,7 +22,8 @@ const StudySetsContextProvider = ({ children }) => {
     const addStudySetToUser = async(userId, studySetId, topicTitle) => {
         const studySetData = {
             topicTitle: topicTitle,
-            studySetId: studySetId  
+            studySetId: studySetId, 
+            status: "no"  
         }
         try {
             await axios.patch(`${backendApiUrl}/users/${userId}`, studySetData);
