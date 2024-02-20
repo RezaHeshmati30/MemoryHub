@@ -15,7 +15,7 @@ function StudySets() {
   }, [])
 
   const onClickHandler = (topicId, studySetId) => {
-   navigate("/studySet");
+   navigate(`/studySet/${topicId}/${studySetId}`);
    setTopicId(topicId); 
    setStudySetId(studySetId);
   }

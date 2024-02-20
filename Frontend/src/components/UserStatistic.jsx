@@ -1,45 +1,19 @@
 import React, { useContext, useEffect } from 'react'
 import { AuthContext } from '../context/AuthContext'
+import { UserStudySetsContext } from '../context/UserStudySetsContext';
 
 function UserStatistic() {
     const {getUserInfo, user} = useContext(AuthContext);
+    const {countCardsByStatus} = useContext(UserStudySetsContext);
 
     useEffect(() => {
         getUserInfo();
       }, []);
 
-      const numberOfStudySets = user?.savedStudySets?.length ?? 0;
-  
+    const numberOfStudySets = user?.savedStudySets?.length ?? 0;
 
-      const countCardsByStatus = () => {
-        const cardsCount = { mastered: 0, needPractice: 0, notStudied: 0 };
-
-        user?.savedStudySets?.forEach(savedStudySet => {
-            savedStudySet.cards.forEach(card => {
-                switch (card.status) {
-                    case "mastered":
-                        cardsCount.mastered++;
-                        break;
-                    case "need practice":
-                        cardsCount.needPractice++;
-                        break;
-                    case "not studied":
-                        cardsCount.notStudied++;
-                        break;
-                    default:
-                        break;
-                }
-            });
-        });
-
-        return cardsCount;
-    };
-
-    const cardsCount = countCardsByStatus();
+    const cardsCount = countCardsByStatus(user?.savedStudySets);
       
-
-
-
   return (
     <section>
         <h2>Number of study sets: {numberOfStudySets} </h2>
