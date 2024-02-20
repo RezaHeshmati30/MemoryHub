@@ -17,6 +17,7 @@ const AuthContextProvider = ({ children }) => {
     const [passwordLogin, setPasswordLogin] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
+    const [isCreateCardsClicked, setIsCreateCardsClicked] = useState(false);
 
 
     
@@ -28,7 +29,6 @@ const AuthContextProvider = ({ children }) => {
       }
 
       const setErrorMessages = (error) => {
-        // debugger;
         if (error.response) {
           setError(error.response.data.error)
         } else {
@@ -151,7 +151,7 @@ const AuthContextProvider = ({ children }) => {
                 hasToken, setHasToken, msg, setMsg,user, setUser, 
                 error, setError, loginHandler, signUpHandler, logoutHandler, userInfoHandler, showLoginForm, setShowLoginForm,
                 showSignUpForm, setShowSignUpForm, emailSignUp, setEmailSignUp,emailLogin, setEmailLogin, passwordSignUp, setPasswordSignUp, passwordLogin, setPasswordLogin,
-                firstName, setFirstName, lastName, setLastName, getUserInfo
+                firstName, setFirstName, lastName, setLastName, getUserInfo, isCreateCardsClicked, setIsCreateCardsClicked
             }}
         >
             {children}
