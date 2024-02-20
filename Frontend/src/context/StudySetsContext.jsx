@@ -9,6 +9,7 @@ const StudySetsContextProvider = ({ children }) => {
   const moduleId = "65cf67756f6a0e0ef199b5ca";
   const [studySetId, setStudySetId] = useState("");
   const [topicId, setTopicId] = useState("");
+  const [cardIds, setCardIds] = useState([]);
 
   const getModuleData = async () => {
     const response = await axios.get(`${backendApiUrl}/modules/${moduleId}`);
@@ -30,28 +31,48 @@ const StudySetsContextProvider = ({ children }) => {
     }
   };
 
-  const createStudySetsAndCards = async (userId, cardIds, title) => {
+  const createStudySetsAndCards = async (
+    title,
+    description,
+    questions,
+    answers,
+    images
+  ) => {
+   
+
     try {
-      // Step 1: Add cards
-      const addedCardsResponse = await axios.post(`${backendApiUrl}/cards`, {
-        cardIds
-      });
-      const addedCardIds = addedCardsResponse.data.map((card) => card._id);
-
-      // Step 2: Create a study set and add cards to it
-      const newStudySetResponse = await axios.post(
-        `${backendApiUrl}/studySets`,
-        { cardIds: addedCardIds }
+      const createStudySetsAndCardsResponse = await axios.post(
+        `${backendApiUrl}/create`,
+        {
+          studySetData: [
+            {
+              title: title,
+              description: description,
+              cards: [],
+            },
+          ],
+        }
       );
-      const newStudySetId = newStudySetResponse.data._id;
-
-      await addStudySetToUser(userId, newStudySetId, title);
-      setStudySetId(newStudySetId);
-      setTopicId(topicId);
+      console.log("here is it")
+      // const newStudySetId = createStudySetsAndCardsResponse?.data.studySetId;
+      // console.log("newStudySetId", newStudySetId); 
+      // console.log("cards", questions, answers);
+      // if (setStudySetId && setTopicId) {
+      //   setStudySetId(newStudySetId);
+      //   setTopicId(topicId);
+      // } else {
+      //   console.error("Context functions not available.");
+      // }
     } catch (error) {
       console.error("Error creating study sets and cards:", error);
+      if (error.response) {
+        console.error("Response Status:", error.response.status);
+        console.error("Response Data:", error.response.data);
+      }
+      throw error;
     }
   };
+
   return (
     <StudySetsContext.Provider
       value={{
