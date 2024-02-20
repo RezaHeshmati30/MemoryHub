@@ -100,7 +100,7 @@ function Cards() {
         </button>
         <button
           className={`${hasToken ? "block" : "hidden"} bg-[#b6b2b2] py-[5px] px-[10px] rounded-[10px]`}
-          onClick={() => {addStudySetToUser(user._id, currentCardsSet._id, topicTitle); navigate("/userProfile"); } }
+          onClick={() => {addStudySetToUser(user._id, currentCardsSet._id, topicTitle)} }
         >
           Add to your set
         </button>

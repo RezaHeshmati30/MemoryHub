@@ -33,7 +33,7 @@ function StudySets() {
                 <li key={studySet._id}>
                   <p className='cursor-pointer' onClick={() => onClickHandler(topic._id, studySet._id)}>Subtopic: {studySet.title}</p>
                   <button className={`${hasToken ? "block" : "hidden"} bg-[#b6b2b2] py-[5px] px-[10px] rounded-[10px]`}
-                   onClick={() => {addStudySetToUser(user._id, studySet._id, topic.title); navigate("/userProfile"); } }
+                   onClick={() => {addStudySetToUser(user._id, studySet._id, topic.title)} }
                   >Add to your set</button>
                 </li>
               ))}

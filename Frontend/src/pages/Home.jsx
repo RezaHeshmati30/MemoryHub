@@ -8,7 +8,6 @@ import HomePageButtons from '../components/HomePageButtons'
 function Home() {
   return (
     <>
-      <NavBar />
       <LoginForm />
       <SignUpForm />
       <HomePageButtons />

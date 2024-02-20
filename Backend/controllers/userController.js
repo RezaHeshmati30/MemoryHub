@@ -63,7 +63,7 @@ export const addStudySetToUser = async (req, res) => {
                 studySet: studySetId,
                 savedAt: Date.now(),
                 cards: studySet.cards.map(card => ({ card: card._id })),
-                status: req.body.status
+                edit: req.body.status
               };
           
               user.savedStudySets.push(savedStudySet);

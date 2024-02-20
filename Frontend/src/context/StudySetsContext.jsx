@@ -28,13 +28,13 @@ const StudySetsContextProvider = ({ children }) => {
         try {
             await axios.patch(`${backendApiUrl}/users/${userId}`, studySetData);
             console.log(`studySetData ${studySetData} sent to user ${userId}`);
+            alert("Study set was added to your account")
         } catch (error) {
             console.log("error while logging in:", error);
             alert("Study set already exists in your account")
         }
+
     }
-
-
 
     return (
         <StudySetsContext.Provider
