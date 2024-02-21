@@ -23,7 +23,7 @@ const StudySetsContextProvider = ({ children }) => {
         const studySetData = {
             topicTitle: topicTitle,
             studySetId: studySetId, 
-            status: "no"  
+            edit: "no"  
         }
         try {
             await axios.patch(`${backendApiUrl}/users/${userId}`, studySetData);
