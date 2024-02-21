@@ -5,13 +5,15 @@ import { AuthContext } from '../context/AuthContext';
 
 function StudySets() {
   const {getModuleData, moduleData, setStudySetId, setTopicId, addStudySetToUser} = useContext(StudySetsContext);
-  const {hasToken, getUserInfo, user} = useContext(AuthContext);
+  const {hasToken, getUserInfo, user, setShowLoginForm, setShowSignUpForm} = useContext(AuthContext);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     getModuleData();
     getUserInfo();
+    setShowLoginForm(false);
+    setShowSignUpForm(false);
   }, [])
 
   const onClickHandler = (topicId, studySetId) => {
