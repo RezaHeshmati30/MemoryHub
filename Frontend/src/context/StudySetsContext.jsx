@@ -37,6 +37,7 @@ const StudySetsContextProvider = ({ children }) => {
     }
   };
 
+
   const createStudySetsAndCards = async (
     userId,
     title,
@@ -60,6 +61,7 @@ const StudySetsContextProvider = ({ children }) => {
       // }
       // console.log('Questions:', cards.questions);
       //  console.log('Answers:', cards.answers);
+
 
       const studySetData = {
         title: title,
