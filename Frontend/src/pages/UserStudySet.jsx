@@ -4,7 +4,7 @@ import { AuthContext } from '../context/AuthContext';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
 function UserStudySet() {
-    const {countCardsByStatus, deleteSavedStudySet} = useContext(UserStudySetsContext);
+    const {countCardsByStatus, deleteSavedStudySet, setStudySetId} = useContext(UserStudySetsContext);
     const {getUserInfo, user} = useContext(AuthContext);
 
     const {id} = useParams();
@@ -18,12 +18,15 @@ function UserStudySet() {
     const cardsCount = studySet ? countCardsByStatus([studySet]) : { mastered: 0, needPractice: 0, notStudied: 0 };
     const userId = user?._id;
     const studySetId = studySet?._id;
+    console.log("STUDY SET:", studySet)
+    console.log("StudySetId:", studySetId)
 
     const onClickEdit = (setId) => {
         navigate(`/studySet/edit/${setId}`);
     }
 
     const onClickPractice = (setId) => {
+        setStudySetId(studySetId);
         navigate(`/studySet/practice/${setId}`);
     }
 

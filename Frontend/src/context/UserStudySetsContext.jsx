@@ -6,6 +6,9 @@ const UserStudySetsContext = createContext();
 
 const UserStudySetsContextProvider = ({ children }) => {
     const [studySetId, setStudySetId] = useState("");
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [currentCard, setCurrentCard] = useState({});
+    const [isFlipped, setIsFlipped] = useState(false); 
     const backendApiUrl = "http://localhost:3001";
 
 
@@ -41,12 +44,37 @@ const UserStudySetsContextProvider = ({ children }) => {
             
         }
     }   
+
+    const handleNextCard = (cardsArray) => {
+        setCurrentIndex((prevIndex) => {
+          if (prevIndex === cardsArray?.length - 1) {
+            return prevIndex;
+          }
+          const newIndex = (prevIndex + 1) % cardsArray?.length;
+          setIsFlipped(false);
+          return newIndex;
+        });
+      };
+      
+
+      const handlePreviousCard = (cardsArray) => {
+        setCurrentIndex((prevIndex) => {
+          if (prevIndex === 0) {
+            return prevIndex;
+          }
+          const newIndex = (prevIndex - 1 + cardsArray?.length) % cardsArray?.length;
+          setIsFlipped(false);
+          return newIndex;
+        });
+      };
+      
     
     
     return (
     <UserStudySetsContext.Provider
         value={{
-            studySetId, setStudySetId, countCardsByStatus, deleteSavedStudySet
+            studySetId, setStudySetId, countCardsByStatus, deleteSavedStudySet, currentIndex, setCurrentIndex,
+            currentCard, setCurrentCard, backendApiUrl, isFlipped, setIsFlipped, handleNextCard, handlePreviousCard
         }}
     >
         {children}

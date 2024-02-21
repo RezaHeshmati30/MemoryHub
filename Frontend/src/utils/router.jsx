@@ -11,6 +11,7 @@ import UserStudySets from "../pages/UserStudySets";
 import UserStudySet from "../pages/UserStudySet";
 import EditStudySet from "../pages/EditStudySet";
 import Practice from "../pages/Practice";
+import EndPractice from "../pages/EndPractice";
 
 
 
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
       { path: '/createSet/', element: <CreateSets />},
       { path: '/studySet/edit/:id', element: < EditStudySet/>},
       { path: '/studySet/practice/:id', element: <Practice />},
+      { path: '/studySet/practice/:id/end', element: <EndPractice />},
       { path: '/contact', element: <Contact />},
       { path: '*', element: <PageNotFound />},
     ],

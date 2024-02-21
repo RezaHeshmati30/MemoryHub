@@ -7,10 +7,8 @@ import "./cards.css";
 function Cards() {
   const [isFlipped, setIsFlipped] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const {user} = useContext(AuthContext);
-
   const { getModuleData,  moduleData, addStudySetToUser} = useContext(StudySetsContext);
-  const { hasToken, getUserInfo } = useContext(AuthContext);
+  const { hasToken, getUserInfo, user } = useContext(AuthContext);
   const navigate = useNavigate();
   const {topicId} = useParams();
   const {studySetId} = useParams();
