@@ -63,7 +63,7 @@ export const addStudySetToUser = async (req, res) => {
                 studySet: studySetId,
                 savedAt: Date.now(),
                 cards: studySet.cards.map(card => ({ card: card._id })),
-                edit: req.body.status
+                edit: req.body.edit
               };
           
               user.savedStudySets.push(savedStudySet);
@@ -105,3 +105,39 @@ export const addStudySetToUser = async (req, res) => {
         }
       }
       
+      export const updateCardStatus = async(req, res) => {
+        const userId = req.params.userId;
+        const studySetId = req.params.studySetId;
+        const cardId = req.params.cardId;
+        const newStatus = req.body.newStatus;
+        console.log("USERId:", userId)
+        console.log("StudySet:", studySetId)
+        console.log("CardId:", cardId)
+        console.log("Nes Status:", newStatus)
+
+        try {
+          // Find the user by userId and update the card
+          const user = await UserModel.findById(userId);
+          console.log("User:", user)
+          const updatedUser = await UserModel.findOneAndUpdate(
+            { _id: userId, "savedStudySets._id": studySetId, "savedStudySets.cards._id": cardId },
+            { 
+              $set: {
+                "savedStudySets.$[set].cards.$[card].status": newStatus 
+              }
+            },
+            { 
+              new: true, 
+              arrayFilters: [ 
+                { "set._id": studySetId }, 
+                { "card._id": cardId } 
+              ] 
+            }
+          );
+          console.log("User:", updatedUser)
+          res.status(200).send(updatedUser);
+        } catch (error) {
+          console.error("Error retrieving user information:", error);
+          res.status(500).send("Internal Server Error"); 
+        }
+      }
