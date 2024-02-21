@@ -9,3 +9,5 @@ const CardSchema = new mongoose.Schema({
 const CardModel = mongoose.model('Card', CardSchema)
 
 export default CardModel
+
+

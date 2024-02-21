@@ -19,8 +19,8 @@ router
     // .patch("/studySets/:id", addCardToStudySet)
     .patch("/studySets/:id", addCardsToStudySet)
     .patch("/addAllStudySets/:id", addAllStudySetsWithCardsToTopic)
-    .post("/create", createStudySetsAndCards)
-    //!just for test
+    .post("/createSet/:userId", createStudySetsAndCards)
+    //*****just for test
     .get("/getAllSets", getAllSets)
 
 
