@@ -1,8 +1,13 @@
 import React from 'react'
+import StudySetStatistic from '../components/StudySetStatistic'
+import EndPracticeButtons from '../components/EndPracticeButtons'
 
 function EndPractice() {
   return (
-    <div>EndPractice</div>
+    <section>
+        <StudySetStatistic />
+        <EndPracticeButtons />
+    </section>
   )
 }
 
