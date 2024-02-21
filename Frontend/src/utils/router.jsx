@@ -29,7 +29,7 @@ const router = createBrowserRouter([
       { path: '/createSet/', element: <CreateSets />},
       { path: '/studySet/edit/:id', element: < EditStudySet/>},
       { path: '/studySet/practice/:id', element: <Practice />},
-      { path: '/studySet/practice/:id/end', element: <EndPractice />},
+      { path: '/studySet/endPractice/:id', element: <EndPractice />},
       { path: '/contact', element: <Contact />},
       { path: '*', element: <PageNotFound />},
     ],
