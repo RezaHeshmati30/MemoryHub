@@ -1,8 +1,14 @@
 import React, { useContext, useEffect } from 'react'
 import Cards from '../components/Cards'
-import { StudySetsContext } from '../context/StudySetsContext'
+import { AuthContext } from '../context/AuthContext';
 
 function StudySet() {
+  const {setShowLoginForm, setShowSignUpForm} = useContext(AuthContext);
+
+  useEffect(() => {
+    setShowLoginForm(false);
+    setShowSignUpForm(false);
+  }, [])
 
   return (
     <div>
