@@ -2,11 +2,10 @@ import React, { useContext, useEffect, useState } from 'react'
 import { UserStudySetsContext } from '../context/UserStudySetsContext'
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate, useParams } from 'react-router-dom';
-import { StudySetsContext } from '../context/StudySetsContext';
 import PracticeButtons from '../components/PracticeButtons';
 
 function Practice() {
-  const {currentIndex, setCurrentIndex, isFlipped, setIsFlipped, handleNextCard, handlePreviousCard} = useContext(UserStudySetsContext);
+  const {currentIndex, isFlipped, setIsFlipped, handleNextCard, handlePreviousCard, setCurrentIndex} = useContext(UserStudySetsContext);
   const { hasToken, getUserInfo, user } = useContext(AuthContext);
   const navigate = useNavigate();
   const {id} = useParams();
@@ -14,6 +13,7 @@ function Practice() {
 
     useEffect(() => {
         getUserInfo();
+        setCurrentIndex(0);
     }, [])
 
     useEffect(() => {
@@ -24,7 +24,6 @@ function Practice() {
 
     const studySet = user?.savedStudySets?.filter(studySet => studySet._id === id)[0]|| [];
     const currentCardsSet = user?.savedStudySets?.filter(studySet => studySet._id === id)[0].cards || [];
-    const topicTitle = user?.savedStudySets?.filter(studySet => studySet._id === id)[0].topicTitle || '';
     const currentCard = currentCardsSet[currentIndex];
     console.log("current card", currentCard)
 

@@ -27,7 +27,7 @@ function PracticeButtons() {
                 newStatus: status
             });
             if (currentIndex === currentCardsSet.length - 1) {
-                navigate(`/studySet/practice/${id}/end`)
+                navigate(`/studySet/endPractice/${id}`)
             } else {
                 handleNextCard(currentCardsSet);
             }
