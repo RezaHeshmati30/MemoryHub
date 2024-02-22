@@ -9,6 +9,7 @@ const UserStudySetsContextProvider = ({ children }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [currentCard, setCurrentCard] = useState({});
     const [isFlipped, setIsFlipped] = useState(false); 
+    const [round, setRound] = useState(1);
     const backendApiUrl = "http://localhost:3001";
 
 
@@ -74,7 +75,7 @@ const UserStudySetsContextProvider = ({ children }) => {
     <UserStudySetsContext.Provider
         value={{
             studySetId, setStudySetId, countCardsByStatus, deleteSavedStudySet, currentIndex, setCurrentIndex,
-            currentCard, setCurrentCard, backendApiUrl, isFlipped, setIsFlipped, handleNextCard, handlePreviousCard
+            currentCard, setCurrentCard, backendApiUrl, isFlipped, setIsFlipped, handleNextCard, handlePreviousCard, round, setRound
         }}
     >
         {children}
