@@ -36,9 +36,10 @@ function StudySets() {
     <section className='flex flex-col items-center p-[20px]'>
       <h1>Study Sets</h1>
       <h2>{moduleData?.title}</h2>
+      {/* Verwende die Search-Bar-Komponente */}
       <StudySetsSearchBar value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
       <ul>
-        {filteredStudySets.map(topic => (
+        {filteredStudySets?.map(topic => (
           <li key={topic._id} className='border-[1px] border-gray-400 p-[20px]'>
             <p className=''> Topic: {topic.title}</p>
             <ul className=''>
