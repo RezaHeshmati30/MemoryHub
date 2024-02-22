@@ -25,8 +25,9 @@ function Practice() {
     const studySet = user?.savedStudySets?.filter(studySet => studySet._id === id)[0]|| [];
     const currentCardsSet = user?.savedStudySets?.filter(studySet => studySet._id === id)[0].cards || [];
     const currentCard = currentCardsSet[currentIndex];
+    console.log("Current Card Set", currentCardsSet)
     console.log("current card", currentCard)
-
+    
 
   const handleFlip = () => {
     setIsFlipped(!isFlipped);

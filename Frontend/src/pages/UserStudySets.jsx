@@ -20,7 +20,7 @@ function UserStudySets() {
     }
 
   return (
-   <section className='flex flex-col gap-[20px]'>
+   <section className='flex flex-col gap-[20px] p-[30px]'>
     <h2>User Study Sets Page</h2>
     <h3>Study Sets</h3>
     <ul className='flex flex-col gap-[15px]'>
@@ -36,7 +36,7 @@ function UserStudySets() {
         ).map(([topicTitle, studySetsUnderTopic]) => (
             <li key={topicTitle}>
                 <h3>{topicTitle}</h3>
-                <ul>
+                <ul className='flex flex-col gap-[5px]'>
                     {studySetsUnderTopic.map(studySet => (
                         <li key={studySet._id} className='border-[1px] border-gray-400 cursor-pointer' onClick={() => onClickHandler(studySet._id, topicTitle)}>
                             <p>Title: {studySet.studySet.title}</p>
