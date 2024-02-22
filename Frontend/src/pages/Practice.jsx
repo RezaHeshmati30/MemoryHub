@@ -44,6 +44,7 @@ function Practice() {
 
   const currentCard = filteredCards[currentIndex];
 
+
   const handleFlip = () => {
     setIsFlipped(!isFlipped);
   };
