@@ -122,6 +122,7 @@
 import StudySetModel from "../models/StudySetModel.js";
 import CardModel from "../models/CardModel.js";
 import UserModel from "../models/UserModel.js";
+import ModuleModel from "../models/ModuleModel.js";
 
 const createStudySetsAndCards = async (req, res) => {
   try {

@@ -1,27 +1,25 @@
 import React, { createContext, useContext, useState } from "react";
 import axios from "axios";
-//import { AuthContext } from "./AuthContext";
 
 const StudySetsContext = createContext();
 
 const StudySetsContextProvider = ({ children }) => {
-  //const { userId } = useContext(AuthContext);
   const [moduleData, setModuleData] = useState({});
   const backendApiUrl = "http://localhost:3001";
   const [studySetId, setStudySetId] = useState("");
   const [topicId, setTopicId] = useState("");
-  const [cardIds, setCardIds] = useState([]);
   const [question, setQuestion] = useState([]);
   const [answer, setAnswer] = useState([]);
   const [image, setImage] = useState([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const moduleId = "65cf67756f6a0e0ef199b5ca";
 
-  const getModuleData = async (moduleId) => {
+  const getModuleData = async () => {
     const response = await axios.get(`${backendApiUrl}/modules/${moduleId}`);
     console.log(response.data);
     setModuleData(response.data);
-  };
+}
 
   const addStudySetToUser = async (userId, studySetId, topicTitle) => {
     const studySetData = {

@@ -7,18 +7,15 @@ function CreateSets() {
   const {
     createStudySetsAndCards,
     answer,
-    moduleData,
     setAnswer,
     image,
     setImage,
     question,
     setQuestion,
-    title,
     setTitle,
-    description,
     setDescription,
   } = useContext(StudySetsContext);
-  const { userId, hasToken, getUserInfo } = useContext(AuthContext);
+  const { userId, getUserInfo } = useContext(AuthContext);
   const [lines, setLines] = useState([1]);
 
   useEffect(() => {
@@ -30,21 +27,18 @@ function CreateSets() {
     try {
       console.log("User ID:", userId);
       const formData = new FormData(e.target);
-      
-      // Extract title and description directly from form data
+
       const formObject = {
         title: formData.get('title'),
         description: formData.get('description'),
         cards: []
       };
     
-      // Loop through form data to extract questions, answers, and images
       for (let i = 0; i < lines.length; i++) {
         const question = formData.get(`question${i}`);
         const answer = formData.get(`answer${i}`);
         const imageFile = formData.get(`image${i}`);
-  
-        // Read image file and convert to base64 string
+
         const image = await readImageAsBase64(imageFile);
         formObject.cards.push({
           question,
@@ -53,18 +47,11 @@ function CreateSets() {
         });
       }
  
-      // const createStudySetsAndCards = async (
-      //   userId,
-      //   title,
-      //   description,
-      //   cards
-      // ) => {
       console.log("formobject.cards",formObject.cards)
       createStudySetsAndCards( userId,formObject.title, formObject.description, formObject.cards);
     
       console.log("Study sets and cards created successfully!", formObject);
-    
-      // Reset form fields
+
       setQuestion([""]);
       setAnswer([""]);
       setImage([""]);
@@ -74,8 +61,7 @@ function CreateSets() {
       console.error("Error creating study sets and cards:", error);
     }
   };
-  
-  // Function to read image file as base64 string
+
   const readImageAsBase64 = (file) => {
     return new Promise((resolve, reject) => {
       if (file) {
@@ -93,30 +79,6 @@ function CreateSets() {
     });
   };
   
-  
-  
-
-  // const handleCreateSets = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     console.log("User ID:", userId);
-  //     const formData = new FormData(e.target);
-  //     const formObject = {};
-  //     formData.forEach((value, key) => {
-  //       formObject[key] = value;
-  //     });
-  //     createStudySetsAndCards(formObject, userId);
-  //     console.log("Study sets and cards created successfully!", formObject);
-  //     setQuestion([""]);
-  //     setAnswer([""]);
-  //     setImage([""]);
-  //     setTitle("");
-  //     setDescription("");
-  //   } catch (error) {
-  //     console.error("Error creating study sets and cards:", error);
-  //   }
-  // };
-
   const addLine = () => {
     const newLines = [...lines, lines.length + 1];
     setLines(newLines);
@@ -125,24 +87,6 @@ function CreateSets() {
   const removeLine = (index) => {
     const newLines = lines.filter((line, i) => i !== index);
     setLines(newLines);
-  };
-
-  const handleQuestionChange = (index, e) => {
-    const newQuestions = [...question];
-    newQuestions[index] = e.target.value;
-    setQuestion(newQuestions);
-  };
-
-  const handleAnswerChange = (index, e) => {
-    const newAnswers = [...answer];
-    newAnswers[index] = e.target.value;
-    setAnswer(newAnswers);
-  };
-
-  const handleImageChange = (index, value) => {
-    const newImages = [...image];
-    newImages[index] = value;
-    setImage(newImages);
   };
 
   return (
@@ -174,7 +118,6 @@ function CreateSets() {
             className='block text-gray-700 text-sm font-bold mb-2'
             htmlFor='description'
           >
-            {" "}
             Description
           </label>
           <textarea
@@ -214,7 +157,7 @@ function CreateSets() {
         id={`answer${index}`}
         type='text'
         placeholder={`Enter answer ${index + 1}`}
-        name={`answer${index}`}  // Unique name for each answer input
+        name={`answer${index}`}  
       />
     </div>
     <div className='w-full sm:w-1/2 md:w-1/3 mb-4 px-2'>
@@ -229,7 +172,7 @@ function CreateSets() {
         id={`image${index}`}
         type='file'
         accept='image/*'
-        name={`image${index}`}  // Unique name for each image input
+        name={`image${index}`}  
       />
     </div>
     <button
@@ -241,7 +184,6 @@ function CreateSets() {
     </button>
   </div>
 ))}
-
 
         {/* {lines.map((line, index) => (
           <div
