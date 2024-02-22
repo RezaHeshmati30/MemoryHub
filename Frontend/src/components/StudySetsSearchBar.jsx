@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 
-export const StudySetsSearchBar = ({ value, onChange }) => {
+const StudySetsSearchBar = ({ value, onChange }) => {
     return (
       <input
         type="text"
@@ -11,3 +11,5 @@ export const StudySetsSearchBar = ({ value, onChange }) => {
       />
     );
   }
+
+export default StudySetsSearchBar;
