@@ -37,43 +37,23 @@ const StudySetsContextProvider = ({ children }) => {
     }
   };
 
-
-  const createStudySetsAndCards = async (
-    userId,
-    title,
-    description,
-    cards
-  ) => {
-    console.log("userid from from:",userId)
-    console.log("cards in ceratestudyset:",cards)
+  const createStudySetsAndCards = async (userId, title, description, cards) => {
+    console.log("userid from from:", userId);
+    console.log("cards in ceratestudyset:", cards);
     try {
-      // if (!Array.isArray(cards.questions)) {
-      //   console.error('Questions must be an array.',cards.questions);
-      //   return;
-      // }
-      // if (!Array.isArray(cards.answers)) {
-      //   console.error('Answers must be an array.');
-      //   return;
-      // }
-      // if (cards.questions.length !== cards.answers.length) {
-      //   console.error('Questions and Answers must have the same length.');
-      //   return;
-      // }
-      // console.log('Questions:', cards.questions);
-      //  console.log('Answers:', cards.answers);
-
-
       const studySetData = {
         title: title,
         description: description,
-        cards: cards.map((card, index) => ([{
-          question: card.question,
-          answer: card.answer,
-        }])),
+        cards: cards.map((card, index) => [
+          {
+            question: card.question,
+            answer: card.answer,
+          },
+        ]),
       };
-      console.log("axios url:",  `${backendApiUrl}/createSet/${userId}`,)
-      console.log("studyset:",studySetData)
-      console.log("Request Payload:", { studySetData: [studySetData] });
+      console.log("axios url:", `${backendApiUrl}/createSet/${userId}`);
+      console.log("studyset:", studySetData);
+
       const response = await axios.post(
         `${backendApiUrl}/createSet/${userId}`,
         { ...studySetData }
@@ -84,12 +64,11 @@ const StudySetsContextProvider = ({ children }) => {
       if (error.response) {
         console.log("Response Data from backend:", error.response.data);
       }
-  
+
       throw error;
     }
   };
-  
-  
+
   // const createStudySetsAndCards = async (
   //   userId,
   //   title,
