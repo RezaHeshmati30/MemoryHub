@@ -126,7 +126,7 @@ import UserModel from "../models/UserModel.js";
 const createStudySetsAndCards = async (req, res) => {
   try {
     const userId = req.params.userId;
-    const { topicTitle, title, description, cards } = req.body;
+    const { title, description, cards } = req.body;
 
     console.log("Incoming Request Body:", req.body);
 
@@ -136,14 +136,12 @@ const createStudySetsAndCards = async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
 
-    // Check if the incoming cards data is an array
     if (!Array.isArray(cards)) {
       return res
         .status(400)
         .json({ error: "Invalid format for flashcards. Expecting an array." });
     }
 
-    // Create new cards and handle duplicates
     const newCards = await CardModel.create(
       cards.map((card) => ({ question: card.question, answer: card.answer }))
     );
@@ -169,7 +167,7 @@ const createStudySetsAndCards = async (req, res) => {
 
     // Add study set data to user's savedStudySets
     user.savedStudySets.push({
-      topicTitle,
+
       studySet: studySet._id,
       cards: savedCards.map((card) => ({
         question: card.question,

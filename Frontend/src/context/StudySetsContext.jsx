@@ -15,7 +15,6 @@ const StudySetsContextProvider = ({ children }) => {
   const [answer, setAnswer] = useState([]);
   const [image, setImage] = useState([]);
   const [title, setTitle] = useState("");
-  const [topic, setTopic] = useState("");
   const [description, setDescription] = useState("");
 
   const getModuleData = async (moduleId) => {
@@ -42,24 +41,40 @@ const StudySetsContextProvider = ({ children }) => {
     userId,
     title,
     description,
-    questions,
-    answers
+    cards
   ) => {
+    console.log("userid from from:",userId)
+    console.log("cards in ceratestudyset:",cards)
     try {
+      // if (!Array.isArray(cards.questions)) {
+      //   console.error('Questions must be an array.',cards.questions);
+      //   return;
+      // }
+      // if (!Array.isArray(cards.answers)) {
+      //   console.error('Answers must be an array.');
+      //   return;
+      // }
+      // if (cards.questions.length !== cards.answers.length) {
+      //   console.error('Questions and Answers must have the same length.');
+      //   return;
+      // }
+      // console.log('Questions:', cards.questions);
+      //  console.log('Answers:', cards.answers);
+
       const studySetData = {
-        topicTitle: topic,
         title: title,
         description: description,
-        cards: questions.map((question, index) => ({
-          question: question,
-          answer: answers[index],
-        })),
+        cards: cards.map((card, index) => ([{
+          question: card.question,
+          answer: card.answer,
+        }])),
       };
-  
+      console.log("axios url:",  `${backendApiUrl}/createSet/${userId}`,)
+      console.log("studyset:",studySetData)
       console.log("Request Payload:", { studySetData: [studySetData] });
       const response = await axios.post(
         `${backendApiUrl}/createSet/${userId}`,
-        { studySetData: [studySetData] }
+        { ...studySetData }
       );
       console.log("Study set created successfully:", response.data);
     } catch (error) {
@@ -129,8 +144,6 @@ const StudySetsContextProvider = ({ children }) => {
         setQuestion,
         title,
         setTitle,
-        topic,
-        setTopic,
         description,
         setDescription,
       }}

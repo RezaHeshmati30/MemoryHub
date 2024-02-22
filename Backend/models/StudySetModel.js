@@ -6,8 +6,8 @@ const StudySetSchema = new mongoose.Schema({
     unique: true,
   },
   description: { type: String },
-  cards: [{ type: mongoose.Schema.Types.ObjectId, ref: "Card" }],
-  savedAt: { type: Date, default: Date.now },
+  cards: [{ type: mongoose.Schema.Types.ObjectId, ref: "Card" }]
+ 
 });
 
 const StudySetModel = mongoose.model("StudySet", StudySetSchema);
