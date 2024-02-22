@@ -185,7 +185,6 @@ function CreateSets() {
           />
         </div>
 
-        // Inside the map function for rendering card inputs
 {lines.map((line, index) => (
   <div key={index} className='flex flex-wrap justify-between mb-4 relative'>
     <div className='w-full sm:w-1/2 md:w-1/3 mb-4 px-2'>
