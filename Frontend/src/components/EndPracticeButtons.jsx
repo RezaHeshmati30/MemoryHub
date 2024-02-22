@@ -5,13 +5,16 @@ import { UserStudySetsContext } from '../context/UserStudySetsContext';
 function EndPracticeButtons() {
     const {id} = useParams();
     const navigate = useNavigate();
+    const {setRound} = useContext(UserStudySetsContext);
 
     const onClickNextRound = () => {
         navigate(`/studySet/practice/${id}`);
+        setRound(prev => prev + 1);
     }
 
     const onClickFinish = () => {
         navigate(`/user/studySets`);
+        setRound(1);
     }
 
   return (
