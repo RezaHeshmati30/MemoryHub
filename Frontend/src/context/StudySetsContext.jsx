@@ -14,6 +14,9 @@ const StudySetsContextProvider = ({ children }) => {
   const [question, setQuestion] = useState([]);
   const [answer, setAnswer] = useState([]);
   const [image, setImage] = useState([]);
+  const [title, setTitle] = useState("");
+  const [topic, setTopic] = useState("");
+  const [description, setDescription] = useState("");
 
   const getModuleData = async (moduleId) => {
     const response = await axios.get(`${backendApiUrl}/modules/${moduleId}`);
@@ -34,7 +37,7 @@ const StudySetsContextProvider = ({ children }) => {
       alert("Study set already exists in your account");
     }
   };
-  
+
   const createStudySetsAndCards = async (
     userId,
     title,
@@ -43,31 +46,32 @@ const StudySetsContextProvider = ({ children }) => {
     answers
   ) => {
     try {
-    const studySetData = {
-      topicTitle: moduleData.topicTitle,
-      title: title,
-      description: description,
-      cards: questions.map((question, index) => ({
-        question: question,
-        answer: answers[index],
-      })),
-    };
+      const studySetData = {
+        topicTitle: topic,
+        title: title,
+        description: description,
+        cards: questions.map((question, index) => ({
+          question: question,
+          answer: answers[index],
+        })),
+      };
+  
+      console.log("Request Payload:", { studySetData: [studySetData] });
       const response = await axios.post(
         `${backendApiUrl}/createSet/${userId}`,
-        { studySetData: studySetData}
+        { studySetData: [studySetData] }
       );
-  
       console.log("Study set created successfully:", response.data);
     } catch (error) {
       console.error("Error creating study sets and cards:", error);
-  
       if (error.response) {
-        console.error("Response Data:", error.response.data);
+        console.log("Response Data from backend:", error.response.data);
       }
   
       throw error;
     }
   };
+  
   
   // const createStudySetsAndCards = async (
   //   userId,
@@ -123,7 +127,12 @@ const StudySetsContextProvider = ({ children }) => {
         setImage,
         question,
         setQuestion,
-       
+        title,
+        setTitle,
+        topic,
+        setTopic,
+        description,
+        setDescription,
       }}
     >
       {children}

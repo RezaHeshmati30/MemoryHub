@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { StudySetsContext } from "../context/StudySetsContext";
 import { AuthContext } from "../context/AuthContext";
-import { set } from "mongoose";
+
 
 function CreateSets() {
   const {
@@ -14,14 +14,15 @@ function CreateSets() {
     setImage,
     question,
     setQuestion,
+    title,
+    setTitle,
+    topic,
+    setTopic,
+    description,
+    setDescription,
   } = useContext(StudySetsContext);
   const { userId, hasToken, getUserInfo } = useContext(AuthContext);
-
   const [lines, setLines] = useState([1]);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     getUserInfo();
@@ -30,20 +31,26 @@ function CreateSets() {
   const handleCreateSets = async (e) => {
     e.preventDefault();
     try {
-      console.log('User ID:', userId); 
-      await createStudySetsAndCards(userId, title, description, question, answer);
-      console.log('Study sets and cards created successfully!');
+      console.log("User ID:", userId);
+      await createStudySetsAndCards(
+        userId,
+        title,
+        description,
+        question,
+        answer
+      );
+      console.log("Study sets and cards created successfully!");
     } catch (error) {
-      console.error('Error creating study sets and cards:', error);
+      console.error("Error creating study sets and cards:", error);
     }
-    setQuestion(['']);  
-    setAnswer(['']);  
-    setImage(['']);
-    setTitle('');
-    setDescription('');
+    setQuestion([""]);
+    setAnswer([""]);
+    setImage([""]);
+    setTitle("");
+    setTopic("");
+    setDescription("");
   };
-  
-  
+
   const addLine = () => {
     const newLines = [...lines, lines.length + 1];
     setLines(newLines);
@@ -73,13 +80,29 @@ function CreateSets() {
 
   return (
     <div className='flex justify-center items-center h-screen'>
-    <form
-      className='bg-pink-200 shadow-md rounded px-8 pt-6 pb-8 mb-4'
-      onSubmit={(e) => handleCreateSets(e)}
-    >
+      <form
+        className='bg-pink-200 shadow-md rounded px-8 pt-6 pb-8 mb-4'
+        onSubmit={(e) => handleCreateSets(e)}
+      >
         <h2 className='text-center text-lg font-bold mb-4'>
           Create a New Study Set
         </h2>
+        <div className='mb-4'>
+          <label
+            className='block text-gray-700 text-sm font-bold mb-2'
+            htmlFor='topic'
+          >
+            Topic
+          </label>
+          <input
+            className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+            id='topic'
+            type='text'
+            placeholder='Enter topic'
+            value={topic}
+            onChange={(e) => setTopic(e.target.value)}
+          />
+        </div>
         <div className='mb-4'>
           <label
             className='block text-gray-700 text-sm font-bold mb-2'
@@ -185,7 +208,6 @@ function CreateSets() {
           <button
             className='bg-green-500 hover:bg-green-700 text-white font-bold py-4 px-8 rounded-lg focus:outline-none focus:shadow-outline'
             type='submit'
-           
           >
             Create new Set
           </button>

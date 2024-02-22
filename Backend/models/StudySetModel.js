@@ -7,6 +7,7 @@ const StudySetSchema = new mongoose.Schema({
   },
   description: { type: String },
   cards: [{ type: mongoose.Schema.Types.ObjectId, ref: "Card" }],
+  savedAt: { type: Date, default: Date.now },
 });
 
 const StudySetModel = mongoose.model("StudySet", StudySetSchema);
