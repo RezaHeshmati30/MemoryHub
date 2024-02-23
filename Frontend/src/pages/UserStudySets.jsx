@@ -39,8 +39,8 @@ function UserStudySets() {
                 <ul>
                     {studySetsUnderTopic.map(studySet => (
                         <li key={studySet._id} className='border-[1px] border-gray-400 cursor-pointer' onClick={() => onClickHandler(studySet._id, topicTitle)}>
-                            <p>Title: {studySet.studySet.title}</p>
-                            <p>Description: {studySet.studySet.description}</p>
+                            <p>Title: {studySet?.studySet?.title}</p>
+                            <p>Description: {studySet?.studySet?.description}</p>
                         </li>
                     ))}
                 </ul>
