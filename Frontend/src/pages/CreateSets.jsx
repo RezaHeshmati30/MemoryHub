@@ -21,47 +21,60 @@ function CreateSets() {
   useEffect(() => {
     getUserInfo();
   }, [userId]);
-
   const handleCreateSets = async (e) => {
     e.preventDefault();
     try {
       console.log("User ID:", userId);
       const formData = new FormData(e.target);
-
+  
       const formObject = {
-        title: formData.get('title'),
-        description: formData.get('description'),
-        cards: []
+        topicTitle: formData.get("topic"),
+        title: formData.get("title"),
+        description: formData.get("description"),
+        cards: [],
       };
-    
+  
       for (let i = 0; i < lines.length; i++) {
         const question = formData.get(`question${i}`);
         const answer = formData.get(`answer${i}`);
         const imageFile = formData.get(`image${i}`);
-
+  
         const image = await readImageAsBase64(imageFile);
         formObject.cards.push({
           question,
           answer,
-          image
+          image,
         });
       }
- 
-      console.log("formobject.cards",formObject.cards)
-      createStudySetsAndCards( userId,formObject.title, formObject.description, formObject.cards);
-    
-      console.log("Study sets and cards created successfully!", formObject);
-
-      setQuestion([""]);
-      setAnswer([""]);
-      setImage([""]);
-      setTitle("");
-      setDescription("");
+  
+      console.log("formObject.cards", formObject.cards);
+      
+      // Ensure formObject is defined before calling createStudySetsAndCards
+      if (formObject) {
+        createStudySetsAndCards(
+          userId,
+          formObject.topicTitle,
+          formObject.title,
+          formObject.description,
+          formObject.cards
+        );
+  
+        console.log("Study sets and cards created successfully!", formObject);
+  
+        // Clear form fields
+        setQuestion([""]);
+        setAnswer([""]);
+        setImage([""]);
+        setTitle("");
+        setDescription("");
+      } else {
+        console.error("formObject is not defined.");
+      }
     } catch (error) {
       console.error("Error creating study sets and cards:", error);
     }
   };
-
+  
   const readImageAsBase64 = (file) => {
     return new Promise((resolve, reject) => {
       if (file) {
@@ -78,7 +91,7 @@ function CreateSets() {
       }
     });
   };
-  
+
   const addLine = () => {
     const newLines = [...lines, lines.length + 1];
     setLines(newLines);

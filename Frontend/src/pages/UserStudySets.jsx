@@ -20,7 +20,7 @@ function UserStudySets() {
     }
 
     const filteredStudySets = user?.savedStudySets?.filter(studySet =>
-      studySet.studySet.title.toLowerCase().includes(searchQuery.toLowerCase())
+      studySet?.studySet?.title?.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     return (

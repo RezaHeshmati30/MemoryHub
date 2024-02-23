@@ -119,15 +119,85 @@
 
 // export { createStudySetsAndCards };
 
+// import StudySetModel from "../models/StudySetModel.js";
+// import CardModel from "../models/CardModel.js";
+// import UserModel from "../models/UserModel.js";
+
+
+// const createStudySetsAndCards = async (req, res) => {
+//   try {
+//     const userId = req.params.userId;
+//     const { title, description, cards } = req.body;
+
+//     console.log("Incoming Request Body:", req.body);
+
+//     // Check if the user exists
+//     const user = await UserModel.findById(userId);
+//     if (!user) {
+//       return res.status(404).json({ error: "User not found" });
+//     }
+
+//     if (!Array.isArray(cards)) {
+//       return res
+//         .status(400)
+//         .json({ error: "Invalid format for flashcards. Expecting an array." });
+//     }
+
+//     const newCards = await CardModel.create(
+//       cards.map((card) => ({ question: card.question, answer: card.answer }))
+//     );
+
+//     let savedCards;
+//     try {
+//       savedCards = await CardModel.insertMany(newCards);
+//     } catch (error) {
+//       if (error.code === 11000) {
+//         console.error("Handle it gracefully.");
+//         savedCards = newCards;
+//       } else {
+//         throw error;
+//       }
+//     }
+
+//     // Create a new study set
+//     const studySet = await StudySetModel.create({
+//       title,
+//       description,
+//       cards: savedCards.map((card) => card._id),
+//     });
+
+//     // Add study set data to user's savedStudySets
+//     user.savedStudySets.push({
+
+//       studySet: studySet._id,
+//       cards: savedCards.map((card) => ({
+//         question: card.question,
+//         answer: card.answer,
+//       })),
+//     });
+
+//     await user.save();
+
+//     res.status(201).json({
+//       message: "Flashcards created successfully",
+//       flashcards: savedCards,
+//     });
+//   } catch (error) {
+//     console.error(error);
+//     console.log("error in backend,in catch");
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// };
+
+// export { createStudySetsAndCards };
 import StudySetModel from "../models/StudySetModel.js";
 import CardModel from "../models/CardModel.js";
 import UserModel from "../models/UserModel.js";
-import ModuleModel from "../models/ModuleModel.js";
 
 const createStudySetsAndCards = async (req, res) => {
   try {
     const userId = req.params.userId;
-    const { title, description, cards } = req.body;
+    const { topicTitle, title, description, cards } = req.body;
 
     console.log("Incoming Request Body:", req.body);
 
@@ -168,11 +238,11 @@ const createStudySetsAndCards = async (req, res) => {
 
     // Add study set data to user's savedStudySets
     user.savedStudySets.push({
-
+      topicTitle,
       studySet: studySet._id,
       cards: savedCards.map((card) => ({
-        question: card.question,
-        answer: card.answer,
+        card: card._id,
+        status: "not studied",
       })),
     });
 
@@ -180,11 +250,16 @@ const createStudySetsAndCards = async (req, res) => {
 
     res.status(201).json({
       message: "Flashcards created successfully",
-      flashcards: savedCards,
+      flashcards: {
+        topicTitle,
+        title,
+        description,
+        cards: user.savedStudySets[user.savedStudySets.length - 1].cards,
+      },
     });
   } catch (error) {
     console.error(error);
-    console.log("error in backend,in catch");
+    console.log("error in backend, in catch");
     res.status(500).json({ error: "Internal server error" });
   }
 };

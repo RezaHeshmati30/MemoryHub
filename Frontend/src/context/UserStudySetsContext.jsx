@@ -10,8 +10,8 @@ const UserStudySetsContextProvider = ({ children }) => {
     const [currentCard, setCurrentCard] = useState({});
     const [isFlipped, setIsFlipped] = useState(false); 
     const [round, setRound] = useState(1);
-    // const backendApiUrl = "http://localhost:3001";
-    const backendApiUrl = import.meta.env.VITE_SERVER_URL;
+     const backendApiUrl = "http://localhost:3001";
+   // const backendApiUrl = import.meta.env.VITE_SERVER_URL;
 
 
     const countCardsByStatus = (studySets) => {

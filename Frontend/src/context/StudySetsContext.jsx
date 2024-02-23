@@ -15,8 +15,8 @@ const StudySetsContextProvider = ({ children }) => {
   const [description, setDescription] = useState("");
   const moduleId = "65cf67756f6a0e0ef199b5ca";
 
-    // const backendApiUrl = "http://localhost:3001";
-    const backendApiUrl = import.meta.env.VITE_SERVER_URL;
+     const backendApiUrl = "http://localhost:3001";
+  //  const backendApiUrl = import.meta.env.VITE_SERVER_URL;
 
     const getModuleData = async () => {
         const response = await axios.get(`${backendApiUrl}/modules/${moduleId}`);
@@ -37,24 +37,59 @@ const StudySetsContextProvider = ({ children }) => {
       alert("Study set already exists in your account");
     }
   };
+////?answer with Michael====>
+  // const createStudySetsAndCards = async (userId, title, description, cards) => {
+  //   console.log("userid from from:", userId);
+  //   console.log("cards in ceratestudyset:", cards);
+  //   try {
+  //     const studySetData = {
+  //       title: title,
+  //       description: description,
+  //       cards: cards.map((card, index) => [
+  //         {
+  //           question: card.question,
+  //           answer: card.answer,
+  //         },
+  //       ]),
+  //     };
+  //     console.log("axios url:", `${backendApiUrl}/createSet/${userId}`);
+  //     console.log("studyset:", studySetData);
 
-  const createStudySetsAndCards = async (userId, title, description, cards) => {
+  //     const response = await axios.post(
+  //       `${backendApiUrl}/createSet/${userId}`,
+  //       { ...studySetData }
+  //     );
+  //     console.log("Study set created successfully:", response.data);
+  //   } catch (error) {
+  //     console.error("Error creating study sets and cards:", error);
+  //     if (error.response) {
+  //       console.log("Response Data from backend:", error.response.data);
+  //     }
+
+  //     throw error;
+  //   }
+  // };
+  const createStudySetsAndCards = async (userId, topicTitle, title, description, cards) => {
     console.log("userid from from:", userId);
     console.log("cards in ceratestudyset:", cards);
     try {
       const studySetData = {
-        title: title,
-        description: description,
-        cards: cards.map((card, index) => [
-          {
+        topicTitle: formObject.topicTitle, // Update this line
+        title: formObject.title,
+        description: formObject.description,
+        cards: formObject.cards.map((card, index) => ({
+          card: {
             question: card.question,
             answer: card.answer,
           },
-        ]),
+          status: "not studied",
+        })),
+  
+      
       };
       console.log("axios url:", `${backendApiUrl}/createSet/${userId}`);
       console.log("studyset:", studySetData);
-
+  
       const response = await axios.post(
         `${backendApiUrl}/createSet/${userId}`,
         { ...studySetData }
@@ -65,48 +100,11 @@ const StudySetsContextProvider = ({ children }) => {
       if (error.response) {
         console.log("Response Data from backend:", error.response.data);
       }
-
+  
       throw error;
     }
   };
-
-  // const createStudySetsAndCards = async (
-  //   userId,
-  //   title,
-  //   description,
-  //   question,
-  //   answer
-  // ) => {
-  //   try {
-  //     const response = await axios.post(
-  //       `${backendApiUrl}/createSet/${userId}`,
-  //       {
-  //         studySetData: [
-  //           {
-  //             topicTitle: moduleData.topicTitle,
-  //             title: title,
-  //             description: description,
-  //             cards: [
-  //               {
-  //                 question: question,
-  //                 answer: answer,
-  //               },
-  //             ],
-  //           },
-  //         ],
-  //       }
-  //     );
-  //     console.log("here is it", response.data);
-  //   } catch (error) {
-  //     console.error("Error creating study sets and cards:", error);
-  //     if (error.response) {
-  //       console.error("Response Status:", error.response.status);
-  //       console.error("Response Data:", error.response.data);
-  //     }
-  //     throw error;
-  //   }
-  // };
-
+  
   return (
     <StudySetsContext.Provider
       value={{

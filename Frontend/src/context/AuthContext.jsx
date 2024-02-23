@@ -21,8 +21,8 @@ const AuthContextProvider = ({ children }) => {
 
 
     
-    // const backendApiUrl = "http://localhost:3001";
-    const backendApiUrl = import.meta.env.VITE_SERVER_URL;
+    const backendApiUrl = "http://localhost:3001";
+    // const backendApiUrl = import.meta.env.VITE_SERVER_URL;
 
     const resetMessages = () => {
         setMsg("");
