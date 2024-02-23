@@ -2,7 +2,7 @@ import express from "express";
 import { addModule, addTopicToModule, getModuleInfo } from "../controllers/moduleController.js";
 import { addTopic, addStudySetToTopic, addAllStudySetsWithCardsToTopic   } from "../controllers/topicController.js";
 import { addCardToStudySet, addCardsToStudySet, addStudySet } from "../controllers/studySetController.js";
-import { addCard, getAllSets } from "../controllers/cardController.js";
+import { addCard } from "../controllers/cardController.js";
 import { createStudySetsAndCards } from "../controllers/createStudySetsAndCards.js";
 
 
@@ -20,8 +20,6 @@ router
     .patch("/studySets/:id", addCardsToStudySet)
     .patch("/addAllStudySets/:id", addAllStudySetsWithCardsToTopic)
     .post("/createSet/:userId", createStudySetsAndCards)
-    //*****just for test
-    .get("/getAllSets", getAllSets)
 
-
-export default router;    
+   
+export default router;

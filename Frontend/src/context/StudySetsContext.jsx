@@ -71,29 +71,19 @@ const StudySetsContextProvider = ({ children }) => {
   // };
   const createStudySetsAndCards = async (userId, topicTitle, title, description, cards) => {
     console.log("userid from from:", userId);
-    console.log("cards in ceratestudyset:", cards);
     try {
-      const studySetData = {
-        topicTitle: formObject.topicTitle, // Update this line
-        title: formObject.title,
-        description: formObject.description,
-        cards: formObject.cards.map((card, index) => ({
-          card: {
-            question: card.question,
-            answer: card.answer,
-          },
-          status: "not studied",
-        })),
-  
-      
+      const savedStudySets = {
+        topicTitle: topicTitle,
+        title: title,
+        description: description,
+        cards: cards.map(card => ({
+          question: card.question,
+          answer: card.answer
+        }))
       };
-      console.log("axios url:", `${backendApiUrl}/createSet/${userId}`);
-      console.log("studyset:", studySetData);
-  
-      const response = await axios.post(
-        `${backendApiUrl}/createSet/${userId}`,
-        { ...studySetData }
-      );
+      console.log("Request Payload:", { ...savedStudySets });
+      const response = await axios.post(`${backendApiUrl}/createSet/${userId}`, { ...savedStudySets });
+      
       console.log("Study set created successfully:", response.data);
     } catch (error) {
       console.error("Error creating study sets and cards:", error);
