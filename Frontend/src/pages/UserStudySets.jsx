@@ -1,13 +1,13 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../context/AuthContext'
 import { UserStudySetsContext } from '../context/UserStudySetsContext';
 import { useNavigate } from 'react-router-dom';
-
+import UserStudySetsSearchBar from '../components/UserStudySetsSearchBar';
 
 function UserStudySets() {
     const {getUserInfo, user} = useContext(AuthContext);
     const {setStudySetId} = useContext(UserStudySetsContext);
-
+    const [searchQuery, setSearchQuery] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -51,4 +51,4 @@ function UserStudySets() {
   )
 }
 
-export default UserStudySets
+export default UserStudySets;

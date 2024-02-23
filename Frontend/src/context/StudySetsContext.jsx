@@ -15,10 +15,41 @@ const StudySetsContextProvider = ({ children }) => {
   const [description, setDescription] = useState("");
   const moduleId = "65cf67756f6a0e0ef199b5ca";
 
-  const getModuleData = async () => {
-    const response = await axios.get(`${backendApiUrl}/modules/${moduleId}`);
-    console.log(response.data);
-    setModuleData(response.data);
+
+
+    const getModuleData = async () => {
+        const response = await axios.get(`${backendApiUrl}/modules/${moduleId}`);
+        console.log(response.data);
+        setModuleData(response.data);
+    }
+
+    const addStudySetToUser = async(userId, studySetId, topicTitle) => {
+        const studySetData = {
+            topicTitle: topicTitle,
+            studySetId: studySetId, 
+            edit: "no"  
+        }
+        try {
+            await axios.patch(`${backendApiUrl}/users/${userId}`, studySetData);
+            console.log(`studySetData ${studySetData} sent to user ${userId}`);
+            alert("Study set was added to your account")
+        } catch (error) {
+            console.log("error while logging in:", error);
+            alert("Study set already exists in your account")
+        }
+
+    }
+
+    return (
+        <StudySetsContext.Provider
+            value={{
+                getModuleData, moduleData, studySetId, setStudySetId, topicId, setTopicId, addStudySetToUser,
+            }}
+        >
+            {children}
+        </StudySetsContext.Provider>
+    );
+
 }
 
   const addStudySetToUser = async (userId, studySetId, topicTitle) => {
@@ -130,6 +161,6 @@ const StudySetsContextProvider = ({ children }) => {
       {children}
     </StudySetsContext.Provider>
   );
-};
+
 
 export { StudySetsContext, StudySetsContextProvider };

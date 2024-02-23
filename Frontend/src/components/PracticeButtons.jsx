@@ -14,7 +14,6 @@ function PracticeButtons() {
     const currentCard = currentCardsSet[currentIndex];
     const currentCardId = currentCard?._id;
 
-
     useEffect(() => {
         getUserInfo();
     }, [])
