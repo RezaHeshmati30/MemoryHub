@@ -5,15 +5,18 @@ import { AuthContext } from '../context/AuthContext';
 import StudySetsSearchBar from '../components/StudySetsSearchBar';
 
 function StudySets() {
-  const {getModuleData, moduleData, setStudySetId, setTopicId, addStudySetToUser} = useContext(StudySetsContext);
-  const {hasToken, getUserInfo, user} = useContext(AuthContext);
-
+  const { getModuleData, moduleData, setStudySetId, setTopicId, addStudySetToUser } = useContext(StudySetsContext);
+  const { hasToken, getUserInfo, user, setShowLoginForm, setShowSignUpForm } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
     getModuleData();
     getUserInfo();
-  }, [])
+    setShowLoginForm(false);
+    setShowSignUpForm(false);
+  }, []);
+
+  const [searchQuery, setSearchQuery] = useState('');
 
   const onClickHandler = (topicId, studySetId) => {
     navigate(`/studySet/${topicId}/${studySetId}`);
@@ -56,4 +59,4 @@ function StudySets() {
   );
 }
 
-export default StudySets
+export default StudySets;

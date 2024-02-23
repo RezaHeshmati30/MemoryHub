@@ -29,13 +29,17 @@ export const postLoginController = async (req, res) => {
 
         const cookieOptions = {
             httpOnly: true, 
-            maxAge: expiresInMs
+            maxAge: expiresInMs,
+            sameSite: process.env.NODE_ENV === "production" ? "None": "Lax",
+            secure: process.env.NODE_ENV === "production"
         }
 
         res.cookie('jwt', token, cookieOptions);
 
         const options = {
-            maxAge: expiresInMs
+            maxAge: expiresInMs,
+            sameSite: process.env.NODE_ENV === "production" ? "None": "Lax",
+            secure: process.env.NODE_ENV === "production"
         };
         const payload = {
             expires: expiresInDate.toISOString(), 

@@ -20,12 +20,8 @@ const AuthContextProvider = ({ children }) => {
   const [isCreateCardsClicked, setIsCreateCardsClicked] = useState(false);
   const [userId, setUserId] = useState("");
 
-  const backendApiUrl = "http://localhost:3001";
-
-  const resetMessages = () => {
-    setMsg("");
-    setError("");
-  };
+  // const backendApiUrl = "http://localhost:3001";
+  const backendApiUrl = import.meta.env.VITE_SERVER_URL;
 
   const setErrorMessages = (error) => {
     if (error.response) {
@@ -186,7 +182,8 @@ const AuthContextProvider = ({ children }) => {
         getUserInfo,
         isCreateCardsClicked,
         setIsCreateCardsClicked,
-        userId, setUserId
+        userId,
+        setUserId,
       }}
     >
       {children}
