@@ -6,7 +6,8 @@ const StudySetsContext = createContext();
 
 const StudySetsContextProvider = ({ children }) => {
     const [moduleData, setModuleData] = useState({});
-    const backendApiUrl = "http://localhost:3001";
+    // const backendApiUrl = "http://localhost:3001";
+    const backendApiUrl = import.meta.env.VITE_SERVER_URL;
     const moduleId = "65cf67756f6a0e0ef199b5ca";
     const [studySetId, setStudySetId] = useState("");
     const [topicId, setTopicId] = useState("");
