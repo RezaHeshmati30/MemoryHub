@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose";
 
 const StudySetSchema = new mongoose.Schema({
   title: {
@@ -6,9 +6,18 @@ const StudySetSchema = new mongoose.Schema({
     unique: true,
   },
   description: { type: String },
-  cards: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Card' }],
-})
+  cards: [{ type: mongoose.Schema.Types.ObjectId, ref: "Card" }]
+ 
+});
 
-const StudySetModel = mongoose.model('StudySet', StudySetSchema)
+const StudySetModel = mongoose.model("StudySet", StudySetSchema);
+//having error during adding title:
+StudySetModel.collection.dropIndexes((err, result) => {
+  if (err) {
+    console.error("Error dropping indexes:", err);
+  } else {
+    console.log("Indexes dropped successfully:", result);
+  }
+});
 
-export default StudySetModel
+export default StudySetModel;

@@ -10,7 +10,7 @@ function PracticeButtons() {
     const {currentIndex, backendApiUrl, handleNextCard} = useContext(UserStudySetsContext);
     const navigate = useNavigate();
 
-    const currentCardsSet = user?.savedStudySets?.filter(studySet => studySet._id === id)[0].cards || [];
+    const currentCardsSet = user?.savedStudySets?.filter(studySet => studySet?._id === id)[0]?.cards || [];
     const currentCard = currentCardsSet[currentIndex];
     const currentCardId = currentCard?._id;
     console.log("CurrentCard ID:", currentCardId)

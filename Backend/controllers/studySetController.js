@@ -7,7 +7,9 @@ export const addStudySet = async(req, res) => {
     try {
         const newStudySet = new StudySetModel(req.body);
         await newStudySet.save();
-        res.status(201).send('new StudySet added');
+       
+        res.status(201).send('new StudySet added'); 
+        console.log(newStudySet)
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
