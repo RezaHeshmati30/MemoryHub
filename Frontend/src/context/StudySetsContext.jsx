@@ -15,8 +15,8 @@ const StudySetsContextProvider = ({ children }) => {
   const [description, setDescription] = useState("");
   const moduleId = "65cf67756f6a0e0ef199b5ca";
 
-     const backendApiUrl = "http://localhost:3001";
-  //  const backendApiUrl = import.meta.env.VITE_SERVER_URL;
+  //   const backendApiUrl = "http://localhost:3001";
+    const backendApiUrl = import.meta.env.VITE_SERVER_URL;
 
     const getModuleData = async () => {
         const response = await axios.get(`${backendApiUrl}/modules/${moduleId}`);
@@ -84,7 +84,7 @@ const StudySetsContextProvider = ({ children }) => {
       console.log("Request Payload:", { ...savedStudySets });
       const response = await axios.post(`${backendApiUrl}/createSet/${userId}`, { ...savedStudySets });
       
-      console.log("Study set created successfully:", response.data);
+      //console.log("Study set created successfully:", response.data);
     } catch (error) {
       console.error("Error creating study sets and cards:", error);
       if (error.response) {

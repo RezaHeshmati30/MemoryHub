@@ -224,41 +224,57 @@
 import StudySetModel from "../models/StudySetModel.js";
 import CardModel from "../models/CardModel.js";
 import UserModel from "../models/UserModel.js";
+import TopicModel from "../models/TopicModel.js";
 
 const createStudySetsAndCards = async (req, res) => {
   try {
     const userId = req.params.userId;
     const { topicTitle, title, description, cards } = req.body;
 
-    // Check if the user exists
     const user = await UserModel.findById(userId);
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     } else if (!Array.isArray(cards) || cards.length === 0) {
-      return res.status(400).json({ error: "Invalid format for flashcards. Expecting a non-empty array." });
+      return res
+        .status(400)
+        .json({
+          error: "Invalid format for flashcards. Expecting a non-empty array.",
+        });
     }
 
     try {
       // Save each card to CardModel
-      const savedCards = await Promise.all(cards.map(async (cardData) => {
-        const newCard = new CardModel(cardData);
-        return await newCard.save();
-      }));
+      const savedCards = await Promise.all(
+        cards.map(async (cardData) => {
+          const newCard = new CardModel(cardData);
+          return await newCard.save();
+        })
+      );
 
-      // Save StudySet with card references
+     
       const newStudySet = new StudySetModel({
         title,
         description,
-        cards: savedCards.map(card => card._id),
+        cards: savedCards.map((card) => card._id),
       });
 
       const savedStudySet = await newStudySet.save();
+      const existingTopic = await TopicModel.findOne({ title: topicTitle });
+      if (existingTopic) {
+        existingTopic.studySets.push(savedStudySet._id);
+        await existingTopic.save();
+      } else {
+        const newTopic = new TopicModel({
+          title: topicTitle,
+          studySets: [savedStudySet._id],
+        });
+        await newTopic.save();
+      }
 
-      // Associate StudySet with the User
       user.savedStudySets.push({
         topicTitle,
         studySet: savedStudySet._id,
-        cards: savedCards.map(card => ({
+        cards: savedCards.map((card) => ({
           card: card._id,
           question: card.question,
           answer: card.answer,
@@ -279,7 +295,9 @@ const createStudySetsAndCards = async (req, res) => {
     } catch (error) {
       console.error("Error in saving study set:", error);
       if (error.code === 11000) {
-        return res.status(400).json({ error: "StudySet with the given title already exists." });
+        return res
+          .status(400)
+          .json({ error: "StudySet with the given title already exists." });
       } else {
         return res.status(500).json({ error: "Internal server error" });
       }

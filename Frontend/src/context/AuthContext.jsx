@@ -20,8 +20,8 @@ const AuthContextProvider = ({ children }) => {
   const [isCreateCardsClicked, setIsCreateCardsClicked] = useState(false);
   const [userId, setUserId] = useState("");
 
-  const backendApiUrl = "http://localhost:3001";
-
+  //const backendApiUrl = "http://localhost:3001";
+  const backendApiUrl = import.meta.env.VITE_SERVER_URL;
   const resetMessages = () => {
     setMsg("");
     setError("");
