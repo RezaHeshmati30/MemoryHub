@@ -12,16 +12,20 @@ function CreateSets() {
     setImage,
     question,
     setQuestion,
-    setTitle,
-    setDescription,
+    setTitle,useParams
+    
   } = useContext(StudySetsContext);
   const { userId, getUserInfo } = useContext(AuthContext);
   const [lines, setLines] = useState([1]);
   const navigate = useNavigate();
+  const { studySetId } = useParams(); 
 
   useEffect(() => {
     getUserInfo();
-  }, [userId]);
+    if (studySetId) {
+      getModuleData(studySetId);
+    }
+  }, [userId, studySetId])
 
   const handleCreateSets = async (e) => {
     e.preventDefault();
@@ -50,10 +54,11 @@ function CreateSets() {
        
         console.log(`Card ${i + 1}:`, formObject.cards[i]);
       }
-
       console.log("formObject.cards", formObject.cards[0].card);
 
-      // Ensure formObject is defined before calling createStudySetsAndCards
+      if (studySetId) {
+        updateStudySet(userId, studySetId, formObject);
+      } 
       if (formObject) {
         createStudySetsAndCards(
           userId,

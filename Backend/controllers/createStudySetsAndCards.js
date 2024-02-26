@@ -226,7 +226,7 @@ import CardModel from "../models/CardModel.js";
 import UserModel from "../models/UserModel.js";
 import TopicModel from "../models/TopicModel.js";
 
-const createStudySetsAndCards = async (req, res) => {
+export const createStudySetsAndCards = async (req, res) => {
   try {
     const userId = req.params.userId;
     const { topicTitle, title, description, cards } = req.body;
@@ -309,4 +309,111 @@ const createStudySetsAndCards = async (req, res) => {
   }
 };
 
-export { createStudySetsAndCards };
+///***this is good till /userId/studySetId */
+// export const editCreatedCard = async (req, res) => {
+//   try {
+//     const userId = req.params.userId;
+//     const studySetId = req.params.studySetId; // Extract studySetId from route parameters
+//     const { updatedData } = req.body;
+
+//     const user = await UserModel.findById(userId);
+//     if (!user) {
+//       return res.status(404).json({ error: "User not found" });
+//     }
+
+//     const studySet = await StudySetModel.findById(studySetId);
+//     if (!studySet) {
+//       return res.status(404).json({ error: "Study set not found" });
+//     }
+
+//     Object.assign(studySet, updatedData);
+
+//     await studySet.save();
+
+//     res.status(200).json({
+//       message: "Study set updated successfully",
+//       updatedStudySet: studySet,
+//     });
+//   } catch (error) {
+//     console.error("Error in editing study set:", error);
+//     return res.status(500).json({ error: "Internal server error" });
+//   }
+// };
+///***working good but doenst show the question and answer */
+// export const editCreatedCard = async (req, res) => {
+//   try {
+//     const userId = req.params.userId;
+//     const studySetId = req.params.studySetId;
+//     const cardId = req.params.cardId; // Extract cardId from route parameters
+//     const { updatedData } = req.body;
+
+//     const user = await UserModel.findById(userId);
+//     if (!user) {
+//       return res.status(404).json({ error: "User not found" });
+//     }
+
+//     const studySet = await StudySetModel.findById(studySetId);
+//     if (!studySet) {
+//       return res.status(404).json({ error: "Study set not found" });
+//     }
+
+//     const cardIndex = studySet.cards.findIndex(card => card._id.toString() === cardId);
+//     if (cardIndex === -1) {
+//       return res.status(404).json({ error: "Card not found in study set" });
+//     }
+
+//     // Update card fields with the provided updatedData
+//     Object.assign(studySet.cards[cardIndex], updatedData);
+
+//     await studySet.save();
+
+//     res.status(200).json({
+//       message: "Card updated successfully",
+//       updatedCard: studySet.cards[cardIndex],
+//     });
+//   } catch (error) {
+//     console.error("Error in editing card:", error);
+//     return res.status(500).json({ error: "Internal server error" });
+//   }
+// };
+
+export const editCreatedCard = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const studySetId = req.params.studySetId;
+    const cardId = req.params.cardId;
+    const { updatedData } = req.body;
+
+    const user = await UserModel.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const studySet = await StudySetModel.findById(studySetId);
+    if (!studySet) {
+      return res.status(404).json({ error: "Study set not found" });
+    }
+
+    const cardIndex = studySet.cards.findIndex(card => card._id.toString() === cardId);
+    if (cardIndex === -1) {
+      return res.status(404).json({ error: "Card not found in study set" });
+    }
+
+    // Update card fields with the provided updatedData
+    Object.assign(studySet.cards[cardIndex], updatedData);
+
+    // Save the study set to persist the changes
+    await studySet.save();
+
+    // Fetch the updated card from the database
+    const updatedCard = await CardModel.findById(cardId);
+
+    res.status(200).json({
+      message: "Card updated successfully",
+      updatedCard,
+    });
+  } catch (error) {
+    console.error("Error in editing card:", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+};

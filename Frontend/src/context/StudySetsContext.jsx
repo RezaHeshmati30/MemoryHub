@@ -93,8 +93,22 @@ const StudySetsContextProvider = ({ children }) => {
   
       throw error;
     }
+    
   };
-  
+  const editStudySet = async (userId, studySetId, cardId, updatedData) => {
+    try {
+      const response = await axios.patch(`${backendApiUrl}/editSet/${userId}/${studySetId}/${cardId}`, { updatedData });
+      console.log("Card in study set updated successfully!", response.data);
+    } catch (error) {
+      console.error("Error updating card in study set:", error);
+      if (error.response) {
+        console.log("Response Data from backend:", error.response.data);
+      }
+
+      throw error;
+    }
+  };
+
   return (
     <StudySetsContext.Provider
       value={{
@@ -116,6 +130,7 @@ const StudySetsContextProvider = ({ children }) => {
         setTitle,
         description,
         setDescription,
+        editStudySet
       }}
     >
       {children}

@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
 
 function EditStudySet() {
   return (
-    <div>EditStudySet</div>
-  )
+    <>
+      <h1>EditStudySet</h1>
+      <EditStudySet />
+    </>
+  );
 }
 
-export default EditStudySet
+export default EditStudySet;
