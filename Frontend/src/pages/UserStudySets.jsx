@@ -5,14 +5,23 @@ import { useNavigate } from 'react-router-dom';
 import UserStudySetsSearchBar from '../components/UserStudySetsSearchBar';
 
 function UserStudySets() {
-    const {getUserInfo, user} = useContext(AuthContext);
-    const {setStudySetId} = useContext(UserStudySetsContext);
+    const {getUserInfo, user, savedStudySets, setSavedStudySets} = useContext(AuthContext);
+    const {setStudySetId, deleteSavedStudySet} = useContext(UserStudySetsContext);
     const [searchQuery, setSearchQuery] = useState('');
     const navigate = useNavigate();
+    
 
     useEffect(() => {
         getUserInfo();
     }, [])
+
+    useEffect(() => {
+        getUserInfo();
+    }, [savedStudySets])
+
+   
+
+    const userId = user?._id;
 
     const onClickHandler = (id) => {
         setStudySetId(id);
@@ -23,11 +32,25 @@ function UserStudySets() {
       studySet?.studySet?.title?.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
+    const handleDeleteStudySet = async (studySetId) => {
+        try {
+            await deleteSavedStudySet(userId, studySetId);
+            setSavedStudySets(prevFilteredSets =>
+                prevFilteredSets.filter(set => set._id !== studySetId)
+            );
+        } catch (error) {
+            console.error('Error deleting study set:', error);
+        }
+    };
+
     return (
-        <section className='flex flex-col gap-[20px]'>
+        <section className='flex flex-col gap-[20px] p-[30px]'>
             <h2>User Study Sets Page</h2>
             <h3>Study Sets</h3>
-            <UserStudySetsSearchBar value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+            <div className='flex justify-center'>
+                <UserStudySetsSearchBar value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+            </div>
+            
             <ul className='flex flex-col gap-[15px]'>
                 {Object.entries(
                     (filteredStudySets || []).reduce((groups, studySet) => {
@@ -39,13 +62,16 @@ function UserStudySets() {
                         return groups;
                     }, {}) || {}
                 ).map(([topicTitle, studySetsUnderTopic]) => (
-                    <li key={topicTitle}>
+                    <li className='' key={topicTitle}>
                         <h3>{topicTitle}</h3>
-                        <ul>
+                        <ul className='flex flex-col gap-[20px]'>
                             {studySetsUnderTopic.map(studySet => (
-                                <li key={studySet._id} className='border-[1px] border-gray-400 cursor-pointer' onClick={() => onClickHandler(studySet._id, topicTitle)}>
-                                    <p>Title: {studySet.studySet.title}</p>
-                                    <p>Description: {studySet.studySet.description}</p>
+                                <li key={studySet._id} className='border-[1px] rounded-[4px] border-gray-400 cursor-pointer p-[10px] flex gap-[20px] w-[75%]'>
+                                    <div onClick={() => onClickHandler(studySet._id, topicTitle)}>
+                                        <p>Title: {studySet.studySet.title}</p>
+                                        <p>Description: {studySet.studySet.description}</p>
+                                    </div>
+                                    <button onClick={() => handleDeleteStudySet(studySet._id)}>X</button>
                                 </li>
                             ))}
                         </ul>

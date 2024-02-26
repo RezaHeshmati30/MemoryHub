@@ -19,8 +19,7 @@ const AuthContextProvider = ({ children }) => {
   const [lastName, setLastName] = useState("");
   const [isCreateCardsClicked, setIsCreateCardsClicked] = useState(false);
   const [userId, setUserId] = useState("");
-  const [userStudySets, setUserStudySets] = useState([]);
-
+  const [savedStudySets, setSavedStudySets] = useState([]);
 
   //const backendApiUrl = "http://localhost:3001";
   const backendApiUrl = import.meta.env.VITE_SERVER_URL;
@@ -148,8 +147,9 @@ const AuthContextProvider = ({ children }) => {
       });
       setUser(response.data);
       setUserId(response.data._id);
-      setUserTopic(response.data.topic);
+      setSavedStudySets(response.data.savedStudySets);
 
+      //console.log("user response", response.data);
     } catch (error) {
       setErrorMessages(error);
     }
@@ -189,11 +189,8 @@ const AuthContextProvider = ({ children }) => {
         getUserInfo,
         isCreateCardsClicked,
         setIsCreateCardsClicked,
-        userId,
-        setUserId,
-        userStudySets,
-        setUserStudySets,
-        
+        userId, setUserId,
+        savedStudySets, setSavedStudySets
       }}
     >
       {children}
