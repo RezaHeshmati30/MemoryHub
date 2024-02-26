@@ -101,7 +101,8 @@ export const addStudySetToUser = async (req, res) => {
           
           res.status(200).send("Study set deleted successfully" );
         } catch (error) {
-          throw error;
+          console.error("Error retrieving user information:", error);
+          res.status(500).send("Internal Server Error"); 
         }
       }
       
