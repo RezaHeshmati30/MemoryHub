@@ -1,8 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { StudySetsContext } from "../context/StudySetsContext";
 import { AuthContext } from "../context/AuthContext";
-import "./spinner.css";
 
 function CreateSets() {
   const {
@@ -15,22 +14,16 @@ function CreateSets() {
     setQuestion,
     setTitle,
     setDescription,
-    loading,
-    setLoading,
   } = useContext(StudySetsContext);
   const { userId, getUserInfo } = useContext(AuthContext);
   const [lines, setLines] = useState([1]);
   const navigate = useNavigate();
-  const { studySetId } = useParams();
 
   useEffect(() => {
     getUserInfo();
-    if (studySetId) {
-      getModuleData(studySetId);
-    }
-  }, [userId, studySetId]);
+  }, [userId]);
 
-  const handleCreateSets = async (e) => {
+  const editHandler = async (e) => {
     e.preventDefault();
     try {
       console.log("User ID:", userId);
@@ -42,29 +35,25 @@ function CreateSets() {
         description: formData.get("description"),
         cards: [],
       };
-
+      
       for (let i = 0; i < lines.length; i++) {
         const question = formData.get(`question${i}`);
         const answer = formData.get(`answer${i}`);
         const imageFile = formData.get(`image${i}`);
-
+      
         const image = await readImageAsBase64(imageFile);
         formObject.cards.push({
           question,
           answer,
           image,
         });
-    
-        if (!loading) {
-          console.log("Loading...");
-        }
+       
         console.log(`Card ${i + 1}:`, formObject.cards[i]);
       }
+
       console.log("formObject.cards", formObject.cards[0].card);
 
-      if (studySetId) {
-        updateStudySet(userId, studySetId, formObject);
-      }
+      // Ensure formObject is defined before calling createStudySetsAndCards
       if (formObject) {
         createStudySetsAndCards(
           userId,
@@ -76,6 +65,7 @@ function CreateSets() {
 
         console.log("Study sets and cards created successfully!", formObject);
 
+        // Clear form fields
         setQuestion([""]);
         setAnswer([""]);
         setImage([""]);
@@ -121,7 +111,7 @@ function CreateSets() {
     <div className='flex justify-center items-center '>
       <form
         className='bg-pink-200 shadow-md rounded px-8 pt-6 pb-8 mb-4'
-        onSubmit={handleCreateSets}
+        onSubmit={editHandler}
       >
         <h2 className='text-center text-lg font-bold mb-4'>
           Create a New Study Set
@@ -303,16 +293,7 @@ function CreateSets() {
             className='bg-green-500 hover:bg-green-700 text-white font-bold py-4 px-8 rounded-lg focus:outline-none focus:shadow-outline'
             type='submit'
           >
-            <div className='flex gap-1'>
-              Create new Set
-              {!loading ? null : (
-                <>
-                  <svg viewBox='25 25 50 50'>
-                    <circle r='20' cy='50' cx='50'></circle>
-                  </svg>
-                </>
-              )}
-            </div>
+            Create new Set
           </button>
         </div>
       </form>

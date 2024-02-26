@@ -37,7 +37,7 @@ const StudySetsContextProvider = ({ children }) => {
       alert("Study set already exists in your account");
     }
   };
-  ////?answer with Michael====>
+ 
   // const createStudySetsAndCards = async (userId, title, description, cards) => {
   //   console.log("userid from from:", userId);
   //   console.log("cards in ceratestudyset:", cards);
