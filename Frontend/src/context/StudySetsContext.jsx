@@ -4,7 +4,6 @@ import axios from "axios";
 const StudySetsContext = createContext();
 
 const StudySetsContextProvider = ({ children }) => {
-
   const [moduleData, setModuleData] = useState({});
   const [studySetId, setStudySetId] = useState("");
   const [topicId, setTopicId] = useState("");
@@ -13,16 +12,17 @@ const StudySetsContextProvider = ({ children }) => {
   const [image, setImage] = useState([]);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [loading, setLoading] = useState(false);
   const moduleId = "65cf67756f6a0e0ef199b5ca";
 
   //   const backendApiUrl = "http://localhost:3001";
-    const backendApiUrl = import.meta.env.VITE_SERVER_URL;
+  const backendApiUrl = import.meta.env.VITE_SERVER_URL;
 
-    const getModuleData = async () => {
-        const response = await axios.get(`${backendApiUrl}/modules/${moduleId}`);
-        console.log(response.data);
-        setModuleData(response.data);
-    }
+  const getModuleData = async () => {
+    const response = await axios.get(`${backendApiUrl}/modules/${moduleId}`);
+    console.log(response.data);
+    setModuleData(response.data);
+  };
 
   const addStudySetToUser = async (userId, studySetId, topicTitle) => {
     const studySetData = {
@@ -37,7 +37,7 @@ const StudySetsContextProvider = ({ children }) => {
       alert("Study set already exists in your account");
     }
   };
-////?answer with Michael====>
+  ////?answer with Michael====>
   // const createStudySetsAndCards = async (userId, title, description, cards) => {
   //   console.log("userid from from:", userId);
   //   console.log("cards in ceratestudyset:", cards);
@@ -69,35 +69,46 @@ const StudySetsContextProvider = ({ children }) => {
   //     throw error;
   //   }
   // };
-  const createStudySetsAndCards = async (userId, topicTitle, title, description, cards) => {
+  const createStudySetsAndCards = async (
+    userId,
+    topicTitle,
+    title,
+    description,
+    cards
+  ) => {
     console.log("userid from from:", userId);
     try {
       const savedStudySets = {
         topicTitle: topicTitle,
         title: title,
         description: description,
-        cards: cards.map(card => ({
-          question: card.question,
-          answer: card.answer
-        }))
+        cards: cards.map((eachCard) => ({
+          question: eachCard.question,
+          answer: eachCard.answer,
+        })),
       };
       console.log("Request Payload:", { ...savedStudySets });
-      const response = await axios.post(`${backendApiUrl}/createSet/${userId}`, { ...savedStudySets });
-      
+      const response = await axios.post(
+        `${backendApiUrl}/createSet/${userId}`,
+        { ...savedStudySets }
+      );
+      setLoading(true);
       //console.log("Study set created successfully:", response.data);
     } catch (error) {
       console.error("Error creating study sets and cards:", error);
       if (error.response) {
         console.log("Response Data from backend:", error.response.data);
       }
-  
+
       throw error;
     }
-    
   };
   const editStudySet = async (userId, studySetId, cardId, updatedData) => {
     try {
-      const response = await axios.patch(`${backendApiUrl}/editSet/${userId}/${studySetId}/${cardId}`, { updatedData });
+      const response = await axios.patch(
+        `${backendApiUrl}/editSet/${userId}/${studySetId}/${cardId}`,
+        { updatedData }
+      );
       console.log("Card in study set updated successfully!", response.data);
     } catch (error) {
       console.error("Error updating card in study set:", error);
@@ -130,12 +141,14 @@ const StudySetsContextProvider = ({ children }) => {
         setTitle,
         description,
         setDescription,
-        editStudySet
+        editStudySet,
+        loading,
+        setLoading,
       }}
     >
       {children}
     </StudySetsContext.Provider>
   );
-    }
+};
 
 export { StudySetsContext, StudySetsContextProvider };
