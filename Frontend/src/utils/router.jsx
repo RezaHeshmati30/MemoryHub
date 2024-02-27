@@ -13,6 +13,7 @@ import EditStudySet from "../pages/EditStudySet";
 import Practice from "../pages/Practice";
 import EndPractice from "../pages/EndPractice";
 import LearnCards from "../pages/LearnCards";
+import WriteMode from "../pages/WriteMode";
 
 
 
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
       { path: '/user/studySets', element: <UserStudySets />},
       { path: '/user/studySet/:id', element: <UserStudySet />},
       { path: '/user/studySet/learn-cards/:id', element: <LearnCards />},
+      { path: '/user/study-set/write-mode/:id', element:<WriteMode />},
       { path: '/studySets', element: <StudySets />},
       { path: '/studySet/:topicId/:studySetId', element: <StudySet />},
       { path: '/createSet/', element: <CreateSets />},
