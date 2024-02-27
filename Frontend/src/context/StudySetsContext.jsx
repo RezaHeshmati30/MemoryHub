@@ -20,7 +20,7 @@ const StudySetsContextProvider = ({ children }) => {
 
   const getModuleData = async () => {
     const response = await axios.get(`${backendApiUrl}/modules/${moduleId}`);
-    console.log(response.data);
+   console.log(response.data);
     setModuleData(response.data);
   };
 
@@ -103,11 +103,12 @@ const StudySetsContextProvider = ({ children }) => {
       throw error;
     }
   };
+
   const editStudySet = async (userId, studySetId, cardId, updatedData) => {
     try {
       const response = await axios.patch(
         `${backendApiUrl}/editSet/${userId}/${studySetId}/${cardId}`,
-        { updatedData }
+        { updatedData: updatedData }  
       );
       console.log("Card in study set updated successfully!", response.data);
     } catch (error) {
@@ -115,11 +116,11 @@ const StudySetsContextProvider = ({ children }) => {
       if (error.response) {
         console.log("Response Data from backend:", error.response.data);
       }
-
+  
       throw error;
     }
   };
-
+  
   return (
     <StudySetsContext.Provider
       value={{

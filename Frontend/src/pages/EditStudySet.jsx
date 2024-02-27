@@ -3,95 +3,85 @@ import { useNavigate } from "react-router-dom";
 import { StudySetsContext } from "../context/StudySetsContext";
 import { AuthContext } from "../context/AuthContext";
 
+
 function EditStudySet() {
-  const {
-    createStudySetsAndCards,
-    answer,
-    setAnswer,
-    image,
-    setImage,
-    question,
-    setQuestion,
-    setTitle,
-    setDescription,
-    studySetId
-  } = useContext(StudySetsContext);
-  const { userId, getUserInfo } = useContext(AuthContext);
+  const { editStudySet, studySetId, setTitle, setDescription, setLoading } =
+    useContext(StudySetsContext);
+  const { userId, getUserInfo, userStudySets, setUserStudySets } =
+    useContext(AuthContext);
+  const [formState, setFormState] = useState({
+    topic: "",
+    title: "",
+    description: "",
+    cards: [{ question: "", answer: "" }],
+  });
   const [lines, setLines] = useState([1]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    getUserInfo();
-    if (studySetId) {
-      // If studySetId exists, fetch and set the data for editing
-      getStudySetData(studySetId);
-    }
-  }, [userId, studySetId]);
+    const fetchData = async () => {
+      try {
+        // Assuming getUserInfo returns a promise
+        const user = await getUserInfo();  // Make sure to await the user info
+  
+        // Assuming userId is available in the user object
+        const studySet = user.studySets.find((set) => set._id === studySetId);
+  
+        if (!studySet) {
+          console.error("Study set not found for the given ID");
+          return;
+        }
+  
+        setFormState({
+          topic: studySet.topic,
+          title: studySet.title,
+          description: studySet.description,
+          cards: studySet.cards || [{ question: "", answer: "" }],
+        });
+  
+      } catch (error) {
+        console.error("Error fetching study set:", error);
+      }
+    };
+  
+    fetchData();
+  }, [getUserInfo, studySetId]);
 
-  const handleCreateSets = async (e) => {
+  
+  const handleEditSets = async (e) => {
     e.preventDefault();
     try {
-      console.log("User ID:", userId);
-      const formData = new FormData(e.target);
-
-      const formObject = {
-        topicTitle: formData.get("topic"),
-        title: formData.get("title"),
-        description: formData.get("description"),
+      const updatedData = {
+        title: e.target.title.value,
+        description: e.target.description.value,
         cards: [],
       };
-      
-      for (let i = 0; i < lines.length; i++) {
-        const question = formData.get(`question${i}`);
-        const answer = formData.get(`answer${i}`);
-        const imageFile = formData.get(`image${i}`);
-      
-        const image = await readImageAsBase64(imageFile);
-        formObject.cards.push({
-          question,
-          answer,
-          image,
-        });
-       
-        console.log(`Card ${i + 1}:`, formObject.cards[i]);
+
+      for (let index = 0; index < lines.length; index++) {
+        const card = {
+          question: e.target[`question${index}`].value,
+          answer: e.target[`answer${index}`].value,
+        };
+        updatedData.cards.push(card);
       }
-      console.log("formObject.cards", formObject.cards[0].card);
 
-      if (formObject) {
-        createStudySetsAndCards(
-          userId,
-          formObject.topicTitle,
-          formObject.title,
-          formObject.description,
-          formObject.cards
-        );
-
-        console.log("Study sets and cards created successfully!", formObject);
-
-        navigate("/user/studySets");
-      } else {
-        console.error("formObject is not defined.");
-      }
+      await editStudySet(userId, studySetId, updatedData);
+      console.log("Study Set updated successfully!");
     } catch (error) {
-      console.error("Error creating study sets and cards:", error);
+      console.error("Error updating study set:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const readImageAsBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      if (file) {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onloadend = () => {
-          resolve(reader.result);
-        };
-        reader.onerror = (error) => {
-          reject(error);
-        };
-      } else {
-        resolve(null);
-      }
-    });
+  const handleInputChange = (index, field, value) => {
+    const updatedCards = [...formState.cards];
+    updatedCards[index][field] = value;
+
+    setFormState((prevState) => ({
+      ...prevState,
+      cards: updatedCards,
+    }));
   };
 
   const addLine = () => {
@@ -100,19 +90,22 @@ function EditStudySet() {
   };
 
   const removeLine = (index) => {
-    const newLines = lines.filter((line, i) => i !== index);
-    setLines(newLines);
+    const updatedCards = formState.cards.filter((_, i) => i !== index);
+
+    setFormState((prevState) => ({
+      ...prevState,
+      cards: updatedCards,
+    }));
+    setLines(lines.filter((_, i) => i !== index));
   };
 
   return (
     <div className='flex justify-center items-center '>
       <form
         className='bg-blue-200 shadow-md rounded px-8 pt-6 pb-8 mb-4'
-        onSubmit={handleCreateSets}
+        onSubmit={handleEditSets}
       >
-        <h2 className='text-center text-lg font-bold mb-4'>
-        Edit Study Set
-        </h2>
+        <h2 className='text-center text-lg font-bold mb-4'>Edit Study Set</h2>
         <div className='mb-4'>
           <label
             className='block text-gray-700 text-sm font-bold mb-2'
@@ -124,8 +117,12 @@ function EditStudySet() {
             className='shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
             id='topic'
             type='text'
-            placeholder='Enter title'
+            placeholder='Enter topic'
             name='topic'
+            value={formState.topic}
+            onChange={(e) =>
+              setFormState({ ...formState, topic: e.target.value })
+            }
           />
         </div>
         <div className='mb-4'>
@@ -141,6 +138,10 @@ function EditStudySet() {
             type='text'
             placeholder='Enter title'
             name='title'
+            value={formState.title}
+            onChange={(e) =>
+              setFormState({ ...formState, title: e.target.value })
+            }
           />
         </div>
         <div className='mb-6'>
@@ -155,6 +156,10 @@ function EditStudySet() {
             id='description'
             placeholder='Enter description'
             name='description'
+            value={formState.description}
+            onChange={(e) =>
+              setFormState({ ...formState, description: e.target.value })
+            }
           />
         </div>
 
@@ -175,7 +180,11 @@ function EditStudySet() {
                 id={`question${index}`}
                 type='text'
                 placeholder={`Enter question ${index + 1}`}
-                name={`question${index}`} 
+                name={`question${index}`}
+                value={formState.cards[index]?.question || ""}
+                onChange={(e) =>
+                  handleInputChange(index, "question", e.target.value)
+                }
               />
             </div>
             <div className='w-full sm:w-1/2 md:w-1/3 mb-4 px-2'>
@@ -191,6 +200,10 @@ function EditStudySet() {
                 type='text'
                 placeholder={`Enter answer ${index + 1}`}
                 name={`answer${index}`}
+                value={formState.cards[index]?.answer || ""}
+                onChange={(e) =>
+                  handleInputChange(index, "answer", e.target.value)
+                }
               />
             </div>
             <div className='w-full sm:w-1/2 md:w-1/3 mb-4 px-2'>
@@ -236,4 +249,5 @@ function EditStudySet() {
     </div>
   );
 }
+
 export default EditStudySet;
