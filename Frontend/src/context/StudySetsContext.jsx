@@ -13,6 +13,7 @@ const StudySetsContextProvider = ({ children }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
+  const [studySets, setStudySets] = useState([])
   const moduleId = "65cf67756f6a0e0ef199b5ca";
 
   //   const backendApiUrl = "http://localhost:3001";
@@ -103,20 +104,24 @@ const StudySetsContextProvider = ({ children }) => {
       throw error;
     }
   };
-
-  const editStudySet = async (userId, studySetId, cardId, updatedData) => {
+  const editStudySet = async (id, studySetId, topicId, updatedData) => {
     try {
       const response = await axios.patch(
-        `${backendApiUrl}/editSet/${userId}/${studySetId}/${cardId}`,
+        `${backendApiUrl}/editSet/${id}/${topicId}/${studySetId}`,
         { updatedData: updatedData }  
       );
+      const updatedStudySets = studySets.map((studySet) =>
+        studySet._id === studySetId ? { ...studySet, title, description, cards } : studySet
+      );
+      setStudySets(updatedStudySets);
+  
       console.log("Card in study set updated successfully!", response.data);
     } catch (error) {
-      console.error("Error updating card in study set:", error);
+      console.error("Error updating study set:", error);
       if (error.response) {
         console.log("Response Data from backend:", error.response.data);
       }
-  
+    
       throw error;
     }
   };

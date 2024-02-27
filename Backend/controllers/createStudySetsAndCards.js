@@ -92,13 +92,13 @@ export const editCreatedCard = async (req, res) => {
   const topicId = req.params.topicId;
   const { topicTitle, title, description, cards } = req.body;
   const cardsId = cards.map((eachCard) => eachCard.card);
-  console.log("cardsid:::::", cardsId);
-  console.log("cardid", cardId);
-  console.log("topicId", topicId);
-  console.log("studySetId", studySetId);
-  console.log("userId", userId);
-  console.log("cards", cards);
-  console.log(req.body);
+  // console.log("cardsid:::::", cardsId);
+  // console.log("cardid", cardId);
+  // console.log("topicId", topicId);
+  // console.log("studySetId", studySetId);
+  // console.log("userId", userId);
+  // console.log("cards", cards);
+  // console.log(req.body);
   try {
     //find the studyset and update it
     const studySet = await StudySetModel.findByIdAndUpdate(
@@ -114,7 +114,7 @@ export const editCreatedCard = async (req, res) => {
       console.error("Study set not found");
       return res.status(404).json({ error: "Study set not found" });
     }
- //find the card and update it
+ //find the card and update it, then return the updated card
     const updatedCards = await Promise.allSettled(
       cards.map(async (eachCard) => {
         const foundCard = await CardModel.findByIdAndUpdate(
@@ -136,7 +136,7 @@ export const editCreatedCard = async (req, res) => {
         return { status: "fulfilled", value: foundCard };
       })
     );
-
+//find the topic and update it
     const updatedTopic = await TopicModel.findByIdAndUpdate(
       topicId,
       {
@@ -153,26 +153,19 @@ export const editCreatedCard = async (req, res) => {
       console.error("Topic not found");
       return res.status(404).json({ error: "Topic not found" });
     }
-    console.log(
-      "savedStudySets.$[studySet].topicTitle: topicTitle",
-      `savedStudySets.$[${studySet}].topicTitle: ${topicTitle}`
-    );
+    // console.log(
+    //   "savedStudySets.$[studySet].topicTitle: topicTitle",
+    //   `savedStudySets.$[${studySet}].topicTitle: ${topicTitle}`
+    // );
     const updatedUser = await UserModel.findByIdAndUpdate(
       userId,
       {
         $set: {
           "savedStudySets.$[elem].topicTitle": topicTitle,
-          // "savedStudySets.$[studySet].topicTitle": topicTitle,
-          // "savedStudySets.$[studySet].studySetId": studySetId,
-          // "savedStudySets.$[studySet].cards": updatedCards.map((card) => ({
-          //   card: card.value._id,
-          //})),
         },
       },
       {
         arrayFilters: [{ "elem.studySet": studySet._id }],
-    
-        //arrayFilters: [{ "studySet._id": studySet._id }],
         new: true,
       }
     );

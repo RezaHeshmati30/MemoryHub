@@ -1,109 +1,125 @@
 import React, { useState, useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { StudySetsContext } from "../context/StudySetsContext";
 import { AuthContext } from "../context/AuthContext";
 
+const EditStudySet = () => {
+  const { editStudySet, studySetId } = useContext(StudySetsContext);
+  const { id } = useParams();
 
-function EditStudySet() {
-  const { editStudySet, studySetId, setTitle, setDescription, setLoading } =
-    useContext(StudySetsContext);
-  const { userId, getUserInfo, userStudySets, setUserStudySets } =
-    useContext(AuthContext);
+  const { userId, user, getUserInfo } = useContext(AuthContext);
+
+  const studySet = user?.savedStudySets?.find(
+    (studySet) => studySet._id === id
+  );
+  const cardsDefault = studySet?.cards || [];
+  //const cards = studySet?.cards.map((card) => card._id === id);
+  const hasMatchingCard = studySet?.cards.some((card) => card._id === id);
+
+  const topicSet = user?.savedStudySets?.find(
+    (studySet) => studySet._id === id
+  );
+  
+  const topicId = topicSet?._id;
+  console.log("topicId", topicId);
+
   const [formState, setFormState] = useState({
-    topic: "",
-    title: "",
-    description: "",
-    cards: [{ question: "", answer: "" }],
+    topic: studySet?.topicTitle || "",
+    title: studySet?.studySet?.title || "",
+    description: studySet?.studySet?.description || "",
+    cards: (studySet?.studySet?.cards || []).map(cardId => {
+      const CardsSameId = studySet?.cards.find(cardObj => cardObj.card._id === cardId);
+      return {
+        answer: CardsSameId?.card?.answer || "",
+        question: CardsSameId?.card?.question || "",
+      };
+    }),
   });
-  const [lines, setLines] = useState([1]);
-  const navigate = useNavigate();
+  
 
+  //?tests to see if the cards are being pulled from the database
+  console.log("studySetttttttt", studySet);
+  console.log("Initial formState:", formState);
+  console.log(
+    "cardsDefault has Q and A in it: ",
+    cardsDefault[1]?.card.question
+  );
+  console.log("Rendered formState:", formState);
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Assuming getUserInfo returns a promise
-        const user = await getUserInfo();  // Make sure to await the user info
-  
-        // Assuming userId is available in the user object
-        const studySet = user.studySets.find((set) => set._id === studySetId);
-  
-        if (!studySet) {
-          console.error("Study set not found for the given ID");
-          return;
-        }
-  
-        setFormState({
-          topic: studySet.topic,
-          title: studySet.title,
-          description: studySet.description,
-          cards: studySet.cards || [{ question: "", answer: "" }],
-        });
-  
-      } catch (error) {
-        console.error("Error fetching study set:", error);
-      }
-    };
-  
-    fetchData();
-  }, [getUserInfo, studySetId]);
+    getUserInfo();
+    console.log("cardsDefault in useEffect:", cardsDefault);
 
+    if (cardsDefault.length > 0) {
+      setFormState((prevFormState) => ({
+        ...prevFormState,
+        cards: cardsDefault.map((eachCard) => ({
+          answer: eachCard?.answer,
+          question: eachCard?.question,
+        })),
+        
+      }));
+    }
+  }, [id, JSON.stringify(cardsDefault)]);
+
+
+  const handleCardChange = (index, field, value) => {
+    setFormState((prevFormState) => ({
+      ...prevFormState,
+      cards: prevFormState.cards.map((card, i) =>
+        i === index ? { ...card, [field]: value } : card
+      ),
+    }));
+  };
   
-  const handleEditSets = async (e) => {
+  // const handleCardChange = (index, field, value) => {
+  //   const updatedCards = [...formState.cards];
+  //   updatedCards[index] = {
+  //     ...updatedCards[index],
+  //     [field]: value,
+  //   };
+  //   setFormState({
+  //     ...formState,
+  //     cards: updatedCards,
+  //   });
+  // };
+
+  const handleAddCard = () => {
+    setFormState({
+      ...formState,
+      cards: [...formState.cards, { question: "", answer: "" }],
+    });
+  };
+
+  const handleRemoveCard = (index) => {
+    const updatedCards = [...formState.cards];
+    updatedCards.splice(index, 1);
+    setFormState({
+      ...formState,
+      cards: updatedCards,
+    });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const updatedData = {
-        title: e.target.title.value,
-        description: e.target.description.value,
-        cards: [],
-      };
-
-      for (let index = 0; index < lines.length; index++) {
-        const card = {
-          question: e.target[`question${index}`].value,
-          answer: e.target[`answer${index}`].value,
-        };
-        updatedData.cards.push(card);
-      }
-
-      await editStudySet(userId, studySetId, updatedData);
-      console.log("Study Set updated successfully!");
+      await editStudySet(
+        id,
+        studySetId,
+        topicId,
+        studySet?.topic,
+        formState?.title,
+        formState?.description,
+        formState?.cards
+      );
     } catch (error) {
-      console.error("Error updating study set:", error);
-    } finally {
-      setLoading(false);
+      console.log(error.message);
     }
   };
-
-  const handleInputChange = (index, field, value) => {
-    const updatedCards = [...formState.cards];
-    updatedCards[index][field] = value;
-
-    setFormState((prevState) => ({
-      ...prevState,
-      cards: updatedCards,
-    }));
-  };
-
-  const addLine = () => {
-    const newLines = [...lines, lines.length + 1];
-    setLines(newLines);
-  };
-
-  const removeLine = (index) => {
-    const updatedCards = formState.cards.filter((_, i) => i !== index);
-
-    setFormState((prevState) => ({
-      ...prevState,
-      cards: updatedCards,
-    }));
-    setLines(lines.filter((_, i) => i !== index));
-  };
-
   return (
     <div className='flex justify-center items-center '>
       <form
         className='bg-blue-200 shadow-md rounded px-8 pt-6 pb-8 mb-4'
-        onSubmit={handleEditSets}
+        onSubmit={handleSubmit}
       >
         <h2 className='text-center text-lg font-bold mb-4'>Edit Study Set</h2>
         <div className='mb-4'>
@@ -162,79 +178,67 @@ function EditStudySet() {
             }
           />
         </div>
-
-        {lines.map((line, index) => (
-          <div
-            key={index}
-            className='flex flex-wrap justify-between mb-4 relative'
-          >
-            <div className='w-full sm:w-1/2 md:w-1/3 mb-4 px-2'>
-              <label
-                className='block text-gray-700 text-sm font-bold mb-2'
-                htmlFor={`question${index}`}
-              >
-                Question {index + 1}
-              </label>
-              <input
-                className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                id={`question${index}`}
-                type='text'
-                placeholder={`Enter question ${index + 1}`}
-                name={`question${index}`}
-                value={formState.cards[index]?.question || ""}
-                onChange={(e) =>
-                  handleInputChange(index, "question", e.target.value)
-                }
-              />
-            </div>
-            <div className='w-full sm:w-1/2 md:w-1/3 mb-4 px-2'>
-              <label
-                className='block text-gray-700 text-sm font-bold mb-2'
-                htmlFor={`answer${index}`}
-              >
-                Answer {index + 1}
-              </label>
-              <input
-                className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                id={`answer${index}`}
-                type='text'
-                placeholder={`Enter answer ${index + 1}`}
-                name={`answer${index}`}
-                value={formState.cards[index]?.answer || ""}
-                onChange={(e) =>
-                  handleInputChange(index, "answer", e.target.value)
-                }
-              />
-            </div>
-            <div className='w-full sm:w-1/2 md:w-1/3 mb-4 px-2'>
-              <label
-                className='block text-gray-700 text-sm font-bold mb-2'
-                htmlFor={`image${index}`}
-              >
-                Image {index + 1}
-              </label>
-              <input
-                className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                id={`image${index}`}
-                type='file'
-                accept='image/*'
-                name={`image${index}`}
-              />
-            </div>
-            <button
-              className='absolute right-0 top-0 mt-2 mr-2 text-red-600 hover:text-red-700 focus:outline-none'
-              type='button'
-              onClick={() => removeLine(index)}
+        {formState?.cards &&
+          formState?.cards.map((card, index) => (
+            <div
+              key={index}
+              className='flex flex-wrap justify-between mb-4 relative'
             >
-              X
-            </button>
-          </div>
-        ))}
+              <div className='w-full sm:w-1/2 md:w-1/3 mb-4 px-2'>
+                <label
+                  className='block text-gray-700 text-sm font-bold mb-2'
+                  htmlFor={`question${index}`}
+                >
+                  Question {index + 1}
+                </label>
+                <input
+                  className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                  id={`question${index}`}
+                  type='text'
+                  placeholder={`Enter question ${index + 1}`}
+                  name={`question${index}`}
+                  value={card.question}
+                  onChange={(e) =>
+                    handleCardChange(index, "question", e.target.value)
+                  }
+                />
+              </div>
+              <div className='w-full sm:w-1/2 md:w-1/3 mb-4 px-2'>
+                <label
+                  className='block text-gray-700 text-sm font-bold mb-2'
+                  htmlFor={`answer${index}`}
+                >
+                  Answer {index + 1}
+                </label>
+                <input
+                  className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                  id={`answer${index}`}
+                  type='text'
+                  placeholder={`Enter answer ${index + 1}`}
+                  name={`answer${index}`}
+                  value={card.answer}
+                  onChange={(e) =>
+                    handleCardChange(index, "answer", e.target.value)
+                  }
+                />
+              </div>
+              <div className='w-full sm:w-1/2 md:w-1/3 mb-4 px-2'>
+                {/* Add input field for image if needed */}
+              </div>
+              <button
+                className='absolute right-0 top-0 mt-2 mr-2 text-red-600 hover:text-red-700 focus:outline-none'
+                type='button'
+                onClick={() => handleRemoveCard(index)}
+              >
+                X
+              </button>
+            </div>
+          ))}
         <div className='flex justify-between'>
           <button
             className='bg-blue-900 hover:shadow-md cursor-pointer text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
             type='button'
-            onClick={addLine}
+            onClick={handleAddCard}
           >
             Add new Card
           </button>
@@ -248,6 +252,6 @@ function EditStudySet() {
       </form>
     </div>
   );
-}
+};
 
 export default EditStudySet;

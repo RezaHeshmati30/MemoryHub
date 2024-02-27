@@ -35,6 +35,7 @@ const router = createBrowserRouter([
       { path: '/studySet/endPractice/:id', element: <EndPractice />},
       { path: '/contact', element: <Contact />},
       { path: '*', element: <PageNotFound />},
+    
     ],
   },
 ]);
