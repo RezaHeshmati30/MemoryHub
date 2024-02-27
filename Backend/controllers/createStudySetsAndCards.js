@@ -83,93 +83,204 @@ export const createStudySetsAndCards = async (req, res) => {
   }
 };
 
+//!!!!!!!!!
+//!!!!!!!!!
 export const editCreatedCard = async (req, res) => {
+  const userId = req.params.userId;
+  const studySetId = req.params.studySetId;
+  const cardId = req.params.cardId;
+  const topicId = req.params.topicId;
+  const { topicTitle, title, description, cards } = req.body;
+  const cardsId = cards.map((eachCard) => eachCard.card);
+  console.log("cardsid:::::", cardsId);
+  console.log("cardid", cardId);
+  console.log("topicId", topicId);
+  console.log("studySetId", studySetId);
+  console.log("userId", userId);
+  console.log("cards", cards);
+  console.log(req.body);
   try {
-    const userId = req.params.userId;
-    const studySetId = req.params.studySetId;
-    const cardId = req.params.cardId;
-    const { updatedData } = req.body;
-
-    if (!updatedData || Object.keys(updatedData).length === 0) {
-      return res.status(400).json({ error: "No data provided for update" });
-    }
-
-    const updatedCard = await CardModel.findByIdAndUpdate(
-      cardId,
-      { $set: updatedData },
-      { new: true }
-    );
-
-    if (!updatedCard && !cardId) {
-      return res.status(404).json({ error: "Card not found" });
-    }
-
+    //find the studyset and update it
     const studySet = await StudySetModel.findByIdAndUpdate(
       studySetId,
       {
-        $set: {
-          title: updatedData.title,
-          description: updatedData.description,
-          cards: [updatedCard],
-        },
+        title: title,
+        description: description,
       },
       { new: true }
     );
 
     if (!studySet) {
+      console.error("Study set not found");
       return res.status(404).json({ error: "Study set not found" });
     }
+ //find the card and update it
+    const updatedCards = await Promise.allSettled(
+      cards.map(async (eachCard) => {
+        const foundCard = await CardModel.findByIdAndUpdate(
+          eachCard.cardId,
+          {
+            $set: {
+              question: eachCard.question,
+              answer: eachCard.answer,
+            },
+          },
+          { new: true }
+        );
 
-    await studySet.save();
-    console.log(studySet, "studySet");
-    const user = await UserModel.findByIdAndUpdate(
-      userId,
-      { $set: updatedData },
+        if (!foundCard) {
+          console.error("Card not found:", eachCard.card);
+          return { status: "rejected", reason: "Card not found" };
+        }
+
+        return { status: "fulfilled", value: foundCard };
+      })
+    );
+
+    const updatedTopic = await TopicModel.findByIdAndUpdate(
+      topicId,
+      {
+        $set: {
+          title: topicTitle,
+        },
+      },
       { new: true }
     );
 
-    if (!user) {
+    console.log("Received updatedtopicTitle:", updatedTopic);
+
+    if (!updatedTopic) {
+      console.error("Topic not found");
+      return res.status(404).json({ error: "Topic not found" });
+    }
+    console.log(
+      "savedStudySets.$[studySet].topicTitle: topicTitle",
+      `savedStudySets.$[${studySet}].topicTitle: ${topicTitle}`
+    );
+    const updatedUser = await UserModel.findByIdAndUpdate(
+      userId,
+      {
+        $set: {
+          "savedStudySets.$[elem].topicTitle": topicTitle,
+          // "savedStudySets.$[studySet].topicTitle": topicTitle,
+          // "savedStudySets.$[studySet].studySetId": studySetId,
+          // "savedStudySets.$[studySet].cards": updatedCards.map((card) => ({
+          //   card: card.value._id,
+          //})),
+        },
+      },
+      {
+        arrayFilters: [{ "elem.studySet": studySet._id }],
+    
+        //arrayFilters: [{ "studySet._id": studySet._id }],
+        new: true,
+      }
+    );
+
+    if (!updatedUser) {
+      console.error("User not found");
       return res.status(404).json({ error: "User not found" });
     }
 
-    // Assuming user.savedStudySets is an array where you store study sets
-    const lastStudySet = user.savedStudySets[user.savedStudySets.length - 1];
-    console.log("lastStudySet:", lastStudySet);
-    let cards;
-    if (Array.isArray(updatedCard)) {
-      // Handle the case where updatedCard is an array
-      cards = updatedCard.map((eachCard) => ({
-        question: eachCard.question,
-        answer: eachCard.answer,
-      }));
-    } else {
-      // Handle the case where updatedCard is a single document
-      cards = [
-        {
-          question: updatedCard.question,
-          answer: updatedCard.answer,
-        },
-      ];
-      console.log("cards:", cards);
-    }
+    const formattedUpdatedCards = updatedCards.map((card) => ({
+      card: card.value._id,
+      question: card.value.question,
+      answer: card.value.answer,
+    }));
 
     res.status(201).json({
-      topicTitle: lastStudySet.topicTitle,
+      topicTitle: topicTitle,
       title: studySet.title,
       description: studySet.description,
-      cards: cards,
+      cards: formattedUpdatedCards,
       message: "Flashcards updated successfully",
     });
-    
   } catch (error) {
-    console.error("Error in editing card:", error);
-
-    // Handle the CastError and BSONError
-    if (error.name === "CastError" || error.name === "BSONError") {
-      return res.status(400).json({ error: "Invalid data format" });
-    }
-
+    console.error("Internal server error:", error);
     return res.status(500).json({ error: "Internal server error" });
   }
 };
 
+// export const editCreatedCard = async (req, res) => {
+//   const userId = req.params.userId;
+//   const studySetId = req.params.studySetId;
+//   const { topicTitle, title, description, cards } = req.body;
+
+//   try {
+//     const studySet = await StudySetModel.findByIdAndUpdate(
+//       studySetId,
+//       {
+//         title: title,
+//         description: description,
+//         cards: cards.map((eachCard) => eachCard.card),
+//       },
+//       { new: true }
+//     );
+
+//     if (!studySet) {
+//       console.error("Study set not found");
+//       return res.status(404).json({ error: "Study set not found" });
+//     }
+
+//     const updatedCards = await Promise.allSettled(
+//       cards.map(async (eachCard) => {
+//         const foundCard = await CardModel.findByIdAndUpdate(
+//           eachCard.cardId,
+//           {
+//             $set: {
+//               question: eachCard.question,
+//               answer: eachCard.answer,
+//             },
+//           },
+//           { new: true }
+//         );
+
+//         if (!foundCard) {
+//           console.error("Card not found:", eachCard.card);
+//           return { status: "rejected", reason: "Card not found" };
+//         }
+
+//         return { status: "fulfilled", value: foundCard };
+//       })
+//     );
+
+//     const updatedUser = await UserModel.findByIdAndUpdate(
+//       userId,
+//       {
+//         $set: {
+//           "savedStudySets.$[studySet].topicTitle": topicTitle,
+//           "savedStudySets.$[studySet].studySetId": studySetId,
+//           "savedStudySets.$[studySet].cards": updatedCards.map((card) => ({
+//             card: card.value._id, // Use 'card.value._id' to get the ID from Promise result
+//           })),
+//         },
+//       },
+//       {
+//         arrayFilters: [{ "studySet._id": studySet._id }],
+//         new: true,
+//       }
+//     );
+
+//     if (!updatedUser) {
+//       console.error("User not found");
+//       return res.status(404).json({ error: "User not found" });
+//     }
+
+//     const formattedUpdatedCards = updatedCards.map((card) => ({
+//       card: card.value._id, // Use 'card.value._id' to get the ID from Promise result
+//       question: card.value.question,
+//       answer: card.value.answer,
+//     }));
+
+//     res.status(201).json({
+//       topicTitle: topicTitle,
+//       title: studySet.title,
+//       description: studySet.description,
+//       cards: formattedUpdatedCards,
+//       message: "Flashcards updated successfully",
+//     });
+//   } catch (error) {
+//     console.error("Internal server error:", error);
+//     return res.status(500).json({ error: "Internal server error" });
+//   }
+// };

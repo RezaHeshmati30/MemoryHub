@@ -20,7 +20,6 @@ router
     .patch("/studySets/:id", addCardsToStudySet)
     .patch("/addAllStudySets/:id", addAllStudySetsWithCardsToTopic)
     .post("/createSet/:userId", createStudySetsAndCards)
-    .patch("/editSet/:userId/:studySetId/:cardId", editCreatedCard)
-   
-   
+    .patch("/editSet/:userId/:topicId/:studySetId", editCreatedCard)
+
 export default router;
