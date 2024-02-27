@@ -4,14 +4,14 @@ import { AuthContext } from '../context/AuthContext';
 import { useNavigate, useParams } from 'react-router-dom';
 import { UserStudySetsContext } from '../context/UserStudySetsContext';
 
-function PracticeButtons() {
+function PracticeButtons({currentSet}) {
     const {getUserInfo, user} = useContext(AuthContext);
     const {id} = useParams();
     const {currentIndex, backendApiUrl, handleNextCard} = useContext(UserStudySetsContext);
     const navigate = useNavigate();
 
-    const currentCardsSet = user?.savedStudySets?.filter(studySet => studySet?._id === id)[0]?.cards || [];
-    const currentCard = currentCardsSet[currentIndex];
+    // const currentCardsSet = user?.savedStudySets?.filter(studySet => studySet?._id === id)[0]?.cards || [];
+    const currentCard = currentSet[currentIndex];
     const currentCardId = currentCard?._id;
     //console.log("CurrentCard ID:", currentCardId)
 
@@ -26,10 +26,10 @@ function PracticeButtons() {
             await axios.patch(`${backendApiUrl}/user/${userId}/${id}/${currentCardId}`, {
                 newStatus: status
             });
-            if (currentIndex === currentCardsSet.length - 1) {
+            if (currentIndex === currentSet.length - 1) {
                 navigate(`/studySet/endPractice/${id}`)
             } else {
-                handleNextCard(currentCardsSet);
+                handleNextCard(currentSet);
             }
             
             console.log("Status changed");
