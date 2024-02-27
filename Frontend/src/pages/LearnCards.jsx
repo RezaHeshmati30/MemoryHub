@@ -19,7 +19,6 @@ function LearnCards() {
     const [selectedAnswer, setSelectedAnswer] = useState(null);
     const [message, setMessage] = useState("");
     const [showMessages, setShowMessages] = useState(false);
-    const [isContinue, setIsContinue] = useState(false);
 
     useEffect(() => {
         getUserInfo();
@@ -40,7 +39,6 @@ function LearnCards() {
         setCurrentCard(currentCard);
         setCurrentCardsSet(currentCardsSet);
         
-
         if (currentCard) {
             const correctAnswer = currentCard.card.answer;
             const allAnswers = currentCardsSet.map(card => card.card.answer);
@@ -57,8 +55,6 @@ function LearnCards() {
     }, [currentIndex]);
 
     
-    
-
     useEffect(() => {
         if (currentCardsSet && currentCardsSet.length > 0) { // Add null check
             setProgress(((correctAnswers / currentCardsSet.length) * 100).toFixed(0));
@@ -95,18 +91,12 @@ function LearnCards() {
         
     }
 
-
     const onClickTryAgainHandler = () => {
         navigate(`/user/studySet/learn-cards/${id}`); 
         setCurrentIndex(0);
         setCorrectAnswers(0);
         setWrongAnswers(0);
     }
-
-    console.log("Correct:", correctAnswers)
-    console.log("Wrong:", wrongAnswers)
-    console.log(`Progress: ${progress}%`)
-        
 
   return (
     <section className='p-[30px]'>
@@ -127,7 +117,6 @@ function LearnCards() {
                       } basis-[45%] rounded-[10px] border-[2px] p-[15px]`} key={index}>{index+1}: {option}</button>
                 ))}
             </div>
-            
             <p>{currentIndex +1} / {currentCardsSet?.length}</p>
         </div>) : 
         (
@@ -140,17 +129,14 @@ function LearnCards() {
                     <button onClick={onClickTryAgainHandler} className='bg-blue-400 p-[10px] rounded-md mt-[40px]'>Try again!</button>
                 </div>
                 
-            </div>
-            
+            </div> 
         )}
-        
-            <button
-          className='bg-blue-400 p-[10px] rounded-md mt-[40px]'
-          onClick={() => navigate("/user/studySets")}
-        >
-          back to Study Sets
+        <button
+            className='bg-blue-400 p-[10px] rounded-md mt-[40px]'
+            onClick={() => navigate("/user/studySets")}
+            >
+            back to Study Sets
         </button>
-
     </section>
   )
 }
