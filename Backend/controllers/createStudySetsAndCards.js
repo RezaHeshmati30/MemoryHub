@@ -85,13 +85,14 @@ export const createStudySetsAndCards = async (req, res) => {
 
 //!!!!!!!!!
 //!!!!!!!!!
-export const editCreatedCard = async (req, res) => {
+export const editStudySet = async (req, res) => {
   const userId = req.params.userId;
+  const topicId = req.params.topicId;
   const studySetId = req.params.studySetId;
   const cardId = req.params.cardId;
-  const topicId = req.params.topicId;
+
   const { topicTitle, title, description, cards } = req.body;
-  const cardsId = cards.map((eachCard) => eachCard.card);
+  //const cardsId = cards.map((eachCard) => eachCard.card);
   // console.log("cardsid:::::", cardsId);
   // console.log("cardid", cardId);
   // console.log("topicId", topicId);
@@ -114,7 +115,7 @@ export const editCreatedCard = async (req, res) => {
       console.error("Study set not found");
       return res.status(404).json({ error: "Study set not found" });
     }
- //find the card and update it, then return the updated card
+    //find the card and update it, then return the updated card
     const updatedCards = await Promise.allSettled(
       cards.map(async (eachCard) => {
         const foundCard = await CardModel.findByIdAndUpdate(
@@ -136,7 +137,7 @@ export const editCreatedCard = async (req, res) => {
         return { status: "fulfilled", value: foundCard };
       })
     );
-//find the topic and update it
+    //find the topic and update it
     const updatedTopic = await TopicModel.findByIdAndUpdate(
       topicId,
       {
@@ -165,10 +166,25 @@ export const editCreatedCard = async (req, res) => {
         },
       },
       {
-        arrayFilters: [{ "elem.studySet": studySet._id }],
+        arrayFilters: [{ "elem.studySet": studySet._id.toString() }],
         new: true,
       }
     );
+    
+    // const updatedUser = await UserModel.findByIdAndUpdate(
+    //   userId,
+    //   {
+    //     $set: {
+    //       "savedStudySets.$[elem].topicTitle": topicTitle,
+    //     },
+    //   },
+    //   {
+    //     // arrayFilters: [{ "elem.studySet": studySet._id }],
+    //     arrayFilters: [{ "elem.studySet": studySet._id.toString() }],
+
+    //     new: true,
+    //   }
+    // );
 
     if (!updatedUser) {
       console.error("User not found");

@@ -17,8 +17,8 @@ function StudySetStatistic() {
     const cardsCount = studySet ? countCardsByStatus([studySet]) : { mastered: 0, needPractice: 0, notStudied: 0 };
     const userId = user?._id;
     const studySetId = studySet?._id;
-    console.log("STUDY SET:", studySet)
-    console.log("StudySetId:", studySetId)
+    //console.log("STUDY SET:", studySet)
+    //console.log("StudySetId:", studySetId)
 
     return (
         <section className='p-[30px] flex flex-col gap-[20px]'>

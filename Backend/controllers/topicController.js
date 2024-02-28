@@ -52,4 +52,20 @@ export const addStudySetToTopic = async (req, res) => {
     }
   };
 
+  export async function getTopicIdByTitle(req,res) {
+    try {
+      const title = req.params.title;
+      const topic = await TopicModel.findOne({ title });
+  
+      console.log('topic:', topic);
+      res.status(200).json(topic._id);
+      if (topic) {
+        return topic._id;
+      }
+    } catch (error) {
+      console.error('Error getting topic by title:', error.message);
+      throw error;
+    }
+  }
+  
   
