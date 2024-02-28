@@ -54,18 +54,22 @@ export const addStudySetToUser = async (req, res) => {
             res.status(400).send('Study set already saved by the user');
           } else {
             const studySet = await StudySetModel.findById(studySetId);
-      
-          if (!studySet) {
+            if (!studySet) {
             res.status(404).send('Study set not found');
-          } else {
-            const savedStudySet = {
-                topicTitle: req.body.topicTitle || 'Your topic',
-                studySet: studySetId,
-                savedAt: Date.now(),
-                cards: studySet.cards.map(card => ({ card: card._id })),
-                edit: req.body.edit
-              };
-          
+            } else {
+              const savedStudySet = {
+                  topicTitle: req.body.topicTitle || 'Your topic',
+                  studySet: studySetId,
+                  savedAt: Date.now(),
+                  cards: studySet.cards.map(card => ({ card: card._id })),
+                  edit: req.body.edit
+                };
+
+                await StudySetModel.findOneAndUpdate(
+                  { _id: studySetId },
+                  { $inc: { shared: 1 } }
+              );  
+            
               user.savedStudySets.push(savedStudySet);
               await user.save();
               res.status(200).send(user);

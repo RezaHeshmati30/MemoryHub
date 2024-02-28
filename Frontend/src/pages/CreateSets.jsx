@@ -33,6 +33,7 @@ function CreateSets() {
         topicTitle: formData.get("topic"),
         title: formData.get("title"),
         description: formData.get("description"),
+        createdBy: userId,
         cards: [],
       };
       
@@ -60,6 +61,7 @@ function CreateSets() {
           formObject.topicTitle,
           formObject.title,
           formObject.description,
+          formObject.createdBy,
           formObject.cards
         );
 

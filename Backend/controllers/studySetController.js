@@ -49,3 +49,15 @@ export const addCardsToStudySet = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 }
+
+
+export const getAllStudySets = async (req, res) => {
+    try {
+        const studySets = await StudySetModel.find().populate('createdBy').populate('cards');
+        res.status(200).json(studySets);
+    } catch (error) {
+        console.error("Error retrieving study sets:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
+};
+
