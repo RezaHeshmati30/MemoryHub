@@ -38,6 +38,31 @@ export const getUserInfo = async (req, res) => {
     }
 }
 
+export const getUserStudySets = async(req, res) => {
+  const userId = req.params.id;
+
+  try {
+    const user = await UserModel.findById(userId)
+      .populate({
+        path: 'savedStudySets',
+        populate: [
+          { path: 'topic', model: 'Topic' },
+          { path: 'studySet', model: 'StudySet' },
+          { path: 'cards.card', model: 'Card' }
+        ]
+      });
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    res.status(200).json({ savedStudySets: user.savedStudySets });
+  } catch (error) {
+    console.error('Error fetching saved study sets:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+}
+
 export const addStudySetToUser = async (req, res) => {
     const studySetId = req.body.studySetId;
     const userId = req.params.id;
@@ -145,4 +170,24 @@ export const addStudySetToUser = async (req, res) => {
           console.error("Error retrieving user information:", error);
           res.status(500).send("Internal Server Error"); 
         }
+      }
+
+      export const getUserShortData = async (req, res) => {
+        const userId = req.params.id;
+
+        try {
+          const user = await UserModel.findById(userId);
+  
+          if (!user) {
+              return res.status(404).send("User not found"); 
+          }
+          res.send({
+              nickName: user.nickName,
+              photo: user.photo
+            });
+  
+      } catch (error) {
+          console.error("Error retrieving user information:", error);
+          res.status(500).send("Internal Server Error"); 
+      }
       }

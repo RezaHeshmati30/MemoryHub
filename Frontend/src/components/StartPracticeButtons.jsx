@@ -23,11 +23,11 @@ function StartPracticeButtons({edit, studySetId, userId}) {
     }
 
     const onClickLearn = (setId) => {
-        navigate(`/user/studySet/learn-cards/${setId}`);
+        navigate(`/user/${userId}/studySet/learn-cards/${setId}`);
     }
 
     const onClickWrite = (setId) => {
-        navigate(`/user/study-set/write-mode/${setId}`);
+        navigate(`/user/${userId}/study-set/write-mode/${setId}`);
     }
 
   return (

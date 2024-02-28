@@ -6,7 +6,7 @@ import TopicModel from "../models/TopicModel.js";
 export const createStudySetsAndCards = async (req, res) => {
   try {
     const userId = req.params.userId;
-    const { topicTitle, title, description, createdBy, cards } = req.body;
+    const { topic, title, description, createdBy, cards } = req.body;
 
     const user = await UserModel.findById(userId);
     if (!user) {
@@ -18,7 +18,6 @@ export const createStudySetsAndCards = async (req, res) => {
     }
 
     try {
-      // Save each card to CardModel
       const savedCards = await Promise.all(
         cards.map(async (cardData) => {
           const newCard = new CardModel(cardData);
@@ -26,6 +25,17 @@ export const createStudySetsAndCards = async (req, res) => {
         })
       );
 
+      let topicObject;
+      if (topic && typeof topic === 'string') {
+        // Find or create topic
+        topicObject = await TopicModel.findOne({ title: { $regex: new RegExp(topic, "i") } });
+        if (!topicObject) {
+          topicObject = await TopicModel.create({ title: topic });
+        }
+      } else {
+        throw new Error("Invalid topic data");
+      }
+     
       const newStudySet = new StudySetModel({
         title,
         description,
@@ -34,20 +44,12 @@ export const createStudySetsAndCards = async (req, res) => {
       });
 
       const savedStudySet = await newStudySet.save();
-      const existingTopic = await TopicModel.findOne({ title: topicTitle });
-      if (existingTopic) {
-        existingTopic.studySets.push(savedStudySet._id);
-        await existingTopic.save();
-      } else {
-        const newTopic = new TopicModel({
-          title: topicTitle,
-          studySets: [savedStudySet._id],
-        });
-        await newTopic.save();
-      }
+
+      topicObject.studySets.push(savedStudySet._id);
+      await topicObject.save();
 
       user.savedStudySets.push({
-        topicTitle,
+        topic: topicObject._id,
         studySet: savedStudySet._id,
         cards: savedCards.map((card) => ({
           card: card._id,
@@ -61,7 +63,7 @@ export const createStudySetsAndCards = async (req, res) => {
       res.status(201).json({
         message: "Flashcards created successfully",
         flashcards: {
-          topicTitle,
+          topicTitle: topic.title,
           title,
           description,
           cards: user.savedStudySets[user.savedStudySets.length - 1].cards,

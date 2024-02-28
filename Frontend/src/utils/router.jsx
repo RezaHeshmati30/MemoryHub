@@ -14,6 +14,7 @@ import Practice from "../pages/Practice";
 import EndPractice from "../pages/EndPractice";
 import LearnCards from "../pages/LearnCards";
 import WriteMode from "../pages/WriteMode";
+import ForeignUserStudySets from "../pages/ForeignUserStudySets";
 
 
 
@@ -23,12 +24,13 @@ const router = createBrowserRouter([
     element: <Root />,
     children: [
       { path: '/', element: <Home /> },
-      { path: '/userProfile', element: <UserProfile />},
-      { path: '/user/studySets', element: <UserStudySets />},
-      { path: '/user/studySet/:id', element: <UserStudySet />},
-      { path: '/user/studySet/learn-cards/:id', element: <LearnCards />},
-      { path: '/user/study-set/write-mode/:id', element:<WriteMode />},
+      { path: '/user/:id', element: <UserProfile />},
+      { path: '/user/:id/studySets', element: <UserStudySets />},
+      { path: '/user/:userId/studySet/:id', element: <UserStudySet />},
+      { path: '/user/:userId/studySet/learn-cards/:id', element: <LearnCards />},
+      { path: '/user/:userId/study-set/write-mode/:id', element:<WriteMode />},
       { path: '/studySets', element: <StudySets />},
+      { path: '/user/:userId/all-study-sets', element: <ForeignUserStudySets />},
       { path: '/studySet/:topicId/:studySetId', element: <StudySet />},
       { path: '/createSet/', element: <CreateSets />},
       { path: '/studySet/edit/:id', element: < EditStudySet/>},
