@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../context/AuthContext'
 import { UserStudySetsContext } from '../context/UserStudySetsContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import UserStudySetsSearchBar from '../components/UserStudySetsSearchBar';
 
 function UserStudySets() {
@@ -9,23 +9,22 @@ function UserStudySets() {
     const {setStudySetId, deleteSavedStudySet} = useContext(UserStudySetsContext);
     const [searchQuery, setSearchQuery] = useState('');
     const navigate = useNavigate();
+    // const {id} = useParams();
     
 
     useEffect(() => {
         getUserInfo();
-    }, [])
+    }, []);
 
     useEffect(() => {
         getUserInfo();
     }, [savedStudySets])
 
-   
-
     const userId = user?._id;
 
     const onClickHandler = (id) => {
         setStudySetId(id);
-        navigate(`/user/studySet/${id}`);
+        navigate(`/user/${userId}/studySet/${id}`);
     }
 
     const filteredStudySets = user?.savedStudySets?.filter(studySet =>
