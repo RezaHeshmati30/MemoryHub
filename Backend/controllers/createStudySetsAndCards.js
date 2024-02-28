@@ -229,7 +229,7 @@ import TopicModel from "../models/TopicModel.js";
 const createStudySetsAndCards = async (req, res) => {
   try {
     const userId = req.params.userId;
-    const { topicTitle, title, description, cards } = req.body;
+    const { topicTitle, title, description, createdBy, cards } = req.body;
 
     const user = await UserModel.findById(userId);
     if (!user) {
@@ -255,6 +255,7 @@ const createStudySetsAndCards = async (req, res) => {
       const newStudySet = new StudySetModel({
         title,
         description,
+        createdBy,
         cards: savedCards.map((card) => card._id),
       });
 

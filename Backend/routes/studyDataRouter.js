@@ -1,7 +1,7 @@
 import express from "express";
 import { addModule, addTopicToModule, getModuleInfo } from "../controllers/moduleController.js";
 import { addTopic, addStudySetToTopic, addAllStudySetsWithCardsToTopic   } from "../controllers/topicController.js";
-import { addCardToStudySet, addCardsToStudySet, addStudySet } from "../controllers/studySetController.js";
+import { addCardToStudySet, addCardsToStudySet, addStudySet, getAllStudySets } from "../controllers/studySetController.js";
 import { addCard } from "../controllers/cardController.js";
 import { createStudySetsAndCards } from "../controllers/createStudySetsAndCards.js";
 
@@ -11,6 +11,7 @@ const router = express.Router();
 router 
     .post("/modules", addModule)
     .get("/modules/:id", getModuleInfo)
+    .get("/studySets", getAllStudySets)
     .post("/topics", addTopic)
     .patch("/modules/:id", addTopicToModule)
     .post("/studySets", addStudySet)

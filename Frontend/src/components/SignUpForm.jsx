@@ -3,7 +3,7 @@ import { AuthContext } from '../context/AuthContext'
 
 function SignUpForm() {
     const {signUpHandler, showSignUpForm, setShowLoginForm, setShowSignUpForm, hasToken, emailSignUp, passwordSignUp, 
-      setEmailSignUp, setPasswordSignUp, firstName, setFirstName, lastName, setLastName, setIsCreateCardsClicked} = useContext(AuthContext);
+      setEmailSignUp, setPasswordSignUp, firstName, setFirstName, lastName, setLastName, setIsCreateCardsClicked, nickName, setNickName} = useContext(AuthContext);
 
     const onClickHandler = () => {
       setShowSignUpForm(false);
@@ -30,6 +30,9 @@ function SignUpForm() {
           <br />
           <label htmlFor="lastName">Last Name: </label>
           <input className='border-[1px] border-gray-400' onChange={(e) => setLastName(e.target.value) } type="text" name="lastName" value={lastName} />
+          <br />
+          <label htmlFor="nickName">Nickname: </label>
+          <input className='border-[1px] border-gray-400' onChange={(e) => setNickName(e.target.value) } type="text" name="nickName" value={nickName} />
           <br />
           <button onClick={onClickHandler} type="submit" className='bg-[#a39a9a] py-[10px] px-[20px] rounded-[10px] m-[10px]'>Sign Up</button>
         </form>

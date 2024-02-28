@@ -24,6 +24,10 @@ const StudySetsContextProvider = ({ children }) => {
         setModuleData(response.data);
     }
 
+    const getStudySets = async () => {
+      
+    }
+
   const addStudySetToUser = async (userId, studySetId, topicTitle) => {
     const studySetData = {
       topicTitle: topicTitle,
@@ -69,13 +73,14 @@ const StudySetsContextProvider = ({ children }) => {
   //     throw error;
   //   }
   // };
-  const createStudySetsAndCards = async (userId, topicTitle, title, description, cards) => {
+  const createStudySetsAndCards = async (userId, topicTitle, title, description, createdBy, cards) => {
     console.log("userid from from:", userId);
     try {
       const savedStudySets = {
         topicTitle: topicTitle,
         title: title,
         description: description,
+        createdBy: createdBy,
         cards: cards.map(card => ({
           question: card.question,
           answer: card.answer
