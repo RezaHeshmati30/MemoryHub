@@ -2,62 +2,105 @@ import React, { useState, useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { StudySetsContext } from "../context/StudySetsContext";
 import { AuthContext } from "../context/AuthContext";
+import axios from "axios";
 
 const EditStudySet = () => {
-  const { editStudySet } = useContext(StudySetsContext);
+  const { editStudySet, getTopicIdByTitle } = useContext(StudySetsContext);
   const { id } = useParams();
   const { userId, user, getUserInfo } = useContext(AuthContext);
 
-  const studySet = user?.savedStudySets?.find((studySet) => studySet._id === id);
-  const studySetId = studySet?.studySet?._id || "";
-  const cardsDefault = studySet?.cards || [];
+  const savedStudySet = user?.savedStudySets?.find(
+    (studySet) => studySet._id === id
+  );
+  console.log("savedStudySet", savedStudySet);
+  const studySetId = savedStudySet?.studySet?._id || "";
+  const cardsDefault = savedStudySet?.cards || [];
+  const savedTopicTitle = savedStudySet?.topicTitle || "";
+  console.log("savedTopicTitle", savedTopicTitle);
 
-  const cardsInfo = cardsDefault.map((card) => ({
-    question: card.card.question,
-    answer: card.card.answer,
-    id: card.card._id,
+  const cardsInfo = cardsDefault.map((cardSet) => ({
+    question: cardSet.card.question,
+    answer: cardSet.card.answer,
+    //id: cardSet.card._id,
   }));
+  //console.log("cardsInfoooooo:", cardsInfo);
 
- const topicSet = user?.savedStudySets?.find((topic) => topic._id === id);
+  //  const topicSet = user?.savedStudySets?.find((topic) => topic._id === id);
+  //  console.log('topicSet', topicSet)
 
- //const topicTitle = topicSet?.topicTitle;
- 
+  //const topicTitle = topicSet?.topicTitle;
+  console.log("savedTopicTitle", savedTopicTitle);
   const [formState, setFormState] = useState({
-    topic: topicSet?.topicTitle || "",
-    title: studySet?.studySet?.title || "",
-    description: studySet?.studySet?.description || "",
-    cards: (studySet?.studySet?.cards || []).map((cardId) => {
-      const correspondingCard = studySet?.cards.find(
-        (cardObj) => cardObj.card._id === cardId
-      );
-      return {
-        answer: correspondingCard?.card?.answer || "",
-        question: correspondingCard?.card?.question || "",
-      };
-    }),
+    topicTitle: savedTopicTitle,
+    title: savedStudySet?.studySet?.title || "",
+    description: savedStudySet?.studySet?.description || "",
+    cards: cardsInfo,
+    // (savedStudySet?.studySet?.cards || []).map((cardId) => {
+    //   const correspondingCard = savedStudySet?.cards.find(
+    //     (cardObj) => cardObj.card._id === cardId
+    //   );
+    //   return {
+    //     answer: correspondingCard?.card?.answer || "",
+    //     question: correspondingCard?.card?.question || "",
+    //   };
+    // }),
   });
+  //console.log("formState", formState);
+  console.log("CardsInfoooooo", cardsInfo);
 
-  useEffect(() => {
-    getUserInfo();
 
-    if (cardsDefault.length > 0) {
-      setFormState((prevFormState) => ({
-        ...prevFormState,
-        topic: topicSet?.topicTitle || "",
-        title: studySet?.studySet?.title || "",
-        description: studySet?.studySet?.description || "",
-        cards: cardsDefault.map((eachCard) => ({
-          answer: eachCard?.answer,
-          question: eachCard?.question,
-        })),
-        // cards: cardsDefault.map((card) => ({
-        //   question: card.card.question,
-        //   answer: card.card.answer,
-        //   id: card.card._id,
-        // })),
-      }));
-    }
-  }, [id, JSON.stringify(cardsDefault)]);
+  const topicSet = user?.savedStudySets?.find((topic) => topic._id === id);
+  //console.log('topicSet', topicSet)
+
+  
+  // useEffect(() => {
+  //   getUserInfo();
+
+  //   if (cardsDefault.length > 0) {
+  //     setFormState((prevFormState) => ({
+  //       ...prevFormState,
+  //       topic: savedTopicTitle || "",
+  //       title: savedStudySet?.studySet?.title || "",
+  //       description: savedStudySet?.studySet?.description || "",
+  //       cards: cardsInfo,
+  //       //cardsDefault.map((eachCard) => ({
+  //       //   answer: eachCard?.answer,
+  //       //   question: eachCard?.question,
+  //       // })),
+  //       // cards: cardsDefault.map((card) => ({
+  //       //   question: card.card.question,
+  //       //   answer: card.card.answer,
+  //       //   id: card.card._id,
+  //       // })),
+  //     }));
+      useEffect(() => {
+        getUserInfo();
+      
+        if (cardsDefault.length > 0) {
+          setFormState((prevFormState) => ({
+            ...prevFormState,
+            topic: savedTopicTitle || "",
+            title: savedStudySet?.studySet?.title || "",
+            description: savedStudySet?.studySet?.description || "",
+            cards: cardsInfo,
+          }));
+        }
+        const backendApiUrl = import.meta.env.VITE_SERVER_URL;
+        const title = topicSet?.topicTitle;
+        axios.get(`${backendApiUrl}/getTopicIdByTitle/${title}`)
+          .then((res) => {
+            console.log("res dataaaaa", res.data);
+            const topicId = res.data;
+            console.log("topicId", topicId);
+          })
+          .catch((error) => {
+            console.error("Error getting topicId:", error.message);
+            throw error;
+          });
+      }, [id,JSON.stringify(cardsDefault)]);
+      
+    
+  
 
   // const allQandA = cardsInfo.map((card) => ({
   //   question: card?.question,
@@ -75,12 +118,16 @@ const EditStudySet = () => {
     try {
       await editStudySet(
         userId,
-        //topicId,
+        topicId,
         studySetId,
-        studySet?.topicTitle,
-        formState?.title,
-        formState?.description,
+        formState.topic,
+        formState.title,
+        formState.description,
         cardsInfo
+        //savedStudySet?.topicTitle,
+        //formState?.title,
+        //formState?.description,
+        //cardsInfo
         //formCards
       );
     } catch (error) {
@@ -95,14 +142,32 @@ const EditStudySet = () => {
     }));
   };
 
-  const handleCardChange = (cardId, field, value) => {
+  const handleCardChange = (index, field, value) => {
     setFormState((prevFormState) => ({
       ...prevFormState,
-      cards: prevFormState.cards.map((card) =>
-        card.cardId === cardId ? { ...card, [field]: value } : card
+      cards: prevFormState.cards.map((card, cardIndex) =>
+        cardIndex === index ? { ...card, [field]: value } : card
       ),
     }));
   };
+
+  // const handleCardChange = (cardId, field, value) => {
+  //   setFormState((prevFormState) => ({
+  //     ...prevFormState,
+  //     cards: prevFormState.cards.map((card) =>
+  //       card.id === cardId ? { ...card, [field]: value } : card
+  //     ),
+  //   }));
+  // };
+
+  // const handleCardChange = (cardId, field, value) => {
+  //   setFormState((prevFormState) => ({
+  //     ...prevFormState,
+  //     cards: prevFormState.cards.map((card) =>
+  //       card.cardId === cardId ? { ...card, [field]: value } : card
+  //     ),
+  //   }));
+  // };
 
   const handleAddCard = () => {
     setFormState({
@@ -186,26 +251,29 @@ const EditStudySet = () => {
               <div className='w-full sm:w-1/2 md:w-1/3 mb-4 px-2'>
                 <label
                   className='block text-gray-700 text-sm font-bold mb-2'
-                  htmlFor={`question${index+1}`}
+                  htmlFor={`question${index + 1}`}
                 >
                   Question {index + 1}
                 </label>
                 <input
                   className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                  id={`question${index+1}`}
+                  id={`question${index + 1}`}
                   type='text'
                   placeholder={`Enter question ${index + 1}`}
-                  name={`question${index+1}`}
+                  name={`question${index + 1}`}
                   value={card.question}
                   onChange={(e) =>
-                    handleCardChange(index, `question${index+1}`, e.target.value)
+                    handleCardChange(index, "question", e.target.value)
                   }
+                  // onChange={(e) =>
+                  //   handleCardChange(card.id, `question`, e.target.value)
+                  //}
                 />
               </div>
               <div className='w-full sm:w-1/2 md:w-1/3 mb-4 px-2'>
                 <label
                   className='block text-gray-700 text-sm font-bold mb-2'
-                  htmlFor={`answer${index+1}`}
+                  htmlFor={`answer${index + 1}`}
                 >
                   Answer {index + 1}
                 </label>
@@ -219,6 +287,9 @@ const EditStudySet = () => {
                   onChange={(e) =>
                     handleCardChange(index, "answer", e.target.value)
                   }
+                  // onChange={(e) =>
+                  //   handleCardChange(card.id, `answer`, e.target.value)
+                  // }
                 />
               </div>
               <div className='w-full sm:w-1/2 md:w-1/3 mb-4 px-2'>
@@ -254,9 +325,6 @@ const EditStudySet = () => {
 };
 
 export default EditStudySet;
-
-
-
 
 // import React, { useState, useContext, useEffect } from "react";
 // import { useNavigate, useParams } from "react-router-dom";

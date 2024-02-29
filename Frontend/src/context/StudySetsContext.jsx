@@ -13,6 +13,7 @@ const StudySetsContextProvider = ({ children }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
+  //const[topicTitle, setTopicTitle] = useState("");
   //const [studySets, setStudySets] = useState([]);
   const moduleId = "65cf67756f6a0e0ef199b5ca";
 
@@ -57,6 +58,7 @@ const StudySetsContextProvider = ({ children }) => {
           answer: eachCard.answer,
         })),
       };
+
       console.log("savedStudySets:", { ...savedStudySets });
       const response = await axios.post(
         `${backendApiUrl}/createSet/${userId}`,
@@ -73,67 +75,66 @@ const StudySetsContextProvider = ({ children }) => {
       throw error;
     }
   };
-// Assuming you have a function to get topicId
-const getTopicIdByTitle = async (topicTitle) => {
-  try {
-    const res = await axios.get(`${backendApiUrl}/getTopicIdByTitle/${topicTitle}`);
-    return res.data; // Assuming the backend returns the topicId directly
-  } catch (error) {
-    console.error("Error getting topicId:", error.message);
-    throw error;
-  }
-};
 
-const editStudySet = async (
-  userId,
-  studySetId,
-  topicTitle,
-  title,
-  description,
-  cardsInfo
-  //formCards
-) => {
-  try {
-    // Get the topicId
-    const topicId = await getTopicIdByTitle(topicTitle);
+  // const getTopicIdByTitle = async (topic) => {
+  //   try {
+  //     const res = await axios.get(
+  //       `${backendApiUrl}/getTopicIdByTitle/${topic}`
+  //     );
+  //     console.log("res data", res.data);
+  //     return res.data;
+  //   } catch (error) {
+  //     console.error("Error getting topicId:", error.message);
+  //     throw error;
+  //   }
+  // };
+  //const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-    const updatedStudySets = {
-      topic: topicTitle,
-      title: title,
-      description: description,
-      cards: cardsInfo.map((card) => ({
-      //cards: (cardsInfo || []).map((card) => ({
-        //answer: card.answer || "",
-        //question: card.question || "",
-        answer: card.answer,
-        question: card.question,
-      })),
-    };
+  const editStudySet = async (
+    userId,
+    topicId,
+    studySetId,
+    topic,
+    title,
+    description,
+    cardsInfo
+    //formCards
+  ) => {
+    try {
+      const updatedStudySets = {
+        //topic: topic,
+        title: title,
+        description: description,
+        cards: cardsInfo,
+        // (cardsInfo || []).map((card) => ({
+        //   answer: card.answer || "",
+        //   question: card.question || "",
 
-    // Assuming setStudySets is a function that interacts with your database
-    //await setStudySets(updatedStudySets);
+        // })),
+      };
+      //await delay(100);
+      
+      const response = await axios.patch(
+        `${backendApiUrl}/editSet/${userId}/${topicId}/${studySetId}`,
+        { ...updatedStudySets },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-    const response = await axios.patch(
-      `${backendApiUrl}/editSet/${userId}/${topicId}/${studySetId}`,
-      { ...updatedStudySets },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
+      console.log("Response Data:", response.data);
+      console.log("Study set updated successfully!");
+    } catch (error) {
+      console.error("Error updating study set:", error.message);
+
+      if (error.response) {
+        console.log("Response Data from backend:", error.response.data);
       }
-    );
-
-    console.log("Response Data:", response.data);
-    console.log("Study set updated successfully!");
-  } catch (error) {
-    console.error("Error updating study set:", error.message);
-
-    if (error.response) {
-      console.log("Response Data from backend:", error.response.data);
+      throw error;
     }
-    throw error;
-  }
-};
+  };
 
   return (
     <StudySetsContext.Provider
@@ -159,17 +160,16 @@ const editStudySet = async (
         editStudySet,
         loading,
         setLoading,
+     
       }}
     >
       {children}
     </StudySetsContext.Provider>
   );
-    }
+};
 
 export { StudySetsContext, StudySetsContextProvider };
 
-// import React, { createContext, useContext, useState } from "react";
-// import axios from "axios";
 
 // const StudySetsContext = createContext();
 
