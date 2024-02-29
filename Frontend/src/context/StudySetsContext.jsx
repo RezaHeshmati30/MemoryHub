@@ -87,6 +87,62 @@ const StudySetsContextProvider = ({ children }) => {
     }
   };
 
+  const editStudySet = async (
+    userId,
+    topicId,
+    studySetId,
+    topic,
+    title,
+    description,
+    cardsInfo
+    //formCards
+  ) => {
+    console.log("userid from edit:", userId);
+    console.log("topicId from edit:", topicId);
+    console.log("studySetId from edit:", studySetId);
+    console.log("topic from edit:", topic);
+    console.log("title from edit:", title);
+    console.log("description from edit:", description);
+    console.log("cardsInfo from edit:", cardsInfo);
+    try {
+      const updatedStudySets = {
+        topicTitle: topic,
+        title: title,
+        description: description,
+        cards: cardsInfo.map((card) => {
+        console.log("card:", card);
+          return {
+          question: card.question,
+          answer: card.answer,
+          id: card.id,
+      }
+      })
+    }
+      console.log("Updated Study Sets:", updatedStudySets.cards);
+
+      const response = await axios.patch(
+        `${backendApiUrl}/editSet/${userId}/${topicId}/${studySetId}`,
+        { ...updatedStudySets },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      console.log("Response Data:", response);
+      console.log("Study set updated successfully!");
+    } catch (error) {
+      console.error("Error updating study set:", error.message);
+
+      if (error.response) {
+        console.log("Response Data from backend:", error.response.data);
+      }
+      throw error;
+    }
+  };
+
+
   return (
     <StudySetsContext.Provider
       value={{
@@ -113,7 +169,8 @@ const StudySetsContextProvider = ({ children }) => {
         getUserStudySets,
         userStudySets, setUserStudySets,
         userShortData, setUserShortData,
-        getUserShortData
+        getUserShortData,
+        editStudySet
       }}
     >
       {children}

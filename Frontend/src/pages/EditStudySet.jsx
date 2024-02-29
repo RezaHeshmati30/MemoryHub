@@ -12,40 +12,43 @@ const EditStudySet = () => {
   const savedStudySet = user?.savedStudySets?.find(
     (studySet) => studySet._id === id
   );
+
   const studySetId = savedStudySet?.studySet?._id || "";
-  console.log("studySetId", studySetId);
+  console.log("first of all studySetId", studySetId);
 
   //?finding the topicId:
-  const savedTopic = user?.savedStudySet?.find((topic) => topic._id === id);
+  const topicTitle = savedStudySet?.topic?.title || "";
+  console.log("topicTitleeeee", topicTitle);
   const topicId = savedStudySet?.topic?._id || "";
-  console.log("topicId", topicId);
+  console.log("secondly we have the topicId", topicId);
 
   //?finding cards:
   const cardsDefault = savedStudySet?.cards || [];
   const cardsInfo = cardsDefault.map((cardSet) => ({
     question: cardSet.card.question,
     answer: cardSet.card.answer,
-    //id: cardSet.card._id,
+    id: cardSet.card._id,
   }));
+  
   console.log("cardsInfo:", cardsInfo);
   //? settting Form
   const [formState, setFormState] = useState({
-    topicTitle: savedTopic?.topic?.title || "",
+    topicTitle: topicTitle,
     title: savedStudySet?.studySet?.title || "",
     description: savedStudySet?.studySet?.description || "",
     cards: cardsInfo,
   });
 
- //? when page is loading it would load this Data in useEffect
+  //? when page is loading it would load this Data in useEffect
   useEffect(() => {
     getUserInfo();
-      setFormState((prevFormState) => ({
-        ...prevFormState,
-        topic: savedTopic?.topic?.title || "",
-        title: savedStudySet?.studySet?.title || "",
-        description: savedStudySet?.studySet?.description || "",
-        cards: cardsInfo,
-      }));
+    setFormState((prevFormState) => ({
+      ...prevFormState,
+      topic: topicTitle || "",
+      title: savedStudySet?.studySet?.title || "",
+      description: savedStudySet?.studySet?.description || "",
+      cards: cardsInfo,
+    }));
   }, [id, JSON.stringify(cardsDefault)]);
 
   const handleSubmit = async (e) => {
@@ -205,7 +208,7 @@ const EditStudySet = () => {
                 />
               </div>
               <div className='w-full sm:w-1/2 md:w-1/3 mb-4 px-2'>
-                {/* Add input field for image if needed */}
+              
               </div>
               <button
                 className='absolute right-0 top-0 mt-2 mr-2 text-red-600 hover:text-red-700 focus:outline-none'
