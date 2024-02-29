@@ -135,7 +135,7 @@ function WriteMode() {
             }
             <button
                 className='bg-blue-400 p-[10px] rounded-md mt-[40px]'
-                onClick={() => navigate("/user/studySets")}
+                onClick={() => navigate(`/user/${user?._id}/studySets`)}
             >
                 Back to Study Sets
             </button>

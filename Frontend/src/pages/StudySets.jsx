@@ -17,7 +17,6 @@ function StudySets() {
     setShowSignUpForm(false);
   }, []);
 
-  const test = studyData?.topics || [];
   const onClickHandler = (topicId, studySetId) => {
     navigate(`/studySet/${topicId}/${studySetId}`);
     setTopicId(topicId);
