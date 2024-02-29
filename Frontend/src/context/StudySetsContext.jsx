@@ -45,14 +45,12 @@ const StudySetsContextProvider = ({ children }) => {
       setUserStudySets(response.data);
     }
 
-  const addStudySetToUser = async (userId, studySetId, topicTitle) => {
+  const addStudySetToUser = async (userId, studySetId, topicId) => {
     const studySetData = {
-      topicTitle: topicTitle,
-      studySetId: studySetId,
       edit: "no"  
     };
     try {
-      await axios.patch(`${backendApiUrl}/users/${userId}`, studySetData);
+      await axios.patch(`${backendApiUrl}/users/${userId}/topics/${topicId}/studySets/${studySetId}`, studySetData);
       console.log(`studySetData ${studySetData} sent to user ${userId}`);
       alert("Study set was added to your account");
     } catch (error) {
