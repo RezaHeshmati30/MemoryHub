@@ -90,7 +90,6 @@ const StudySetsContextProvider = ({ children }) => {
     }
   };
 
-
   const editStudySet = async (
     userId,
     topicId,
