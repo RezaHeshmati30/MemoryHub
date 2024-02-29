@@ -6,8 +6,9 @@ const StudySetSchema = new mongoose.Schema({
     unique: true,
   },
   description: { type: String },
-  cards: [{ type: mongoose.Schema.Types.ObjectId, ref: "Card" }]
- 
+  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  shared: { type: Number, default: 0 },
+  cards: [ { type: mongoose.Schema.Types.ObjectId, ref: "Card" } ],
 });
 
 const StudySetModel = mongoose.model("StudySet", StudySetSchema);

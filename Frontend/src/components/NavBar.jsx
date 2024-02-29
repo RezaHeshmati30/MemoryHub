@@ -1,13 +1,18 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { AuthContext } from '../context/AuthContext'
 import { Link, useNavigate } from 'react-router-dom';
 
 function NavBar() {
-    const {showLoginForm, setShowLoginForm,showSignUpForm, setShowSignUpForm, hasToken, logoutHandler} = useContext(AuthContext);
+    const {showLoginForm, setShowLoginForm, showSignUpForm, setShowSignUpForm, hasToken, logoutHandler, getUserInfo, user} = useContext(AuthContext);
     const navigate = useNavigate();
 
+    useEffect(() => {
+        getUserInfo();
+    },[])
+
+    const userId = user?._id;
+
     const onClickLoginHandler = () => {
-        // showLoginForm ? setShowLoginForm(false) : setShowLoginForm(true);
         setShowLoginForm(true);
         setShowSignUpForm(false);
     }
@@ -27,8 +32,7 @@ function NavBar() {
                 <button onClick={onClickLoginHandler} className='bg-[#a39a9a] py-[10px] px-[20px] rounded-[10px]'>Login</button>
             </li>
             <li className={!hasToken ? "hidden" : "block"}>
-                {/* <button  className='bg-[#a39a9a] py-[10px] px-[20px] rounded-[10px]'>My Account</button> */}
-                <Link to="/userProfile" className='block bg-[#a39a9a] py-[10px] px-[20px] rounded-[10px]'>My Account</Link>
+                <Link to={`/user/${userId}`} className='block bg-[#a39a9a] py-[10px] px-[20px] rounded-[10px]'>My Account</Link>
             </li>
             <li className={!hasToken ? "hidden" : "block"}>
                 <button className='bg-[#a39a9a] py-[10px] px-[20px] rounded-[10px]' onClick={(e) => {logoutHandler(e); navigate("/");}} type='submit'>Logout</button>

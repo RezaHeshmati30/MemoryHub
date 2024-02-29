@@ -30,9 +30,10 @@ function CreateSets() {
       const formData = new FormData(e.target);
 
       const formObject = {
-        topicTitle: formData.get("topic"),
+        topic: formData.get("topic"),
         title: formData.get("title"),
         description: formData.get("description"),
+        createdBy: userId,
         cards: [],
       };
       
@@ -57,9 +58,10 @@ function CreateSets() {
       if (formObject) {
         createStudySetsAndCards(
           userId,
-          formObject.topicTitle,
+          formObject.topic,
           formObject.title,
           formObject.description,
+          formObject.createdBy,
           formObject.cards
         );
 

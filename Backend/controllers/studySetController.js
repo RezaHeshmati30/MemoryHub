@@ -1,5 +1,6 @@
 import StudySetModel from "../models/StudySetModel.js";
 import CardModel from "../models/CardModel.js";
+import TopicModel from "../models/TopicModel.js";
 
 
 
@@ -49,3 +50,25 @@ export const addCardsToStudySet = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 }
+
+
+export const getAllStudyData = async (req, res) => {
+    try {
+        const topics = await TopicModel.find({})
+        .populate({
+          path: 'studySets',
+          populate: [
+            { path: 'cards', model: 'Card' },
+            { path: 'createdBy', model: 'User' } // Populate createdBy field
+          ]
+        });
+  
+  
+      res.status(200).json({ topics });
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  };
+  
+

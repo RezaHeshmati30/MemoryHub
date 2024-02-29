@@ -5,26 +5,26 @@ import { AuthContext } from '../context/AuthContext';
 import StudySetsSearchBar from '../components/StudySetsSearchBar';
 
 function StudySets() {
-  const { getModuleData, moduleData, setStudySetId, setTopicId, addStudySetToUser } = useContext(StudySetsContext);
+  const { setStudySetId, setTopicId, addStudySetToUser, getStudyData, studyData } = useContext(StudySetsContext);
   const { hasToken, getUserInfo, user, setShowLoginForm, setShowSignUpForm } = useContext(AuthContext);
+  const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
-    getModuleData();
     getUserInfo();
+    getStudyData();
     setShowLoginForm(false);
     setShowSignUpForm(false);
   }, []);
 
-  const [searchQuery, setSearchQuery] = useState('');
-
+  const test = studyData?.topics || [];
   const onClickHandler = (topicId, studySetId) => {
     navigate(`/studySet/${topicId}/${studySetId}`);
     setTopicId(topicId);
     setStudySetId(studySetId);
   };
 
-  const filteredStudySets = moduleData?.topics?.reduce((acc, topic) => {
+  const filteredStudySets = studyData?.topics?.reduce((acc, topic) => {
     const filteredSets = topic.studySets.filter(studySet => studySet.title.toLowerCase().includes(searchQuery.toLowerCase()));
     if (filteredSets.length) {
       acc.push({ ...topic, studySets: filteredSets });
@@ -33,18 +33,19 @@ function StudySets() {
   }, []);
 
   return (
-    <section className='flex flex-col items-center p-[20px]'>
-      <h1>Study Sets</h1>
-      <h2>{moduleData?.title}</h2>
-      {/* Verwende die Search-Bar-Komponente */}
-      <StudySetsSearchBar value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
-      <ul>
+    <section className='flex flex-col p-[20px]'>
+      <div className='flex flex-col items-center'>
+        <h1>All Study Sets</h1>
+        <StudySetsSearchBar value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+      </div>
+      
+      <ul className='flex gap-[10px] flex-wrap'>
         {filteredStudySets?.map(topic => (
-          <li key={topic._id} className='border-[1px] border-gray-400 p-[20px]'>
-            <p className=''> Topic: {topic.title}</p>
-            <ul className=''>
+          <li key={topic._id} className='border-[1px] border-gray-400 rounded-[10px] p-[20px] basis-[30%]'>
+            <p className='mb-[15px]'> Topic: {topic.title}</p>
+            <ul className='flex flex-col gap-[15px]'>
               {topic.studySets.map(studySet => (
-                <li key={studySet._id}>
+                <li key={studySet._id} className=''>
                   <p className='cursor-pointer' onClick={() => onClickHandler(topic._id, studySet._id)}>Subtopic: {studySet.title}</p>
                   <button className={`${hasToken ? "block" : "hidden"} bg-[#b6b2b2] py-[5px] px-[10px] rounded-[10px]`}
                     onClick={() => { addStudySetToUser(user._id, studySet._id, topic.title) }}
@@ -55,6 +56,7 @@ function StudySets() {
           </li>
         ))}
       </ul>
+
     </section>
   );
 }

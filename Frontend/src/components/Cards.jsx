@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { StudySetsContext } from "../context/StudySetsContext";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext"; 
 
 import "./cards.css";
@@ -11,7 +11,7 @@ function Cards() {
 
   const [isAnimated, setAnimated] = useState(false);
   const {user} = useContext(AuthContext);
-  const { getModuleData,  moduleData, addStudySetToUser} = useContext(StudySetsContext);
+  const { addStudySetToUser, getStudyData, studyData} = useContext(StudySetsContext);
   const { hasToken, getUserInfo } = useContext(AuthContext);
 
 
@@ -21,15 +21,21 @@ function Cards() {
 
 
   useEffect(() => {
-    getModuleData();
+    getStudyData();
     console.log("Topic Id:", topicId);
     console.log("StudySet Id:", studySetId);
     getUserInfo();
   }, []);
 
-  const currentCardsSet = moduleData?.topics
+  const currentCardsSet = studyData?.topics
     ?.filter((topic) => topic._id === topicId)[0]
     ?.studySets.filter((set) => set._id === studySetId)[0];
+
+  const author = studyData?.topics
+  ?.filter((topic) => topic._id === topicId)[0]
+  ?.studySets.filter((set) => set._id === studySetId)[0].createdBy;
+
+  console.log("Author:", author)
 
   const currentCard = currentCardsSet?.cards[currentIndex];
 
@@ -71,6 +77,10 @@ function Cards() {
               <strong>{currentCardsSet.title}</strong>
             </p>
             <p className='text-xl my-5'>{currentCardsSet.description}</p>
+            <Link to={hasToken && user?._id === author?._id ? `/user/${user?._id}` : `/user/${author?._id}/all-study-sets` }>  
+              <p>Created by: {author.nickName}</p>
+            </Link>
+            
             <div
               className={`flip-container flex justify-center ${
                 isAnimated ? "animate" : ""

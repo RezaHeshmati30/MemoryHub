@@ -15,7 +15,7 @@ function UserProfile() {
       <div>
         <UserPageNavigation />
       </div>
-      <div className='basis-[75%] flex flex-col gap-[20px] bg-gray-200'>
+      <div className='basis-[75%] flex flex-col gap-[20px] bg-gray-200 p-[30px]'>
       <div className='flex flex-col'>
         <p>{user?.firstName}</p>
         <p>{user?.lastName}</p>

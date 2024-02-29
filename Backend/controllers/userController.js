@@ -22,12 +22,12 @@ export const getUserInfo = async (req, res) => {
             return res.status(401).send("Unauthorized"); 
         }
         const loggedUser = await UserModel.findById(req.userId).populate({
-            path: 'savedStudySets.studySet', // Populate the 'studySet' field within the 'savedStudySets' array
-            model: 'StudySet',
-        })
-        .populate({
-            path: 'savedStudySets.cards.card', // Populate the 'card' field within the 'cards' array
-            model: 'Card'
+          path: 'savedStudySets',
+          populate: [
+            { path: 'topic', model: 'Topic' },
+            { path: 'studySet', model: 'StudySet' },
+            { path: 'cards.card', model: 'Card' }
+          ]
         });
 
         if (!loggedUser) {
@@ -36,6 +36,7 @@ export const getUserInfo = async (req, res) => {
         res.send({
             firstName: loggedUser.firstName,
             lastName: loggedUser.lastName,
+            nickName: loggedUser.nickName,
             _id: loggedUser._id,
             email: loggedUser.email,
             photo: loggedUser.photo,
@@ -46,6 +47,31 @@ export const getUserInfo = async (req, res) => {
         console.error("Error retrieving user information:", error);
         res.status(500).send("Internal Server Error"); 
     }
+}
+
+export const getUserStudySets = async(req, res) => {
+  const userId = req.params.id;
+
+  try {
+    const user = await UserModel.findById(userId)
+      .populate({
+        path: 'savedStudySets',
+        populate: [
+          { path: 'topic', model: 'Topic' },
+          { path: 'studySet', model: 'StudySet' },
+          { path: 'cards.card', model: 'Card' }
+        ]
+      });
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    res.status(200).json({ savedStudySets: user.savedStudySets });
+  } catch (error) {
+    console.error('Error fetching saved study sets:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 }
 
 export const addStudySetToUser = async (req, res) => {
@@ -64,18 +90,22 @@ export const addStudySetToUser = async (req, res) => {
             res.status(400).send('Study set already saved by the user');
           } else {
             const studySet = await StudySetModel.findById(studySetId);
-      
-          if (!studySet) {
+            if (!studySet) {
             res.status(404).send('Study set not found');
-          } else {
-            const savedStudySet = {
-                topicTitle: req.body.topicTitle || 'Your topic',
-                studySet: studySetId,
-                savedAt: Date.now(),
-                cards: studySet.cards.map(card => ({ card: card._id })),
-                edit: req.body.edit
-              };
-          
+            } else {
+              const savedStudySet = {
+                  topicTitle: req.body.topicTitle || 'Your topic',
+                  studySet: studySetId,
+                  savedAt: Date.now(),
+                  cards: studySet.cards.map(card => ({ card: card._id })),
+                  edit: req.body.edit
+                };
+
+                await StudySetModel.findOneAndUpdate(
+                  { _id: studySetId },
+                  { $inc: { shared: 1 } }
+              );  
+            
               user.savedStudySets.push(savedStudySet);
               await user.save();
               res.status(200).send(user);
@@ -111,7 +141,8 @@ export const addStudySetToUser = async (req, res) => {
           
           res.status(200).send("Study set deleted successfully" );
         } catch (error) {
-          throw error;
+          console.error("Error retrieving user information:", error);
+          res.status(500).send("Internal Server Error"); 
         }
       }
       
@@ -212,3 +243,24 @@ export const addStudySetToUser = async (req, res) => {
       }
   };
     
+
+      export const getUserShortData = async (req, res) => {
+        const userId = req.params.id;
+
+        try {
+          const user = await UserModel.findById(userId);
+  
+          if (!user) {
+              return res.status(404).send("User not found"); 
+          }
+          res.send({
+              nickName: user.nickName,
+              photo: user.photo
+            });
+  
+      } catch (error) {
+          console.error("Error retrieving user information:", error);
+          res.status(500).send("Internal Server Error"); 
+      }
+      }
+

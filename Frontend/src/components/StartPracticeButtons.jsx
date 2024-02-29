@@ -23,7 +23,11 @@ function StartPracticeButtons({edit, studySetId, userId}) {
     }
 
     const onClickLearn = (setId) => {
-        navigate(`/user/studySet/learn-cards/${setId}`);
+        navigate(`/user/${userId}/studySet/learn-cards/${setId}`);
+    }
+
+    const onClickWrite = (setId) => {
+        navigate(`/user/${userId}/study-set/write-mode/${setId}`);
     }
 
   return (
@@ -35,6 +39,7 @@ function StartPracticeButtons({edit, studySetId, userId}) {
         )}
         <button onClick={() => onClickPractice(studySetId)} className='bg-[#b6b2b2] py-[5px] px-[10px] rounded-[10px]'>Start practice</button>
         <button onClick={() => onClickLearn(studySetId)} className='bg-[#b6b2b2] py-[5px] px-[10px] rounded-[10px]'>Test your knowledge</button>
+        <button onClick={() => onClickWrite(studySetId)} className='bg-[#b6b2b2] py-[5px] px-[10px] rounded-[10px]'>Write mode</button>
     </div>
   )
 }

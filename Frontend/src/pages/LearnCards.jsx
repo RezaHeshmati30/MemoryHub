@@ -17,6 +17,8 @@ function LearnCards() {
     const [progress, setProgress] = useState(0);
     const [isCorrect, setIsCorrect] = useState(false);
     const [selectedAnswer, setSelectedAnswer] = useState(null);
+    const [message, setMessage] = useState("");
+    const [showMessages, setShowMessages] = useState(false);
 
     useEffect(() => {
         getUserInfo();
@@ -37,7 +39,6 @@ function LearnCards() {
         setCurrentCard(currentCard);
         setCurrentCardsSet(currentCardsSet);
         
-
         if (currentCard) {
             const correctAnswer = currentCard.card.answer;
             const allAnswers = currentCardsSet.map(card => card.card.answer);
@@ -49,12 +50,11 @@ function LearnCards() {
             setAnswerOptions(shuffledOptions);
             setIsCorrect(false);
             setCorrectAnswer(correctAnswer);
+            setShowMessages(false);
         }
     }, [currentIndex]);
 
     
-    
-
     useEffect(() => {
         if (currentCardsSet && currentCardsSet.length > 0) { // Add null check
             setProgress(((correctAnswers / currentCardsSet.length) * 100).toFixed(0));
@@ -74,11 +74,21 @@ function LearnCards() {
     const onClickAnswerHandler = (option) => {
         console.log("Option:", option)
         console.log("correct answer:", correctAnswer)
+        setShowMessages(true);
+        if (correctAnswer === option) {
+            setMessage("Correct!");
+            setTimeout(() => {
+                setCurrentIndex(prevValue => prevValue + 1);
+            }, 2000); 
+        } else {
+            setMessage(`Wrong :(`);
+            setIsCorrect(false);
+        }  
         setSelectedAnswer(option);
         setIsCorrect(option === correctAnswer);
         option === correctAnswer ? 
         setCorrectAnswers(prevValue => prevValue + 1) : setWrongAnswers(prevValue => prevValue + 1);
-        setCurrentIndex(prevValue => prevValue + 1);
+        
     }
 
     const onClickTryAgainHandler = () => {
@@ -88,23 +98,25 @@ function LearnCards() {
         setWrongAnswers(0);
     }
 
-    console.log("Correct:", correctAnswers)
-    console.log("Wrong:", wrongAnswers)
-    console.log(`Progress: ${progress}%`)
-        
-
   return (
     <section className='p-[30px]'>
         {currentCardsSet && 
         currentCardsSet?.length - 1 >= currentIndex ? (
         <div>
             <p className='text-center'>Question: {currentCard?.card?.question}</p>
-            <div className='flex flex-wrap gap-[20px] mt-[40px] items-stretch'>
-                {answerOptions.map((option, index) => (
-                    <button onClick={() => onClickAnswerHandler(option)} className={` basis-[45%] rounded-[10px] border-[2px] p-[15px]`} key={index}>{index+1}: {option}</button>
-                ))}
+            <div className={`${showMessages ? "block" : "hidden"} flex flex-col items-center gap-[15px] mt-[20px]`}>
+                <p>{message}</p>
+                <button onClick={() => setCurrentIndex(prevValue => prevValue + 1)} className={`${isCorrect ? "hidden" : "block"} bg-blue-300 p-[6px] rounded-[5px]` }>Continue</button>
             </div>
             
+            <div className='flex flex-wrap gap-[20px] mt-[40px] items-stretch'>
+                {answerOptions.map((option, index) => (
+                    <button onClick={() => onClickAnswerHandler(option)} className={`${
+                        showMessages &&
+                        (option === correctAnswer ? "border-green-500 bg-green-200" : "border-red-500")
+                      } basis-[45%] rounded-[10px] border-[2px] p-[15px]`} key={index}>{index+1}: {option}</button>
+                ))}
+            </div>
             <p>{currentIndex +1} / {currentCardsSet?.length}</p>
         </div>) : 
         (
@@ -117,17 +129,14 @@ function LearnCards() {
                     <button onClick={onClickTryAgainHandler} className='bg-blue-400 p-[10px] rounded-md mt-[40px]'>Try again!</button>
                 </div>
                 
-            </div>
-            
+            </div> 
         )}
-        
-            <button
-          className='bg-blue-400 p-[10px] rounded-md mt-[40px]'
-          onClick={() => navigate("/user/studySets")}
-        >
-          back to Study Sets
+        <button
+            className='bg-blue-400 p-[10px] rounded-md mt-[40px]'
+            onClick={() => navigate("/user/studySets")}
+            >
+            back to Study Sets
         </button>
-
     </section>
   )
 }

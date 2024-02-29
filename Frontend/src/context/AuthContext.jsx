@@ -19,6 +19,8 @@ const AuthContextProvider = ({ children }) => {
   const [lastName, setLastName] = useState("");
   const [isCreateCardsClicked, setIsCreateCardsClicked] = useState(false);
   const [userId, setUserId] = useState("");
+  const [savedStudySets, setSavedStudySets] = useState([]);
+  const [nickName, setNickName] = useState("");
 
   //const backendApiUrl = "http://localhost:3001";
   const backendApiUrl = import.meta.env.VITE_SERVER_URL;
@@ -46,6 +48,7 @@ const AuthContextProvider = ({ children }) => {
         password: passwordSignUp,
         firstName,
         lastName,
+        nickName
       });
       console.log("Erfolgreich registriert:", resp.data);
       setEmailSignUp("");
@@ -145,6 +148,8 @@ const AuthContextProvider = ({ children }) => {
       });
       setUser(response.data);
       setUserId(response.data._id);
+      setSavedStudySets(response.data.savedStudySets);
+
       //console.log("user response", response.data);
     } catch (error) {
       setErrorMessages(error);
@@ -185,7 +190,9 @@ const AuthContextProvider = ({ children }) => {
         getUserInfo,
         isCreateCardsClicked,
         setIsCreateCardsClicked,
-        userId, setUserId
+        userId, setUserId,
+        savedStudySets, setSavedStudySets,
+        nickName, setNickName
       }}
     >
       {children}
