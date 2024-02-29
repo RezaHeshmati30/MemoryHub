@@ -39,9 +39,7 @@ const AuthContextProvider = ({ children }) => {
 
   const signUpHandler = async (e) => {
     e.preventDefault();
-
     resetMessages();
-
     try {
       const resp = await axios.post(`${backendApiUrl}/register`, {
         email: emailSignUp,

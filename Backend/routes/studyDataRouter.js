@@ -25,6 +25,6 @@ router
     .patch("/addAllStudySets/:id", addAllStudySetsWithCardsToTopic)
     .post("/createSet/:userId", createStudySetsAndCards)
     .patch("/editSet/:userId/:topicId/:studySetId", editStudySet)
-    .get("/getTopicIdByTitle/:title", getTopicIdByTitle);
+  
 
 export default router;

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useState } from "react";
 import axios from "axios";
 
 const StudySetsContext = createContext();
@@ -156,7 +156,8 @@ const StudySetsContextProvider = ({ children }) => {
         getUserStudySets,
         userStudySets, setUserStudySets,
         userShortData, setUserShortData,
-        getUserShortData
+        getUserShortData,
+        editStudySet
       }}
     >
       {children}
