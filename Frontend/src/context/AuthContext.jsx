@@ -17,6 +17,10 @@ const AuthContextProvider = ({ children }) => {
   const [passwordLogin, setPasswordLogin] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [isCreateCardsClicked, setIsCreateCardsClicked] = useState(false);
+  const [userId, setUserId] = useState("");
+  const [savedStudySets, setSavedStudySets] = useState([]);
+  const [nickName, setNickName] = useState("");
 
   const backendApiUrl = "http://localhost:3001";
 
@@ -45,6 +49,7 @@ const AuthContextProvider = ({ children }) => {
         password: passwordSignUp,
         firstName,
         lastName,
+        nickName
       });
       console.log("Erfolgreich registriert:", resp.data);
       setEmailSignUp("");
@@ -144,7 +149,10 @@ const AuthContextProvider = ({ children }) => {
         withCredentials: true,
       });
       setUser(response.data);
-      //console.trace(response.data);
+      setUserId(response.data._id);
+      setSavedStudySets(response.data.savedStudySets);
+
+      //console.log("user response", response.data);
     } catch (error) {
       setErrorMessages(error);
     }
@@ -182,6 +190,11 @@ const AuthContextProvider = ({ children }) => {
         lastName,
         setLastName,
         getUserInfo,
+        isCreateCardsClicked,
+        setIsCreateCardsClicked,
+        userId, setUserId,
+        savedStudySets, setSavedStudySets,
+        nickName, setNickName
       }}
     >
       {children}

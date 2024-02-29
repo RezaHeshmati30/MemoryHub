@@ -59,49 +59,24 @@ const StudySetsContextProvider = ({ children }) => {
       alert("Study set already exists in your account");
     }
   };
-  // if (formObject) {
-  //   createStudySetsAndCards(
-  //     userId,
-  //     formObject.topicTitle,
-  //     formObject.title,
-  //     formObject.description,
-  //     formObject.createdBy,
-  //     formObject.cards
-  //   );
 
   const createStudySetsAndCards = async (userId, topic, title, description, createdBy, cards) => {
-  };
-  
-  const editStudySet = async (
-    userId,
-    topicId,
-    studySetId,
-    topic,
-    title,
-    description,
-    cardsInfo
-    
-  ) => {
+    console.log("userid from from:", userId);
     try {
-      const updatedStudySets = {
+      const savedStudySets = {
         topic: topic,
         title: title,
         description: description,
-        cards: cardsInfo,
+        createdBy: createdBy,
+        cards: cards.map(card => ({
+          question: card.question,
+          answer: card.answer
+        }))
       };
-  
-      const response = await axios.patch(
-        `${backendApiUrl}/editSet/${userId}/${topicId}/${studySetId}`,
-        { ...updatedStudySets },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      console.log("Response Data:", response.data);
-      console.log("Study set updated successfully!");
+      console.log("Request Payload:", { ...savedStudySets });
+      const response = await axios.post(`${backendApiUrl}/createSet/${userId}`, { ...savedStudySets });
+      
+      //console.log("Study set created successfully:", response.data);
     } catch (error) {
       console.error("Error updating study set:", error.message);
 
@@ -138,8 +113,7 @@ const StudySetsContextProvider = ({ children }) => {
         getUserStudySets,
         userStudySets, setUserStudySets,
         userShortData, setUserShortData,
-        getUserShortData,
-        editStudySet
+        getUserShortData
       }}
     >
       {children}
