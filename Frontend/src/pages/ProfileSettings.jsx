@@ -63,7 +63,7 @@ function ProfileSettings() {
       });
       
       alert('Profile successfully updated');
-      navigate('/userProfile');
+      navigate(`/user/${user._id}`);
     } else {
       alert('No changes made');
     }
