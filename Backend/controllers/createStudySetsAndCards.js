@@ -18,7 +18,6 @@ const createStudySetsAndCards = async (req, res) => {
           error: "Invalid format for flashcards. Expecting a non-empty array.",
         });
     }
-
     try {
       const savedCards = await Promise.all(
         cards.map(async (cardData) => {
