@@ -13,12 +13,12 @@ export const getUserInfo = async (req, res) => {
             return res.status(401).send("Unauthorized"); 
         }
         const loggedUser = await UserModel.findById(req.userId).populate({
-            path: 'savedStudySets.studySet', // Populate the 'studySet' field within the 'savedStudySets' array
-            model: 'StudySet',
-        })
-        .populate({
-            path: 'savedStudySets.cards.card', // Populate the 'card' field within the 'cards' array
-            model: 'Card'
+          path: 'savedStudySets',
+          populate: [
+            { path: 'topic', model: 'Topic' },
+            { path: 'studySet', model: 'StudySet' },
+            { path: 'cards.card', model: 'Card' }
+          ]
         });
 
         if (!loggedUser) {
@@ -27,6 +27,7 @@ export const getUserInfo = async (req, res) => {
         res.send({
             firstName: loggedUser.firstName,
             lastName: loggedUser.lastName,
+            nickName: loggedUser.nickName,
             _id: loggedUser._id,
             email: loggedUser.email,
             savedStudySets: loggedUser.savedStudySets

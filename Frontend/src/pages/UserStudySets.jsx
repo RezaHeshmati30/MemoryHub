@@ -9,7 +9,7 @@ function UserStudySets() {
     const {setStudySetId, deleteSavedStudySet} = useContext(UserStudySetsContext);
     const [searchQuery, setSearchQuery] = useState('');
     const navigate = useNavigate();
-    // const {id} = useParams();
+    
     
 
     useEffect(() => {
@@ -53,7 +53,7 @@ function UserStudySets() {
             <ul className='flex flex-col gap-[15px]'>
                 {Object.entries(
                     (filteredStudySets || []).reduce((groups, studySet) => {
-                        const topicTitle = studySet.topicTitle;
+                        const topicTitle = studySet?.topic?.title;
                         if (!groups[topicTitle]) {
                             groups[topicTitle] = [];
                         }
