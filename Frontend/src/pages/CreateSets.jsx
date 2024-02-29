@@ -23,7 +23,7 @@ function CreateSets() {
     getUserInfo();
   }, [userId]);
 
-  const editHandler = async (e) => {
+  const handleCreateSets = async (e) => {
     e.preventDefault();
     try {
       console.log("User ID:", userId);
@@ -113,7 +113,7 @@ function CreateSets() {
     <div className='flex justify-center items-center '>
       <form
         className='bg-pink-200 shadow-md rounded px-8 pt-6 pb-8 mb-4'
-        onSubmit={editHandler}
+        onSubmit={handleCreateSets}
       >
         <h2 className='text-center text-lg font-bold mb-4'>
           Create a New Study Set

@@ -7,7 +7,7 @@ function UserPageNavigation() {
 
   useEffect(() => {
     getUserInfo();
-  })
+  },[])
 
   const userId = user?._id;
 

@@ -17,19 +17,16 @@ const AuthContextProvider = ({ children }) => {
   const [passwordLogin, setPasswordLogin] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [isCreateCardsClicked, setIsCreateCardsClicked] = useState(false);
-  const [userId, setUserId] = useState("");
-  const [savedStudySets, setSavedStudySets] = useState([]);
-  const [nickName, setNickName] = useState("");
 
-  //const backendApiUrl = "http://localhost:3001";
-  const backendApiUrl = import.meta.env.VITE_SERVER_URL;
+  const backendApiUrl = "http://localhost:3001";
+
   const resetMessages = () => {
     setMsg("");
     setError("");
   };
 
   const setErrorMessages = (error) => {
+    // debugger;
     if (error.response) {
       setError(error.response.data.error);
     } else {
@@ -39,14 +36,15 @@ const AuthContextProvider = ({ children }) => {
 
   const signUpHandler = async (e) => {
     e.preventDefault();
+
     resetMessages();
+
     try {
       const resp = await axios.post(`${backendApiUrl}/register`, {
         email: emailSignUp,
         password: passwordSignUp,
         firstName,
         lastName,
-        nickName
       });
       console.log("Erfolgreich registriert:", resp.data);
       setEmailSignUp("");
@@ -130,7 +128,7 @@ const AuthContextProvider = ({ children }) => {
         withCredentials: true,
       });
       console.log("resp.data:", resp.data);
-      setMsg(resp.data);
+       setMsg(resp.data);
     } catch (error) {
       setErrorMessages(error);
     }
@@ -146,10 +144,7 @@ const AuthContextProvider = ({ children }) => {
         withCredentials: true,
       });
       setUser(response.data);
-      setUserId(response.data._id);
-      setSavedStudySets(response.data.savedStudySets);
-
-      //console.log("user response", response.data);
+      //console.trace(response.data);
     } catch (error) {
       setErrorMessages(error);
     }
@@ -187,11 +182,6 @@ const AuthContextProvider = ({ children }) => {
         lastName,
         setLastName,
         getUserInfo,
-        isCreateCardsClicked,
-        setIsCreateCardsClicked,
-        userId, setUserId,
-        savedStudySets, setSavedStudySets,
-        nickName, setNickName
       }}
     >
       {children}

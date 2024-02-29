@@ -59,37 +59,19 @@ const StudySetsContextProvider = ({ children }) => {
       alert("Study set already exists in your account");
     }
   };
+  // if (formObject) {
+  //   createStudySetsAndCards(
+  //     userId,
+  //     formObject.topicTitle,
+  //     formObject.title,
+  //     formObject.description,
+  //     formObject.createdBy,
+  //     formObject.cards
+  //   );
 
   const createStudySetsAndCards = async (userId, topic, title, description, createdBy, cards) => {
-    console.log("userid from from:", userId);
-    try {
-      const savedStudySets = {
-        topic: topic,
-        title: title,
-        description: description,
-        createdBy: createdBy,
-        cards: cards.map(card => ({
-          question: card.question,
-          answer: card.answer
-        }))
-      };
-
-      console.log("savedStudySets:", { ...savedStudySets });
-      const response = await axios.post(
-        `${backendApiUrl}/createSet/${userId}`,
-        { ...savedStudySets }
-      );
-      setLoading(true);
-    } catch (error) {
-      console.error("Error creating study sets and cards:", error);
-      if (error.response) {
-        console.log("Response Data from backend:", error.response.data);
-      }
-
-      throw error;
-    }
   };
-
+  
   const editStudySet = async (
     userId,
     topicId,

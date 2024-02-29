@@ -75,13 +75,13 @@ export const createStudySetsAndCards = async (req, res) => {
           .status(400)
           .json({ error: "StudySet with the given title already exists." });
       } else {
-        return res.status(500).json({ error: "Internal server error" });
+        return res.status(500).json({ error: "Internal server error from backend" });
       }
     }
   } catch (error) {
     console.error(error);
     console.log("Error in backend, in catch");
-    return res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error from backend catch" });
   }
 };
 

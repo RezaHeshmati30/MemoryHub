@@ -11,7 +11,7 @@ function UserStudySet() {
     
 
     useEffect(() => {
-        getUserInfo();
+       getUserInfo();
     }, [])
 
     const studySet = user?.savedStudySets?.filter(studySet => studySet._id === id)[0];
