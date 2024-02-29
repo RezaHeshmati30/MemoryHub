@@ -3,21 +3,19 @@ import { StudySetsContext } from "../context/StudySetsContext";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext"; 
 
-import "./cards.css";
+import "../components/cards.css";
 
-function Cards() {
+
+function ForeignUserStudySet() {
+
   const [isFlipped, setIsFlipped] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
-
   const [isAnimated, setAnimated] = useState(false);
   const {user} = useContext(AuthContext);
   const { addStudySetToUser, getStudyData, studyData} = useContext(StudySetsContext);
   const { hasToken, getUserInfo } = useContext(AuthContext);
-
-
   const navigate = useNavigate();
-  const {topicId} = useParams();
-  const {studySetId} = useParams();
+  const {userId, topicId, studySetId} = useParams();
 
 
   useEffect(() => {
@@ -28,14 +26,17 @@ function Cards() {
   }, []);
 
   const currentCardsSet = studyData?.topics
-    ?.filter((topic) => topic._id === topicId)[0]
-    ?.studySets.filter((set) => set._id === studySetId)[0];
+    ?.filter((topic) => topic?._id === topicId)[0]
+    ?.studySets?.filter((set) => set._id === studySetId)[0];
 
-  const author = studyData?.topics
-  ?.filter((topic) => topic._id === topicId)[0]
-  ?.studySets.filter((set) => set._id === studySetId)[0].createdBy;
+    console.log("Studydata", studyData?.topics?.filter((topic) => topic?._id === topicId)[0]?.studySets?.filter((set) => set._id === studySetId))
+//     console.log("current card set", currentCardsSet)
 
-  console.log("Author:", author)
+//   const author = studyData?.topics
+//   ?.filter((topic) => topic._id === topicId)[0]
+//   ?.studySets.filter((set) => set._id === studySetId)[0].createdBy;
+
+//   console.log("Author:", author)
 
   const currentCard = currentCardsSet?.cards[currentIndex];
 
@@ -77,9 +78,9 @@ function Cards() {
               <strong>{currentCardsSet.title}</strong>
             </p>
             <p className='text-xl my-5'>{currentCardsSet.description}</p>
-            <Link to={hasToken && user?._id === author?._id ? `/user/${user?._id}` : `/users/${author?._id}/all-study-sets` }>  
+            {/* <Link to={hasToken && user?._id === author?._id ? `/user/${user?._id}` : `/users/${author?._id}/all-study-sets` }>  
               <p>Created by: {author.nickName}</p>
-            </Link>
+            </Link> */}
             
             <div
               className={`flip-container flex justify-center ${
@@ -126,7 +127,7 @@ function Cards() {
 
         <button
           className='bg-blue-400 p-[10px] rounded-md'
-          onClick={() => navigate("/studySets")}
+          onClick={() => navigate(`/users/${userId}/all-study-sets`)}
         >
           back to Study Sets
         </button>
@@ -142,4 +143,4 @@ function Cards() {
   );
 }
 
-export default Cards;
+export default ForeignUserStudySet

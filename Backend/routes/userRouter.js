@@ -8,7 +8,7 @@ import { postChangePasswordController } from "../controllers/ChangePasswordContr
 const router = express.Router();
 
 router
-  .patch("/users/:id", addStudySetToUser)
+  .patch("/users/:userId/topics/:topicId/studySets/:studySetId", addStudySetToUser)
   .get("/user", isAuth, getUserInfo)
   .get("/users/:id", getUserShortData)
   .get("/user/:id/studySets", getUserStudySets)
