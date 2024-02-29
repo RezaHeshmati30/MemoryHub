@@ -13,6 +13,7 @@ import EditStudySet from "../pages/EditStudySet";
 import Practice from "../pages/Practice";
 import EndPractice from "../pages/EndPractice";
 import LearnCards from "../pages/LearnCards";
+import UserProfileUpdate from "../pages/ProfileSettings";
 
 
 
@@ -35,6 +36,7 @@ const router = createBrowserRouter([
       { path: '/studySet/endPractice/:id', element: <EndPractice />},
       { path: '/contact', element: <Contact />},
       { path: '*', element: <PageNotFound />},
+      { path: '/userProfileUpdate', element: <UserProfileUpdate />},
     ],
   },
 ]);

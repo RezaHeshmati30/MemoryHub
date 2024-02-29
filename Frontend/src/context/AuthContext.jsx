@@ -86,7 +86,6 @@ const AuthContextProvider = ({ children }) => {
   };
 
   const logoutHandler = async (e) => {
-    e.preventDefault();
     resetMessages();
     try {
       const resp = await axios.post(

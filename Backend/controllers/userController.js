@@ -4,6 +4,15 @@ import StudySetModel from "../models/StudySetModel.js"
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 import mongoose from "mongoose";
+import { v2 as cloudinary } from 'cloudinary';
+import "dotenv/config";
+import formidable from 'formidable';
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+  });
 
 export const getUserInfo = async (req, res) => {
 
@@ -29,7 +38,8 @@ export const getUserInfo = async (req, res) => {
             lastName: loggedUser.lastName,
             _id: loggedUser._id,
             email: loggedUser.email,
-            savedStudySets: loggedUser.savedStudySets
+            photo: loggedUser.photo,
+            savedStudySets: loggedUser.savedStudySets,
           });
 
     } catch (error) {
@@ -141,3 +151,64 @@ export const addStudySetToUser = async (req, res) => {
           res.status(500).send("Internal Server Error"); 
         }
       }
+
+      export const updateUser = async (req, res) => {
+        const userId = req.params.id;
+        const { email, firstName, lastName } = req.body;
+    
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
+          return res.status(404).send(`No user with id: ${userId}`);
+        }
+    
+        try {
+          let updatedUser = { email, firstName, lastName };   
+          updatedUser = await UserModel.findByIdAndUpdate(userId, updatedUser, { new: true });
+          res.status(200).send(updatedUser);
+        } catch (error) {
+          console.error("Error updating user:", error);
+          res.status(500).send("Internal Server Error");
+        }
+    };
+
+      export const updateUserPhoto = async (req, res) => {
+        const userId = req.params.id;
+        const form = formidable({});
+        const [fields, files] = await form.parse(req);
+        let filePath;
+        try {
+           filePath = files?.photo[0]?.filepath;
+
+        } catch (err) {
+          console.error(err);
+        }
+        
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
+          return res.status(404).send(`No user with id: ${userId}`);
+        }
+    
+        try {
+          let updatedUser = { };
+          if (filePath) {
+            const result = await cloudinary.uploader.upload(filePath);
+            updatedUser.photo = result.secure_url;
+          }
+    
+          updatedUser = await UserModel.findByIdAndUpdate(userId, updatedUser, { new: true });
+          res.status(200).send(updatedUser);
+        } catch (error) {
+          console.error("Error updating user Photo:", error);
+          res.status(500).send("Internal Server Error");
+        }
+    };
+
+    export const deleteUserAccount = async (req, res) => {
+      const userId = req.params.id;
+      try {
+        const deletedUser = await UserModel.findByIdAndDelete(userId);
+        res.status(200).send(deletedUser);
+      } catch (error) {
+        console.error("Error deleting user:", error);
+        res.status(500).send("Internal Server Error");
+      }
+  };
+    

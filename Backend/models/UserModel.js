@@ -14,6 +14,7 @@ const UserSchema = new mongoose.Schema({
   },
   firstName: {type: String},
   lastName: {type: String},
+  photo: {type: String, default: "https://cdn-icons-png.flaticon.com/512/149/149071.png"},
   savedStudySets: [{
     topicTitle: { type: String, default: "Your topic" },
     studySet: { type: mongoose.Schema.Types.ObjectId, ref: "StudySet" },
