@@ -116,29 +116,38 @@ export const editStudySet = async (req, res) => {
       return res.status(404).json({ error: "Study set not found" });
     }
     //find the card and update it, then return the updated card
-    const updatedCardsPromises = cards.map( (eachCard) => {
+    const updatedCardsPromises = cards.map(async (eachCard) => {
       const cardId = eachCard.cardId;
-      console.log("cardIDDD", cardId);
-
-      try {
-        const foundCard = CardModel.findByIdAndUpdate(
-          cardId,
-          {
-            $set: {
-              question: eachCard.question,
-              answer: eachCard.answer,
+      if (!cardId) {
+        const newCard = CardModel.create(eachCard);
+        newCard.then((newCard) => {
+          return StudySetModel.findByIdAndUpdate(studySetId, {
+            $push: { cards: newCard._id  },
+          });
+        });
+        return newCard;
+      } else {
+        try {
+          const foundCard = CardModel.findByIdAndUpdate(
+            cardId,
+            {
+              $set: {
+                question: eachCard.question,
+                answer: eachCard.answer,
+              },
             },
-          },
-          { new: true }
-        );
-        return foundCard; 
-      } catch (error) {
-        console.error("Error updating card:", error.message);
-        return null; 
+            { new: true }
+          );
+          return foundCard;
+        } catch (error) {
+          console.error("Error updating card:", error.message);
+          return null;
+        }
       }
     });
+
     const updatedCards = await Promise.all(updatedCardsPromises);
-     console.log("updatedcards", updatedCards)
+    console.log("updatedcards", updatedCards);
     //find the topic and update it
     const updatedTopic = await TopicModel.findByIdAndUpdate(
       topicId,
@@ -166,4 +175,3 @@ export const editStudySet = async (req, res) => {
     return res.status(500).json({ error: "Internal server error" });
   }
 };
-
