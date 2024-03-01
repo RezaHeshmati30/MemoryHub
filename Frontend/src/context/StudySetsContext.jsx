@@ -95,15 +95,8 @@ const StudySetsContextProvider = ({ children }) => {
     title,
     description,
     cardsInfo
-    //formCards
   ) => {
-    console.log("userid from edit:", userId);
-    console.log("topicId from edit:", topicId);
-    console.log("studySetId from edit:", studySetId);
-    console.log("topic from edit:", topic);
-    console.log("title from edit:", title);
-    console.log("description from edit:", description);
-    console.log("cardsInfo from edit:", cardsInfo);
+  
     try {
       const updatedStudySets = {
         topicTitle: topic,
@@ -118,8 +111,7 @@ const StudySetsContextProvider = ({ children }) => {
       }
       })
     }
-      console.log("Updated Study Sets:", updatedStudySets.cards);
-
+    console.log("updatedStudySets:", updatedStudySets);
       const response = await axios.patch(
         `${backendApiUrl}/editSet/${userId}/${topicId}/${studySetId}`,
         { ...updatedStudySets },

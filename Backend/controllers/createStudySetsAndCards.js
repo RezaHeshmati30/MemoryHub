@@ -99,11 +99,7 @@ export const editStudySet = async (req, res) => {
   const studySetId = req.params.studySetId;
 
   const { topicTitle, title, description, cards } = req.body;
-  console.log("topicId", topicId);
-  console.log("studySetId", studySetId);
-  console.log("userId", userId);
-  console.log("cards at first", cards);
-  console.log(req.body);
+
   try {
     //find the studyset and update it
     const studySet = await StudySetModel.findByIdAndUpdate(
@@ -135,12 +131,10 @@ export const editStudySet = async (req, res) => {
           },
           { new: true }
         );
-
-        //console.log("Found Card:", foundCard)
-        return foundCard; // Move the return statement outside of the inner map
+        return foundCard; 
       } catch (error) {
         console.error("Error updating card:", error.message);
-        return null; // Handle the error by returning null or some other value
+        return null; 
       }
     });
     const updatedCards = await Promise.all(updatedCardsPromises);
@@ -156,37 +150,10 @@ export const editStudySet = async (req, res) => {
       { new: true }
     );
 
-    //console.log("Received updatedtopicTitle:", updatedTopic);
-
     if (!updatedTopic) {
       console.error("Topic not found");
       return res.status(404).json({ error: "Topic not found" });
     }
-
-    // const updatedUser = await UserModel.findByIdAndUpdate(
-    //   userId,
-    //   {
-    //     $set: {
-    //       "savedStudySets.$[elem].topicTitle": topicTitle,
-    //     },
-    //   },
-    //   {
-    //     arrayFilters: [{ "elem.studySet": studySet._id.toString() }],
-    //     new: true,
-    //   }
-    // );
-
-    // if (!updatedUser) {
-    //   console.error("User not found");
-    //   return res.status(404).json({ error: "User not found" });
-    // }
-
-    // const formattedUpdatedCards = updatedCards.map((card) => ({
-    //   card: card.value._id,
-    //   question: card.value.question,
-    //   answer: card.value.answer,
-    // }));
-
     res.status(201).json({
       topicTitle: topicTitle,
       title: studySet.title,
@@ -200,86 +167,3 @@ export const editStudySet = async (req, res) => {
   }
 };
 
-// export const editCreatedCard = async (req, res) => {
-//   const userId = req.params.userId;
-//   const studySetId = req.params.studySetId;
-//   const { topicTitle, title, description, cards } = req.body;
-
-//   try {
-//     const studySet = await StudySetModel.findByIdAndUpdate(
-//       studySetId,
-//       {
-//         title: title,
-//         description: description,
-//         cards: cards.map((eachCard) => eachCard.card),
-//       },
-//       { new: true }
-//     );
-
-//     if (!studySet) {
-//       console.error("Study set not found");
-//       return res.status(404).json({ error: "Study set not found" });
-//     }
-
-//     const updatedCards = await Promise.allSettled(
-//       cards.map(async (eachCard) => {
-//         const foundCard = await CardModel.findByIdAndUpdate(
-//           eachCard.cardId,
-//           {
-//             $set: {
-//               question: eachCard.question,
-//               answer: eachCard.answer,
-//             },
-//           },
-//           { new: true }
-//         );
-
-//         if (!foundCard) {
-//           console.error("Card not found:", eachCard.card);
-//           return { status: "rejected", reason: "Card not found" };
-//         }
-
-//         return { status: "fulfilled", value: foundCard };
-//       })
-//     );
-
-//     const updatedUser = await UserModel.findByIdAndUpdate(
-//       userId,
-//       {
-//         $set: {
-//           "savedStudySets.$[studySet].topicTitle": topicTitle,
-//           "savedStudySets.$[studySet].studySetId": studySetId,
-//           "savedStudySets.$[studySet].cards": updatedCards.map((card) => ({
-//             card: card.value._id, // Use 'card.value._id' to get the ID from Promise result
-//           })),
-//         },
-//       },
-//       {
-//         arrayFilters: [{ "studySet._id": studySet._id }],
-//         new: true,
-//       }
-//     );
-
-//     if (!updatedUser) {
-//       console.error("User not found");
-//       return res.status(404).json({ error: "User not found" });
-//     }
-
-//     const formattedUpdatedCards = updatedCards.map((card) => ({
-//       card: card.value._id, // Use 'card.value._id' to get the ID from Promise result
-//       question: card.value.question,
-//       answer: card.value.answer,
-//     }));
-
-//     res.status(201).json({
-//       topicTitle: topicTitle,
-//       title: studySet.title,
-//       description: studySet.description,
-//       cards: formattedUpdatedCards,
-//       message: "Flashcards updated successfully",
-//     });
-//   } catch (error) {
-//     console.error("Internal server error:", error);
-//     return res.status(500).json({ error: "Internal server error" });
-//   }
-// };

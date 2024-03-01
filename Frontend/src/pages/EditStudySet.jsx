@@ -12,15 +12,11 @@ const EditStudySet = () => {
   const savedStudySet = user?.savedStudySets?.find(
     (studySet) => studySet._id === id
   );
-
   const studySetId = savedStudySet?.studySet?._id || "";
-  console.log("first of all studySetId", studySetId);
-
   //?finding the topicId:
+
   const topicTitle = savedStudySet?.topic?.title || "";
-  console.log("topicTitleeeee", topicTitle);
   const topicId = savedStudySet?.topic?._id || "";
-  console.log("secondly we have the topicId", topicId);
 
   //?finding cards:
   const cardsDefault = savedStudySet?.cards || [];
@@ -29,8 +25,7 @@ const EditStudySet = () => {
     answer: cardSet.card.answer,
     id: cardSet.card._id,
   }));
-  
-  console.log("cardsInfo:", cardsInfo);
+
   //? settting Form
   const [formState, setFormState] = useState({
     topicTitle: topicTitle,
@@ -44,7 +39,7 @@ const EditStudySet = () => {
     getUserInfo();
     setFormState((prevFormState) => ({
       ...prevFormState,
-      topic: topicTitle || "",
+      topicTitle: topicTitle || "",
       title: savedStudySet?.studySet?.title || "",
       description: savedStudySet?.studySet?.description || "",
       cards: cardsInfo,
@@ -61,7 +56,7 @@ const EditStudySet = () => {
         formState.topic,
         formState.title,
         formState.description,
-        cardsInfo
+        formState.cards
       );
     } catch (error) {
       console.log(error.message);
@@ -74,7 +69,7 @@ const EditStudySet = () => {
       [e.target.name]: e.target.value,
     }));
   };
-
+console.log("formStateeeee:", formState);
   const handleCardChange = (index, field, value) => {
     setFormState((prevFormState) => ({
       ...prevFormState,
@@ -103,7 +98,7 @@ const EditStudySet = () => {
   return (
     <div className='flex justify-center items-center '>
       <form
-        className='bg-blue-200 shadow-md rounded px-8 pt-6 pb-8 mb-4'
+        className='bg-blue-100 shadow-md rounded px-8 pt-6 pb-8 mb-4'
         onSubmit={handleSubmit}
       >
         <h2 className='text-center text-lg font-bold mb-4'>Edit Study Set</h2>
@@ -207,9 +202,7 @@ const EditStudySet = () => {
                   // }
                 />
               </div>
-              <div className='w-full sm:w-1/2 md:w-1/3 mb-4 px-2'>
-              
-              </div>
+              <div className='w-full sm:w-1/2 md:w-1/3 mb-4 px-2'></div>
               <button
                 className='absolute right-0 top-0 mt-2 mr-2 text-red-600 hover:text-red-700 focus:outline-none'
                 type='button'

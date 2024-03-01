@@ -56,7 +56,7 @@ function CreateSets() {
 
       // Ensure formObject is defined before calling createStudySetsAndCards
       if (formObject) {
-        createStudySetsAndCards(
+       await createStudySetsAndCards(
           userId,
           formObject.topic,
           formObject.title,
@@ -73,7 +73,7 @@ function CreateSets() {
         setImage([""]);
         setTitle("");
         setDescription("");
-        navigate("/user/studySets");
+        navigate(`/user/${userId}/studySets`);
       } else {
         console.error("formObject is not defined.");
       }
