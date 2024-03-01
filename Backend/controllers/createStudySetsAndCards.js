@@ -120,13 +120,12 @@ export const editStudySet = async (req, res) => {
       return res.status(404).json({ error: "Study set not found" });
     }
     //find the card and update it, then return the updated card
-    const updatedCardsPromises = cards.map(async (eachCard) => {
+    const updatedCardsPromises = cards.map( (eachCard) => {
       const cardId = eachCard.cardId;
-
       console.log("cardIDDD", cardId);
 
       try {
-        const foundCard = await CardModel.findByIdAndUpdate(
+        const foundCard = CardModel.findByIdAndUpdate(
           cardId,
           {
             $set: {
@@ -137,16 +136,15 @@ export const editStudySet = async (req, res) => {
           { new: true }
         );
 
-        console.log("Found Card:", foundCard)
+        //console.log("Found Card:", foundCard)
         return foundCard; // Move the return statement outside of the inner map
       } catch (error) {
         console.error("Error updating card:", error.message);
         return null; // Handle the error by returning null or some other value
       }
     });
-
-    const updatedCards = await Promise.allSettled(updatedCardsPromises);
-
+    const updatedCards = await Promise.all(updatedCardsPromises);
+     console.log("updatedcards", updatedCards)
     //find the topic and update it
     const updatedTopic = await TopicModel.findByIdAndUpdate(
       topicId,
@@ -158,7 +156,7 @@ export const editStudySet = async (req, res) => {
       { new: true }
     );
 
-    console.log("Received updatedtopicTitle:", updatedTopic);
+    //console.log("Received updatedtopicTitle:", updatedTopic);
 
     if (!updatedTopic) {
       console.error("Topic not found");

@@ -114,7 +114,7 @@ const StudySetsContextProvider = ({ children }) => {
           return {
           question: card.question,
           answer: card.answer,
-          id: card.id,
+          cardId: card.id,
       }
       })
     }
@@ -179,4 +179,3 @@ const StudySetsContextProvider = ({ children }) => {
 };
 
 export { StudySetsContext, StudySetsContextProvider };
-
