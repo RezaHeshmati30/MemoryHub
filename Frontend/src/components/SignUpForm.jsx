@@ -4,7 +4,7 @@ import { AuthContext } from '../context/AuthContext'
 function SignUpForm() {
     const {signUpHandler, showSignUpForm, setShowLoginForm, setShowSignUpForm, hasToken, emailSignUp, passwordSignUp, 
       setEmailSignUp, setPasswordSignUp, firstName, setFirstName, lastName, setLastName, setIsCreateCardsClicked,
-      nickName, setNickName, error, successSignUpWindow, setSuccessSignUpWindow} = useContext(AuthContext); 
+      nickName, setNickName, error, successSignUpWindow, setSuccessSignUpWindow, isLoading} = useContext(AuthContext); 
 
     const onClickHandler = () => {
       setShowSignUpForm(false);
@@ -40,11 +40,11 @@ function SignUpForm() {
           </form>
           <button className='bg-[#b6b2b2] py-[5px] px-[10px] rounded-[10px] w-[30%] mb-[20px]' onClick={onClickCloseHandler}>Close X</button>
       </div>
-      <div className={`${successSignUpWindow ? "flex" : "hidden"} absolute top-[50%] left-[50%] z-3 -translate-x-[50%] bg-white -translate-y-[50%] mx-auto max-w-[300px] flex-col items-center p-[15px] mt-[50px] border-[2px] border-gray-300 rounded-[8px] `}>
-        {console.log("error:", error)}
-        <p className=''>{error?.length > 0 ? error : "An email confirmation has been sent to your email address. Please check your inbox to complete the signup process."}</p>
-        <button className='bg-[#b6b2b2] py-[5px] px-[10px] rounded-[10px] w-[30%] mb-[20px]' onClick={() => setSuccessSignUpWindow(false)}>Close</button>
-      </div>
+        <div className={`${successSignUpWindow ? "flex" : "hidden"} absolute top-[50%] left-[50%] z-3 -translate-x-[50%] bg-white -translate-y-[50%] mx-auto max-w-[300px] flex-col items-center p-[15px] mt-[50px] border-[2px] border-gray-300 rounded-[8px] `}>
+          {console.log("error:", error)}
+          <p className=''>{error?.length > 0 ? error : "An email confirmation has been sent to your email address. Please check your inbox to complete the signup process."}</p>
+          <button className='bg-[#b6b2b2] py-[5px] px-[10px] rounded-[10px] w-[30%] mb-[20px]' onClick={() => setSuccessSignUpWindow(false)}>Close</button>
+        </div>
     </section>
   )
 }

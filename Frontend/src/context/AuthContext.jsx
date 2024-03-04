@@ -23,6 +23,7 @@ const AuthContextProvider = ({ children }) => {
   const [nickName, setNickName] = useState("");
   const [successLoginWindow, setSuccessLoginWindow] = useState(false);
   const [successSignUpWindow, setSuccessSignUpWindow] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   //const backendApiUrl = "http://localhost:3001";
   const backendApiUrl = import.meta.env.VITE_SERVER_URL;
@@ -56,6 +57,7 @@ const AuthContextProvider = ({ children }) => {
       setPasswordSignUp("");
       setMsg("Du hast dich erfolgreich registriert.");
       setSuccessSignUpWindow(true);
+      setIsLoading(true);
     } catch (error) {
       setErrorMessages(error);
       setSuccessSignUpWindow(true);
@@ -199,7 +201,8 @@ const AuthContextProvider = ({ children }) => {
         savedStudySets, setSavedStudySets,
         nickName, setNickName, 
         successLoginWindow, setSuccessLoginWindow,
-        successSignUpWindow, setSuccessSignUpWindow
+        successSignUpWindow, setSuccessSignUpWindow,
+        isLoading, setIsLoading
       }}
     >
       {children}
