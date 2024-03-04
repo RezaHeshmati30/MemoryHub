@@ -133,7 +133,7 @@ function LearnCards() {
         )}
         <button
             className='bg-blue-400 p-[10px] rounded-md mt-[40px]'
-            onClick={() => navigate("/user/studySets")}
+            onClick={() => navigate(`/user/${user?._id}/studySets`)}
             >
             back to Study Sets
         </button>

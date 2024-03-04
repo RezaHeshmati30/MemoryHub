@@ -16,6 +16,7 @@ function UserPageNavigation() {
         <h2>Account navigation:</h2>
         <Link to={`/user/${userId}/studySets`}>Study sets page</Link>
         <Link to="/createSet">Create new set page</Link>
+        <Link to="/userProfileUpdate">Settings</Link>
     </section>
   )
 }

@@ -1,14 +1,21 @@
 import bcrypt from "bcrypt";
 import UserModel from "../models/UserModel.js";
-import StudySetModel from "../models/StudySetModel.js"
+import StudySetModel from "../models/StudySetModel.js";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 import mongoose from "mongoose";
+import { v2 as cloudinary } from 'cloudinary';
+import "dotenv/config";
+import formidable from 'formidable';
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+  });
 
 export const getUserInfo = async (req, res) => {
-
     try {
-        
         if (!req.userId) {
             return res.status(401).send("Unauthorized"); 
         }
@@ -30,148 +37,213 @@ export const getUserInfo = async (req, res) => {
             nickName: loggedUser.nickName,
             _id: loggedUser._id,
             email: loggedUser.email,
-            savedStudySets: loggedUser.savedStudySets
+            photo: loggedUser.photo,
+            savedStudySets: loggedUser.savedStudySets,
           });
 
     } catch (error) {
         console.error("Error retrieving user information:", error);
         res.status(500).send("Internal Server Error"); 
-    }
-}
+  }
+};
 
-export const getUserStudySets = async(req, res) => {
+export const getUserStudySets = async (req, res) => {
   const userId = req.params.id;
 
   try {
-    const user = await UserModel.findById(userId)
-      .populate({
-        path: 'savedStudySets',
-        populate: [
-          { path: 'topic', model: 'Topic' },
-          { path: 'studySet', model: 'StudySet' },
-          { path: 'cards.card', model: 'Card' }
-        ]
-      });
+    const user = await UserModel.findById(userId).populate({
+      path: "savedStudySets",
+      populate: [
+        { path: "topic", model: "Topic" },
+        { path: "studySet", model: "StudySet" },
+        { path: "cards.card", model: "Card" },
+      ],
+    });
 
     if (!user) {
-      return res.status(404).json({ error: 'User not found' });
+      return res.status(404).json({ error: "User not found" });
     }
 
     res.status(200).json({ savedStudySets: user.savedStudySets });
   } catch (error) {
-    console.error('Error fetching saved study sets:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    console.error("Error fetching saved study sets:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
-}
+};
 
 export const addStudySetToUser = async (req, res) => {
-    const studySetId = req.body.studySetId;
-    const userId = req.params.id;
+  const userId = req.params.userId;
+  const topicId = req.params.topicId;
+  const studySetId = req.params.studySetId;
 
-        try {
-          const user = await UserModel.findById(userId);
-          
-          if (!user) {
-            res.status(404).send('User not found');
-          }
-          const existingSavedStudySetIndex = user.savedStudySets.findIndex(savedStudySet => savedStudySet.studySet.equals(studySetId));
-      
-          if (existingSavedStudySetIndex !== -1) {
-            res.status(400).send('Study set already saved by the user');
-          } else {
-            const studySet = await StudySetModel.findById(studySetId);
-            if (!studySet) {
-            res.status(404).send('Study set not found');
-            } else {
-              const savedStudySet = {
-                  topicTitle: req.body.topicTitle || 'Your topic',
-                  studySet: studySetId,
-                  savedAt: Date.now(),
-                  cards: studySet.cards.map(card => ({ card: card._id })),
-                  edit: req.body.edit
-                };
+  try {
+    const user = await UserModel.findById(userId);
 
-                await StudySetModel.findOneAndUpdate(
-                  { _id: studySetId },
-                  { $inc: { shared: 1 } }
-              );  
-            
-              user.savedStudySets.push(savedStudySet);
-              await user.save();
-              res.status(200).send(user);
-              }
-          }
-        } catch (error) {
-            console.error("Error retrieving user information:", error);
-            res.status(500).send("Internal Server Error"); 
-        }
-      };
+    if (!user) {
+      res.status(404).send("User not found");
+    }
+    const existingSavedStudySetIndex = user.savedStudySets.findIndex(
+      (savedStudySet) => savedStudySet.studySet.equals(studySetId)
+    );
 
-      
-      export const deleteSavedStudySet = async (req, res) => {
-        const userId = req.params.userId;
-        const studySetId = req.params.setId;
+    if (existingSavedStudySetIndex !== -1) {
+      res.status(400).send("Study set already saved by the user");
+    } else {
+      const studySet = await StudySetModel.findById(studySetId);
+      if (!studySet) {
+        res.status(404).send("Study set not found");
+      } else {
+        const savedStudySet = {
+          topic: topicId || "Your topic",
+          studySet: studySetId,
+          savedAt: Date.now(),
+          cards: studySet.cards.map((card) => ({ card: card._id })),
+          edit: req.body.edit,
+        };
 
-        try {
-          const user = await UserModel.findById(userId);
-      
-          if (!user) {
-           res.status(404).send("User not found");
-          }
-      
-          const studySetIndex = user.savedStudySets.findIndex(set => set._id.toString() === studySetId);
-      
-          if (studySetIndex === -1) {
-            res.status(404).send("Study set not found in saved study sets");
-          }
-      
-          user.savedStudySets.splice(studySetIndex, 1); 
-      
-          await user.save();
-          
-          res.status(200).send("Study set deleted successfully" );
-        } catch (error) {
-          console.error("Error retrieving user information:", error);
-          res.status(500).send("Internal Server Error"); 
-        }
+        await StudySetModel.findOneAndUpdate(
+          { _id: studySetId },
+          { $inc: { shared: 1 } }
+        );
+
+        user.savedStudySets.push(savedStudySet);
+        await user.save();
+        res.status(200).send(user);
       }
-      
-      export const updateCardStatus = async(req, res) => {
-        const userId = req.params.userId;
-        const studySetId = req.params.studySetId;
-        const cardId = req.params.cardId;
-        const newStatus = req.body.newStatus;
-        console.log("USERId:", userId)
-        console.log("StudySet:", studySetId)
-        console.log("CardId:", cardId)
-        console.log("Nes Status:", newStatus)
+    }
+  } catch (error) {
+    console.error("Error retrieving user information:", error);
+    res.status(500).send("Internal Server Error");
+  }
+};
 
+export const deleteSavedStudySet = async (req, res) => {
+  const userId = req.params.userId;
+  const studySetId = req.params.setId;
+
+  try {
+    const user = await UserModel.findById(userId);
+
+    if (!user) {
+      res.status(404).send("User not found");
+    }
+
+    const studySetIndex = user.savedStudySets.findIndex(
+      (set) => set._id.toString() === studySetId
+    );
+
+    if (studySetIndex === -1) {
+      res.status(404).send("Study set not found in saved study sets");
+    }
+
+    user.savedStudySets.splice(studySetIndex, 1);
+
+    await user.save();
+
+    res.status(200).send("Study set deleted successfully");
+  } catch (error) {
+    console.error("Error retrieving user information:", error);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
+export const updateCardStatus = async (req, res) => {
+  const userId = req.params.userId;
+  const studySetId = req.params.studySetId;
+  const cardId = req.params.cardId;
+  const newStatus = req.body.newStatus;
+  console.log("USERId:", userId);
+  console.log("StudySet:", studySetId);
+  console.log("CardId:", cardId);
+  console.log("Nes Status:", newStatus);
+
+  try {
+    // Find the user by userId and update the card
+    const user = await UserModel.findById(userId);
+    console.log("User:", user);
+    const updatedUser = await UserModel.findOneAndUpdate(
+      {
+        _id: userId,
+        "savedStudySets._id": studySetId,
+        "savedStudySets.cards._id": cardId,
+      },
+      {
+        $set: {
+          "savedStudySets.$[set].cards.$[card].status": newStatus,
+        },
+      },
+      {
+        new: true,
+        arrayFilters: [{ "set._id": studySetId }, { "card._id": cardId }],
+      }
+    );
+    console.log("User:", updatedUser);
+    res.status(200).send(updatedUser);
+  } catch (error) {
+    console.error("Error retrieving user information:", error);
+    res.status(500).send("Internal Server Error");
+  }
+};
+      export const updateUser = async (req, res) => {
+        const userId = req.params.id;
+        const { email, firstName, lastName } = req.body;
+    
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
+          return res.status(404).send(`No user with id: ${userId}`);
+        }
+    
         try {
-          // Find the user by userId and update the card
-          const user = await UserModel.findById(userId);
-          console.log("User:", user)
-          const updatedUser = await UserModel.findOneAndUpdate(
-            { _id: userId, "savedStudySets._id": studySetId, "savedStudySets.cards._id": cardId },
-            { 
-              $set: {
-                "savedStudySets.$[set].cards.$[card].status": newStatus 
-              }
-            },
-            { 
-              new: true, 
-              arrayFilters: [ 
-                { "set._id": studySetId }, 
-                { "card._id": cardId } 
-              ] 
-            }
-          );
-          console.log("User:", updatedUser)
+          let updatedUser = { email, firstName, lastName };   
+          updatedUser = await UserModel.findByIdAndUpdate(userId, updatedUser, { new: true });
           res.status(200).send(updatedUser);
         } catch (error) {
-          console.error("Error retrieving user information:", error);
-          res.status(500).send("Internal Server Error"); 
+          console.error("Error updating user:", error);
+          res.status(500).send("Internal Server Error");
         }
+    };
+
+      export const updateUserPhoto = async (req, res) => {
+        const userId = req.params.id;
+        const form = formidable({});
+        const [fields, files] = await form.parse(req);
+        let filePath;
+        try {
+           filePath = files?.photo[0]?.filepath;
+
+        } catch (err) {
+          console.error(err);
+        }
+        
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
+          return res.status(404).send(`No user with id: ${userId}`);
+        }
+    
+        try {
+          let updatedUser = { };
+          if (filePath) {
+            const result = await cloudinary.uploader.upload(filePath);
+            updatedUser.photo = result.secure_url;
+          }
+    
+          updatedUser = await UserModel.findByIdAndUpdate(userId, updatedUser, { new: true });
+          res.status(200).send(updatedUser);
+        } catch (error) {
+          console.error("Error updating user Photo:", error);
+          res.status(500).send("Internal Server Error");
+        }
+    };
+
+    export const deleteUserAccount = async (req, res) => {
+      const userId = req.params.id;
+      try {
+        const deletedUser = await UserModel.findByIdAndDelete(userId);
+        res.status(200).send(deletedUser);
+      } catch (error) {
+        console.error("Error deleting user:", error);
+        res.status(500).send("Internal Server Error");
       }
+  };
+    
 
       export const getUserShortData = async (req, res) => {
         const userId = req.params.id;
@@ -192,3 +264,4 @@ export const addStudySetToUser = async (req, res) => {
           res.status(500).send("Internal Server Error"); 
       }
       }
+

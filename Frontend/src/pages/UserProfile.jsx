@@ -10,7 +10,6 @@ function UserProfile() {
   useEffect(() => {
     getUserInfo();
   }, [])
-
   return (
     <section className='flex justify-between p-[30px]'>
       <div>
@@ -20,6 +19,7 @@ function UserProfile() {
       <div className='flex flex-col'>
         <p>{user?.firstName}</p>
         <p>{user?.lastName}</p>
+        <img src={user?.photo} alt="profile picture" className='w-[100px] h-[100px] rounded-full' />
       </div>
       <UserStatistic />
       <Link className="bg-[#b6b2b2] py-[5px] px-[10px] rounded-[10px] w-[10%]" to="/">Back to home</Link>

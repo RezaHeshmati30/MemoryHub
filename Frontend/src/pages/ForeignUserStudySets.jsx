@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { StudySetsContext } from '../context/StudySetsContext';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 function ForeignUserStudySets() {
-    const { getUserStudySets, userStudySets, getUserShortData, userShortData } = useContext(StudySetsContext);
+    const { getUserStudySets, userStudySets, getUserShortData, userShortData, setTopicId, setStudySetId } = useContext(StudySetsContext);
     const { userId } = useParams();
     const [groupedStudySets, setGroupedStudySets] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         getUserStudySets(userId);
@@ -16,7 +17,6 @@ function ForeignUserStudySets() {
 
     useEffect(() => {
         if (userStudySets && userStudySets?.savedStudySets) {
-            // Group study sets by topic
             const grouped = {};
             userStudySets?.savedStudySets?.forEach(studySet => {
                 const topicTitle = studySet?.topic?.title; // Check if topic exists
@@ -29,6 +29,12 @@ function ForeignUserStudySets() {
         }
     }, [userStudySets]);
 
+    const onClickHandler = (topicId, studySetId) => {
+        navigate(`/users/${userId}/topic/${topicId}/study-set/${studySetId}`);
+        // setTopicId(topicId);
+        // setStudySetId(studySetId);
+      };
+
     return (
         <section className='p-[40px]'>
             {userStudySets && userShortData && (
@@ -40,13 +46,13 @@ function ForeignUserStudySets() {
                     <ul className='flex gap-[15px] flex-wrap'>
                         {Object.entries(groupedStudySets).map(([topic, studySets]) => (
                             <li key={topic} className='border-[2px] border-gray-400 p-[10px] basis-1/3'>
-                                <h3 className='mb-[10px]'>Topic: {topic}</h3>
+                                <h3 className='mb-[10px]'>{console.log("topic:",studySets)}{topic}</h3>
                                 <ul className='flex flex-col gap-[10px]'>
                                     {studySets.map(studySet => (
-                                        <li key={studySet._id} className='border-[1px] rounded-[8px] border-gray-400 p-[10px]'>
-                                            {studySet.studySet && ( // Check if studySet exists
+                                        <li key={studySet._id} onClick={() => onClickHandler(studySet.topic._id, studySet.studySet._id)} className='border-[1px] rounded-[8px] border-gray-400 p-[10px]'>
+                                            {studySet.studySet && ( 
                                                 <>
-                                                    <p>Title: {studySet.studySet.title}</p>
+                                                    <p>Title:{studySet.studySet.title}</p>
                                                     <p>Description: {studySet.studySet.description}</p>
                                                 </>
                                             )}
@@ -63,3 +69,5 @@ function ForeignUserStudySets() {
 }
 
 export default ForeignUserStudySets;
+
+// studySet.topic._id,
