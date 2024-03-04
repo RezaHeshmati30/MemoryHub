@@ -6,6 +6,9 @@ import cors from "cors"
 import authRouter from "./routes/authRouter.js";
 import studyDataRouter from "./routes/studyDataRouter.js"
 import userRouter from "./routes/userRouter.js";
+import nodemailer from "nodemailer";
+import bodyParser from 'body-parser';
+
 
 
 
@@ -19,6 +22,11 @@ app.use( cors({
   }) );
 app.use(express.json());
 app.use( cookieParser() );
+
+// Nodemailer setup
+
+
+app.use(bodyParser.json());
 
 
 app.use("/", authRouter)
