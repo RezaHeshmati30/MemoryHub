@@ -2,28 +2,30 @@ import React, { useState, useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { StudySetsContext } from "../context/StudySetsContext";
 import { AuthContext } from "../context/AuthContext";
+import axios from 'axios';
 
 const EditStudySet = () => {
   const { editStudySet } = useContext(StudySetsContext);
   const { id } = useParams();
   const { userId, user, getUserInfo } = useContext(AuthContext);
   const navigate = useNavigate();
+
   //?finding the studySetId:
   const savedStudySet = user?.savedStudySets?.find(
     (studySet) => studySet._id === id
   );
   const studySetId = savedStudySet?.studySet?._id || "";
-  //?finding the topicId:
 
+  //?finding the topicId:
   const topicTitle = savedStudySet?.topic?.title || "";
   const topicId = savedStudySet?.topic?._id || "";
 
   //?finding cards:
   const cardsDefault = savedStudySet?.cards || [];
   const cardsInfo = cardsDefault.map((cardSet) => ({
-    question: cardSet.card.question,
-    answer: cardSet.card.answer,
-    id: cardSet.card._id,
+    question: cardSet.card?.question,
+    answer: cardSet.card?.answer,
+    id: cardSet.card?._id
   }));
 
   //? settting Form
@@ -33,8 +35,8 @@ const EditStudySet = () => {
     description: savedStudySet?.studySet?.description || "",
     cards: cardsInfo,
   });
-
   //? when page is loading it would load this Data in useEffect
+
   useEffect(() => {
     getUserInfo();
     setFormState((prevFormState) => ({
@@ -53,7 +55,7 @@ const EditStudySet = () => {
         userId,
         topicId,
         studySetId,
-        formState.topic,
+        formState.topicTitle,
         formState.title,
         formState.description,
         formState.cards
@@ -62,104 +64,129 @@ const EditStudySet = () => {
       console.log(error.message);
     }
   };
-
   const handleChange = (e) => {
     setFormState((prevFormState) => ({
       ...prevFormState,
       [e.target.name]: e.target.value,
     }));
   };
-console.log("formStateeeee:", formState);
   const handleCardChange = (index, field, value) => {
     setFormState((prevFormState) => ({
       ...prevFormState,
       cards: prevFormState.cards.map((card, cardIndex) =>
-        cardIndex === index ? { ...card, [field]: value } : card
+        cardIndex === index
+          ? { ...card, [field]: value }
+          : card
       ),
     }));
   };
-
   const handleAddCard = () => {
-    //.patch("/studySets/:id", addCardsToStudySet)
-    //looping over the cards and findout which one doesnt have id
     setFormState({
       ...formState,
       cards: [...formState.cards, { question: "", answer: "" }],
     });
   };
+  
 
-  const handleRemoveCard = (index) => {
-    const updatedCards = [...formState.cards];
-    updatedCards.splice(index, 1);
-    setFormState({
-      ...formState,
-      cards: updatedCards,
-    });
+  //? removing the card
+  // const handleRemoveCard = (index) => {
+  //   const updatedCards = [...formState.cards];
+  //   updatedCards.splice(index, 1);
+  //   setFormState({
+  //     ...formState,
+  //     cards: updatedCards,
+  //   });
+  const handleRemoveCard = async (index) => {
+    // const updatedCards = [...formState.cards];
+    // const deletedCardId = updatedCards[index].id;
+    // const backendApiUrl = import.meta.env.VITE_SERVER_URL;
+
+    // try {
+    //   // Call your backend API to delete the card using Axios
+    //   await axios.delete(`${backendApiUrl}/deleteCard/${userId}/${topicId}/${studySetId}/${deletedCardId}`);
+    //   // Update the state in the frontend to reflect the deleted card
+    //   updatedCards.splice(index, 1);
+    //   setFormState({
+    //     ...formState,
+    //     cards: updatedCards,
+    //   });
+    //   console.log("Card deleted successfully!");
+    // } catch (error) {
+    //   console.error("Error deleting card:", error.message);
+    // }
   };
-
+  
+  
   return (
-    <div className='flex justify-center items-center '>
+    <div className="flex justify-center items-center ">
       <form
         className='bg-blue-100 shadow-md rounded px-8 pt-6 pb-8 mb-4'
         onSubmit={handleSubmit}
       >
-        <h2 className='text-center text-lg font-bold mb-4'>Edit Study Set</h2>
-        <div className='mb-4'>
+        <h2 className="text-center text-lg font-bold mb-4">Edit Study Set</h2>
+        <div className="mb-4">
           <label
-            className='block text-gray-700 text-sm font-bold mb-2'
-            htmlFor='topic'
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="topicTitle"
           >
             Topic
           </label>
           <input
-            className='shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-            id='topic'
-            type='text'
-            placeholder='Enter topic'
-            name='topic'
-            value={formState.topic}
+            className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="topicTitle"
+            type="text"
+            placeholder="Enter topic"
+            name="topicTitle"
+            value={formState.topicTitle}
             onChange={handleChange}
           />
         </div>
-        <div className='mb-4'>
+        <div className="mb-4">
           <label
-            className='block text-gray-700 text-sm font-bold mb-2'
-            htmlFor='title'
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="title"
           >
             Title
           </label>
           <input
-            className='shadow border rounded w-full py-2 px-3 text-gray-700 text-black leading-tight focus:outline-none focus:shadow-outline'
-            id='title'
-            type='text'
-            placeholder='Enter title'
-            name='title'
+            className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="title"
+            type="text"
+            placeholder="Enter title"
+            name="title"
             value={formState.title}
             onChange={handleChange}
           />
         </div>
-        <div className='mb-6'>
+        <div className="mb-6">
           <label
-            className='block text-gray-700 text-sm font-bold mb-2'
-            htmlFor='description'
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="description"
           >
             Description
           </label>
           <textarea
-            className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 text-black leading-tight focus:outline-none focus:shadow-outline'
-            id='description'
-            placeholder='Enter description'
-            name='description'
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="description"
+            placeholder="Enter description"
+            name="description"
             value={formState.description}
             onChange={handleChange}
           />
         </div>
         {formState?.cards &&
-          formState?.cards.map((card, index) => (
-            <div
-              key={index}
-              className='flex flex-wrap justify-between mb-4 relative'
-            >
+  formState.cards
+  .slice()
+  .sort((a, b) => {
+    const indexA = a.id ? formState.cards.findIndex((card) => card.id === a.id) : -1;
+    const indexB = b.id ? formState.cards.findIndex((card) => card.id === b.id) : -1;
+    return indexA - indexB;
+  })
+    .map((card, index) => (
+      <div
+        key={index}
+        className='flex flex-wrap justify-between mb-4 relative'
+      >
               <div className='w-full sm:w-1/2 md:w-1/3 mb-4 px-2'>
                 <label
                   className='block text-gray-700 text-sm font-bold mb-2'
@@ -177,9 +204,6 @@ console.log("formStateeeee:", formState);
                   onChange={(e) =>
                     handleCardChange(index, "question", e.target.value)
                   }
-                  // onChange={(e) =>
-                  //   handleCardChange(card.id, `question`, e.target.value)
-                  //}
                 />
               </div>
               <div className='w-full sm:w-1/2 md:w-1/3 mb-4 px-2'>
@@ -194,14 +218,11 @@ console.log("formStateeeee:", formState);
                   id={`answer${index}`}
                   type='text'
                   placeholder={`Enter answer ${index + 1}`}
-                  name={`answer${index}`}
+                  name={`answer${index + 1}`}
                   value={card.answer}
                   onChange={(e) =>
                     handleCardChange(index, "answer", e.target.value)
                   }
-                  // onChange={(e) =>
-                  //   handleCardChange(card.id, `answer`, e.target.value)
-                  // }
                 />
               </div>
               <div className='w-full sm:w-1/2 md:w-1/3 mb-4 px-2'></div>
@@ -223,8 +244,8 @@ console.log("formStateeeee:", formState);
             Add new Card
           </button>
           <button
-            className='bg-green-500 hover:bg-green-700 text-white font-bold py-4 px-8 rounded-lg focus:outline-none focus:shadow-outline'
-            type='submit'
+            className="bg-green-500 hover:bg-green-700 text-white font-bold py-4 px-8 rounded-lg focus:outline-none focus:shadow-outline"
+            type="submit"
           >
             Save Set
           </button>
@@ -233,5 +254,4 @@ console.log("formStateeeee:", formState);
     </div>
   );
 };
-
 export default EditStudySet;

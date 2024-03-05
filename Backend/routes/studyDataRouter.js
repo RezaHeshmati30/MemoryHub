@@ -5,7 +5,7 @@ import { addCardToStudySet, addCardsToStudySet, addStudySet, getAllStudyData } f
 import { addCard } from "../controllers/cardController.js";
 import {
     createStudySetsAndCards,
-    editStudySet  
+    editStudySet 
   } from "../controllers/createStudySetsAndCards.js";
 
 
@@ -25,6 +25,6 @@ router
     .patch("/addAllStudySets/:id", addAllStudySetsWithCardsToTopic)
     .post("/createSet/:userId", createStudySetsAndCards)
     .patch("/editSet/:userId/:topicId/:studySetId", editStudySet)
-    ///createSet/65e0560301399598ae55df1b
+    //.delete('/deleteCard/:userId/:topicId/:studySetId/:cardId', deleteCard);
 
 export default router;

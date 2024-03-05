@@ -84,12 +84,20 @@ const StudySetsContextProvider = ({ children }) => {
       throw error;
     }
   };
-
+  // await editStudySet(
+  //   userId,
+  //   topicId,
+  //   studySetId,
+  //   formState.topic,
+  //   formState.title,
+  //   formState.description,
+  //   formState.cards
+  // );
   const editStudySet = async (
     userId,
     topicId,
     studySetId,
-    topic,
+    topicTitle,
     title,
     description,
     cardsInfo
@@ -97,7 +105,7 @@ const StudySetsContextProvider = ({ children }) => {
   
     try {
       const updatedStudySets = {
-        topicTitle: topic,
+        topicTitle: topicTitle,
         title: title,
         description: description,
         cards: cardsInfo.map((card) => {

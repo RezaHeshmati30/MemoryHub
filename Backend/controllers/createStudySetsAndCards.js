@@ -116,39 +116,64 @@ export const editStudySet = async (req, res) => {
       return res.status(404).json({ error: "Study set not found" });
     }
     //find the card and update it, then return the updated card
-    const updatedCardsPromises = cards.map(async (eachCard) => {
-      const cardId = eachCard.cardId;
-      if (!cardId) {
-        const newCard = CardModel.create(eachCard);
-        newCard.then((newCard) => {
-          return StudySetModel.findByIdAndUpdate(studySetId, {
-            $push: { cards: newCard._id  },
-          });
-        });
-        return newCard;
-      } else {
-        try {
-          const foundCard = CardModel.findByIdAndUpdate(
-            cardId,
-            {
-              $set: {
-                question: eachCard.question,
-                answer: eachCard.answer,
-              },
-            },
-            { new: true }
-          );
-          return foundCard;
-        } catch (error) {
-          console.error("Error updating card:", error.message);
-          return null;
-        }
-      }
-    });
+// ... (previous code)
 
-    const updatedCards = await Promise.all(updatedCardsPromises);
-    console.log("updatedcards", updatedCards);
-    //find the topic and update it
+const updatedCardsPromises = cards.map(async (eachCard) => {
+  const cardId = eachCard.cardId;
+  const status = eachCard.status || "not studied";  // Use a default value if status is not provided
+  if (!cardId) {
+    try {
+      const newCard = await CardModel.create(eachCard);
+
+      await StudySetModel.findByIdAndUpdate(studySetId, {
+        $push: { cards: newCard._id },
+      });
+
+      await UserModel.findByIdAndUpdate(userId, {
+        $push: {
+          "savedStudySets.$[elem].cards": {
+            card: newCard._id,
+            status: status,
+          },
+        },
+      }, {
+        arrayFilters: [{"elem.studySet": studySetId}]
+      });
+
+      return newCard;
+    } catch (error) {
+      console.error("Error creating and updating new card:", error.message);
+      return null;
+    }
+  } else {
+    try {
+      const foundCard = await CardModel.findByIdAndUpdate(
+        cardId,
+        {
+          $set: {
+            question: eachCard.question,
+            answer: eachCard.answer,
+          },
+        },
+        { new: true }
+      );
+
+      if (!foundCard) {
+        console.error("Card not found");
+        return null;
+      }
+
+      return foundCard;
+    } catch (error) {
+      console.error("Error updating card:", error.message);
+      return null;
+    }
+  }
+});
+
+const updatedCards = (await Promise.all(updatedCardsPromises)).filter(card => card !== null);
+console.log("updatedcards", updatedCards);
+
     const updatedTopic = await TopicModel.findByIdAndUpdate(
       topicId,
       {

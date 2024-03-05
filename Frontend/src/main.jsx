@@ -7,7 +7,7 @@ import { StudySetsContextProvider } from './context/StudySetsContext.jsx'
 import { UserStudySetsContext, UserStudySetsContextProvider } from './context/UserStudySetsContext.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+  //<React.StrictMode>
     <UserStudySetsContextProvider>
       <StudySetsContextProvider>
         <AuthContextProvider>
@@ -15,5 +15,5 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         </AuthContextProvider>
       </StudySetsContextProvider>
     </UserStudySetsContextProvider>
-  </React.StrictMode>,
+ // </React.StrictMode>,
 )
