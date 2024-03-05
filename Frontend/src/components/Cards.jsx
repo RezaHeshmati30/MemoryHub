@@ -77,8 +77,8 @@ function Cards() {
               <strong>{currentCardsSet.title}</strong>
             </p>
             <p className='text-xl my-5'>{currentCardsSet.description}</p>
-            <Link to={hasToken && user?._id === author?._id ? `/user/${user?._id}` : `/users/${author?._id}/all-study-sets` }>  
-              <p>Created by: {author.nickName}</p>
+            <Link className={author?.nickName ? "block": "hidden"} to={hasToken && user?._id === author?._id ? `/user/${user?._id}` : `/users/${author?._id}/all-study-sets` }>  
+              <p>Created by: {author?.nickName}</p>
             </Link>
             
             <div
@@ -96,6 +96,7 @@ function Cards() {
                   <strong>Question</strong>
                   <br />
                   <p> {currentCard?.question}</p>
+                  <img src={currentCard?.image} alt="" />
                 </div>
                 <div className={`flip-content `}>
                   <strong>Answer</strong>

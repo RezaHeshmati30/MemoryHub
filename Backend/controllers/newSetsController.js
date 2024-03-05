@@ -241,7 +241,6 @@ export const deleteCard = async (req, res) => {
             new: true,
           }
         );
-
         console.log("userAfterDel", userAfterDel);
 
         res.status(200).json({ message: "Card deleted successfully" });

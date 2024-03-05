@@ -95,6 +95,7 @@ const StudySetsContextProvider = ({ children }) => {
     }
   };
 
+
   const editStudySet = async (
     userId,
     topicId,
@@ -139,6 +140,7 @@ const StudySetsContextProvider = ({ children }) => {
       }
       throw error;
     }
+    
   };
 
   const deleteCard = async (userId, studySetId, cardId) => {
