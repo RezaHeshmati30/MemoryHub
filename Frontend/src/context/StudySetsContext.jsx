@@ -69,7 +69,8 @@ const StudySetsContextProvider = ({ children }) => {
         createdBy: createdBy,
         cards: cards.map(card => ({
           question: card.question,
-          answer: card.answer
+          answer: card.answer,
+          image: card.image
         }))
       };
       console.log("Request Payload:", { ...savedStudySets });
