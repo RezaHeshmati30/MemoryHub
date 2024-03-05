@@ -2,7 +2,6 @@ import StudySetModel from "../models/StudySetModel.js";
 import CardModel from "../models/CardModel.js";
 import UserModel from "../models/UserModel.js";
 import TopicModel from "../models/TopicModel.js";
-import mongoose from 'mongoose';
 
 
 export const createStudySetsAndCards = async (req, res) => {
@@ -92,7 +91,6 @@ export const createStudySetsAndCards = async (req, res) => {
       .json({ error: "Internal server error from backend catch" });
   }
 };
-
 //!!!!!!!!!
 //!!!!!!!!!
 export const editStudySet = async (req, res) => {

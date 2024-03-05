@@ -61,30 +61,22 @@ const StudySetsContextProvider = ({ children }) => {
     }
   };
 
-  const createStudySetsAndCards = async (
-    userId,
-    topic,
-    title,
-    description,
-    createdBy,
-    cards
-  ) => {
+  const createStudySetsAndCards = async (userId, topic, title, description, createdBy, cards) => {
+
     try {
       const savedStudySets = {
         topic: topic,
         title: title,
         description: description,
         createdBy: createdBy,
-        cards: cards.map((card) => ({
+        cards: cards.map(card => ({
           question: card.question,
           answer: card.answer,
-        })),
+          image: card.image
+        }))
       };
-
-      const response = await axios.post(
-        `${backendApiUrl}/createSet/${userId}`,
-        { ...savedStudySets }
-      );
+      console.log("Request Payload:", { ...savedStudySets });
+      const response = await axios.post(`${backendApiUrl}/createSet/${userId}`, { ...savedStudySets });
     } catch (error) {
       console.error("Error updating study set:", error.message);
 
@@ -94,8 +86,6 @@ const StudySetsContextProvider = ({ children }) => {
       throw error;
     }
   };
-
-
   const editStudySet = async (
     userId,
     topicId,
