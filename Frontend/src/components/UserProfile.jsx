@@ -8,8 +8,7 @@ function UserProfile() {
 
   useEffect(() => {
     getUserInfo();
-   
-    
+
   }, [])
 
   return (

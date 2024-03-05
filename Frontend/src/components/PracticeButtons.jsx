@@ -13,7 +13,7 @@ function PracticeButtons({currentSet}) {
     // const currentCardsSet = user?.savedStudySets?.filter(studySet => studySet?._id === id)[0]?.cards || [];
     const currentCard = currentSet[currentIndex];
     const currentCardId = currentCard?._id;
-    console.log("CurrentCard ID:", currentCardId)
+    //console.log("CurrentCard ID:", currentCardId)
 
     useEffect(() => {
         getUserInfo();

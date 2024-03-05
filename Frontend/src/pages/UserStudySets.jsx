@@ -14,11 +14,12 @@ function UserStudySets() {
 
     useEffect(() => {
         getUserInfo();
+        console.log('savedStudySets: example')
     }, []);
 
-    useEffect(() => {
-        getUserInfo();
-    }, [savedStudySets])
+    // useEffect(() => {
+    //     getUserInfo();
+    // }, [savedStudySets])
 
     const userId = user?._id;
 

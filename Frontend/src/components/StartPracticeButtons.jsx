@@ -35,7 +35,7 @@ function StartPracticeButtons({edit, studySetId, userId}) {
         {edit === "no" ? (
             <button onClick={onClickDelete}  className='bg-[#b6b2b2] py-[5px] px-[10px] rounded-[10px]'>Delete study set</button>
         ) : (
-            <button onClick={() => onClickEdit(studySetId)} className='bg-[#b6b2b2] py-[5px] px-[10px] rounded-[10px]'>Edit study set</button>
+            <button onClick={() => onClickEdit(studySetId)} className='bg-[#a95b5b] py-[5px] px-[10px] rounded-[10px]'>Edit study set</button>
         )}
         <button onClick={() => onClickPractice(studySetId)} className='bg-[#b6b2b2] py-[5px] px-[10px] rounded-[10px]'>Start practice</button>
         <button onClick={() => onClickLearn(studySetId)} className='bg-[#b6b2b2] py-[5px] px-[10px] rounded-[10px]'>Test your knowledge</button>

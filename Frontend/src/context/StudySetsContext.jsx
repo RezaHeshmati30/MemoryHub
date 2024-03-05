@@ -1,10 +1,9 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useState } from "react";
 import axios from "axios";
 
 const StudySetsContext = createContext();
 
 const StudySetsContextProvider = ({ children }) => {
-
   const [moduleData, setModuleData] = useState({});
   const [studySetId, setStudySetId] = useState("");
   const [topicId, setTopicId] = useState("");
@@ -18,8 +17,8 @@ const StudySetsContextProvider = ({ children }) => {
   const [userShortData, setUserShortData] = useState({});
   const moduleId = "65cf67756f6a0e0ef199b5ca";
 
-  //   const backendApiUrl = "http://localhost:3001";
-    const backendApiUrl = import.meta.env.VITE_SERVER_URL;
+  // const backendApiUrl = "http://localhost:3001";
+  const backendApiUrl = import.meta.env.VITE_SERVER_URL;
 
     const getModuleData = async () => {
         const response = await axios.get(`${backendApiUrl}/modules/${moduleId}`);
@@ -75,18 +74,83 @@ const StudySetsContextProvider = ({ children }) => {
       };
       console.log("Request Payload:", { ...savedStudySets });
       const response = await axios.post(`${backendApiUrl}/createSet/${userId}`, { ...savedStudySets });
-      
-      //console.log("Study set created successfully:", response.data);
     } catch (error) {
-      console.error("Error creating study sets and cards:", error);
+      console.error("Error updating study set:", error.message);
+
       if (error.response) {
         console.log("Response Data from backend:", error.response.data);
       }
-  
       throw error;
     }
   };
+
+  const editStudySet = async (
+    userId,
+    topicId,
+    studySetId,
+    topicTitle,
+    title,
+    description,
+    cardsInfo
+  ) => {
   
+    try {
+      const updatedStudySets = {
+        topicTitle: topicTitle,
+        title: title,
+        description: description,
+        cards: cardsInfo.map((card) => {
+        console.log("card:", card);
+          return {
+          question: card.question,
+          answer: card.answer,
+          cardId: card.id,
+      }
+      })
+    }
+    console.log("updatedStudySets:", updatedStudySets);
+      const response = await axios.patch(
+        `${backendApiUrl}/editSet/${userId}/${topicId}/${studySetId}`,
+        { ...updatedStudySets },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      console.log("Response Data:", response);
+      console.log("Study set updated successfully!");
+    } catch (error) {
+      console.error("Error updating study set:", error.message);
+
+      if (error.response) {
+        console.log("Response Data from backend:", error.response.data);
+      }
+      throw error;
+    }
+    
+  };
+  const deleteCard = async (userId, topicId, studySetId, cardId) => {
+    try {
+      const response = await axios.delete(
+        `${backendApiUrl}/deleteCard/${userId}/${topicId}/${studySetId}/${cardId}`
+      );
+  
+      if (response.status === 200) {
+        console.log('Card deleted successfully');
+        return true; 
+      } else {
+        console.error('Error deleting card:', response.data.error);
+        return false; 
+      }
+    } catch (error) {
+      console.error('Error deleting card:', error);
+      return false; 
+    }
+  };
+  
+
   return (
     <StudySetsContext.Provider
       value={{
@@ -113,12 +177,13 @@ const StudySetsContextProvider = ({ children }) => {
         getUserStudySets,
         userStudySets, setUserStudySets,
         userShortData, setUserShortData,
-        getUserShortData
+        getUserShortData,
+        editStudySet
       }}
     >
       {children}
     </StudySetsContext.Provider>
   );
-    }
+};
 
 export { StudySetsContext, StudySetsContextProvider };

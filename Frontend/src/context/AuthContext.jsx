@@ -22,14 +22,15 @@ const AuthContextProvider = ({ children }) => {
   const [savedStudySets, setSavedStudySets] = useState([]);
   const [nickName, setNickName] = useState("");
 
-  //const backendApiUrl = "http://localhost:3001";
   const backendApiUrl = import.meta.env.VITE_SERVER_URL;
+
   const resetMessages = () => {
     setMsg("");
     setError("");
   };
 
   const setErrorMessages = (error) => {
+    // debugger;
     if (error.response) {
       setError(error.response.data.error);
     } else {
@@ -131,7 +132,7 @@ const AuthContextProvider = ({ children }) => {
         withCredentials: true,
       });
       console.log("resp.data:", resp.data);
-      setMsg(resp.data);
+       setMsg(resp.data);
     } catch (error) {
       setErrorMessages(error);
     }
