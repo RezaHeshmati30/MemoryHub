@@ -119,6 +119,7 @@ function Practice() {
                     <div className="flip-content">
                       <strong>Question</strong>
                       <p>{currentCard?.card?.question}</p>
+                      <img src={currentCard?.card?.image} alt="" />
                     </div>
                     <div className="flip-content">
                       <strong>Answer</strong>

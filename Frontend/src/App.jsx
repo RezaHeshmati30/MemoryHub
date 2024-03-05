@@ -3,15 +3,15 @@ import router from './utils/router'
 import { useEffect } from 'react';
 
 function App() {
-  // Check if user is logged in
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    const isHomePage = window.location.pathname === '/';
+  // // Check if user is logged in
+  // useEffect(() => {
+  //   const token = localStorage.getItem('token');
+  //   const isHomePage = window.location.pathname === '/';
 
-    if (!token && !isHomePage) {
-      window.location.href = '/';
-    }
-  }, []);
+  //   if (!token && !isHomePage) {
+  //     window.location.href = '/';
+  //   }
+  // }, []);
 
   return (
     <>

@@ -17,7 +17,9 @@ app.use( cors({
     origin: "http://localhost:5173", // URL unseres Frontends
     credentials: true // erlaube Cookie-Austausch
   }) );
-app.use(express.json());
+
+// app.use(express.json());
+app.use(express.json({ limit: '5mb' })); // Adjust the limit as needed
 app.use( cookieParser() );
 
 
