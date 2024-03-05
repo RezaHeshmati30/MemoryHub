@@ -3,9 +3,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { StudySetsContext } from "../context/StudySetsContext";
 import { AuthContext } from "../context/AuthContext";
 import axios from 'axios';
+import { UserStudySetsContext } from "../context/UserStudySetsContext";
 
 const EditStudySet = () => {
   const { editStudySet } = useContext(StudySetsContext);
+  const { readImageAsBase64 } = useContext(UserStudySetsContext);
   const { id } = useParams();
   const { userId, user, getUserInfo } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -26,9 +28,9 @@ const EditStudySet = () => {
   const cardsInfo = cardsDefault.map((cardSet) => ({
     question: cardSet.card?.question,
     answer: cardSet.card?.answer,
+    image: cardSet?.card?.image,
     id: cardSet.card?._id
   }));
-
   //? settting Form
   const [formState, setFormState] = useState({
     topicTitle: topicTitle,
@@ -71,21 +73,56 @@ const EditStudySet = () => {
       [e.target.name]: e.target.value,
     }));
   };
-  
-  const handleCardChange = (index, field, value) => {
-    setFormState((prevFormState) => ({
-      ...prevFormState,
-      cards: prevFormState.cards.map((card, cardIndex) =>
-        cardIndex === index
-          ? { ...card, [field]: value }
-          : card
-      ),
-    }));
+
+  const handleFileUpload = async (file, index) => {
+    try {
+      const base64Data = await readImageAsBase64(file);
+      setFormState((prevFormState) => ({
+        ...prevFormState,
+        cards: prevFormState.cards.map((card, cardIndex) =>
+          cardIndex === index
+            ? { ...card, image: base64Data }
+            : card
+        ),
+        
+      }));
+      console.log("FORM", formState)
+    } catch (error) {
+      console.error("Error uploading file:", error);
+    }
   };
+  
+
+  const handleCardChange = async (index, field, value) => {
+    console.log("field", field)
+    if (field === "image") {
+      // Handle file upload separately
+      const file = value;
+      const base64Data = await readImageAsBase64(file);
+      console.log(base64Data)
+      setFormState((prevFormState) => ({
+        ...prevFormState,
+        cards: prevFormState.cards.map((card, cardIndex) =>
+          cardIndex === index ? { ...card, image: base64Data } : card
+        ),
+      }));
+    } else {
+      setFormState((prevFormState) => ({
+        ...prevFormState,
+        cards: prevFormState.cards.map((card, cardIndex) =>
+          cardIndex === index ? { ...card, [field]: value } : card
+        ),
+      }));
+    }
+  
+  };
+
+  console.log("form state", formState)
+
   const handleAddCard = () => {
     setFormState({
       ...formState,
-      cards: [...formState.cards, { question: "", answer: "" }],
+      cards: [...formState.cards, { question: "", answer: "", image: "" }],
     });
   };
 
@@ -208,6 +245,28 @@ const EditStudySet = () => {
                   }
                 />
               </div>
+              <div className='w-full sm:w-1/2 md:w-1/3 mb-4 px-2'>
+              <label
+                className='block text-gray-700 text-sm font-bold mb-2'
+                htmlFor={`image${index}`}
+              >
+                Image {index + 1}
+              </label>
+              <div className="flex gap-[10px]">
+                <img className="w-[40px]" src={card.image} alt="" />
+                <input
+                className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                id={`image${index}`}
+                type='file'
+                accept='image/*'
+                name={`image${index}`}
+                // value={card.image}
+                onChange={(e) => handleFileUpload(e.target.files[0], index)}
+                
+              />
+              </div>
+              
+            </div>
               <div className='w-full sm:w-1/2 md:w-1/3 mb-4 px-2'></div>
               <button
                 className='absolute right-0 top-0 mt-2 mr-2 text-red-600 hover:text-red-700 focus:outline-none'

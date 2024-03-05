@@ -93,7 +93,7 @@ const StudySetsContextProvider = ({ children }) => {
     description,
     cardsInfo
   ) => {
-  
+  console.log("CARDS INFO", cardsInfo)
     try {
       const updatedStudySets = {
         topicTitle: topicTitle,
@@ -104,6 +104,7 @@ const StudySetsContextProvider = ({ children }) => {
           return {
           question: card.question,
           answer: card.answer,
+          image: card.image,
           cardId: card.id,
       }
       })

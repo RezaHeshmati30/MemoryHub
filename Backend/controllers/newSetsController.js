@@ -104,6 +104,8 @@ export const editStudySet = async (req, res) => {
 
   try {
     //find the studyset and update it
+    console.log("userId", userId)
+    console.log("studySetId:", studySetId)
     const studySet = await StudySetModel.findByIdAndUpdate(
       studySetId,
       {
@@ -152,6 +154,7 @@ const updatedCardsPromises = cards.map(async (eachCard) => {
           $set: {
             question: eachCard.question,
             answer: eachCard.answer,
+            image: eachCard.image
           },
         },
         { new: true }
