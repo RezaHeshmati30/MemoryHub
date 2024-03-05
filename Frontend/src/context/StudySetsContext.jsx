@@ -20,36 +20,39 @@ const StudySetsContextProvider = ({ children }) => {
   // const backendApiUrl = "http://localhost:3001";
   const backendApiUrl = import.meta.env.VITE_SERVER_URL;
 
-    const getModuleData = async () => {
-        const response = await axios.get(`${backendApiUrl}/modules/${moduleId}`);
-        console.log(response.data);
-        setModuleData(response.data);
-    }
+  const getModuleData = async () => {
+    const response = await axios.get(`${backendApiUrl}/modules/${moduleId}`);
+    console.log(response.data);
+    setModuleData(response.data);
+  };
 
-    const getStudyData = async () => {
-      const response = await axios.get(`${backendApiUrl}/topics`);
-      console.log(response.data);
-      setStudyData(response.data);
-    }
+  const getStudyData = async () => {
+    const response = await axios.get(`${backendApiUrl}/topics`);
+    console.log(response.data);
+    setStudyData(response.data);
+  };
 
-    const getUserShortData = async (id) => {
-      const response = await axios.get(`${backendApiUrl}/users/${id}`);
-      console.log(response.data);
-      setUserShortData(response.data);
-    }
+  const getUserShortData = async (id) => {
+    const response = await axios.get(`${backendApiUrl}/users/${id}`);
+    console.log(response.data);
+    setUserShortData(response.data);
+  };
 
-    const getUserStudySets = async (id) => {
-      const response = await axios.get(`${backendApiUrl}/user/${id}/studySets`);
-      console.log(response.data);
-      setUserStudySets(response.data);
-    }
+  const getUserStudySets = async (id) => {
+    const response = await axios.get(`${backendApiUrl}/user/${id}/studySets`);
+    console.log("getUserStudySets", response.data);
+    setUserStudySets(response.data);
+  };
 
   const addStudySetToUser = async (userId, studySetId, topicId) => {
     const studySetData = {
-      edit: "no"  
+      edit: "no",
     };
     try {
-      await axios.patch(`${backendApiUrl}/users/${userId}/topics/${topicId}/studySets/${studySetId}`, studySetData);
+      await axios.patch(
+        `${backendApiUrl}/users/${userId}/topics/${topicId}/studySets/${studySetId}`,
+        studySetData
+      );
       console.log(`studySetData ${studySetData} sent to user ${userId}`);
       alert("Study set was added to your account");
     } catch (error) {
@@ -58,23 +61,30 @@ const StudySetsContextProvider = ({ children }) => {
     }
   };
 
-  const createStudySetsAndCards = async (userId, topic, title, description, createdBy, cards) => {
-    console.log("userid from from:", userId);
+  const createStudySetsAndCards = async (
+    userId,
+    topic,
+    title,
+    description,
+    createdBy,
+    cards
+  ) => {
     try {
       const savedStudySets = {
         topic: topic,
         title: title,
         description: description,
         createdBy: createdBy,
-        cards: cards.map(card => ({
+        cards: cards.map((card) => ({
           question: card.question,
-          answer: card.answer
-        }))
+          answer: card.answer,
+        })),
       };
-      console.log("Request Payload:", { ...savedStudySets });
-      const response = await axios.post(`${backendApiUrl}/createSet/${userId}`, { ...savedStudySets });
-      
-      //console.log("Study set created successfully:", response.data);
+
+      const response = await axios.post(
+        `${backendApiUrl}/createSet/${userId}`,
+        { ...savedStudySets }
+      );
     } catch (error) {
       console.error("Error updating study set:", error.message);
 
@@ -84,15 +94,7 @@ const StudySetsContextProvider = ({ children }) => {
       throw error;
     }
   };
-  // await editStudySet(
-  //   userId,
-  //   topicId,
-  //   studySetId,
-  //   formState.topic,
-  //   formState.title,
-  //   formState.description,
-  //   formState.cards
-  // );
+
   const editStudySet = async (
     userId,
     topicId,
@@ -102,22 +104,21 @@ const StudySetsContextProvider = ({ children }) => {
     description,
     cardsInfo
   ) => {
-  
     try {
       const updatedStudySets = {
         topicTitle: topicTitle,
         title: title,
         description: description,
         cards: cardsInfo.map((card) => {
-        console.log("card:", card);
+          // console.log("card:", card);
           return {
-          question: card.question,
-          answer: card.answer,
-          cardId: card.id,
-      }
-      })
-    }
-    console.log("updatedStudySets:", updatedStudySets);
+            question: card.question,
+            answer: card.answer,
+            cardId: card.id,
+          };
+        }),
+      };
+      console.log("updatedStudySets:", updatedStudySets);
       const response = await axios.patch(
         `${backendApiUrl}/editSet/${userId}/${topicId}/${studySetId}`,
         { ...updatedStudySets },
@@ -140,6 +141,24 @@ const StudySetsContextProvider = ({ children }) => {
     }
   };
 
+  const deleteCard = async (userId, studySetId, cardId) => {
+    try {
+      const response = await axios.delete(
+        `${backendApiUrl}/deleteCard/${userId}/${studySetId}/${cardId}`
+      );
+
+      if (response.status === 200) {
+        console.log("Card deleted successfully");
+        return true;
+      } else {
+        console.error("Error deleting card. Server response:", response);
+        return false;
+      }
+    } catch (error) {
+      console.error("Error deleting card:", error);
+      return false;
+    }
+  };
 
   return (
     <StudySetsContext.Provider
@@ -163,12 +182,16 @@ const StudySetsContextProvider = ({ children }) => {
         description,
         setDescription,
         getStudyData,
-        studyData, setStudyData,
+        studyData,
+        setStudyData,
         getUserStudySets,
-        userStudySets, setUserStudySets,
-        userShortData, setUserShortData,
+        userStudySets,
+        setUserStudySets,
+        userShortData,
+        setUserShortData,
         getUserShortData,
-        editStudySet
+        editStudySet,
+        deleteCard,
       }}
     >
       {children}
