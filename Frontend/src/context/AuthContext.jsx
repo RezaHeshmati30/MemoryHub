@@ -43,7 +43,10 @@ const AuthContextProvider = ({ children }) => {
   const signUpHandler = async (e) => {
     e.preventDefault();
     resetMessages();
-
+    setTimeout(() => {
+      setSuccessSignUpWindow(true);
+  }, 700); 
+    
     try {
       const resp = await axios.post(`${backendApiUrl}/register`, {
         email: emailSignUp,
@@ -56,11 +59,9 @@ const AuthContextProvider = ({ children }) => {
       setEmailSignUp("");
       setPasswordSignUp("");
       setMsg("Du hast dich erfolgreich registriert.");
-      setSuccessSignUpWindow(true);
       setIsLoading(true);
     } catch (error) {
       setErrorMessages(error);
-      setSuccessSignUpWindow(true);
       console.log("error while signing up:", error);
     }
   };
