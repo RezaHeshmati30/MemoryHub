@@ -54,7 +54,6 @@ function CreateSets() {
 
       console.log("formObject.cards", formObject.cards[0].card);
 
-      // Ensure formObject is defined before calling createStudySetsAndCards
       if (formObject) {
        await createStudySetsAndCards(
           userId,
@@ -67,7 +66,6 @@ function CreateSets() {
 
         console.log("Study sets and cards created successfully!", formObject);
 
-        // Clear form fields
         setQuestion([""]);
         setAnswer([""]);
         setImage([""]);
@@ -222,66 +220,6 @@ function CreateSets() {
             </button>
           </div>
         ))}
-
-        {/* {lines.map((line, index) => (
-          <div
-            key={index}
-            className='flex flex-wrap justify-between mb-4 relative'
-          >
-            <div className='w-full sm:w-1/2 md:w-1/3 mb-4 px-2'>
-              <label
-                className='block text-gray-700 text-sm font-bold mb-2'
-                htmlFor={`question${index}`}
-              >
-                Question {index + 1}
-              </label>
-              <input
-                className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                id={`question${index}`}
-                type='text'
-                placeholder={`Enter question ${index + 1}`}
-                name='question'
-              />
-            </div>
-            <div className='w-full sm:w-1/2 md:w-1/3 mb-4 px-2'>
-              <label
-                className='block text-gray-700 text-sm font-bold mb-2'
-                htmlFor={`answer${index}`}
-              >
-                Answer {index + 1}
-              </label>
-              <input
-                className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                id={`answer${index}`}
-                type='text'
-                placeholder={`Enter answer ${index + 1}`}
-                name='answer'
-              />
-            </div>
-            <div className='w-full sm:w-1/2 md:w-1/3 mb-4 px-2'>
-              <label
-                className='block text-gray-700 text-sm font-bold mb-2'
-                htmlFor={`image${index}`}
-              >
-                Image {index + 1}
-              </label>
-              <input
-                className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                id={`image${index}`}
-                type='file'
-                accept='image/*'
-                name='image'
-              />
-            </div>
-            <button
-              className='absolute right-0 top-0 mt-2 mr-2 text-red-600 hover:text-red-700 focus:outline-none'
-              type='button'
-              onClick={() => removeLine(index)}
-            >
-              X
-            </button>
-          </div>
-        ))} */}
 
         <div className='flex justify-between'>
           <button

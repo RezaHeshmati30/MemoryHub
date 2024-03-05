@@ -2,6 +2,8 @@ import StudySetModel from "../models/StudySetModel.js";
 import CardModel from "../models/CardModel.js";
 import UserModel from "../models/UserModel.js";
 import TopicModel from "../models/TopicModel.js";
+import mongoose from 'mongoose';
+
 
 export const createStudySetsAndCards = async (req, res) => {
   try {
@@ -115,12 +117,9 @@ export const editStudySet = async (req, res) => {
       console.error("Study set not found");
       return res.status(404).json({ error: "Study set not found" });
     }
-    //find the card and update it, then return the updated card
-// ... (previous code)
-
 const updatedCardsPromises = cards.map(async (eachCard) => {
   const cardId = eachCard.cardId;
-  const status = eachCard.status || "not studied";  // Use a default value if status is not provided
+  const status = eachCard.status || "not studied"; 
   if (!cardId) {
     try {
       const newCard = await CardModel.create(eachCard);
@@ -197,6 +196,58 @@ console.log("updatedcards", updatedCards);
     });
   } catch (error) {
     console.error("Internal server error:", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+//.delete("/deleteCard/:userId/:topicId/:studySetId/:cardId", deleteCard);
+
+export const deleteCard = async (req, res) => {
+  const userId = req.params.userId;
+  const topicId = req.params.topicId;
+  const studySetId = req.params.studySetId;
+  const cardId = req.params.cardId;
+
+  console.log("deleteCard", userId, topicId, studySetId, cardId);
+
+  try {
+    //? Step 1: Remove the card from the CardModel
+    await CardModel.findByIdAndDelete(cardId)
+      .then(async (deletedCard) => {
+        console.log("afterDeleteCard", deletedCard);
+
+        //? Step 2: Remove the card from the StudySetModel
+        const studySetAfterDel = await StudySetModel.findByIdAndUpdate(
+          studySetId,
+          { $pull: { cards: cardId } },
+          { new: true }
+        );
+        console.log("studySetAfterDel", studySetAfterDel);
+
+        //? Step 3: Remove the card from the UserModel
+        const userAfterDel = await UserModel.findByIdAndUpdate(
+          userId,
+          {
+            $pull: {
+              "savedStudySets.$[elem].cards": {
+                card: cardId,
+              },
+            },
+          },
+          {
+            arrayFilters: [
+              { "elem.studySet": studySetId },
+            ],
+            new: true,
+          }
+        );
+
+        console.log("userAfterDel", userAfterDel);
+
+        res.status(200).json({ message: "Card deleted successfully" });
+      });
+  } catch (error) {
+    console.error("Error deleting card:", error);
     return res.status(500).json({ error: "Internal server error" });
   }
 };

@@ -25,7 +25,7 @@ export const addStudySetToTopic = async (req, res) => {
 };
 
 // Diese Funktion fügt alle StudySets mit ihren Karten zu einem Topic hinzu
-import { createStudySetsAndCards } from "./createStudySetsAndCards.js";
+import { createStudySetsAndCards } from "./newSetsController.js";
 
 export const addAllStudySetsWithCardsToTopic = async (req, res) => {
   const topicId = req.params.id;

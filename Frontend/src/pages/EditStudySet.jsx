@@ -22,6 +22,7 @@ const EditStudySet = () => {
 
   //?finding cards:
   const cardsDefault = savedStudySet?.cards || [];
+  cardsDefault.sort((a, b) => (a.card._id > b.card._id) ? 1 : -1);
   const cardsInfo = cardsDefault.map((cardSet) => ({
     question: cardSet.card?.question,
     answer: cardSet.card?.answer,
@@ -70,6 +71,7 @@ const EditStudySet = () => {
       [e.target.name]: e.target.value,
     }));
   };
+  
   const handleCardChange = (index, field, value) => {
     setFormState((prevFormState) => ({
       ...prevFormState,
@@ -176,12 +178,12 @@ const EditStudySet = () => {
         </div>
         {formState?.cards &&
   formState.cards
-  .slice()
-  .sort((a, b) => {
-    const indexA = a.id ? formState.cards.findIndex((card) => card.id === a.id) : -1;
-    const indexB = b.id ? formState.cards.findIndex((card) => card.id === b.id) : -1;
-    return indexA - indexB;
-  })
+  // .slice()
+  // .sort((a, b) => {
+  //   const indexA = a.id ? formState.cards.findIndex((card) => card.id === a.id) : -1;
+  //   const indexB = b.id ? formState.cards.findIndex((card) => card.id === b.id) : -1;
+  //   return indexA - indexB;
+  // })
     .map((card, index) => (
       <div
         key={index}
