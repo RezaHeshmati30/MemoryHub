@@ -73,8 +73,6 @@ const StudySetsContextProvider = ({ children }) => {
       };
       console.log("Request Payload:", { ...savedStudySets });
       const response = await axios.post(`${backendApiUrl}/createSet/${userId}`, { ...savedStudySets });
-      
-      //console.log("Study set created successfully:", response.data);
     } catch (error) {
       console.error("Error updating study set:", error.message);
 
@@ -84,15 +82,7 @@ const StudySetsContextProvider = ({ children }) => {
       throw error;
     }
   };
-  // await editStudySet(
-  //   userId,
-  //   topicId,
-  //   studySetId,
-  //   formState.topic,
-  //   formState.title,
-  //   formState.description,
-  //   formState.cards
-  // );
+
   const editStudySet = async (
     userId,
     topicId,
@@ -138,8 +128,27 @@ const StudySetsContextProvider = ({ children }) => {
       }
       throw error;
     }
+    
   };
-
+  const deleteCard = async (userId, topicId, studySetId, cardId) => {
+    try {
+      const response = await axios.delete(
+        `${backendApiUrl}/deleteCard/${userId}/${topicId}/${studySetId}/${cardId}`
+      );
+  
+      if (response.status === 200) {
+        console.log('Card deleted successfully');
+        return true; 
+      } else {
+        console.error('Error deleting card:', response.data.error);
+        return false; 
+      }
+    } catch (error) {
+      console.error('Error deleting card:', error);
+      return false; 
+    }
+  };
+  
 
   return (
     <StudySetsContext.Provider

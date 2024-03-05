@@ -88,36 +88,17 @@ const EditStudySet = () => {
       cards: [...formState.cards, { question: "", answer: "" }],
     });
   };
-  
 
   //? removing the card
-  // const handleRemoveCard = (index) => {
-  //   const updatedCards = [...formState.cards];
-  //   updatedCards.splice(index, 1);
-  //   setFormState({
-  //     ...formState,
-  //     cards: updatedCards,
-  //   });
-  const handleRemoveCard = async (index) => {
-    // const updatedCards = [...formState.cards];
-    // const deletedCardId = updatedCards[index].id;
-    // const backendApiUrl = import.meta.env.VITE_SERVER_URL;
+  const handleRemoveCard = async (cardId) => {
+    const success = await deleteCard(userId, topicId, studySetId, cardId);
 
-    // try {
-    //   // Call your backend API to delete the card using Axios
-    //   await axios.delete(`${backendApiUrl}/deleteCard/${userId}/${topicId}/${studySetId}/${deletedCardId}`);
-    //   // Update the state in the frontend to reflect the deleted card
-    //   updatedCards.splice(index, 1);
-    //   setFormState({
-    //     ...formState,
-    //     cards: updatedCards,
-    //   });
-    //   console.log("Card deleted successfully!");
-    // } catch (error) {
-    //   console.error("Error deleting card:", error.message);
-    // }
+    if (success) {
+      console.log('Card deleted successfully');
+    } else {
+      console.error('Error deleting card');
+    }
   };
-  
   
   return (
     <div className="flex justify-center items-center ">
@@ -231,7 +212,7 @@ const EditStudySet = () => {
               <button
                 className='absolute right-0 top-0 mt-2 mr-2 text-red-600 hover:text-red-700 focus:outline-none'
                 type='button'
-                onClick={() => handleRemoveCard(index)}
+                onClick={() => handleRemoveCard(card.id)}
               >
                 X
               </button>
