@@ -12,13 +12,6 @@ const StudySetSchema = new mongoose.Schema({
 });
 
 const StudySetModel = mongoose.model("StudySet", StudySetSchema);
-//having error during adding title:
-StudySetModel.collection.dropIndexes((err, result) => {
-  if (err) {
-    console.error("Error dropping indexes:", err);
-  } else {
-    console.log("Indexes dropped successfully:", result);
-  }
-});
+
 
 export default StudySetModel;
