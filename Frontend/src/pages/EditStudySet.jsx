@@ -5,7 +5,9 @@ import { AuthContext } from "../context/AuthContext";
 import axios from 'axios';
 
 const EditStudySet = () => {
-  const { editStudySet } = useContext(StudySetsContext);
+
+  const { editStudySet, deleteCard } = useContext(StudySetsContext);
+  const { readImageAsBase64 } = useContext(UserStudySetsContext);
   const { id } = useParams();
   const { userId, user, getUserInfo } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -162,12 +164,6 @@ const EditStudySet = () => {
         </div>
         {formState?.cards &&
   formState.cards
-  // .slice()
-  // .sort((a, b) => {
-  //   const indexA = a.id ? formState.cards.findIndex((card) => card.id === a.id) : -1;
-  //   const indexB = b.id ? formState.cards.findIndex((card) => card.id === b.id) : -1;
-  //   return indexA - indexB;
-  // })
     .map((card, index) => (
       <div
         key={index}
@@ -211,6 +207,29 @@ const EditStudySet = () => {
                   }
                 />
               </div>
+
+              <div className='w-full sm:w-1/2 md:w-1/3 mb-4 px-2'>
+              <label
+                className='block text-gray-700 text-sm font-bold mb-2'
+                htmlFor={`image${index}`}
+              >
+                Image {index + 1}
+              </label>
+              <div className="flex gap-[10px]">
+                <img className="w-[40px]" src={card.image} alt="" />
+                <input
+                className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                id={`image${index}`}
+                type='file'
+                accept='image/*'
+                name={`image${index}`}
+                onChange={(e) => handleFileUpload(e.target.files[0], index)}
+                
+              />
+              </div>
+              
+            </div>
+
               <div className='w-full sm:w-1/2 md:w-1/3 mb-4 px-2'></div>
               <button
                 className='absolute right-0 top-0 mt-2 mr-2 text-red-600 hover:text-red-700 focus:outline-none'
