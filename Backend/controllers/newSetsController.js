@@ -207,11 +207,11 @@ console.log("updatedcards", updatedCards);
 
 export const deleteCard = async (req, res) => {
   const userId = req.params.userId;
-  const topicId = req.params.topicId;
+  
   const studySetId = req.params.studySetId;
   const cardId = req.params.cardId;
 
-  console.log("deleteCard", userId, topicId, studySetId, cardId);
+  console.log("deleteCard", userId, studySetId, cardId);
 
   try {
     //? Step 1: Remove the card from the CardModel

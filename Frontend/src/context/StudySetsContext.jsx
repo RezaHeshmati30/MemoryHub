@@ -132,22 +132,22 @@ const StudySetsContextProvider = ({ children }) => {
     }
     
   };
-  const deleteCard = async (userId, topicId, studySetId, cardId) => {
+  const deleteCard = async (userId, studySetId, cardId) => {
     try {
       const response = await axios.delete(
-        `${backendApiUrl}/deleteCard/${userId}/${topicId}/${studySetId}/${cardId}`
+        `${backendApiUrl}/deleteCard/${userId}/${studySetId}/${cardId}`
       );
-  
+
       if (response.status === 200) {
-        console.log('Card deleted successfully');
-        return true; 
+        console.log("Card deleted successfully");
+        return true;
       } else {
-        console.error('Error deleting card:', response.data.error);
-        return false; 
+        console.error("Error deleting card. Server response:", response);
+        return false;
       }
     } catch (error) {
-      console.error('Error deleting card:', error);
-      return false; 
+      console.error("Error deleting card:", error);
+      return false;
     }
   };
   
@@ -179,7 +179,8 @@ const StudySetsContextProvider = ({ children }) => {
         userStudySets, setUserStudySets,
         userShortData, setUserShortData,
         getUserShortData,
-        editStudySet
+        editStudySet,
+        deleteCard
       }}
     >
       {children}

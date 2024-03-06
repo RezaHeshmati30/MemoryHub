@@ -6,7 +6,7 @@ import axios from 'axios';
 import { UserStudySetsContext } from "../context/UserStudySetsContext";
 
 const EditStudySet = () => {
-  const { editStudySet } = useContext(StudySetsContext);
+  const { editStudySet, deleteCard } = useContext(StudySetsContext);
   const { readImageAsBase64 } = useContext(UserStudySetsContext);
   const { id } = useParams();
   const { userId, user, getUserInfo } = useContext(AuthContext);
@@ -114,12 +114,12 @@ const EditStudySet = () => {
 
   //? removing the card
   const handleRemoveCard = async (cardId) => {
-    const success = await deleteCard(userId, topicId, studySetId, cardId);
-
+    const success = await deleteCard(userId, studySetId, cardId);
+    getUserInfo();
     if (success) {
-      console.log('Card deleted successfully');
+      console.log("Card deleted successfully");
     } else {
-      console.error('Error deleting card');
+      console.error("Error deleting card");
     }
   };
   
@@ -182,12 +182,6 @@ const EditStudySet = () => {
         </div>
         {formState?.cards &&
   formState.cards
-  // .slice()
-  // .sort((a, b) => {
-  //   const indexA = a.id ? formState.cards.findIndex((card) => card.id === a.id) : -1;
-  //   const indexB = b.id ? formState.cards.findIndex((card) => card.id === b.id) : -1;
-  //   return indexA - indexB;
-  // })
     .map((card, index) => (
       <div
         key={index}
@@ -246,7 +240,6 @@ const EditStudySet = () => {
                 type='file'
                 accept='image/*'
                 name={`image${index}`}
-                // value={card.image}
                 onChange={(e) => handleFileUpload(e.target.files[0], index)}
                 
               />

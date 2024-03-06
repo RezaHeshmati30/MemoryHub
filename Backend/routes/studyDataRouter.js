@@ -38,6 +38,6 @@ router
   .patch("/addAllStudySets/:id", addAllStudySetsWithCardsToTopic)
   .post("/createSet/:userId", createStudySetsAndCards)
   .patch("/editSet/:userId/:topicId/:studySetId", editStudySet)
-  .delete("/deleteCard/:userId/:topicId/:studySetId/:cardId", deleteCard);
+  .delete("/deleteCard/:userId/:studySetId/:cardId", deleteCard);
 
 export default router;
