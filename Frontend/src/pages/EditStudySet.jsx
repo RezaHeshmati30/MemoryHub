@@ -94,26 +94,12 @@ const EditStudySet = () => {
   
 
   const handleCardChange = async (index, field, value) => {
-    console.log("field", field)
-    if (field === "image") {
-      // Handle file upload separately
-      const file = value;
-      const base64Data = await readImageAsBase64(file);
-      console.log(base64Data)
-      setFormState((prevFormState) => ({
-        ...prevFormState,
-        cards: prevFormState.cards.map((card, cardIndex) =>
-          cardIndex === index ? { ...card, image: base64Data } : card
-        ),
-      }));
-    } else {
       setFormState((prevFormState) => ({
         ...prevFormState,
         cards: prevFormState.cards.map((card, cardIndex) =>
           cardIndex === index ? { ...card, [field]: value } : card
         ),
       }));
-    }
   
   };
 
