@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { StudySetsContext } from "../context/StudySetsContext";
 import { AuthContext } from "../context/AuthContext";
+import { UserStudySetsContext } from "../context/UserStudySetsContext";
 
 function CreateSets() {
   const {
@@ -16,6 +17,7 @@ function CreateSets() {
     setDescription,
   } = useContext(StudySetsContext);
   const { userId, getUserInfo } = useContext(AuthContext);
+  const { readImageAsBase64 } = useContext(UserStudySetsContext);
   const [lines, setLines] = useState([1]);
   const navigate = useNavigate();
 
@@ -80,22 +82,22 @@ function CreateSets() {
     }
   };
 
-  const readImageAsBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      if (file) {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onloadend = () => {
-          resolve(reader.result);
-        };
-        reader.onerror = (error) => {
-          reject(error);
-        };
-      } else {
-        resolve(null);
-      }
-    });
-  };
+  // const readImageAsBase64 = (file) => {
+  //   return new Promise((resolve, reject) => {
+  //     if (file) {
+  //       const reader = new FileReader();
+  //       reader.readAsDataURL(file);
+  //       reader.onloadend = () => {
+  //         resolve(reader.result);
+  //       };
+  //       reader.onerror = (error) => {
+  //         reject(error);
+  //       };
+  //     } else {
+  //       resolve(null);
+  //     }
+  //   });
+  // };
 
   const addLine = () => {
     const newLines = [...lines, lines.length + 1];
