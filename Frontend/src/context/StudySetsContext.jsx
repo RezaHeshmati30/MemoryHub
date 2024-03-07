@@ -130,9 +130,7 @@ const StudySetsContextProvider = ({ children }) => {
           },
         }
       );
-      console.log("After PATCH response", response.data);
 
-      console.log("Response Data:", response.data);
       console.log("Study set updated successfully!");
     } catch (error) {
       console.error("Error updating study set:", error.message);

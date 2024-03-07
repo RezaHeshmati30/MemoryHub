@@ -99,14 +99,9 @@ export const editStudySet = async (req, res) => {
   const userId = req.params.userId;
   const topicId = req.params.topicId;
   const studySetId = req.params.studySetId;
-
   const { topicTitle, title, description, cards } = req.body;
-  console.log("Received Request Body:", req.body);
-
+ 
   try {
-    //find the studyset and update it
-    console.log("userId", userId)
-    console.log("studySetId:", studySetId)
     const studySet = await StudySetModel.findByIdAndUpdate(
       studySetId,
       {
@@ -120,19 +115,7 @@ export const editStudySet = async (req, res) => {
       console.error("Study set not found");
       return res.status(404).json({ error: "Study set not found" });
     }
-    // const studySet = await StudySetModel.findByIdAndUpdate(
-    //   studySetId,
-    //   {
-    //     title: title,
-    //     description: description,
-    //   },
-    //   { new: true }
-    // );
 
-    // if (!studySet) {
-    //   console.error("Study set not found");
-    //   return res.status(404).json({ error: "Study set not found" });
-    // }
 const updatedCardsPromises = cards.map(async (eachCard) => {
   const cardId = eachCard.cardId;
   const status = eachCard.status || "not studied"; 
@@ -181,7 +164,6 @@ const updatedCardsPromises = cards.map(async (eachCard) => {
         console.error("Card not found");
         return null;
       }
-
       return foundCard;
     } catch (error) {
       console.error("Error updating card:", error.message);
@@ -191,9 +173,6 @@ const updatedCardsPromises = cards.map(async (eachCard) => {
 });
 
 const updatedCards = (await Promise.all(updatedCardsPromises)).filter(card => card !== null);
-console.log("updatedcards", updatedCards);
-
-
 
     const updatedTopic = await TopicModel.findByIdAndUpdate(
       topicId,
@@ -204,15 +183,11 @@ console.log("updatedcards", updatedCards);
       },
       { new: true }
     );
-console.log("updatedTopic", updatedTopic);
-
 
     if (!updatedTopic) {
       console.error("Topic not found");
       return res.status(404).json({ error: "Topic not found" });
     }
-
-    
     res.status(201).json({
       topicTitle: topicTitle,
       title: studySet.title,
@@ -230,27 +205,18 @@ console.log("updatedTopic", updatedTopic);
 
 export const deleteCard = async (req, res) => {
   const userId = req.params.userId;
-  
   const studySetId = req.params.studySetId;
   const cardId = req.params.cardId;
 
-  console.log("deleteCard", userId, studySetId, cardId);
-
   try {
-    //? Step 1: Remove the card from the CardModel
     await CardModel.findByIdAndDelete(cardId)
       .then(async (deletedCard) => {
-        console.log("afterDeleteCard", deletedCard);
-
-        //? Step 2: Remove the card from the StudySetModel
         const studySetAfterDel = await StudySetModel.findByIdAndUpdate(
           studySetId,
           { $pull: { cards: cardId } },
           { new: true }
         );
-        console.log("studySetAfterDel", studySetAfterDel);
-
-        //? Step 3: Remove the card from the UserModel
+  
         const userAfterDel = await UserModel.findByIdAndUpdate(
           userId,
           {
@@ -267,10 +233,9 @@ export const deleteCard = async (req, res) => {
             new: true,
           }
         );
-        console.log("userAfterDel", userAfterDel);
-
         res.status(200).json({ message: "Card deleted successfully" });
       });
+
   } catch (error) {
     console.error("Error deleting card:", error);
     return res.status(500).json({ error: "Internal server error" });

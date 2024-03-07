@@ -11,11 +11,11 @@ const TopicModel = mongoose.model('Topic', TopicSchema)
 
 export default TopicModel
 
-// TopicModel.collection.dropIndexes((err, result) => {
-//   if (err) {
-//     console.error("Error dropping indexes:", err);
-//   } else {
-//     console.log("Indexes dropped successfully:", result);
-//   }
-// });
+TopicModel.collection.dropIndexes((err, result) => {
+  if (err) {
+    console.error("Error dropping indexes:", err);
+  } else {
+    console.log("Indexes dropped successfully:", result);
+  }
+});
 
