@@ -150,7 +150,7 @@ const AuthContextProvider = ({ children }) => {
       setUser(response.data);
       setUserId(response.data._id);
       setSavedStudySets(response.data.savedStudySets);
-
+setGetTopics(response.data.savedStudySets.topic);
       //console.log("user response", response.data);
     } catch (error) {
       setErrorMessages(error);

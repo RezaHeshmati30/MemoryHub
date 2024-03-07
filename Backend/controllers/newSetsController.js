@@ -99,6 +99,7 @@ export const editStudySet = async (req, res) => {
   const studySetId = req.params.studySetId;
 
   const { topicTitle, title, description, cards } = req.body;
+  console.log("Received Request Body:", req.body);
 
   try {
     //find the studyset and update it
@@ -110,14 +111,28 @@ export const editStudySet = async (req, res) => {
       },
       { new: true }
     );
-
+    
     if (!studySet) {
       console.error("Study set not found");
       return res.status(404).json({ error: "Study set not found" });
     }
+    // const studySet = await StudySetModel.findByIdAndUpdate(
+    //   studySetId,
+    //   {
+    //     title: title,
+    //     description: description,
+    //   },
+    //   { new: true }
+    // );
+
+    // if (!studySet) {
+    //   console.error("Study set not found");
+    //   return res.status(404).json({ error: "Study set not found" });
+    // }
 const updatedCardsPromises = cards.map(async (eachCard) => {
   const cardId = eachCard.cardId;
   const status = eachCard.status || "not studied"; 
+  
   if (!cardId) {
     try {
       const newCard = await CardModel.create(eachCard);
@@ -128,6 +143,7 @@ const updatedCardsPromises = cards.map(async (eachCard) => {
 
       await UserModel.findByIdAndUpdate(userId, {
         $push: {
+          
           "savedStudySets.$[elem].cards": {
             card: newCard._id,
             status: status,
@@ -171,6 +187,8 @@ const updatedCardsPromises = cards.map(async (eachCard) => {
 const updatedCards = (await Promise.all(updatedCardsPromises)).filter(card => card !== null);
 console.log("updatedcards", updatedCards);
 
+
+
     const updatedTopic = await TopicModel.findByIdAndUpdate(
       topicId,
       {
@@ -180,11 +198,15 @@ console.log("updatedcards", updatedCards);
       },
       { new: true }
     );
+console.log("updatedTopic", updatedTopic);
+
 
     if (!updatedTopic) {
       console.error("Topic not found");
       return res.status(404).json({ error: "Topic not found" });
     }
+
+    
     res.status(201).json({
       topicTitle: topicTitle,
       title: studySet.title,

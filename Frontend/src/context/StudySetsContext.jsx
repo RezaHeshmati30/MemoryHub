@@ -61,22 +61,31 @@ const StudySetsContextProvider = ({ children }) => {
     }
   };
 
-  const createStudySetsAndCards = async (userId, topic, title, description, createdBy, cards) => {
-
+  const createStudySetsAndCards = async (
+    userId,
+    topic,
+    title,
+    description,
+    createdBy,
+    cards
+  ) => {
     try {
       const savedStudySets = {
         topic: topic,
         title: title,
         description: description,
         createdBy: createdBy,
-        cards: cards.map(card => ({
+        cards: cards.map((card) => ({
           question: card.question,
           answer: card.answer,
-          image: card.image
-        }))
+          image: card.image,
+        })),
       };
       console.log("Request Payload:", { ...savedStudySets });
-      const response = await axios.post(`${backendApiUrl}/createSet/${userId}`, { ...savedStudySets });
+      const response = await axios.post(
+        `${backendApiUrl}/createSet/${userId}`,
+        { ...savedStudySets }
+      );
     } catch (error) {
       console.error("Error updating study set:", error.message);
 
@@ -86,6 +95,7 @@ const StudySetsContextProvider = ({ children }) => {
       throw error;
     }
   };
+  
   const editStudySet = async (
     userId,
     topicId,
@@ -97,30 +107,33 @@ const StudySetsContextProvider = ({ children }) => {
   ) => {
     try {
       const updatedStudySets = {
-        topicTitle: topicTitle,
-        title: title,
-        description: description,
-        cards: cardsInfo.map((card) => {
-          // console.log("card:", card);
-          return {
-            question: card.question,
-            answer: card.answer,
-            cardId: card.id,
-          };
-        }),
+        topicTitle,
+        title,
+        description,
+        cards: cardsInfo.map((card) => ({
+          question: card.question,
+          answer: card.answer,
+          cardId: card.id,
+        })),
       };
+
       console.log("updatedStudySets:", updatedStudySets);
+      console.log("userId:", userId);
+      console.log("topicId in axios:", topicId);
+      console.log("studySetId:", studySetId);
+      console.log("topictitle", topicTitle);
       const response = await axios.patch(
         `${backendApiUrl}/editSet/${userId}/${topicId}/${studySetId}`,
-        { ...updatedStudySets },
+        updatedStudySets,
         {
           headers: {
             "Content-Type": "application/json",
           },
         }
       );
+      console.log("After PATCH response", response.data);
 
-      console.log("Response Data:", response);
+      console.log("Response Data:", response.data);
       console.log("Study set updated successfully!");
     } catch (error) {
       console.error("Error updating study set:", error.message);
@@ -128,9 +141,9 @@ const StudySetsContextProvider = ({ children }) => {
       if (error.response) {
         console.log("Response Data from backend:", error.response.data);
       }
+
       throw error;
     }
-    
   };
 
   const deleteCard = async (userId, studySetId, cardId) => {
