@@ -67,6 +67,24 @@ const UserStudySetsContextProvider = ({ children }) => {
     });
   };
 
+  const readImageAsBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      if (file) {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+          resolve(reader.result);
+        };
+        reader.onerror = (error) => {
+          reject(error);
+        };
+      } else {
+        resolve(null);
+      }
+    });
+  };
+
+
   return (
     <UserStudySetsContext.Provider
       value={{
@@ -84,7 +102,7 @@ const UserStudySetsContextProvider = ({ children }) => {
         handleNextCard,
         handlePreviousCard,
         round,
-        setRound,
+        setRound,readImageAsBase64
       }}
     >
       {children}

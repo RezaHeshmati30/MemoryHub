@@ -105,23 +105,22 @@ const StudySetsContextProvider = ({ children }) => {
     description,
     cardsInfo
   ) => {
+
     try {
       const updatedStudySets = {
-        topicTitle,
-        title,
-        description,
-        cards: cardsInfo.map((card) => ({
+        topicTitle: topicTitle,
+        title: title,
+        description: description,
+        cards: cardsInfo.map((card) => {
+          // console.log("card:", card);
+          return {
           question: card.question,
           answer: card.answer,
+          image: card.image,
           cardId: card.id,
-        })),
-      };
-
-      console.log("updatedStudySets:", updatedStudySets);
-      console.log("userId:", userId);
-      console.log("topicId in axios:", topicId);
-      console.log("studySetId:", studySetId);
-      console.log("topictitle", topicTitle);
+      }
+      })
+    }
       const response = await axios.patch(
         `${backendApiUrl}/editSet/${userId}/${topicId}/${studySetId}`,
         updatedStudySets,

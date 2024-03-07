@@ -24,12 +24,16 @@ function Practice() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (hasToken) {
     async function fetchData() {
       await getUserInfo();
       setCurrentIndex(0);
       setLoading(false); // Set loading to false once user data is fetched
     }
     fetchData();
+  } else {
+    navigate("/");
+  }
   }, []);
   useEffect(() => {
     if (user) {
@@ -92,6 +96,7 @@ function Practice() {
   return (
     !loading && (
       <div>
+        {hasToken && (
         <section className="w-[80vw] h-[90vh] bg-gray-200 mx-auto my-5 px-10 py-10">
           <CardFilter
             filterStatus={filterStatus}
@@ -155,6 +160,7 @@ function Practice() {
           </button>
           <PracticeButtons currentSet={currentCardsSet} />
         </section>
+        )}
       </div>
     )
   );

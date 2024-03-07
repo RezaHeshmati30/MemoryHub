@@ -1,17 +1,23 @@
 import React, { useContext, useEffect } from 'react'
 import { AuthContext } from '../context/AuthContext'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import UserStatistic from '../components/UserStatistic';
 import UserPageNavigation from '../components/UserPageNavigation';
 
 function UserProfile() {
-  const {getUserInfo, user} = useContext(AuthContext);
-
+  const {getUserInfo, user, hasToken} = useContext(AuthContext);
+  const navigate = useNavigate();
   useEffect(() => {
-    getUserInfo();
+    if (hasToken) {
+      getUserInfo();
+    } else {
+      navigate('/')
+    }
   }, [])
   return (
     <section className='flex justify-between p-[30px]'>
+      {hasToken && (
+      <>
       <div>
         <UserPageNavigation />
       </div>
@@ -24,6 +30,8 @@ function UserProfile() {
       <UserStatistic />
       <Link className="bg-[#b6b2b2] py-[5px] px-[10px] rounded-[10px] w-[10%]" to="/">Back to home</Link>
     </div>
+      </>
+      )}
     </section>
     
   )

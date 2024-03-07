@@ -21,6 +21,7 @@ function LearnCards() {
     const [showMessages, setShowMessages] = useState(false);
 
     useEffect(() => {
+        if (hasToken) {
         getUserInfo();
         setCurrentIndex(0);
         setCorrectAnswers(0);
@@ -30,6 +31,9 @@ function LearnCards() {
         const currentCard = currentCardsSet[currentIndex];
         setCurrentCard(currentCard);
         setCurrentCardsSet(currentCardsSet);
+        } else {
+            navigate('/');
+        }
     }, [])
 
     useEffect(() => {
@@ -99,6 +103,8 @@ function LearnCards() {
     }
 
   return (
+    <>
+    {hasToken && (
     <section className='p-[30px]'>
         {currentCardsSet && 
         currentCardsSet?.length - 1 >= currentIndex ? (
@@ -114,8 +120,8 @@ function LearnCards() {
                     <button onClick={() => onClickAnswerHandler(option)} className={`${
                         showMessages &&
                         (option === correctAnswer ? "border-green-500 bg-green-200" : "border-red-500")
-                      } basis-[45%] rounded-[10px] border-[2px] p-[15px]`} key={index}>{index+1}: {option}</button>
-                ))}
+                    } basis-[45%] rounded-[10px] border-[2px] p-[15px]`} key={index}>{index+1}: {option}</button>
+                    ))}
             </div>
             <p>{currentIndex +1} / {currentCardsSet?.length}</p>
         </div>) : 
@@ -138,6 +144,8 @@ function LearnCards() {
             back to Study Sets
         </button>
     </section>
+    )}
+    </>
   )
 }
 
