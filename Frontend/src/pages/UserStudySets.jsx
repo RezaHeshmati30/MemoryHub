@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import UserStudySetsSearchBar from '../components/UserStudySetsSearchBar';
 
 function UserStudySets() {
-    const {getUserInfo, user, savedStudySets, setSavedStudySets} = useContext(AuthContext);
+    const {getUserInfo, user, savedStudySets, setSavedStudySets, hasToken} = useContext(AuthContext);
     const {setStudySetId, deleteSavedStudySet} = useContext(UserStudySetsContext);
     const [searchQuery, setSearchQuery] = useState('');
     const navigate = useNavigate();
@@ -13,8 +13,11 @@ function UserStudySets() {
     
 
     useEffect(() => {
-        getUserInfo();
-        console.log('savedStudySets: example')
+        if (hasToken) {
+            getUserInfo();
+        } else {
+            navigate('/');
+        }
     }, []);
 
     // useEffect(() => {
@@ -44,6 +47,8 @@ function UserStudySets() {
     };
 
     return (
+        <>
+        {hasToken && (
         <section className='flex flex-col gap-[20px] p-[30px]'>
             <h2>User Study Sets Page</h2>
             <h3>Study Sets</h3>
@@ -79,6 +84,8 @@ function UserStudySets() {
                 ))}
             </ul>
         </section>
+        )}
+        </>
     );
 
 }

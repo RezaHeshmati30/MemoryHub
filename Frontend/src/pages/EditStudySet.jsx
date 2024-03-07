@@ -9,7 +9,7 @@ const EditStudySet = () => {
   const { editStudySet, deleteCard } = useContext(StudySetsContext);
   const { readImageAsBase64 } = useContext(UserStudySetsContext);
   const { id } = useParams();
-  const { userId, user, getUserInfo } = useContext(AuthContext);
+  const { userId, user, getUserInfo, hasToken } = useContext(AuthContext);
   const navigate = useNavigate();
 
   //?finding the studySetId:
@@ -41,6 +41,9 @@ const EditStudySet = () => {
   //? when page is loading it would load this Data in useEffect
 
   useEffect(() => {
+    if (!hasToken) {
+      navigate("/");
+    } else {
     getUserInfo();
     setFormState((prevFormState) => ({
       ...prevFormState,
@@ -49,6 +52,7 @@ const EditStudySet = () => {
       description: savedStudySet?.studySet?.description || "",
       cards: cardsInfo,
     }));
+  }
   }, [id, JSON.stringify(cardsDefault)]);
 
   const handleSubmit = async (e) => {
@@ -125,6 +129,7 @@ const EditStudySet = () => {
   
   return (
     <div className="flex justify-center items-center ">
+      {hasToken && (
       <form
         className='bg-blue-100 shadow-md rounded px-8 pt-6 pb-8 mb-4'
         onSubmit={handleSubmit}
@@ -272,6 +277,7 @@ const EditStudySet = () => {
           </button>
         </div>
       </form>
+      )}
     </div>
   );
 };

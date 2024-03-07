@@ -4,8 +4,13 @@ import axios from "axios";
 
 const AuthContext = createContext();
 
+const TOKEN_STORAGE_KEY = "authToken";
+
 const AuthContextProvider = ({ children }) => {
-  const [hasToken, setHasToken] = useState(false);
+  const [hasToken, setHasToken] = useState(() => {
+    // Überprüfen, ob ein Token im Local Storage vorhanden ist
+    return localStorage.getItem(TOKEN_STORAGE_KEY) !== null;
+  });
   const [msg, setMsg] = useState("");
   const [user, setUser] = useState({});
   const [error, setError] = useState("");
@@ -80,6 +85,8 @@ const AuthContextProvider = ({ children }) => {
       );
       setMsg(`Erfolgreich eingeloggt: ${email}. JWT erhalten.`);
       console.log(`Erfolgreich eingeloggt: ${email}. JWT erhalten.`);
+      // Token im Local Storage speichern
+      localStorage.setItem(TOKEN_STORAGE_KEY, resp.data.token);
       setHasToken(true);
       setEmailLogin("");
       setPasswordLogin("");
@@ -99,6 +106,8 @@ const AuthContextProvider = ({ children }) => {
       );
       console.log("Erfolgreich ausgeloggt", resp.data);
       setMsg("Erfolgreich ausgeloggt.");
+      // Token aus dem Local Storage entfernen
+      localStorage.removeItem(TOKEN_STORAGE_KEY);
       setHasToken(false);
       setShowLoginForm(false);
       setShowSignUpForm(false);
@@ -143,6 +152,7 @@ const AuthContextProvider = ({ children }) => {
   }, []);
 
   const getUserInfo = async () => {
+    if (!hasToken) return;
     try {
       const response = await axios.get(`${backendApiUrl}/user`, {
         withCredentials: true,

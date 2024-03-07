@@ -2,13 +2,14 @@ import StudySetModel from "../models/StudySetModel.js";
 import CardModel from "../models/CardModel.js";
 import UserModel from "../models/UserModel.js";
 import TopicModel from "../models/TopicModel.js";
+import { v2 as cloudinary } from "cloudinary";
 
 
 export const createStudySetsAndCards = async (req, res) => {
   try {
     const userId = req.params.userId;
     const { topic, title, description, createdBy, cards } = req.body;
-
+    
     const user = await UserModel.findById(userId);
     if (!user) {
       return res.status(404).json({ error: "User not found" });
@@ -20,7 +21,8 @@ export const createStudySetsAndCards = async (req, res) => {
     try {
       const savedCards = await Promise.all(
         cards.map(async (cardData) => {
-          const newCard = new CardModel(cardData);
+          const cloudinaryLink = await cloudinary.uploader.upload(cardData.image);
+          const newCard = new CardModel({question:cardData.question, answer:cardData.answer, image:cloudinaryLink.secure_url});
           return await newCard.save();
         })
       );
@@ -146,13 +148,14 @@ const updatedCardsPromises = cards.map(async (eachCard) => {
     }
   } else {
     try {
+      const cloudinaryLink = await cloudinary.uploader.upload(eachCard.image);
       const foundCard = await CardModel.findByIdAndUpdate(
         cardId,
         {
           $set: {
             question: eachCard.question,
             answer: eachCard.answer,
-            image: eachCard.image
+            image: cloudinaryLink.secure_url,
           },
         },
         { new: true }

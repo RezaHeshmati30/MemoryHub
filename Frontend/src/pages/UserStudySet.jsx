@@ -5,26 +5,34 @@ import StartPracticeButtons from '../components/StartPracticeButtons';
 import StudySetStatistic from '../components/StudySetStatistic';
 
 function UserStudySet() {
-    const {getUserInfo, user} = useContext(AuthContext);
+    const {getUserInfo, user, hasToken} = useContext(AuthContext);
 
     const {id} = useParams();
     
 
     useEffect(() => {
+      if (hasToken) { 
        getUserInfo();
+      } else {
+        navigate('/')
+      }
     }, [])
 
     const studySet = user?.savedStudySets?.filter(studySet => studySet._id === id)[0];
     
   return (
+    <>
+    {hasToken && (
     <section className='p-[30px] flex flex-col gap-[20px]'>
             {studySet && (
-                <>
+              <>
                     <StudySetStatistic />
                     <StartPracticeButtons edit={studySet?.edit} studySetId={studySet?._id} userId={user?._id}/>
                 </>
             )}
         </section>
+    )}
+    </>
   )
 }
 

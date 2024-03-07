@@ -22,8 +22,10 @@ function WriteMode() {
     useEffect(() => {
         if (hasToken) {
             getUserInfo();
+        } else {
+            navigate('/');
         }
-    }, [hasToken]);
+    }, []);
 
     useEffect(() => {
         setCurrentIndex(0);
@@ -108,6 +110,8 @@ function WriteMode() {
     }
 
     return (
+        <>
+        {hasToken && (
         <section className='p-[30px]'>
             {currentCardsSet && currentCardsSet.length - 1 >= currentIndex && (
                 <div className='p-[40px]'>
@@ -140,6 +144,8 @@ function WriteMode() {
                 Back to Study Sets
             </button>
         </section>
+        )}
+        </>
     );
 }
 

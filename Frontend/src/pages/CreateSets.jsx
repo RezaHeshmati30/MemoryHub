@@ -16,13 +16,17 @@ function CreateSets() {
     setTitle,
     setDescription,
   } = useContext(StudySetsContext);
-  const { userId, getUserInfo } = useContext(AuthContext);
+  const { userId, getUserInfo, hasToken } = useContext(AuthContext);
   const { readImageAsBase64 } = useContext(UserStudySetsContext);
   const [lines, setLines] = useState([1]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    getUserInfo();
+    if (hasToken) {
+      getUserInfo();
+    } else {
+      navigate('/')
+    }
   }, [userId]);
 
   const handleCreateSets = async (e) => {
@@ -111,6 +115,7 @@ function CreateSets() {
 
   return (
     <div className='flex justify-center items-center '>
+      {hasToken && (
       <form
         className='bg-pink-200 shadow-md rounded px-8 pt-6 pb-8 mb-4'
         onSubmit={handleCreateSets}
@@ -239,6 +244,7 @@ function CreateSets() {
           </button>
         </div>
       </form>
+      )}
     </div>
   );
 }

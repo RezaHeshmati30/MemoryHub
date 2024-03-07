@@ -17,14 +17,18 @@ function ProfileSettings() {
   const [newPassword, setNewPassword] = useState('');
   const [selectedPhoto, setSelectedPhoto] = useState(null);
 
-  const { getUserInfo, user, logoutHandler } = useContext(AuthContext);
+  const { getUserInfo, user, logoutHandler, hasToken } = useContext(AuthContext);
   const backendApiUrl = import.meta.env.VITE_SERVER_URL;
 
   const navigate = useNavigate();
 
 
   useEffect(() => {
-    getUserInfo();
+    if (hasToken) {
+      getUserInfo();
+    } else {
+      navigate('/')
+    }
   }, []);
 
   useEffect(() => {
@@ -123,6 +127,8 @@ const handleDeleteAccount = async () => {
 
   return (
     <div className="max-w-lg mx-auto mt-8 p-6 bg-white rounded shadow-lg">
+      {hasToken && (
+      <div>
       <h2 className="text-xl font-semibold mb-4">Profile update</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
@@ -162,6 +168,8 @@ const handleDeleteAccount = async () => {
         <button onClick={handleDeleteAccount} className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 mt-4">
         Delete Account
       </button>
+    </div>
+      )}
     </div>
   );
 }
