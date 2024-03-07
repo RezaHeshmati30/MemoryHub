@@ -8,12 +8,14 @@ const EditStudySet = () => {
   const { id } = useParams();
   const { userId, user, getUserInfo } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [updatedTopicTitle, setUpdatedTopicTitle] = useState("savedStudySet?.topic?.title");
+  const [updatedTopicTitle, setUpdatedTopicTitle] = useState(
+    "savedStudySet?.topic?.title"
+  );
 
   const savedStudySet = user?.savedStudySets?.find(
     (studySet) => studySet._id === id
   );
-  console.log("User initial StudySet:", savedStudySet);
+
   const [topicId, setTopicId] = useState(savedStudySet?.topic?._id || "");
   const cardsDefault = savedStudySet?.cards || [];
   const cardsInfo = cardsDefault
@@ -40,33 +42,26 @@ const EditStudySet = () => {
       description: savedStudySet?.studySet?.description || "",
       cards: cardsInfo,
     }));
-  //console.log("loaded topicid:",topicId);
   }, [id, JSON.stringify(cardsDefault)]);
-  
-  const topicHandler = async(e) => {
+
+  const topicHandler = async (e) => {
     const chosenTopic = await e.target.value;
     setUpdatedTopicTitle(chosenTopic);
     setFormState((prevState) => ({
       ...prevState,
       topicTitle: chosenTopic,
     }));
-    console.log("event from dropdown or topic writing:", chosenTopic);
-    console.log("formState after changing topic:", formState);
-    console.log("updatedtopictitle after changing topic:", updatedTopicTitle);
   };
 
-  const topicIdFinder = async() => {
+  const topicIdFinder = async () => {
     const foundTopic = await user?.savedStudySets
       ?.map((eachSet) => eachSet.topic)
       .find((eachTopic) => eachTopic.title === updatedTopicTitle);
-    console.log("Found Topic:", foundTopic);
     if (foundTopic) {
       const foundTopicId = foundTopic._id;
-      console.log(" found topic id:", foundTopicId);
       setTopicId(foundTopicId);
-      console.log("topic is already existed",foundTopicId)
     } else {
-      console.log("topic is new. The current topicId is:",topicId )
+      console.log("topic is new. The current topicId is:", topicId);
     }
   };
 
@@ -83,17 +78,10 @@ const EditStudySet = () => {
         formState.description,
         formState.cards
       );
-      console.log("sent final formstate:", formState)
     } catch (error) {
       console.error("Error updating study set:", error.message);
     }
   };
-
-  useEffect(() => {
-    console.log("After State Update:", topicId, formState.topicTitle);
-  }, [topicId, formState.topicTitle]);
-
-
 
   const handleChange = (e) => {
     setFormState((prevState) => ({
@@ -157,18 +145,19 @@ const EditStudySet = () => {
             <select
               id='topicDropdown'
               name='topicDropdown'
-              //value={formState.topicTitle}
               onChange={topicHandler}
               className='border border-gray-400 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
             >
               <option>Select Topic</option>
-              {user?.savedStudySets
-                ?.map((studySet) => studySet.topic)
-                .map((topic) => (
-                  <option key={topic._id} value={topic.title}>
-                    {topic.title}
-                  </option>
-                ))}
+              {[
+                ...new Set(
+                  user?.savedStudySets?.map((studySet) => studySet.topic?.title)
+                ),
+              ].map((topicTitle) => (
+                <option key={topicTitle} value={topicTitle}>
+                  {topicTitle}
+                </option>
+              ))}
             </select>
           </label>
         </div>
