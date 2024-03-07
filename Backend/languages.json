@@ -1,0 +1,1025 @@
+
+
+
+{
+    "topic": "English",
+    "studySets": [
+      {
+        "title": "Grammar Basics",
+        "description": "Explore the fundamental principles and rules of English grammar.",
+        "cards": [
+          {
+            "question": "What is a noun?",
+            "answer": "A word that represents a person, place, thing, or idea."
+          },
+          {
+            "question": "Name the eight parts of speech.",
+            "answer": "Noun, pronoun, verb, adjective, adverb, preposition, conjunction, interjection"
+          },
+          {
+            "question": "What is a verb?",
+            "answer": "A word that expresses an action, occurrence, or state of being."
+          },
+          {
+            "question": "Name the three types of verb tenses.",
+            "answer": "Past, present, future"
+          },
+          {
+            "question": "What is a conjunction?",
+            "answer": "A word that connects words, phrases, or clauses within a sentence."
+          }
+        ]
+      },
+      {
+        "title": "Vocabulary Expansion",
+        "description": "Enhance your vocabulary by learning new words and their meanings.",
+        "cards": [
+          {
+            "question": "What is a synonym?",
+            "answer": "A word that has the same or similar meaning as another word."
+          },
+          {
+            "question": "Name the process of forming words by combining morphemes.",
+            "answer": "Word formation"
+          },
+          {
+            "question": "What is a homonym?",
+            "answer": "A word that sounds the same as another word but has a different meaning or spelling."
+          },
+          {
+            "question": "Name the opposite of a synonym.",
+            "answer": "Antonym"
+          },
+          {
+            "question": "What is a prefix?",
+            "answer": "A morpheme added to the beginning of a word to modify its meaning."
+          }
+        ]
+      },
+      {
+        "title": "Literary Devices",
+        "description": "Explore the various literary techniques and figures of speech used in writing.",
+        "cards": [
+          {
+            "question": "What is a metaphor?",
+            "answer": "A figure of speech that makes a direct comparison between two unrelated things, suggesting that one thing is another."
+          },
+          {
+            "question": "Name the literary device characterized by the repetition of consonant sounds at the beginning of words.",
+            "answer": "Alliteration"
+          },
+          {
+            "question": "What is personification?",
+            "answer": "A figure of speech in which human characteristics are attributed to non-human entities or objects."
+          },
+          {
+            "question": "Name the technique of repeating a word or phrase at the beginning of successive clauses or sentences.",
+            "answer": "Anaphora"
+          },
+          {
+            "question": "What is symbolism?",
+            "answer": "The use of symbols to represent ideas, concepts, or objects in literature and art."
+          }
+        ]
+      },
+      {
+        "title": "Writing Skills",
+        "description": "Learn the essential skills and techniques for effective writing.",
+        "cards": [
+          {
+            "question": "What is the writing process?",
+            "answer": "The series of steps involved in composing, revising, and editing written texts, including planning, drafting, revising, and proofreading."
+          },
+          {
+            "question": "Name the four main types of writing.",
+            "answer": "Narrative, descriptive, expository, persuasive"
+          },
+          {
+            "question": "What is a thesis statement?",
+            "answer": "A concise statement that summarizes the main point or argument of an essay or research paper."
+          },
+          {
+            "question": "Name the type of writing that aims to inform, explain, or describe a topic.",
+            "answer": "Expository writing"
+          },
+          {
+            "question": "What is plagiarism?",
+            "answer": "The act of using someone else's ideas, words, or work without proper attribution or permission, often considered a form of academic dishonesty."
+          }
+        ]
+      },
+      {
+        "title": "Reading Comprehension",
+        "description": "Enhance your reading skills by understanding and analyzing written texts.",
+        "cards": [
+          {
+            "question": "What is reading comprehension?",
+            "answer": "The ability to understand, interpret, and evaluate written texts, including identifying main ideas, making inferences, and analyzing authorial techniques."
+          },
+          {
+            "question": "Name the process of extracting and recognizing words from written or printed material.",
+            "answer": "Decoding"
+          },
+          {
+            "question": "What is inference?",
+            "answer": "The process of drawing logical conclusions based on evidence or information presented in a text."
+          },
+          {
+            "question": "Name the technique of examining a text closely to identify literary elements, themes, and patterns.",
+            "answer": "Close reading"
+          },
+          {
+            "question": "What is skimming?",
+            "answer": "A reading technique involving quickly scanning a text to get a general sense of its content or structure."
+          }
+        ]
+      }
+    ]
+  }
+  
+
+
+  {
+    "topic": "German",
+    "studySets": [
+      {
+        "title": "Basic German Vocabulary",
+        "description": "Learn essential German words and phrases to build your vocabulary.",
+        "cards": [
+          {
+            "question": "What is the German word for 'hello'?",
+            "answer": "Hallo"
+          },
+          {
+            "question": "Translate 'goodbye' into German.",
+            "answer": "Auf Wiedersehen"
+          },
+          {
+            "question": "What does 'danke' mean in German?",
+            "answer": "Thank you"
+          },
+          {
+            "question": "Translate 'please' into German.",
+            "answer": "Bitte"
+          },
+          {
+            "question": "What is the German word for 'yes'?",
+            "answer": "Ja"
+          },
+          {
+            "question": "How do you say 'excuse me' in German?",
+            "answer": "Entschuldigung"
+          },
+          {
+            "question": "Translate 'I love you' into German.",
+            "answer": "Ich liebe dich"
+          }
+        ]
+      },
+      {
+        "title": "German Grammar",
+        "description": "Explore the grammar rules and structures of the German language.",
+        "cards": [
+          {
+            "question": "What are the three genders in German?",
+            "answer": "Masculine, feminine, neuter"
+          },
+          {
+            "question": "Name the four cases in German.",
+            "answer": "Nominative, accusative, dative, genitive"
+          },
+          {
+            "question": "What is a verb conjugation?",
+            "answer": "The variation of a verb's form to indicate tense, mood, person, and number."
+          },
+          {
+            "question": "Name the German verb that means 'to be'.",
+            "answer": "Sein"
+          },
+          {
+            "question": "What is the comparative form of 'gut' in German?",
+            "answer": "Besser"
+          },
+          {
+            "question": "What is the German word for 'I am'?",
+            "answer": "Ich bin"
+          },
+          {
+            "question": "How do you conjugate the verb 'machen' (to do) in the present tense for 'du' (you)?",
+            "answer": "Du machst"
+          }
+        ]
+      },
+      {
+        "title": "German Verbs",
+        "description": "Learn common German verbs and their conjugations.",
+        "cards": [
+          {
+            "question": "What is the infinitive form of the verb 'to eat' in German?",
+            "answer": "Essen"
+          },
+          {
+            "question": "Conjugate the verb 'gehen' (to go) in the present tense for 'wir' (we).",
+            "answer": "Wir gehen"
+          },
+          {
+            "question": "What is the past participle of the verb 'trinken' (to drink) in German?",
+            "answer": "Getrunken"
+          },
+          {
+            "question": "Translate 'to read' into German.",
+            "answer": "Lesen"
+          },
+          {
+            "question": "Conjugate the verb 'schreiben' (to write) in the past tense for 'sie' (they).",
+            "answer": "Sie haben geschrieben"
+          },
+          {
+            "question": "What is the infinitive form of the verb 'to sleep' in German?",
+            "answer": "Schlafen"
+          },
+          {
+            "question": "Conjugate the verb 'sprechen' (to speak) in the present tense for 'du' (you).",
+            "answer": "Du sprichst"
+          }
+        ]
+      },
+      {
+        "title": "German Phrases and Expressions",
+        "description": "Learn common phrases and expressions used in everyday German conversations.",
+        "cards": [
+          {
+            "question": "What does 'Wie geht es dir?' mean in English?",
+            "answer": "How are you?"
+          },
+          {
+            "question": "Translate 'I don't understand' into German.",
+            "answer": "Ich verstehe nicht"
+          },
+          {
+            "question": "What is the German equivalent of 'See you later'?",
+            "answer": "Bis später"
+          },
+          {
+            "question": "Translate 'What's your name?' into German.",
+            "answer": "Wie ist dein Name?"
+          },
+          {
+            "question": "What does 'Guten Appetit' mean in English?",
+            "answer": "Enjoy your meal"
+          },
+          {
+            "question": "Translate 'How old are you?' into German.",
+            "answer": "Wie alt bist du?"
+          },
+          {
+            "question": "What is the German phrase for 'I'm sorry'?",
+            "answer": "Es tut mir leid"
+          }
+        ]
+      },
+      {
+        "title": "German Numbers and Dates",
+        "description": "Learn how to count and express dates in German.",
+        "cards": [
+          {
+            "question": "What is the German word for 'one'?",
+            "answer": "Eins"
+          },
+          {
+            "question": "How do you say 'twenty' in German?",
+            "answer": "Zwanzig"
+          },
+          {
+            "question": "What is the German word for 'thirty-five'?",
+            "answer": "Fünfunddreißig"
+          },
+          {
+            "question": "Translate 'January' into German.",
+            "answer": "Januar"
+          },
+          {
+            "question": "What is the German date format?",
+            "answer": "Day-month-year (e.g., 12. März 2022)"
+          },
+          {
+            "question": "How do you say 'December' in German?",
+            "answer": "Dezember"
+          },
+          {
+            "question": "What is the German word for 'thousand'?",
+            "answer": "Tausend"
+          }
+        ]
+      }
+    ]
+  }
+
+  
+  {
+    "topic": "Ukrainian",
+    "studySets": [
+      {
+        "title": "Basic Ukrainian Vocabulary",
+        "description": "Learn essential Ukrainian words and phrases to build your vocabulary.",
+        "cards": [
+          {
+            "question": "What is the Ukrainian word for 'hello'?",
+            "answer": "Привіт (Privit)"
+          },
+          {
+            "question": "Translate 'goodbye' into Ukrainian.",
+            "answer": "До побачення (Do pobachennya)"
+          },
+          {
+            "question": "What does 'дякую' mean in Ukrainian?",
+            "answer": "Thank you"
+          },
+          {
+            "question": "Translate 'please' into Ukrainian.",
+            "answer": "Будь ласка (Budʹ laska)"
+          },
+          {
+            "question": "What is the Ukrainian word for 'yes'?",
+            "answer": "Так (Tak)"
+          },
+          {
+            "question": "How do you say 'excuse me' in Ukrainian?",
+            "answer": "Вибачте (Vybachte)"
+          },
+          {
+            "question": "Translate 'I love you' into Ukrainian.",
+            "answer": "Я тебе люблю (Ya tebe lyublyu)"
+          }
+        ]
+      },
+      {
+        "title": "Ukrainian Grammar",
+        "description": "Explore the grammar rules and structures of the Ukrainian language.",
+        "cards": [
+          {
+            "question": "What are the three genders in Ukrainian?",
+            "answer": "Masculine, feminine, neuter"
+          },
+          {
+            "question": "Name the seven cases in Ukrainian.",
+            "answer": "Nominative, genitive, dative, accusative, instrumental, locative, vocative"
+          },
+          {
+            "question": "What is a verb conjugation?",
+            "answer": "The variation of a verb's form to indicate tense, mood, person, and number."
+          },
+          {
+            "question": "Name the Ukrainian verb that means 'to be'.",
+            "answer": "Бути (Buty)"
+          },
+          {
+            "question": "What is the comparative form of 'добре' (good) in Ukrainian?",
+            "answer": "Краще (Krashche)"
+          },
+          {
+            "question": "What is the Ukrainian word for 'I am'?",
+            "answer": "Я є (Ya ye)"
+          },
+          {
+            "question": "How do you conjugate the verb 'читати' (to read) in the past tense for 'він' (he)?",
+            "answer": "Він читав (Vin chytav)"
+          }
+        ]
+      },
+      {
+        "title": "Ukrainian Verbs",
+        "description": "Learn common Ukrainian verbs and their conjugations.",
+        "cards": [
+          {
+            "question": "What is the infinitive form of the verb 'to eat' in Ukrainian?",
+            "answer": "Їсти (Yisty)"
+          },
+          {
+            "question": "Conjugate the verb 'ходити' (to walk) in the present tense for 'ми' (we).",
+            "answer": "Ми ходимо (My khodymo)"
+          },
+          {
+            "question": "What is the past participle of the verb 'пити' (to drink) in Ukrainian?",
+            "answer": "Пив (Pyv)"
+          },
+          {
+            "question": "Translate 'to write' into Ukrainian.",
+            "answer": "Писати (Pysaty)"
+          },
+          {
+            "question": "Conjugate the verb 'говорити' (to speak) in the past tense for 'вони' (they).",
+            "answer": "Вони говорили (Vony hovoryly)"
+          },
+          {
+            "question": "What is the infinitive form of the verb 'to sleep' in Ukrainian?",
+            "answer": "Спати (Spaty)"
+          },
+          {
+            "question": "Conjugate the verb 'читати' (to read) in the present tense for 'ти' (you).",
+            "answer": "Ти читаєш (Ty chytayesh)"
+          }
+        ]
+      },
+      {
+        "title": "Ukrainian Phrases and Expressions",
+        "description": "Learn common phrases and expressions used in everyday Ukrainian conversations.",
+        "cards": [
+          {
+            "question": "What does 'Як справи?' mean in English?",
+            "answer": "How are you?"
+          },
+          {
+            "question": "Translate 'I don't understand' into Ukrainian.",
+            "answer": "Я не розумію (Ya ne rozumiyu)"
+          },
+          {
+            "question": "What is the Ukrainian equivalent of 'See you later'?",
+            "answer": "До побачення (Do pobachennya)"
+          },
+          {
+            "question": "Translate 'What's your name?' into Ukrainian.",
+            "answer": "Як тебе звати? (Yak tebe zvaty?)"
+          },
+          {
+            "question": "What does 'Смачного' mean in English?",
+            "answer": "Enjoy your meal"
+          },
+          {
+            "question": "Translate 'How old are you?' into Ukrainian.",
+            "answer": "Скільки тобі років? (Skilʹky tobi rokiv?)"
+          },
+          {
+            "question": "What is the Ukrainian phrase for 'I'm sorry'?",
+            "answer": "Вибачте (Vybachte)"
+          }
+        ]
+      },
+      {
+        "title": "Ukrainian Numbers and Dates",
+        "description": "Learn how to count and express dates in Ukrainian.",
+        "cards": [
+          {
+            "question": "What is the Ukrainian word for 'one'?",
+            "answer": "Один (Odyn)"
+          },
+          {
+            "question": "How do you say 'twenty' in Ukrainian?",
+            "answer": "Двадцять (Dvadtsyatʹ)"
+          },
+          {
+            "question": "What is the Ukrainian word for 'thirty-five'?",
+            "answer": "Тридцять п'ять (Trydtsyatʹ pyatʹ)"
+          },
+          {
+            "question": "Translate 'January' into Ukrainian.",
+            "answer": "Січень (Sichenʹ)"
+          },
+          {
+            "question": "What is the Ukrainian date format?",
+            "answer": "Day-month-year (e.g., 12 березня 2022)"
+          },
+          {
+            "question": "How do you say 'December' in Ukrainian?",
+            "answer": "Грудень (Hrudenʹ)"
+          },
+          {
+            "question": "What is the Ukrainian word for 'thousand'?",
+            "answer": "Тисяча (Tysyacha)"
+          }
+        ]
+      }
+    ]
+  }
+  
+  {
+    "topic": "Persian Language",
+    "studySets": [
+      {
+        "title": "Basic Persian Vocabulary",
+        "description": "Learn essential Persian words and phrases to build your vocabulary.",
+        "cards": [
+          {
+            "question": "What is the Persian word for 'hello'?",
+            "answer": "سلام (Salam)"
+          },
+          {
+            "question": "Translate 'goodbye' into Persian.",
+            "answer": "خداحافظ (Khodā hāfez)"
+          },
+          {
+            "question": "What does 'متشکرم' mean in Persian?",
+            "answer": "Thank you"
+          },
+          {
+            "question": "Translate 'please' into Persian.",
+            "answer": "لطفاً (Lotfan)"
+          },
+          {
+            "question": "What is the Persian word for 'yes'?",
+            "answer": "بله (Bale)"
+          },
+          {
+            "question": "How do you say 'excuse me' in Persian?",
+            "answer": "ببخشید (Bebakhshid)"
+          },
+          {
+            "question": "Translate 'I love you' into Persian.",
+            "answer": "عشقت می‌کنم (Eshqet mikonam)"
+          }
+        ]
+      },
+      {
+        "title": "Persian Grammar",
+        "description": "Explore the grammar rules and structures of the Persian language.",
+        "cards": [
+          {
+            "question": "What are the three genders in Persian?",
+            "answer": "Masculine, feminine, neuter"
+          },
+          {
+            "question": "Name the seven cases in Persian.",
+            "answer": "Nominative, accusative, genitive, dative, ablative, vocative, instrumental"
+          },
+          {
+            "question": "What is a verb conjugation?",
+            "answer": "The variation of a verb's form to indicate tense, mood, person, and number."
+          },
+          {
+            "question": "Name the Persian verb that means 'to be'.",
+            "answer": "بودن (Budan)"
+          },
+          {
+            "question": "What is the comparative form of 'خوب' (good) in Persian?",
+            "answer": "بهتر (Behtar)"
+          },
+          {
+            "question": "What is the Persian word for 'I am'?",
+            "answer": "من هستم (Man hastam)"
+          },
+          {
+            "question": "How do you conjugate the verb 'خوردن' (to eat) in the present tense for 'او' (he/she)?",
+            "answer": "او می‌خورد (Oo mikhorad)"
+          }
+        ]
+      },
+      {
+        "title": "Persian Verbs",
+        "description": "Learn common Persian verbs and their conjugations.",
+        "cards": [
+          {
+            "question": "What is the infinitive form of the verb 'to eat' in Persian?",
+            "answer": "خوردن (Khordan)"
+          },
+          {
+            "question": "Conjugate the verb 'رفتن' (to go) in the present tense for 'ما' (we).",
+            "answer": "ما می‌رویم (Ma miravim)"
+          },
+          {
+            "question": "What is the past participle of the verb 'نوشیدن' (to drink) in Persian?",
+            "answer": "نوشیده (Noshide)"
+          },
+          {
+            "question": "Translate 'to write' into Persian.",
+            "answer": "نوشتن (Neveshtan)"
+          },
+          {
+            "question": "Conjugate the verb 'صحبت کردن' (to speak) in the past tense for 'آنها' (they).",
+            "answer": "آنها صحبت کردند (Anha sohbat kardand)"
+          },
+          {
+            "question": "What is the infinitive form of the verb 'to sleep' in Persian?",
+            "answer": "خوابیدن (Khabidan)"
+          },
+          {
+            "question": "Conjugate the verb 'خواندن' (to read) in the present tense for 'شما' (you).",
+            "answer": "شما می‌خوانید (Shoma mikhanid)"
+          }
+        ]
+      },
+      {
+        "title": "Persian Phrases and Expressions",
+        "description": "Learn common phrases and expressions used in everyday Persian conversations.",
+        "cards": [
+          {
+            "question": "What does 'حال شما چطور است؟' mean in English?",
+            "answer": "How are you?"
+          },
+          {
+            "question": "Translate 'I don't understand' into Persian.",
+            "answer": "من نمی‌فهمم (Man nemifahmam)"
+          },
+          {
+            "question": "What is the Persian equivalent of 'See you later'?",
+            "answer": "بعداً می‌بینمت (Badan mibinamet)"
+          },
+          {
+            "question": "Translate 'What's your name?' into Persian.",
+            "answer": "نام شما چیست؟ (Nam-e shoma chist?)"
+          },
+          {
+            "question": "What does 'بفرمایید' mean in English?",
+            "answer": "Please"
+          },
+          {
+            "question": "Translate 'How old are you?' into Persian.",
+            "answer": "چند سالتان است؟ (Chand salatan ast?)"
+          },
+          {
+            "question": "What is the Persian phrase for 'I'm sorry'?",
+            "answer": "متأسفم (Motasesefam)"
+          }
+        ]
+      },
+      {
+        "title": "Persian Numbers and Dates",
+        "description": "Learn how to count and express dates in Persian.",
+        "cards": [
+          {
+            "question": "What is the Persian word for 'one'?",
+            "answer": "یک (Yek)"
+          },
+          {
+            "question": "How do you say 'twenty' in Persian?",
+            "answer": "بیست (Bist)"
+          },
+          {
+            "question": "What is the Persian word for 'thirty-five'?",
+            "answer": "سی و پنج (Si o panj)"
+          },
+          {
+            "question": "Translate 'January' into Persian.",
+            "answer": "ژانویه (Zhanviye)"
+          },
+          {
+            "question": "What is the Persian date format?",
+            "answer": "Day-month-year (e.g., ۱۲ مارس ۲۰۲۲)"
+          },
+          {
+            "question": "How do you say 'December' in Persian?",
+            "answer": "دسامبر (Desambar)"
+          },
+          {
+            "question": "What is the Persian word for 'thousand'?",
+            "answer": "هزار (Hazar)"
+          }
+        ]
+      }
+    ]
+  }
+
+  
+  {
+    "topic": "Turkish",
+    "studySets": [
+      {
+        "title": "Basic Turkish Vocabulary",
+        "description": "Learn essential Turkish words and phrases to build your vocabulary.",
+        "cards": [
+          {
+            "question": "What is the Turkish word for 'hello'?",
+            "answer": "Merhaba"
+          },
+          {
+            "question": "Translate 'goodbye' into Turkish.",
+            "answer": "Hoşçakal"
+          },
+          {
+            "question": "What does 'teşekkür ederim' mean in Turkish?",
+            "answer": "Thank you"
+          },
+          {
+            "question": "Translate 'please' into Turkish.",
+            "answer": "Lütfen"
+          },
+          {
+            "question": "What is the Turkish word for 'yes'?",
+            "answer": "Evet"
+          },
+          {
+            "question": "How do you say 'excuse me' in Turkish?",
+            "answer": "Affedersiniz"
+          },
+          {
+            "question": "Translate 'I love you' into Turkish.",
+            "answer": "Seni seviyorum"
+          }
+        ]
+      },
+      {
+        "title": "Turkish Grammar",
+        "description": "Explore the grammar rules and structures of the Turkish language.",
+        "cards": [
+          {
+            "question": "What are the three genders in Turkish?",
+            "answer": "Masculine, feminine, neuter"
+          },
+          {
+            "question": "Name the seven cases in Turkish.",
+            "answer": "Nominative, accusative, genitive, dative, locative, ablative, instrumental"
+          },
+          {
+            "question": "What is a verb conjugation?",
+            "answer": "The variation of a verb's form to indicate tense, mood, person, and number."
+          },
+          {
+            "question": "Name the Turkish verb that means 'to be'.",
+            "answer": "Olmak"
+          },
+          {
+            "question": "What is the comparative form of 'iyi' (good) in Turkish?",
+            "answer": "Daha iyi"
+          },
+          {
+            "question": "What is the Turkish word for 'I am'?",
+            "answer": "Benim"
+          },
+          {
+            "question": "How do you conjugate the verb 'gitmek' (to go) in the present tense for 'o' (he/she/it)?",
+            "answer": "O gider"
+          }
+        ]
+      },
+      {
+        "title": "Turkish Verbs",
+        "description": "Learn common Turkish verbs and their conjugations.",
+        "cards": [
+          {
+            "question": "What is the infinitive form of the verb 'to eat' in Turkish?",
+            "answer": "Yemek"
+          },
+          {
+            "question": "Conjugate the verb 'gitmek' (to go) in the present tense for 'biz' (we).",
+            "answer": "Biz gideriz"
+          },
+          {
+            "question": "What is the past participle of the verb 'içmek' (to drink) in Turkish?",
+            "answer": "İçmiş"
+          },
+          {
+            "question": "Translate 'to write' into Turkish.",
+            "answer": "Yazmak"
+          },
+          {
+            "question": "Conjugate the verb 'konuşmak' (to speak) in the past tense for 'onlar' (they).",
+            "answer": "Onlar konuştular"
+          },
+          {
+            "question": "What is the infinitive form of the verb 'to sleep' in Turkish?",
+            "answer": "Uyumak"
+          },
+          {
+            "question": "Conjugate the verb 'okumak' (to read) in the present tense for 'siz' (you).",
+            "answer": "Siz okursunuz"
+          }
+        ]
+      },
+      {
+        "title": "Turkish Phrases and Expressions",
+        "description": "Learn common phrases and expressions used in everyday Turkish conversations.",
+        "cards": [
+          {
+            "question": "What does 'Nasılsın?' mean in English?",
+            "answer": "How are you?"
+          },
+          {
+            "question": "Translate 'I don't understand' into Turkish.",
+            "answer": "Anlamıyorum"
+          },
+          {
+            "question": "What is the Turkish equivalent of 'See you later'?",
+            "answer": "Sonra görüşürüz"
+          },
+          {
+            "question": "Translate 'What's your name?' into Turkish.",
+            "answer": "Adın ne?"
+          },
+          {
+            "question": "What does 'afiyet olsun' mean in English?",
+            "answer": "Enjoy your meal"
+          },
+          {
+            "question": "Translate 'How old are you?' into Turkish.",
+            "answer": "Kaç yaşındasınız?"
+          },
+          {
+            "question": "What is the Turkish phrase for 'I'm sorry'?",
+            "answer": "Üzgünüm"
+          }
+        ]
+      },
+      {
+        "title": "Turkish Numbers and Dates",
+        "description": "Learn how to count and express dates in Turkish.",
+        "cards": [
+          {
+            "question": "What is the Turkish word for 'one'?",
+            "answer": "Bir"
+          },
+          {
+            "question": "How do you say 'twenty' in Turkish?",
+            "answer": "Yirmi"
+          },
+          {
+            "question": "What is the Turkish word for 'thirty-five'?",
+            "answer": "Otuz beş"
+          },
+          {
+            "question": "Translate 'January' into Turkish.",
+            "answer": "Ocak"
+          },
+          {
+            "question": "What is the Turkish date format?",
+            "answer": "Day-month-year (e.g., 12 Mart 2022)"
+          },
+          {
+            "question": "How do you say 'December' in Turkish?",
+            "answer": "Aralık"
+          },
+          {
+            "question": "What is the Turkish word for 'thousand'?",
+            "answer": "Bin"
+          }
+        ]
+      }
+    ]
+  }
+
+
+  {
+    "topic": "Portuguese Language",
+    "studySets": [
+      {
+        "title": "Basic Portuguese Vocabulary",
+        "description": "Learn essential Portuguese words and phrases to build your vocabulary.",
+        "cards": [
+          {
+            "question": "What is the Portuguese word for 'hello'?",
+            "answer": "Olá"
+          },
+          {
+            "question": "Translate 'goodbye' into Portuguese.",
+            "answer": "Adeus"
+          },
+          {
+            "question": "What does 'obrigado' mean in Portuguese?",
+            "answer": "Thank you"
+          },
+          {
+            "question": "Translate 'please' into Portuguese.",
+            "answer": "Por favor"
+          },
+          {
+            "question": "What is the Portuguese word for 'yes'?",
+            "answer": "Sim"
+          },
+          {
+            "question": "How do you say 'excuse me' in Portuguese?",
+            "answer": "Com licença"
+          },
+          {
+            "question": "Translate 'I love you' into Portuguese.",
+            "answer": "Eu te amo"
+          }
+        ]
+      },
+      {
+        "title": "Portuguese Grammar",
+        "description": "Explore the grammar rules and structures of the Portuguese language.",
+        "cards": [
+          {
+            "question": "What are the three genders in Portuguese?",
+            "answer": "Masculine, feminine, neuter"
+          },
+          {
+            "question": "Name the seven cases in Portuguese.",
+            "answer": "Nominative, accusative, genitive, dative, locative, ablative, instrumental"
+          },
+          {
+            "question": "What is a verb conjugation?",
+            "answer": "The variation of a verb's form to indicate tense, mood, person, and number."
+          },
+          {
+            "question": "Name the Portuguese verb that means 'to be'.",
+            "answer": "Ser"
+          },
+          {
+            "question": "What is the comparative form of 'bom' (good) in Portuguese?",
+            "answer": "Melhor"
+          },
+          {
+            "question": "What is the Portuguese word for 'I am'?",
+            "answer": "Eu sou"
+          },
+          {
+            "question": "How do you conjugate the verb 'ir' (to go) in the present tense for 'ele/ela' (he/she)?",
+            "answer": "Ele/Ela vai"
+          }
+        ]
+      },
+      {
+        "title": "Portuguese Verbs",
+        "description": "Learn common Portuguese verbs and their conjugations.",
+        "cards": [
+          {
+            "question": "What is the infinitive form of the verb 'to eat' in Portuguese?",
+            "answer": "Comer"
+          },
+          {
+            "question": "Conjugate the verb 'ir' (to go) in the present tense for 'nós' (we).",
+            "answer": "Nós vamos"
+          },
+          {
+            "question": "What is the past participle of the verb 'beber' (to drink) in Portuguese?",
+            "answer": "Bebido"
+          },
+          {
+            "question": "Translate 'to write' into Portuguese.",
+            "answer": "Escrever"
+          },
+          {
+            "question": "Conjugate the verb 'falar' (to speak) in the past tense for 'eles/elas' (they).",
+            "answer": "Eles/Elas falaram"
+          },
+          {
+            "question": "What is the infinitive form of the verb 'to sleep' in Portuguese?",
+            "answer": "Dormir"
+          },
+          {
+            "question": "Conjugate the verb 'ler' (to read) in the present tense for 'vocês' (you all).",
+            "answer": "Vocês leem"
+          }
+        ]
+      },
+      {
+        "title": "Portuguese Phrases and Expressions",
+        "description": "Learn common phrases and expressions used in everyday Portuguese conversations.",
+        "cards": [
+          {
+            "question": "What does 'Como você está?' mean in English?",
+            "answer": "How are you?"
+          },
+          {
+            "question": "Translate 'I don't understand' into Portuguese.",
+            "answer": "Eu não entendo"
+          },
+          {
+            "question": "What is the Portuguese equivalent of 'See you later'?",
+            "answer": "Até logo"
+          },
+          {
+            "question": "Translate 'What's your name?' into Portuguese.",
+            "answer": "Qual é o seu nome?"
+          },
+          {
+            "question": "What does 'por favor' mean in English?",
+            "answer": "Please"
+          },
+          {
+            "question": "Translate 'How old are you?' into Portuguese.",
+            "answer": "Quantos anos você tem?"
+          },
+          {
+            "question": "What is the Portuguese phrase for 'I'm sorry'?",
+            "answer": "Desculpe"
+          }
+        ]
+      },
+      {
+        "title": "Portuguese Numbers and Dates",
+        "description": "Learn how to count and express dates in Portuguese.",
+        "cards": [
+          {
+            "question": "What is the Portuguese word for 'one'?",
+            "answer": "Um"
+          },
+          {
+            "question": "How do you say 'twenty' in Portuguese?",
+            "answer": "Vinte"
+          },
+          {
+            "question": "What is the Portuguese word for 'thirty-five'?",
+            "answer": "Trinta e cinco"
+          },
+          {
+            "question": "Translate 'January' into Portuguese.",
+            "answer": "Janeiro"
+          },
+          {
+            "question": "What is the Portuguese date format?",
+            "answer": "Day-month-year (e.g., 12 de março de 2022)"
+          },
+          {
+            "question": "How do you say 'December' in Portuguese?",
+            "answer": "Dezembro"
+          },
+          {
+            "question": "What is the Portuguese word for 'thousand'?",
+            "answer": "Mil"
+          }
+        ]
+      }
+    ]
+  }
+  
+  

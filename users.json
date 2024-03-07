@@ -1,0 +1,138 @@
+[
+    {
+      "email": "alice@example.com",
+      "password": "alicerules",
+      "role": "user",
+      "firstName": "Alice",
+      "lastName": "Wonderland",
+      "photo": "https://cdn-icons-png.flaticon.com/512/149/149071.png",
+      "nickName": "alicewonder"
+    },
+    {
+      "email": "bob@example.com",
+      "password": "bob123",
+      "role": "user",
+      "firstName": "Bob",
+      "lastName": "Builder",
+      "photo": "https://cdn-icons-png.flaticon.com/512/149/149071.png",
+      "nickName": "builderbob"
+    },
+    {
+      "email": "charlie@example.com",
+      "password": "charliebrown",
+      "role": "user",
+      "firstName": "Charlie",
+      "lastName": "Chaplin",
+      "photo": "https://cdn-icons-png.flaticon.com/512/149/149071.png",
+      "nickName": "charliechap"
+    },
+    {
+      "email": "diana@example.com",
+      "password": "diana88",
+      "role": "user",
+      "firstName": "Diana",
+      "lastName": "Prince",
+      "photo": "https://cdn-icons-png.flaticon.com/512/149/149071.png",
+      "nickName": "wonderdiana"
+    },
+    {
+      "email": "edward@example.com",
+      "password": "eddiebear",
+      "role": "user",
+      "firstName": "Edward",
+      "lastName": "Scissorhands",
+      "photo": "https://cdn-icons-png.flaticon.com/512/149/149071.png",
+      "nickName": "scissored"
+    },
+    {
+      "email": "fiona@example.com",
+      "password": "fiona123",
+      "role": "user",
+      "firstName": "Fiona",
+      "lastName": "Apple",
+      "photo": "https://cdn-icons-png.flaticon.com/512/149/149071.png",
+      "nickName": "fionaple"
+    },
+    {
+      "email": "george@example.com",
+      "password": "george456",
+      "role": "user",
+      "firstName": "George",
+      "lastName": "Washington",
+      "photo": "https://cdn-icons-png.flaticon.com/512/149/149071.png",
+      "nickName": "georgewash"
+    },
+    {
+      "email": "hannah@example.com",
+      "password": "hannah99",
+      "role": "user",
+      "firstName": "Hannah",
+      "lastName": "Montana",
+      "photo": "https://cdn-icons-png.flaticon.com/512/149/149071.png",
+      "nickName": "hannahbanana"
+    },
+    {
+      "email": "isaac@example.com",
+      "password": "isaacnewton",
+      "role": "user",
+      "firstName": "Isaac",
+      "lastName": "Newton",
+      "photo": "https://cdn-icons-png.flaticon.com/512/149/149071.png",
+      "nickName": "newtonian"
+    },
+    {
+      "email": "juliet@example.com",
+      "password": "julietlove",
+      "role": "user",
+      "firstName": "Juliet",
+      "lastName": "Capulet",
+      "photo": "https://cdn-icons-png.flaticon.com/512/149/149071.png",
+      "nickName": "starcrossed"
+    },
+    {
+      "email": "kyle@example.com",
+      "password": "kyle123",
+      "role": "user",
+      "firstName": "Kyle",
+      "lastName": "Walker",
+      "photo": "https://cdn-icons-png.flaticon.com/512/149/149071.png",
+      "nickName": "kylewalking"
+    },
+    {
+      "email": "laura@example.com",
+      "password": "lauralove",
+      "role": "user",
+      "firstName": "Laura",
+      "lastName": "Croft",
+      "photo": "https://cdn-icons-png.flaticon.com/512/149/149071.png",
+      "nickName": "tombraider"
+    },
+    {
+      "email": "mario@example.com",
+      "password": "mario123",
+      "role": "user",
+      "firstName": "Mario",
+      "lastName": "Brothers",
+      "photo": "https://cdn-icons-png.flaticon.com/512/149/149071.png",
+      "nickName": "supermario"
+    },
+    {
+      "email": "nancy@example.com",
+      "password": "nancy567",
+      "role": "user",
+      "firstName": "Nancy",
+      "lastName": "Drew",
+      "photo": "https://cdn-icons-png.flaticon.com/512/149/149071.png",
+      "nickName": "sleuthnancy"
+    },
+    {
+      "email": "oscar@example.com",
+      "password": "oscar12",
+      "role": "user",
+      "firstName": "Oscar",
+      "lastName": "Wilde",
+      "photo": "https://cdn-icons-png.flaticon.com/512/149/149071.png",
+      "nickName": "wittyoscar"
+    }
+  ]
+  

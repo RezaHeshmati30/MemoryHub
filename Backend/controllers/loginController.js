@@ -34,7 +34,7 @@ export const postLoginController = async (req, res) => {
             secure: process.env.NODE_ENV === "production"
         }
 
-        res.cookie('jwt', token, cookieOptions);
+        // res.cookie('jwt', token, cookieOptions);
 
         const options = {
             maxAge: expiresInMs,
@@ -45,7 +45,7 @@ export const postLoginController = async (req, res) => {
             expires: expiresInDate.toISOString(), 
             email: loggedUser.email 
         }
-        res.cookie('JWTinfo', payload, options);
+        // res.cookie('JWTinfo', payload, options);
 
 
         return res.send({success: true, msg: `User ${loggedUser.email} logged in`})
