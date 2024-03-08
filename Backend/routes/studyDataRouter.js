@@ -2,6 +2,7 @@ import express from "express";
 import {
   addModule,
   addTopicToModule,
+  getAllModules,
   getModuleInfo,
 } from "../controllers/moduleController.js";
 import {
@@ -26,6 +27,7 @@ const router = express.Router();
 
 router
   .post("/modules", addModule)
+  .get("/modules", getAllModules)
   .get("/modules/:id", getModuleInfo)
   .get("/topics", getAllStudyData)
   .post("/topics", addTopic)

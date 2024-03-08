@@ -17,6 +17,7 @@ import UserProfileUpdate from "../pages/ProfileSettings";
 import WriteMode from "../pages/WriteMode";
 import ForeignUserStudySets from "../pages/ForeignUserStudySets";
 import ForeignUserStudySet from "../pages/ForeignUserStudySet";
+import Modules from "../pages/Modules"
 
 
 
@@ -33,8 +34,8 @@ const router = createBrowserRouter([
       { path: '/user/:userId/study-set/write-mode/:id', element:<WriteMode />},
       { path: '/users/:userId/all-study-sets', element: <ForeignUserStudySets />},
       { path: '/users/:userId/topic/:topicId/study-set/:studySetId', element: <ForeignUserStudySet />},
+      { path: '/modules', element: <Modules />},
       { path: '/studySets', element: <StudySets />},
-      // { path: '/user/:userId/all-study-sets', element: <ForeignUserStudySets />},
       { path: '/studySet/:topicId/:studySetId', element: <StudySet />},
       { path: '/createSet/', element: <CreateSets />},
       { path: '/studySet/edit/:id', element: < EditStudySet/>},

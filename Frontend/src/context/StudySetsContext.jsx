@@ -5,6 +5,7 @@ const StudySetsContext = createContext();
 
 const StudySetsContextProvider = ({ children }) => {
   const [moduleData, setModuleData] = useState({});
+  const [modulesData, setModulesData] = useState([]);
   const [studySetId, setStudySetId] = useState("");
   const [topicId, setTopicId] = useState("");
   const [question, setQuestion] = useState([]);
@@ -19,6 +20,12 @@ const StudySetsContextProvider = ({ children }) => {
 
   // const backendApiUrl = "http://localhost:3001";
   const backendApiUrl = import.meta.env.VITE_SERVER_URL;
+
+  const getModulesData = async () => {
+    const response = await axios.get(`${backendApiUrl}/modules`);
+    console.log(response.data);
+    setModulesData(response.data);
+  };
 
   const getModuleData = async () => {
     const response = await axios.get(`${backendApiUrl}/modules/${moduleId}`);
@@ -185,6 +192,8 @@ const StudySetsContextProvider = ({ children }) => {
         getUserShortData,
         editStudySet,
         deleteCard,
+        getModulesData,
+        modulesData, setModulesData
       }}
     >
       {children}

@@ -72,3 +72,25 @@ export const addAllTopicsToModule = async (req, res) => {
       res.status(500).json({ message: error.message });
     }
   }
+
+  export const getAllModules = async (req, res) => {
+    
+      try {
+          const modules = await ModuleModel.find().populate({
+              path: 'topics',
+              model: 'Topic',
+              populate: {
+                path: 'studySets',
+                model: 'StudySet',
+                populate: {
+                  path: 'cards',
+                  model: 'Card',
+                },
+              },
+            });
+          res.status(200).send(modules);
+      } catch (error) {
+          res.status(500).json({ message: error.message })
+      }
+      
+  }
