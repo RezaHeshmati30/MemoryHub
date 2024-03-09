@@ -94,3 +94,26 @@ export const addAllTopicsToModule = async (req, res) => {
       }
       
   }
+
+  
+
+export async function updateModuleIcon(req, res) {
+    const moduleId = req.params.id;
+    const { icon } = req.body;
+
+    try {
+        const updatedModule = await ModuleModel.findByIdAndUpdate(
+            moduleId,
+            { icon: icon },
+            { new: true } // Set this option to return the updated document
+        );
+
+        if (!updatedModule) {
+            return res.status(404).json({ message: 'Module not found' });
+        }
+
+        res.status(200).json({ message: 'Icon updated successfully', updatedModule });
+    } catch (error) {
+        res.status(500).json({ message: 'Error updating icon for module: ' + error.message });
+    }
+}

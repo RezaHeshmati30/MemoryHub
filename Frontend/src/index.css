@@ -3,6 +3,39 @@
 @tailwind utilities;
 
 
+@layer components {
+  .all-\[unset\] {
+      all: unset;
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "DM Sans", sans-serif;
+  font-weight: 400;
+  font-size: 10px;
+}
+
+ul {
+  list-style: none;
+}
+
+@layer utilities {
+  .max-container {
+    @apply mx-auto max-w-[1440px];
+  }
+
+  .padding-container {
+    @apply px-[40px] py-[25px];
+  }
+
+}
+
 .inter-bold {
   font-family: "Inter", sans-serif;
   font-optical-sizing: auto;
@@ -41,3 +74,4 @@
     font-weight: 700;
     font-style: normal;
 }
+
