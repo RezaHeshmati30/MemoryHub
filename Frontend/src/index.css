@@ -75,3 +75,36 @@ ul {
     font-style: normal;
 }
 
+.modules-box-shadow {
+  box-shadow: 0px 1px 0px 0px #B3AEAE;
+}
+
+.modules-hover-0:hover {
+  border-color: #D33DBB;
+}
+
+.modules-hover-1:hover {
+  border-color: #4856D7;
+}
+
+.modules-hover-2:hover {
+  border-color: #33B4BC;
+}
+
+.modules-hover-3:hover {
+  border-color: #2EAA3A;
+}
+
+.modules-hover-4:hover {
+  border-color: #E50000;
+}
+
+.modules-hover-5:hover {
+  border-color: #EEB900;
+}
+
+.hover-link:hover > div {
+  border-color: #FFC2FF;
+  border-radius: 50%;
+  background-color: #FFC2FF;
+}

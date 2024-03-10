@@ -3,7 +3,7 @@ import Root from "../components/Root";
 import PageNotFound from "../pages/PageNotFound";
 import Home from "../pages/Home";
 import UserProfile from "../pages/UserProfile"
-import StudySets from "../pages/StudySets";
+import StudySets from "../pages/Module";
 import CreateSets from "../pages/CreateSets";
 import StudySet from "../pages/StudySet";
 import Contact from "../pages/Contact";
@@ -18,6 +18,8 @@ import WriteMode from "../pages/WriteMode";
 import ForeignUserStudySets from "../pages/ForeignUserStudySets";
 import ForeignUserStudySet from "../pages/ForeignUserStudySet";
 import Modules from "../pages/Modules"
+import AllStudySets from "../pages/AllStudySets";
+import Module from "../pages/Module";
 
 
 
@@ -35,7 +37,8 @@ const router = createBrowserRouter([
       { path: '/users/:userId/all-study-sets', element: <ForeignUserStudySets />},
       { path: '/users/:userId/topic/:topicId/study-set/:studySetId', element: <ForeignUserStudySet />},
       { path: '/modules', element: <Modules />},
-      { path: '/studySets', element: <StudySets />},
+      { path: '/module/:moduleId', element: <Module />},
+      { path: '/all-study-sets', element: <AllStudySets />},
       { path: '/studySet/:topicId/:studySetId', element: <StudySet />},
       { path: '/createSet/', element: <CreateSets />},
       { path: '/studySet/edit/:id', element: < EditStudySet/>},

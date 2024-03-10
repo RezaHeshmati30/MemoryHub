@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import StudySetsSearchBar from '../components/StudySetsSearchBar';
 
-function StudySets() {
+function AllStudySets() {
   const { setStudySetId, setTopicId, addStudySetToUser, getStudyData, studyData } = useContext(StudySetsContext);
   const { hasToken, getUserInfo, user, setShowLoginForm, setShowSignUpForm } = useContext(AuthContext);
   const [searchQuery, setSearchQuery] = useState('');
@@ -60,4 +60,4 @@ function StudySets() {
   );
 }
 
-export default StudySets;
+export default AllStudySets;
