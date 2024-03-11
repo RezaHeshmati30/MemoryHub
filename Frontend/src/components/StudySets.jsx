@@ -13,6 +13,7 @@ function StudySets() {
   const { moduleId } = useParams();
   const location = useLocation();
   console.log("id", moduleId)
+
   useEffect(() => {
     getUserInfo();
     console.log("id", moduleId)
@@ -44,9 +45,33 @@ function StudySets() {
     }
     return null;
     }).filter(filteredTopic => filteredTopic !== null);
+
+    // const mostPopularSets = location.pathname === "/all-study-sets" ? modulesData?. : moduleData;
+    // const studySets = location.pathname === "/all-study-sets" ? modulesData?.topics.flatMap(topic => topic.studySets) : modulesData?.topics.flatMap(topic => topic.studySets)
+    const studySets = location.pathname === "/all-study-sets" ? modulesData?.topics?.reduce((accumulator, topic) => {
+        return accumulator.concat(topic.studySets);
+    }, []) : moduleData?.topics?.reduce((accumulator, topic) => {
+        return accumulator.concat(topic.studySets);
+    }, [])
+console.log("Flattened Study Sets:", studySets); // Logging for debugging
+
+// Check if studySets is an array
+if (!Array.isArray(studySets)) {
+    console.error("Study sets is not an array.");
+} else {
+    // Sort the study sets by the number of shares in descending order
+    studySets.sort((a, b) => b.shared - a.shared);
+
+    // Select the top 6 most shared study sets
+    const top6MostShared = studySets.slice(0, 6);
+
+    // Print the titles of the top 6 most shared study sets
+    console.log("Top 6 Most Shared Study Sets:");
+    top6MostShared.forEach(set => console.log(set.title));
+}
     
   return (
-    <section className='flex flex-col p-[20px] bg-[#F6F7FB]'>
+    <section className='flex flex-col p-[20px] bg-[#F6F7FB] max-container padding-container'>
         <div className='inline'>
             <Link to="/modules" className='inline-flex items-center gap-[22px] text-[1.2em] dm-sans-bold hover-link'>
                 <div className=' border-[10px] border-transparent hover:border-[10px] hover:rounded-[50%] hover:border-[#FFC2FF] hover:bg-[#FFC2FF]'>
@@ -60,8 +85,19 @@ function StudySets() {
         <div className='flex flex-col items-center'>
             <StudySetsSearchBar value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
         </div>
-      
-        <ul className='flex gap-[10px] flex-wrap'>
+        <h1 className='text-center text-[4em] mb-[1.6px]'>{location.pathname === "/all-study-sets" ? "All topics" : moduleData?.title}</h1>
+        
+            <ul className='flex justify-center gap-[5em] mb-[5.6em]'>
+                {location.pathname === "/all-study-sets" ? (modulesData?.map(module => (
+                    <li className='text-center dm-sans-medium text-[1.7em]' key={module._id}>{module?.title}</li>
+                ))) : 
+                (moduleData?.topics?.map(topic => (
+                    <li className=' text-center dm-sans-medium text-[1.7em]' key={topic._id}>{topic?.title}</li>
+                )))}
+            </ul>
+        
+        
+        <ul className='flex gap-[10px] flex-wrap justify-between'>
             {filteredStudySets?.map(topic => (
                 topic?.studySets.map(studySet => (
                     <li key={studySet._id} className='border-[1px] border-gray-300 basis-[30%]'>
