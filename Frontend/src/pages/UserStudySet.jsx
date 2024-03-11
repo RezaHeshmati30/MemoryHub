@@ -1,12 +1,12 @@
 import React, { useContext, useEffect } from 'react'
 import { AuthContext } from '../context/AuthContext';
-import { useParams } from 'react-router-dom';
+import { useParams,useNavigate } from 'react-router-dom';
 import StartPracticeButtons from '../components/StartPracticeButtons';
 import StudySetStatistic from '../components/StudySetStatistic';
 
 function UserStudySet() {
     const {getUserInfo, user, hasToken} = useContext(AuthContext);
-
+    const navigate = useNavigate();
     const {id} = useParams();
     
 
