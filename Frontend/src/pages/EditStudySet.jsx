@@ -148,7 +148,8 @@ const EditStudySet = () => {
           className='bg-blue-100 shadow-md rounded px-8 pt-6 pb-8 mb-4'
           onSubmit={handleSubmit}
         >
-          <div onClick={() => navigate("/user/:id/studySets")}>
+          <div onClick={() => navigate("/user/:id/studySets")}
+          className="dm-sans-regular flex ">
             <svg
               width='48'
               height='48'
