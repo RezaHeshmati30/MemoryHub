@@ -75,22 +75,31 @@ const StudySetsContextProvider = ({ children }) => {
     }
   };
 
-  const createStudySetsAndCards = async (userId, topic, title, description, createdBy, cards) => {
-
+  const createStudySetsAndCards = async (
+    userId,
+    topic,
+    title,
+    description,
+    createdBy,
+    cards
+  ) => {
     try {
       const savedStudySets = {
         topic: topic,
         title: title,
         description: description,
         createdBy: createdBy,
-        cards: cards.map(card => ({
+        cards: cards.map((card) => ({
           question: card.question,
           answer: card.answer,
-          image: card.image
-        }))
+          image: card.image,
+        })),
       };
       console.log("Request Payload:", { ...savedStudySets });
-      const response = await axios.post(`${backendApiUrl}/createSet/${userId}`, { ...savedStudySets });
+      const response = await axios.post(
+        `${backendApiUrl}/createSet/${userId}`,
+        { ...savedStudySets }
+      );
     } catch (error) {
       console.error("Error updating study set:", error.message);
 
@@ -100,6 +109,7 @@ const StudySetsContextProvider = ({ children }) => {
       throw error;
     }
   };
+  
   const editStudySet = async (
     userId,
     topicId,
@@ -127,7 +137,7 @@ const StudySetsContextProvider = ({ children }) => {
     }
       const response = await axios.patch(
         `${backendApiUrl}/editSet/${userId}/${topicId}/${studySetId}`,
-        { ...updatedStudySets },
+        updatedStudySets,
         {
           headers: {
             "Content-Type": "application/json",
@@ -135,7 +145,6 @@ const StudySetsContextProvider = ({ children }) => {
         }
       );
 
-      console.log("Response Data:", response);
       console.log("Study set updated successfully!");
     } catch (error) {
       console.error("Error updating study set:", error.message);
@@ -143,9 +152,9 @@ const StudySetsContextProvider = ({ children }) => {
       if (error.response) {
         console.log("Response Data from backend:", error.response.data);
       }
+
       throw error;
     }
-    
   };
 
   const deleteCard = async (userId, studySetId, cardId) => {
