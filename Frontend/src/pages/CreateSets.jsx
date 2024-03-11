@@ -117,11 +117,11 @@ function CreateSets() {
                 fill='black'
               />
             </svg>
-            <p className='flex dm-sans-bold font-[12px] leading-100 uppercase'>
-              BACK
+            <p className='flex dm-sans-bold text-[12px] leading-100 uppercase'>
+              back
             </p>
           </div>
-          <h2 className='dm-sans-medium'>Create a New Study Set</h2>
+          <h2 className='dm-sans-medium text-[20px] leading-150'>Create a New Study Set</h2>
           <div className='mb-4'>
             <label
               className='block text-gray-700 text-sm font-bold mb-2'
