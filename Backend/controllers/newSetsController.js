@@ -21,12 +21,17 @@ export const createStudySetsAndCards = async (req, res) => {
     try {
       const savedCards = await Promise.all(
         cards.map(async (cardData) => {
-          const cloudinaryLink = await cloudinary.uploader.upload(cardData.image);
-          const newCard = new CardModel({question:cardData.question, answer:cardData.answer, image:cloudinaryLink.secure_url});
+
+          if (cardData.image ) {
+            const cloudinaryLink = await cloudinary.uploader.upload(cardData.image);
+            const newCard = new CardModel({question:cardData.question, answer:cardData.answer, image:cloudinaryLink.secure_url});
+            return await newCard.save();
+          }
+          const newCard = new CardModel({question:cardData.question, answer:cardData.answer, image:""});
           return await newCard.save();
         })
-      );
-
+        );
+        
       let topicObject;
       if (topic && typeof topic === "string") {
         // Find or create topic

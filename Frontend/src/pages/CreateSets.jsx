@@ -47,8 +47,10 @@ function CreateSets() {
         const question = formData.get(`question${i}`);
         const answer = formData.get(`answer${i}`);
         const imageFile = formData.get(`image${i}`);
-      
-        const image = await readImageAsBase64(imageFile);
+        let image = "";
+        if (imageFile.size > 0) {
+          image = await readImageAsBase64(imageFile);
+       }
         formObject.cards.push({
           question,
           answer,
