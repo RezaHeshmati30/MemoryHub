@@ -17,7 +17,7 @@ function CreateSets() {
     setDescription,
   } = useContext(StudySetsContext);
   const [updatedTopicTitle, setUpdatedTopicTitle] = useState("");
-  const { user,userId, getUserInfo, hasToken } = useContext(AuthContext);
+  const { user, userId, getUserInfo, hasToken } = useContext(AuthContext);
   const { readImageAsBase64 } = useContext(UserStudySetsContext);
   const [lines, setLines] = useState([1]);
   const navigate = useNavigate();
@@ -66,7 +66,8 @@ function CreateSets() {
           formObject.createdBy,
           formObject.cards
         );
-
+       
+        alert("Study sets and cards created successfully!");
         console.log("Study sets and cards created successfully!", formObject);
 
         setQuestion([""]);
@@ -104,7 +105,7 @@ function CreateSets() {
             Create a New Study Set
           </h2>
           <div className='mb-4'>
-          <label
+            <label
               className='block text-gray-700 text-sm font-bold mb-2'
               htmlFor='topic'
             >
@@ -112,12 +113,12 @@ function CreateSets() {
               <input
                 type='text'
                 name='topic'
-                value={updatedTopicTitle} 
-                onChange={(e) => setUpdatedTopicTitle(e.target.value)} 
+                value={updatedTopicTitle}
+                onChange={(e) => setUpdatedTopicTitle(e.target.value)}
               />
             </label>
-            </div>
-            <div className="mb-4">
+          </div>
+          <div className='mb-4'>
             <label
               className='block text-gray-700 text-sm font-bold mb-2'
               htmlFor='topicDropdown'
