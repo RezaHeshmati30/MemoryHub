@@ -2,8 +2,9 @@ import React, { useContext, useEffect, useState } from "react";
 import { StudySetsContext } from "../context/StudySetsContext";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext"; 
-
+import arrow from "../assets/images/arrow-forward.svg";
 import "./cards.css";
+import BackLink from "./BackLink";
 
 function Cards() {
   const [isFlipped, setIsFlipped] = useState(false);
@@ -26,6 +27,9 @@ function Cards() {
     console.log("StudySet Id:", studySetId);
     getUserInfo();
   }, []);
+
+  const currentTopic = studyData?.topics
+  ?.filter((topic) => topic._id === topicId)[0].title;
 
   const currentCardsSet = studyData?.topics
     ?.filter((topic) => topic._id === topicId)[0]
@@ -67,66 +71,76 @@ function Cards() {
     setIsFlipped(!isFlipped);
   };
 
+  function getRandomNumber() {
+    return Math.floor(Math.random() * 6) + 1; // Returns a random integer between 1 and 6 (inclusive)
+}
+  const randomNumber = getRandomNumber();
+
+  
+  console.log("randombg:", randomNumber)
+
   return (
     <div>
-      <section className='w-[80vw] h-[90vh] bg-gray-200 mx-auto my-5 px-10 py-10'>
+      <section className='max-container padding-container'>
+        
+        
         {currentCardsSet && (
           <div key={currentCardsSet._id}>
-            
-            <p className='text-xl my-5'>
-              <strong>{currentCardsSet.title}</strong>
-            </p>
-            <p className='text-xl my-5'>{currentCardsSet.description}</p>
-            <Link className={author?.nickName ? "block": "hidden"} to={hasToken && user?._id === author?._id ? `/user/${user?._id}` : `/users/${author?._id}/all-study-sets` }>  
-              <p>Created by: {author?.nickName}</p>
-            </Link>
+            <div className="flex justify-between items-center">
+              <div className="basis-[30%]">
+                <BackLink />
+              </div>
+              <p className='basis-[30%] text-center text-[4em] text-leading-[120%]'>{currentCardsSet.title}</p>
+              <div className="basis-[30%] flex flex-col items-end">
+                <p className='text-right dm-sans-bold text-[1.7em]'>{currentTopic}</p>
+                <Link className={`${author?.nickName ? "block": "hidden"} flex flex-col items-end text-[1.4em] text-leading-[150%]`} to={hasToken && user?._id === author?._id ? `/user/${user?._id}` : `/users/${author?._id}/all-study-sets` }>  
+                  <p className='text-right'>Created by: {author?.nickName}</p>
+                  <img className='text-right' src={author?.photo} width={40} alt="author's photo" />
+                </Link>
+              </div>
+            </div>
             
             <div
               className={`flip-container flex justify-center ${
                 isAnimated ? "animate" : ""
-              }`}
+              } mt-[40px] `}
               onClick={handleFlip}
             >
               <div
                 className={`flip-card ${
-                  isFlipped ? "flipped" : ""
-                } w-[60vw] h-[50vh]  } next-card`}
+                  isFlipped ? "flipped " : ""
+                } w-[60vw] min-h-[50vh] next-card`}
               >
-                <div className={`flip-content `}>
-                  <strong>Question</strong>
-                  <br />
-                  <p> {currentCard?.question}</p>
+                <div className={`flip-content flex flex-col justify-between pt-[40px] px-[32px] pb-[32px]`}>
+                  <p className="text-[2.5em] text-leading-[120%]">{currentCard?.question}</p>
                   <img src={currentCard?.image} alt="" />
+                  <p className="text-[1.7em] text-leading-[150%] self-center">Show the answer</p>
                 </div>
-                <div className={`flip-content `}>
-                  <strong>Answer</strong>
-                  <br />
-                  <p>{currentCard?.answer}</p>
+                <div className={`flip-content flex flex-col justify-between pt-[40px] px-[32px] pb-[32px]`}>
+                  <p className="text-[2.5em] text-leading-[120%]">{currentCard?.answer}</p>
                 </div>
               </div>
             </div>
-            <div className='flex justify-evenly my-5 ml-[110px]'>
+            <div className='flex w-[60vw] justify-center gap-[40px] items-center mx-auto mt-[21px]'>
               <button
                 onClick={handlePreviousCard}
-                className={`bg-gray-400 p-[10px] rounded-md `}
               >
-                Previous
+                <img src={arrow} alt="previous" className="rotate-180" />
               </button>
-              <p className='text-xl'>
+              <p className='text-[1.7em] dm-sans-bold'>
                 {currentIndex + 1}/{currentCardsSet?.cards.length}
               </p>
               <button
                 onClick={handleNextCard}
-                className='bg-gray-400 mx-10 p-[10px] rounded-md '
               >
-                Next
+                <img src={arrow} alt="next" />
               </button>
             </div>
           </div>
         )}
 
         <button
-          className='bg-blue-400 p-[10px] rounded-md'
+          className={`card-bg-${randomNumber} p-[10px] rounded-md`}
           onClick={() => navigate("/all-study-sets")}
         >
           back to Study Sets

@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import StudySetsSearchBar from '../components/StudySetsSearchBar';
 import arrow from "../assets/images/arrow-forward.svg";
+import BackLink from './BackLink';
 
 function StudySets() {
   const { setStudySetId, setTopicId, addStudySetToUser, getModulesData, modulesData, getModuleData, moduleData } = useContext(StudySetsContext);
@@ -29,11 +30,8 @@ useEffect(() => {
     }
 }, [location.pathname, moduleId]);
 
-
-//   const studyData = location.pathname === "/all-study-sets" ? modulesData : moduleData;
-
-  let filteredStudySets;
-
+  
+let filteredStudySets;
 if (location.pathname === "/all-study-sets") {
     filteredStudySets = [].concat(...(modulesData || []).map(module => (module.topics || []).map(topic => {
         const filteredSets = (topic.studySets || []).filter(studySet => studySet.title.toLowerCase().includes(searchQuery.toLowerCase()));
@@ -71,8 +69,6 @@ const studySets = location.pathname === "/all-study-sets" ? (modulesData || []).
     return accumulator;
 }, []);
 
-console.log("Filtered Study Sets:", studySets); 
-
 
 let top6MostShared;
 if (!Array.isArray(studySets)) {
@@ -80,8 +76,6 @@ if (!Array.isArray(studySets)) {
 } else {
     studySets.sort((a, b) => b.shared - a.shared);
     top6MostShared = studySets.slice(0, 6);
-    console.log("Top 6 Most Shared Study Sets:", top6MostShared);
-    top6MostShared.forEach(set => console.log(`Topic ID: ${set.topicId}, Topic: ${set.topic}, Title: ${set.title}`));
 }
 
 
@@ -112,26 +106,15 @@ const slideRight = () => {
     scroll.style.left = Math.min(newLeft, maxLeft) + 'px'; 
 };
 
-
-
-    
   return (
     <section className='flex flex-col p-[20px] bg-[#F6F7FB] max-container padding-container'>
-        <div className='inline'>
-            <Link to="/modules" className='inline-flex items-center gap-[22px] text-[1.2em] dm-sans-bold hover-link'>
-                <div className=' border-[10px] border-transparent hover:border-[10px] hover:rounded-[50%] hover:border-[#FFC2FF] hover:bg-[#FFC2FF]'>
-                    <img src={arrow} className='rotate-180 w-[20px]' width={20} alt="" />
-                </div>
-                Back
-            </Link>
-        </div>
-        
-        
+        <BackLink />
+
         <div className='flex flex-col items-center'>
             <StudySetsSearchBar value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
         </div>
+
         <h2 className='text-center text-[4em] mb-[1.6px]'>{location.pathname === "/all-study-sets" ? "All topics" : moduleData?.title}</h2>
-        
             <ul className='flex justify-center gap-[5em] mb-[5.6em]'>
                 {location.pathname === "/all-study-sets" ? (modulesData?.map(module => (
                     <li className='text-center dm-sans-medium text-[1.7em]' key={module._id}>{module?.title}</li>
@@ -141,7 +124,6 @@ const slideRight = () => {
                 )))}
             </ul>
         
-
         <h2 className='text-[4em] mb-[56px]'>Popular study sets</h2>
         <div className='relative flex items-center'>
             <ul id='slider' className='w-full h-full overflow-x-scroll test scroll whitespace-nowrap scroll-smooth scrollbar-hide flex gap-[32px] justify-between mb-[40px]'>
@@ -162,12 +144,12 @@ const slideRight = () => {
             </ul>
             
         </div>
-        <div className=''>
+        <div className='flex items-center justify-between gap-[32px]'>
             {/* <div className='container relative w-[100%]'>
                 <div id='scroll' className='absolute top-0 left-0 z-30 h-[1px] w-[50%] bg-black'/>
                 <div className='absolute top-0 left-0 h-[1px] w-full bg-[#BCC0C1]'/>
             </div> */}
-            
+            <div className='h-[1px] basis-[90%] bg-[#BCC0C1]'/>
             <div className='flex gap-[44px] justify-end items-center'>
                     <img src={arrow} className='cursor-pointer rotate-180' onClick={slideLeft} alt="" />
                     <img src={arrow} className='cursor-pointer' onClick={slideRight} alt="" />
@@ -182,7 +164,7 @@ const slideRight = () => {
                     const index = topicIndex * topic.studySets.length + studySetIndex;
                     const styleClass = `study-set-line-${(index % 6) + 1}`;
                     return (
-                        <li key={studySet._id} onClick={() => goToSetHandler(topic._id, studySet._id)} className={`cursor-pointer border-[1px] border-[#BCC0C1] ${styleClass}-hover rounded-[8px] basis-[23%] px-[16px] flex flex-col justify-between pt-[16px] pb-[21px] set-box-shadow `}>
+                        <li key={studySet._id} onClick={() => goToSetHandler(topic._id, studySet._id)} className={`cursor-pointer border-[1px] border-[#BCC0C1] ${styleClass}-hover rounded-[8px] basis-[100%] md:basis-[48%]  lg:basis-[30%] xl:basis-[23%] px-[16px] flex flex-col justify-between pt-[16px] pb-[21px] set-box-shadow `}>
                             <p className='dm-sans-medium text-[2em]'>{studySet.title}</p>
                             <div className={`${styleClass} border-[2px] w-full mb-[8px]`}/>
                             <p className='text-[1.2em] text-leading-[150%] mb-[25px]'>{studySet.description}</p>
