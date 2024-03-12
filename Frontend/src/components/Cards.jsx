@@ -127,7 +127,7 @@ function Cards() {
 
         <button
           className='bg-blue-400 p-[10px] rounded-md'
-          onClick={() => navigate("/studySets")}
+          onClick={() => navigate("/all-study-sets")}
         >
           back to Study Sets
         </button>

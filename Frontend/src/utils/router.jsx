@@ -40,6 +40,7 @@ const router = createBrowserRouter([
       { path: '/module/:moduleId', element: <Module />},
       { path: '/all-study-sets', element: <AllStudySets />},
       { path: '/studySet/:topicId/:studySetId', element: <StudySet />},
+      // { path: '/studySet/:studySetId', element: <StudySet />},
       { path: '/createSet/', element: <CreateSets />},
       { path: '/studySet/edit/:id', element: < EditStudySet/>},
       { path: '/studySet/practice/:id', element: <Practice />},

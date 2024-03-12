@@ -3,11 +3,12 @@ import { AuthContext } from '../context/AuthContext'
 import { Link, useNavigate } from 'react-router-dom';
 
 function NavBar() {
-    const {showLoginForm, setShowLoginForm, showSignUpForm, setShowSignUpForm, hasToken, logoutHandler, getUserInfo, user} = useContext(AuthContext);
+    const {showLoginForm, setShowLoginForm, showSignUpForm, setShowSignUpForm, hasToken, getUserInfo, user, logoutHandler} = useContext(AuthContext);
     const navigate = useNavigate();
 
     useEffect(() => {
         getUserInfo();
+        !hasToken ? logoutHandler() : "";
     },[])
 
     const userId = user?._id;

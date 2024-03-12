@@ -21,7 +21,7 @@ function Modules() {
       </div>
       <ul className='flex flex-wrap gap-[32px] justify-center mb-[17em]'>
         {modulesData?.map((module, index) => (
-          <li key={module._id} className={`basis-[30%] px-[1.6em] py-[2.2em]  border-[1px] border-[#BCC0C1] rounded-[8px] modules-box-shadow modules-hover-${index}`}>
+          <li key={module._id} className={`basis-[30%] px-[1.6em] py-[2.2em]  border-[1px] border-[#BCC0C1] rounded-[8px] modules-box-shadow modules-hover-${index} flex items-center`}>
             <Link to={`/module/${module._id}`} className='flex justify-between' >
               <div className='flex items-center gap-[1.6em]'>
                 <img src={module.icon} className='w-[28px]' alt="" />
@@ -32,7 +32,7 @@ function Modules() {
           </li>
         )
         )}
-        <li className='basis-[30%] bg-[#f5ecfff0]  px-[1.6em] py-[2.2em]  border-[1px] border-[#BCC0C1] rounded-[8px] modules-box-shadow hover:border-[#8E46EC]'>
+        <li className='basis-[30%] bg-[#f5ecfff0] px-[1.6em] py-[2.2em]  border-[1px] border-[#BCC0C1] rounded-[8px] modules-box-shadow hover:border-[#8E46EC] flex items-center'>
           <Link to="/all-study-sets" className='flex justify-between'>
             <div className='flex items-center gap-[1.6em]'>
               <img src={allTopics} alt="" />
