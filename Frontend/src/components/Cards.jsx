@@ -82,8 +82,6 @@ function Cards() {
   return (
     <div>
       <section className='max-container padding-container'>
-        
-        
         {currentCardsSet && (
           <div key={currentCardsSet._id}>
             <div className="flex justify-between items-center">
@@ -95,7 +93,7 @@ function Cards() {
                 <p className='text-right dm-sans-bold text-[1.7em]'>{currentTopic}</p>
                 <Link className={`${author?.nickName ? "block": "hidden"} flex flex-col items-end text-[1.4em] text-leading-[150%]`} to={hasToken && user?._id === author?._id ? `/user/${user?._id}` : `/users/${author?._id}/all-study-sets` }>  
                   <p className='text-right'>Created by: {author?.nickName}</p>
-                  <img className='text-right' src={author?.photo} width={40} alt="author's photo" />
+                  <img className='text-right rounded-full w-[40px]' src={author?.photo} alt="author's photo" />
                 </Link>
               </div>
             </div>
@@ -112,12 +110,12 @@ function Cards() {
                 } w-[60vw] min-h-[50vh] next-card`}
               >
                 <div className={`flip-content flex flex-col justify-between pt-[40px] px-[32px] pb-[32px]`}>
-                  <p className="text-[2.5em] text-leading-[120%]">{currentCard?.question}</p>
+                  <p className="text-[2em] text-leading-[100%]">{currentCard?.question}</p>
                   <img src={currentCard?.image} alt="" />
-                  <p className="text-[1.7em] text-leading-[150%] self-center">Show the answer</p>
+                  <p className="text-[1.4em] text-leading-[150%] self-center">Show the answer</p>
                 </div>
                 <div className={`flip-content flex flex-col justify-between pt-[40px] px-[32px] pb-[32px]`}>
-                  <p className="text-[2.5em] text-leading-[120%]">{currentCard?.answer}</p>
+                  <p className="text-[2em] text-leading-[100%]">{currentCard?.answer}</p>
                 </div>
               </div>
             </div>
@@ -138,13 +136,6 @@ function Cards() {
             </div>
           </div>
         )}
-
-        <button
-          className={`card-bg-${randomNumber} p-[10px] rounded-md`}
-          onClick={() => navigate("/all-study-sets")}
-        >
-          back to Study Sets
-        </button>
         <button
           className={`${hasToken ? "block" : "hidden"} bg-[#b6b2b2] py-[5px] px-[10px] rounded-[10px]`}
           onClick={() => {addStudySetToUser(user._id, currentCardsSet._id, topicId)} }
