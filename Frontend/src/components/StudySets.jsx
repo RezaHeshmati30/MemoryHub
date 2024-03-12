@@ -125,13 +125,13 @@ const slideRight = () => {
             </ul>
         
         <h2 className='text-[4em] mb-[56px]'>Popular study sets</h2>
-        <div className='relative flex items-center'>
-            <ul id='slider' className='w-full h-full overflow-x-scroll test scroll whitespace-nowrap scroll-smooth scrollbar-hide flex gap-[32px] justify-between mb-[40px]'>
+        {/* <div className='relative flex items-center'> */}
+            <ul id='slider' className='w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide flex gap-[32px] mb-[40px]'>
                 {top6MostShared?.map((studySet, index) => (
-                    <li key={studySet._id} onClick={() => goToSetHandler(studySet.topicId, studySet._id)} className={`cursor-pointer border-[1px] border-[#BCC0C1] study-set-line-${index+1}-hover rounded-[8px]  px-[16px] flex flex-col justify-between basis-[25%]  pt-[16px] pb-[21px] set-box-shadow `}>
+                    <li key={studySet._id} onClick={() => goToSetHandler(studySet.topicId, studySet._id)} className={`cursor-pointer border-[1px] border-[#BCC0C1] study-set-line-${index+1}-hover rounded-[8px]  px-[16px] flex flex-col justify-between pt-[16px] pb-[21px] set-box-shadow `}>
                         <p className='dm-sans-medium text-[2em]'>{studySet.title}</p>
                         <div className={`study-set-line-${index+1} border-[2px] w-full mb-[8px]`}/>
-                        <p className='whitespace-normal'>{studySet.description}</p>
+                        <p className='max-w-[300px] overflow-hidden text-ellipsis'>{studySet.description}</p>
                         <div className='flex justify-between items-center'>
                             <p className='text-[#9A9A9A] text-leading-[150%]'>{studySet.cards.length} cards</p>
                             <div className='flex hover:underline items-center gap-[8px]'>
@@ -143,7 +143,7 @@ const slideRight = () => {
                 ))}
             </ul>
             
-        </div>
+        {/* </div> */}
         <div className='flex items-center justify-between gap-[32px]'>
             {/* <div className='container relative w-[100%]'>
                 <div id='scroll' className='absolute top-0 left-0 z-30 h-[1px] w-[50%] bg-black'/>
