@@ -14,17 +14,7 @@ function StudySets() {
   const location = useLocation();
   console.log("id", moduleId)
 
-//   useEffect(() => {
-//     getUserInfo();
-//     console.log("id", moduleId)
-//     if (location.pathname === "/all-study-sets") {
-//         getModulesData();
-//     } else {
-//         getModuleData(moduleId);
-//     }
-//     setShowLoginForm(false);
-//     setShowSignUpForm(false);
-//   }, []);
+
 useEffect(() => {
     getUserInfo();
     console.log("id", moduleId);
@@ -34,24 +24,15 @@ useEffect(() => {
         setShowSignUpForm(false);
     } else {
         getModuleData(moduleId);
-        setShowLoginForm(false); // You might want to set these based on your requirements
-        setShowSignUpForm(false); // You might want to set these based on your requirements
+        setShowLoginForm(false); 
+        setShowSignUpForm(false); 
     }
 }, [location.pathname, moduleId]);
 
-  const onClickHandler = (topicId, studySetId) => {
-    navigate(`/studySet/${topicId}/${studySetId}`);
-    setTopicId(topicId);
-    setStudySetId(studySetId);
-  };
 
-  const studyData = location.pathname === "/all-study-sets" ? modulesData : moduleData;
+//   const studyData = location.pathname === "/all-study-sets" ? modulesData : moduleData;
 
-  console.log("data", studyData)
-  console.log("module", moduleData)
-  console.log("modules", modulesData)
-
-let filteredStudySets;
+  let filteredStudySets;
 
 if (location.pathname === "/all-study-sets") {
     filteredStudySets = [].concat(...(modulesData || []).map(module => (module.topics || []).map(topic => {
@@ -99,8 +80,6 @@ if (!Array.isArray(studySets)) {
 } else {
     studySets.sort((a, b) => b.shared - a.shared);
     top6MostShared = studySets.slice(0, 6);
-
-    // Print the titles of the top 6 most shared study sets along with their topics and topic IDs
     console.log("Top 6 Most Shared Study Sets:", top6MostShared);
     top6MostShared.forEach(set => console.log(`Topic ID: ${set.topicId}, Topic: ${set.topic}, Title: ${set.title}`));
 }
@@ -112,15 +91,28 @@ const goToSetHandler = (topicId, studySetId) => {
     setStudySetId(studySetId);
   };
 
-const slideLeft = () => {
+  const slideLeft = () => {
     var slider = document.getElementById('slider');
+    var scroll = document.getElementById('scroll');
     slider.scrollLeft = slider.scrollLeft - 500;
-  };
+    var currentLeft = parseInt(scroll.style.left || 0);
+    var newLeft = Math.max(currentLeft - 300, 0); // Ensure it's not less than 0
+    var maxLeft = slider.offsetWidth - scroll.offsetWidth; // Calculate the maximum allowable left position
+    scroll.style.left = Math.min(newLeft, maxLeft) + 'px'; // Ensure it's not greater than the container
+};
 
-  const slideRight = () => {
+const slideRight = () => {
     var slider = document.getElementById('slider');
+    var scroll = document.getElementById('scroll');
     slider.scrollLeft = slider.scrollLeft + 500;
-  };
+    var currentLeft = parseInt(scroll.style.left || 0);
+    var newLeft = currentLeft + 300;
+    var container = document.querySelector('.container');
+    var maxLeft = container.offsetWidth - scroll.offsetWidth; // Calculate the maximum allowable left position
+    scroll.style.left = Math.min(newLeft, maxLeft) + 'px'; 
+};
+
+
 
     
   return (
@@ -145,37 +137,67 @@ const slideLeft = () => {
                     <li className='text-center dm-sans-medium text-[1.7em]' key={module._id}>{module?.title}</li>
                 ))) : 
                 (moduleData?.topics?.map(topic => (
-                    <li className=' text-center dm-sans-medium text-[1.7em]' key={topic._id}>{topic?.title}</li>
+                    <li className='text-center dm-sans-medium text-[1.4em]' key={topic._id}>{topic?.title}</li>
                 )))}
             </ul>
         
 
-        <h2 className='text-center text-[4em] mb-[1.6px]'>Popular study sets</h2>
-        <ul className='flex'>
-            {top6MostShared?.map(studySet => (
-                <li key={studySet._id}>
-                    <p>{studySet.title}</p>
-                    <p>{studySet.description}</p>
-                    <p>{studySet.cards.length} cards</p>
-                    <button onClick={() => goToSetHandler(studySet.topicId, studySet._id)}>Go to set</button>
-                </li>
-            ))}
-        </ul>
-
-        <ul className='flex gap-[10px] flex-wrap justify-between'>
-            {filteredStudySets?.map(topic => (
-                topic?.studySets.map(studySet => (
-                    <li key={studySet._id} className='border-[1px] border-gray-300 basis-[30%]'>
-                        <p className='cursor-pointer' onClick={() => goToSetHandler(topic._id, studySet._id)}>{studySet.title}</p>
-                        <p>{studySet.description}</p>
-                        {/* <button className={`${hasToken ? "block" : "hidden"} bg-[#b6b2b2] py-[5px] px-[10px] rounded-[10px]`}
-                            onClick={() => { addStudySetToUser(user._id, studySet._id, topic._id) }}
-                        >Add to your set</button> */}
+        <h2 className='text-[4em] mb-[56px]'>Popular study sets</h2>
+        <div className='relative flex items-center'>
+            <ul id='slider' className='w-full h-full overflow-x-scroll test scroll whitespace-nowrap scroll-smooth scrollbar-hide flex gap-[32px] justify-between mb-[40px]'>
+                {top6MostShared?.map((studySet, index) => (
+                    <li key={studySet._id} onClick={() => goToSetHandler(studySet.topicId, studySet._id)} className={`cursor-pointer border-[1px] border-[#BCC0C1] study-set-line-${index+1}-hover rounded-[8px]  px-[16px] flex flex-col justify-between basis-[25%]  pt-[16px] pb-[21px] set-box-shadow `}>
+                        <p className='dm-sans-medium text-[2em]'>{studySet.title}</p>
+                        <div className={`study-set-line-${index+1} border-[2px] w-full mb-[8px]`}/>
+                        <p className='whitespace-normal'>{studySet.description}</p>
+                        <div className='flex justify-between items-center'>
+                            <p className='text-[#9A9A9A] text-leading-[150%]'>{studySet.cards.length} cards</p>
+                            <div className='flex hover:underline items-center gap-[8px]'>
+                                <button className='dm-sans-bold text-[1.2em] uppercase' onClick={() => goToSetHandler(studySet.topicId, studySet._id)}>Go to set</button>
+                                <img src={arrow} alt="arrow" />
+                            </div>
+                        </div>
                     </li>
-                ))
-            ))}
-        </ul>
+                ))}
+            </ul>
+            
+        </div>
+        <div className=''>
+            {/* <div className='container relative w-[100%]'>
+                <div id='scroll' className='absolute top-0 left-0 z-30 h-[1px] w-[50%] bg-black'/>
+                <div className='absolute top-0 left-0 h-[1px] w-full bg-[#BCC0C1]'/>
+            </div> */}
+            
+            <div className='flex gap-[44px] justify-end items-center'>
+                    <img src={arrow} className='cursor-pointer rotate-180' onClick={slideLeft} alt="" />
+                    <img src={arrow} className='cursor-pointer' onClick={slideRight} alt="" />
+            </div>
+        </div>
+        
 
+        <h2 className='text-[4em] mb-[56px]'>All study sets</h2>
+        <ul className='flex gap-[32px] flex-wrap justify-between'>
+            {filteredStudySets?.map((topic, topicIndex) => {
+                return topic?.studySets.map((studySet, studySetIndex) => {
+                    const index = topicIndex * topic.studySets.length + studySetIndex;
+                    const styleClass = `study-set-line-${(index % 6) + 1}`;
+                    return (
+                        <li key={studySet._id} onClick={() => goToSetHandler(topic._id, studySet._id)} className={`cursor-pointer border-[1px] border-[#BCC0C1] ${styleClass}-hover rounded-[8px] basis-[23%] px-[16px] flex flex-col justify-between pt-[16px] pb-[21px] set-box-shadow `}>
+                            <p className='dm-sans-medium text-[2em]'>{studySet.title}</p>
+                            <div className={`${styleClass} border-[2px] w-full mb-[8px]`}/>
+                            <p className='text-[1.2em] text-leading-[150%] mb-[25px]'>{studySet.description}</p>
+                            <div className='flex justify-between items-center'>
+                                <p className='text-[#9A9A9A] text-leading-[150%]'>{studySet.cards.length} cards</p>
+                                <div className='flex hover:underline items-center gap-[8px]'>
+                                    <button className='dm-sans-bold text-[1.2em] uppercase' onClick={() => goToSetHandler(topic._id, studySet._id)}>Go to set</button>
+                                    <img src={arrow} alt="arrow" />
+                                </div>
+                            </div>
+                        </li>
+                    );
+                });
+            })}
+        </ul>
     </section>
   );
 }
