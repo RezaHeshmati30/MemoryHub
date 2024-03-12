@@ -1,0 +1,123 @@
+form {
+    font-size: 1.7em
+}
+
+.back-arrow-container {
+    display: flex;
+    width:88px;
+    height: 48px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    cursor: pointer;
+    
+}
+
+.arrow-icon {
+    display: flex;
+    width: 48px;
+    height: 48px;
+    padding: 14px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.back {
+    color: #000;
+    font-size: 1.2em;
+    line-height: 100%;
+    text-transform: uppercase;
+}
+input :placeholder-shown {
+    color: #000;
+    line-height: 150%;
+}
+
+.new-topic {
+    border-radius: 8px;
+    border: 1px solid #BCC0C1;
+    background: #FFF;
+    width: 539px;
+    height: 78px;
+    flex-shrink: 0;
+    padding-left: 40px;
+}
+
+
+.choose-topic {
+    color: #000;
+    line-height: 150%;
+    width: 540px;
+    height: 78px;
+    flex-shrink: 0;
+    padding-left: 40px;
+    border-radius: 8px;
+    border: 1px solid #BCC0C1;
+    background: #FFF;
+}
+
+.or {
+    color: #000;
+    line-height: 150%;
+}
+
+.description {
+    width: 1128px;
+    height: 190px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    border: 1px solid #BCC0C1;
+    background: #FFF;
+    padding-left: 40px;
+    padding-top: 24px;
+}
+
+.card-box {
+    width: 1128px;
+    height: 220px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    border: 1px solid #BCC0C1;
+    background: #FFF;
+}
+
+.trash-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    background: url("../../assets/trash.png"), lightgray 50% / cover no-repeat;
+}
+
+.create-button{
+
+width: 172px;
+height: 56px;
+padding: 8px 16px;
+justify-content: center;
+align-items: center;
+gap: 8px;
+flex-shrink: 0;
+color: #000;
+font-size: 12px;
+line-height: 120%; 
+text-transform: uppercase;
+}
+
+/* YourComponent.css */
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    cursor: pointer;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #B3AEAE;
+    border-radius: 6px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background-color: #cbd5e0;
+  }
+  
