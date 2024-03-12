@@ -136,48 +136,33 @@ ul {
 
 .study-set-line-1-hover:hover {
   border-color: #FADBF1; 
+  box-shadow: 0px 1px 0px 0px #FADBF1;
 }
 
 .study-set-line-2-hover:hover {
   border-color: #CDECED; 
+  box-shadow: 0px 1px 0px 0px #CDECED;
 }
 
 .study-set-line-3-hover:hover {
-  border-color: #FDEECC; 
+  border-color: #FDEECC;
+  box-shadow: 0px 1px 0px 0px #FDEECC; 
 }
 
 .study-set-line-4-hover:hover {
   border-color: #C6E9FA; 
+  box-shadow: 0px 1px 0px 0px #C6E9FA; 
 }
 
 .study-set-line-5-hover:hover {
   border-color: #C5F6CA; 
+  box-shadow: 0px 1px 0px 0px #C5F6CA; 
 }
 
 .study-set-line-6-hover:hover {
-  border-color: #EFE0FD; 
+  border-color: #EFE0FD;
+  box-shadow: 0px 1px 0px 0px #EFE0FD;  
 }
 
-/* .card-bg-1 {
-  background-color: #FFF4FC;
-}
 
-.card-bg-2 {
-  background-color: #EFFFFF;
-}
 
-.card-bg-3 {
-  background-color: #FFFBF1;
-}
-
-.card-bg-4 {
-  background-color: #EEF9FF;
-}
-
-.card-bg-5 {
-  background-color: #EEFCEF;
-}
-
-.card-bg-6 {
-  background-color: #F9F4FE;
-} */

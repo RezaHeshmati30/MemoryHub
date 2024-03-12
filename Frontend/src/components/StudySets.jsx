@@ -7,8 +7,8 @@ import arrow from "../assets/images/arrow-forward.svg";
 import BackLink from './BackLink';
 
 function StudySets() {
-  const { setStudySetId, setTopicId, addStudySetToUser, getModulesData, modulesData, getModuleData, moduleData } = useContext(StudySetsContext);
-  const { hasToken, getUserInfo, user, setShowLoginForm, setShowSignUpForm } = useContext(AuthContext);
+  const { setStudySetId, setTopicId, getModulesData, modulesData, getModuleData, moduleData } = useContext(StudySetsContext);
+  const { getUserInfo, setShowLoginForm, setShowSignUpForm } = useContext(AuthContext);
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
   const { moduleId } = useParams();
@@ -90,9 +90,9 @@ const goToSetHandler = (topicId, studySetId) => {
     var scroll = document.getElementById('scroll');
     slider.scrollLeft = slider.scrollLeft - 500;
     var currentLeft = parseInt(scroll.style.left || 0);
-    var newLeft = Math.max(currentLeft - 300, 0); // Ensure it's not less than 0
-    var maxLeft = slider.offsetWidth - scroll.offsetWidth; // Calculate the maximum allowable left position
-    scroll.style.left = Math.min(newLeft, maxLeft) + 'px'; // Ensure it's not greater than the container
+    var newLeft = Math.max(currentLeft - 300, 0); 
+    var maxLeft = slider.offsetWidth - scroll.offsetWidth; 
+    scroll.style.left = Math.min(newLeft, maxLeft) + 'px'; 
 };
 
 const slideRight = () => {
@@ -102,7 +102,7 @@ const slideRight = () => {
     var currentLeft = parseInt(scroll.style.left || 0);
     var newLeft = currentLeft + 300;
     var container = document.querySelector('.container');
-    var maxLeft = container.offsetWidth - scroll.offsetWidth; // Calculate the maximum allowable left position
+    var maxLeft = container.offsetWidth - scroll.offsetWidth; 
     scroll.style.left = Math.min(newLeft, maxLeft) + 'px'; 
 };
 
@@ -125,10 +125,9 @@ const slideRight = () => {
             </ul>
         
         <h2 className='text-[4em] mb-[56px]'>Popular study sets</h2>
-        {/* <div className='relative flex items-center'> */}
             <ul id='slider' className='w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide flex gap-[32px] mb-[40px]'>
                 {top6MostShared?.map((studySet, index) => (
-                    <li key={studySet._id} onClick={() => goToSetHandler(studySet.topicId, studySet._id)} className={`cursor-pointer border-[1px] border-[#BCC0C1] study-set-line-${index+1}-hover rounded-[8px]  px-[16px] flex flex-col justify-between pt-[16px] pb-[21px] set-box-shadow `}>
+                    <li key={studySet._id} onClick={() => goToSetHandler(studySet.topicId, studySet._id)} className={`cursor-pointer border-[1px] set-box-shadow-${index+1} border-[#BCC0C1] study-set-line-${index+1}-hover rounded-[8px] px-[16px] flex flex-col justify-between pt-[16px] pb-[21px] set-box-shadow`}>
                         <p className='dm-sans-medium text-[2em]'>{studySet.title}</p>
                         <div className={`study-set-line-${index+1} border-[2px] w-full mb-[8px]`}/>
                         <p className='max-w-[300px] overflow-hidden text-ellipsis'>{studySet.description}</p>
@@ -142,8 +141,6 @@ const slideRight = () => {
                     </li>
                 ))}
             </ul>
-            
-        {/* </div> */}
         <div className='flex items-center justify-between gap-[32px]'>
             {/* <div className='container relative w-[100%]'>
                 <div id='scroll' className='absolute top-0 left-0 z-30 h-[1px] w-[50%] bg-black'/>
@@ -155,7 +152,6 @@ const slideRight = () => {
                     <img src={arrow} className='cursor-pointer' onClick={slideRight} alt="" />
             </div>
         </div>
-        
 
         <h2 className='text-[4em] mb-[56px]'>All study sets</h2>
         <ul className='flex gap-[32px] flex-wrap justify-between'>
