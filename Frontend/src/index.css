@@ -75,7 +75,7 @@ ul {
     font-style: normal;
 }
 
-.modules-box-shadow {
+.set-box-shadow {
   box-shadow: 0px 1px 0px 0px #B3AEAE;
 }
 
@@ -108,3 +108,76 @@ ul {
   border-radius: 50%;
   background-color: #FFC2FF;
 }
+
+.study-set-line-1 {
+  border-color:#FADBF1;
+}
+
+.study-set-line-2 {
+  border-color:#CDECED;
+}
+
+.study-set-line-3 {
+  border-color:#FDEECC;
+}
+
+.study-set-line-4 {
+  border-color:#C6E9FA;
+}
+
+.study-set-line-5 {
+  border-color:#C5F6CA;
+}
+
+.study-set-line-6 {
+  border-color:#EFE0FD;
+}
+
+
+.study-set-line-1-hover:hover {
+  border-color: #FADBF1; 
+}
+
+.study-set-line-2-hover:hover {
+  border-color: #CDECED; 
+}
+
+.study-set-line-3-hover:hover {
+  border-color: #FDEECC; 
+}
+
+.study-set-line-4-hover:hover {
+  border-color: #C6E9FA; 
+}
+
+.study-set-line-5-hover:hover {
+  border-color: #C5F6CA; 
+}
+
+.study-set-line-6-hover:hover {
+  border-color: #EFE0FD; 
+}
+
+/* .card-bg-1 {
+  background-color: #FFF4FC;
+}
+
+.card-bg-2 {
+  background-color: #EFFFFF;
+}
+
+.card-bg-3 {
+  background-color: #FFFBF1;
+}
+
+.card-bg-4 {
+  background-color: #EEF9FF;
+}
+
+.card-bg-5 {
+  background-color: #EEFCEF;
+}
+
+.card-bg-6 {
+  background-color: #F9F4FE;
+} */
