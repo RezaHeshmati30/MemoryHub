@@ -138,5 +138,3 @@ console.log("gg:", groupedStudySets)
 }
 
 export default ForeignUserStudySets;
-
-// studySet.topic._id,
