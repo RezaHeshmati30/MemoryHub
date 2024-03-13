@@ -7,7 +7,7 @@ function Back() {
     <div>
       <div
         onClick={() => navigate("/user/:id/studySets")}
-        className='flex w-88 h-48 justify-start items-center gap-8 cursor-pointer '
+        className='flex w-[88px] h-[48px] justify-start items-center cursor-pointer '
       >
         <svg
           width='48'
