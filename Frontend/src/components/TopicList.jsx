@@ -20,7 +20,7 @@ function TopicList({ onSelectTopic }) {
   };
 
   return (
-    <div className="dm-sans-regular choose-topic">
+    <div className="container max-h-[78px] min-h-[78px] basis-19/40 border border-solid border-gray-300 rounded-lg bg-white flex-shrink-0 pl-[40px]">
       <div className="flex items-center">
         <div
           className={`dm-sans-regular w-full py-5 cursor-pointer ${

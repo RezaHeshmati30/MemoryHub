@@ -26,39 +26,40 @@ function Card({ removeLine }) {
   };
 
   return (
-    <div>
+    <div >
       {lines.map((line, index) => (
-        <div key={index} className='flex flex-col card-box'>
-          <div className='flex justify-between items-center pt-[24px] pb-[6px] border-b-2'>
-            <p className='dm-sans-medium pl-[40px]'>{index + 1}</p>
+       
+        <div key={index} className='flex flex-col border border-solid border-gray-300 rounded-lg bg-white mb-6 '>
+          <div className='flex justify-between items-center pt-5 pb-1 border-b-2'>
+            <p className='dm-sans-bold text-[20px] pl-10'>{index + 1}</p>
             <img
               src={trash}
-              className='pr-[40px]'
-              alt='trash-icon'
+              className='pr-10'
+              alt='trashcan'
               onClick={() => handleRemoveLine(index)}
             />
           </div>
 
-          <div className='grid grid-cols-5 px-[40px] gap-9 py-[20px]'>
-            <div className='border-b-2 col-span-2'>
+          <div className='flex md:flex-row flex-col px-10 gap-9 py-5'>
+            <div className='border-b-2 flex-grow-2'>
               <textarea
-                className='w-[400px] h-[100px]'
+                className='w-[300px] h-[100px] custom-scrollbar'
                 id={`question${index}`}
                 type='text'
                 placeholder={`Write your Question*`}
                 name={`question${index}`}
               />
             </div>
-            <div className='border-b-2 col-span-2'>
+            <div className='border-b-2 col-span-2 flex-grow-2 '>
               <textarea
-                className='w-[400px] h-[100px]'
+                className='min-w-[300px] h-[100px] custom-scrollbar'
                 id={`answer${index}`}
                 type='text'
                 placeholder={`Write your Answer*`}
                 name={`answer${index}`}
               />
             </div>
-            <div className='w-[90px] h-[64px] flex justify-center items-center outline-dashed outline-2 outline-offset-1 mx-auto my-auto'>
+            <div className='min-w-24 h-16 flex-wrap flex justify-center items-center outline-dashed outline-2 outline-offset-1 mx-auto my-auto'>
               {line.image ? (
                 <label htmlFor={`image${index}`} className='cursor-pointer '>
                   <img
@@ -96,6 +97,7 @@ function Card({ removeLine }) {
         + Add new Card
       </div>
     </div>
+  
   );
 }
 

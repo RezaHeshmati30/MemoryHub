@@ -3,7 +3,7 @@ import { StudySetsContext } from "../context/StudySetsContext";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext"; 
 
-import "./cards.css";
+import "./css/cards.css";
 
 function Cards() {
   const [isFlipped, setIsFlipped] = useState(false);

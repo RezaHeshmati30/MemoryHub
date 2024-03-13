@@ -7,7 +7,7 @@ function Back() {
     <div>
       <div
         onClick={() => navigate("/user/:id/studySets")}
-        className='back-arrow-container'
+        className='flex w-88 h-48 justify-start items-center gap-8 cursor-pointer '
       >
         <svg
           width='48'
@@ -21,7 +21,7 @@ function Back() {
             fill='black'
           />
         </svg>
-        <p className='back dm-sans-bold'>back</p>
+        <p className='text-1.2em leading-100 uppercase dm-sans-bold'>back</p>
       </div>
     </div>
   );
