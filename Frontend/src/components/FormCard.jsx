@@ -29,7 +29,7 @@ function Card({ removeLine }) {
     <div >
       {lines.map((line, index) => (
        
-        <div key={index} className='flex flex-col border border-solid border-gray-300 rounded-lg bg-white mb-6 '>
+        <div key={index} className='container flex flex-col border border-solid border-gray-300 rounded-lg bg-white mb-6 '>
           <div className='flex justify-between items-center pt-5 pb-1 border-b-2'>
             <p className='dm-sans-bold text-[20px] pl-10'>{index + 1}</p>
             <img
@@ -40,26 +40,26 @@ function Card({ removeLine }) {
             />
           </div>
 
-          <div className='flex md:flex-row flex-col px-10 gap-9 py-5'>
-            <div className='border-b-2 flex-grow-2'>
+          <div className='flex md:flex-row flex-col justify-evenly px-10 gap-9 py-5'>
+            <div className='border-b-2 basis-2/6'>
               <textarea
-                className='w-[300px] h-[100px] custom-scrollbar'
+                className='w-full h-[100px] custom-scrollbar'
                 id={`question${index}`}
                 type='text'
                 placeholder={`Write your Question*`}
                 name={`question${index}`}
               />
             </div>
-            <div className='border-b-2 col-span-2 flex-grow-2 '>
+            <div className='border-b-2 basis-2/6 '>
               <textarea
-                className='min-w-[300px] h-[100px] custom-scrollbar'
+                className='w-full h-[100px] custom-scrollbar basis-2/6'
                 id={`answer${index}`}
                 type='text'
                 placeholder={`Write your Answer*`}
                 name={`answer${index}`}
               />
-            </div>
-            <div className='min-w-24 h-16 flex-wrap flex justify-center items-center outline-dashed outline-2 outline-offset-1 mx-auto my-auto'>
+             </div>
+            <div className='min-w-24 h-16 flex justify-center items-center outline-dashed outline-2 outline-offset-1 mx-auto my-auto'>
               {line.image ? (
                 <label htmlFor={`image${index}`} className='cursor-pointer '>
                   <img

@@ -100,11 +100,10 @@ function CreateSets() {
   };
 
   return (
-    <div className='max-container padding-container regal-blue flex justify-center'>
-      {hasToken && (
-        <div className='flex flex-col '>
-          <Back />
-          <form className='flex flex-col ' onSubmit={handleCreateSets}>
+    <div className='max-container padding-container regal-blue flex flex-col'>
+     <Back />
+      {hasToken && (  
+          <form className='flex flex-col justify-center mx-auto md:w-[1128px]' onSubmit={handleCreateSets}>
             <h2 className='dm-sans-medium mb-6 text-[20px]'>
               Creating new set
             </h2>
@@ -152,7 +151,7 @@ function CreateSets() {
               </button>
             </div>
           </form>
-        </div>
+        
       )}
     </div>
   );
