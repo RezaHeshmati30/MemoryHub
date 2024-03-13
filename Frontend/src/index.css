@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "DM Sans", sans-serif;
+  font-weight: 400;
+  font-size: 10px;
+}
 
 .inter-bold {
   font-family: "Inter", sans-serif;

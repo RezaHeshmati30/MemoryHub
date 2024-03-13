@@ -127,50 +127,59 @@ const handleDeleteAccount = async () => {
 
   return (
     <div className="max-w-lg mx-auto mt-8 p-6 bg-white rounded shadow-lg">
-      {hasToken && (
       <div>
-      <h2 className="text-xl font-semibold mb-4">Profile update</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label className="block text-sm font-semibold mb-2" htmlFor="firstName">First name:</label>
-          <input type="text" id="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)} className="w-full border-gray-300 rounded-md px-4 py-2" />
-        </div>
-        <div className="mb-4">
-          <label className="block text-sm font-semibold mb-2" htmlFor="lastName">Last name:</label>
-          <input type="text" id="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} className="w-full border-gray-300 rounded-md px-4 py-2" />
-        </div>
-        <div className="mb-4">
-          <label className="block text-sm font-semibold mb-2" htmlFor="email">E-Mail:</label>
-          <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full border-gray-300 rounded-md px-4 py-2" />
-        </div>
+      <div className='border-[1px] border-black'>
+      image
+      </div>
+      <div>input</div>
+      </div>
+    </div>
+    
+//     <div className="max-w-lg mx-auto mt-8 p-6 bg-white rounded shadow-lg">
+//       {hasToken && (
+//       <div>
+//       <h2 className="text-xl font-semibold mb-4">Profile update</h2>
+//       <form onSubmit={handleSubmit}>
+//         <div className="mb-4">
+//           <label className="block text-sm font-semibold mb-2" htmlFor="firstName">First name:</label>
+//           <input type="text" id="firstName" value={firstName} onChange={(e) => setFirstName(e.target.value)} className="w-full border-gray-300 rounded-md px-4 py-2" />
+//         </div>
+//         <div className="mb-4">
+//           <label className="block text-sm font-semibold mb-2" htmlFor="lastName">Last name:</label>
+//           <input type="text" id="lastName" value={lastName} onChange={(e) => setLastName(e.target.value)} className="w-full border-gray-300 rounded-md px-4 py-2" />
+//         </div>
+//         <div className="mb-4">
+//           <label className="block text-sm font-semibold mb-2" htmlFor="email">E-Mail:</label>
+//           <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full border-gray-300 rounded-md px-4 py-2" />
+//         </div>
         
-        <div className="mb-4">
-  <label className="block text-sm font-semibold mb-2" htmlFor="photo">Photo:</label>
-  <input type="file" id="photo" onChange={(e) => handlePhotoChange(e)} className="w-full border-gray-300 rounded-md px-4 py-2" accept="image/*" />
-</div>
+//         <div className="mb-4">
+//   <label className="block text-sm font-semibold mb-2" htmlFor="photo">Photo:</label>
+//   <input type="file" id="photo" onChange={(e) => handlePhotoChange(e)} className="w-full border-gray-300 rounded-md px-4 py-2" accept="image/*" />
+// </div>
 
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Profil updaten</button>
-      </form>
-      <div className="mb-4 mt-4 ">
-          <label className="block text-sm font-semibold mb-2" htmlFor="password">Password:</label>
-          <button className={isPasswordChangeOpen ? 'hidden' :'bg-blue-500 text-white px-2 py-1 rounded-md hover:bg-blue-600'}  onClick={handleOpenPasswordChange}>Change Passwort</button>
-          {isPasswordChangeOpen && (
-            <PasswordChangePopup
-              onClose={handleClosePasswordChange}
-              onPasswordChange={handlePasswordChange}
-              oldPassword={oldPassword}
-              setOldPassword={setOldPassword}
-              newPassword={newPassword}
-              setNewPassword={setNewPassword}
-            />
-          )}
-        </div>
-        <button onClick={handleDeleteAccount} className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 mt-4">
-        Delete Account
-      </button>
-    </div>
-      )}
-    </div>
+//         <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Profil updaten</button>
+//       </form>
+//       <div className="mb-4 mt-4 ">
+//           <label className="block text-sm font-semibold mb-2" htmlFor="password">Password:</label>
+//           <button className={isPasswordChangeOpen ? 'hidden' :'bg-blue-500 text-white px-2 py-1 rounded-md hover:bg-blue-600'}  onClick={handleOpenPasswordChange}>Change Passwort</button>
+//           {isPasswordChangeOpen && (
+//             <PasswordChangePopup
+//               onClose={handleClosePasswordChange}
+//               onPasswordChange={handlePasswordChange}
+//               oldPassword={oldPassword}
+//               setOldPassword={setOldPassword}
+//               newPassword={newPassword}
+//               setNewPassword={setNewPassword}
+//             />
+//           )}
+//         </div>
+//         <button onClick={handleDeleteAccount} className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 mt-4">
+//         Delete Account
+//       </button>
+//     </div>
+//       )}
+//     </div>
   );
 }
 
