@@ -2,7 +2,9 @@ import express from "express";
 import {
   addModule,
   addTopicToModule,
+  getAllModules,
   getModuleInfo,
+  updateModuleIcon,
 } from "../controllers/moduleController.js";
 import {
   addTopic,
@@ -26,7 +28,9 @@ const router = express.Router();
 
 router
   .post("/modules", addModule)
+  .get("/modules", getAllModules)
   .get("/modules/:id", getModuleInfo)
+  .patch("/module/:id", updateModuleIcon)
   .get("/topics", getAllStudyData)
   .post("/topics", addTopic)
   .patch("/modules/:id", addTopicToModule)
