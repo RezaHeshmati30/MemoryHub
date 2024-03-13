@@ -72,3 +72,48 @@ export const addAllTopicsToModule = async (req, res) => {
       res.status(500).json({ message: error.message });
     }
   }
+
+  export const getAllModules = async (req, res) => {
+    
+      try {
+          const modules = await ModuleModel.find().populate({
+              path: 'topics',
+              model: 'Topic',
+              populate: {
+                path: 'studySets',
+                model: 'StudySet',
+                populate: {
+                  path: 'cards',
+                  model: 'Card',
+                },
+              },
+            });
+          res.status(200).send(modules);
+      } catch (error) {
+          res.status(500).json({ message: error.message })
+      }
+      
+  }
+
+  
+
+export async function updateModuleIcon(req, res) {
+    const moduleId = req.params.id;
+    const { icon } = req.body;
+
+    try {
+        const updatedModule = await ModuleModel.findByIdAndUpdate(
+            moduleId,
+            { icon: icon },
+            { new: true } // Set this option to return the updated document
+        );
+
+        if (!updatedModule) {
+            return res.status(404).json({ message: 'Module not found' });
+        }
+
+        res.status(200).json({ message: 'Icon updated successfully', updatedModule });
+    } catch (error) {
+        res.status(500).json({ message: 'Error updating icon for module: ' + error.message });
+    }
+}
