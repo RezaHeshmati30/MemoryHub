@@ -4,7 +4,7 @@ import { AuthContext } from "../context/AuthContext";
 import openIcon from "../assets/open.svg";
 import closeIcon from "../assets/close.svg";
 
-function TopicList({ onSelectTopic }) {
+function TopicList({ onSelectTopic, mode }) {
   const { user } = useContext(AuthContext);
   const [isOpen, setOpen] = useState(false);
   const [selectedTopic, setSelectedTopic] = useState("");
@@ -19,36 +19,40 @@ function TopicList({ onSelectTopic }) {
     setOpen(false);
   };
 
+  const topicHandler = (e) => {
+    const chosenTopic = e.target.value;
+    setSelectedTopic(chosenTopic);
+    onSelectTopic(chosenTopic);
+  };
+
   return (
     <div className="container max-h-[78px] min-h-[78px] basis-19/40 border border-solid border-gray-300 rounded-lg bg-white flex-shrink-0 pl-[40px]">
-      <div className="flex items-center">
-        <div
-          className={`dm-sans-regular w-full py-5 cursor-pointer ${
-            isOpen ? "border-b border-gray-200" : ""
-          }`}
-          onClick={toggleList}
-        >
-          {selectedTopic || "Choose from already created topics"}
-        </div>
-        {!isOpen ? (
-          <img
-            src={openIcon}
-            alt="click to hide options"
-            onClick={toggleList}
-            className="cursor-pointer mx-5"
-          />
-        ) : (
-          <img
-            src={closeIcon}
-            alt="click to show options"
-            onClick={toggleList}
-            className="cursor-pointer mx-5"
-          />
-        )}
+    <div className="flex items-center">
+      <div
+        className={`dm-sans-regular w-full py-5 cursor-pointer `}
+        onClick={toggleList}
+      >
+        {selectedTopic || "Choose from already created topics"}
       </div>
-      {isOpen && (
+          {!isOpen ? (
+            <img
+              src={openIcon}
+              alt="click to hide options"
+              onClick={toggleList}
+              className="cursor-pointer mx-5 mt-1"
+            />
+          ) : (
+            <img
+              src={closeIcon}
+              alt="click to show options"
+              onClick={toggleList}
+              className="cursor-pointer mx-5 mt-1 "
+            />
+          )}
+        </div>
+        {isOpen && (
         <ul
-          className="dm-sans-regular w-full bg-transparent relative mt-1 border border-gray-300 overflow-y-auto max-h-80 custom-scrollbar rounded-md"
+          className="dm-sans-regular w-full bg-transparent relative mt-1 border  border-gray-300 overflow-y-auto max-h-80 custom-scrollbar rounded-md"
         >
           {[
             ...new Set(

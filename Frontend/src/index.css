@@ -175,3 +175,7 @@ ul {
 .line-color{
   background: #BCC0C1
 }
+ .btn-hover-color:hover {
+  border: 2px solid #BCC0C1; 
+ }
+

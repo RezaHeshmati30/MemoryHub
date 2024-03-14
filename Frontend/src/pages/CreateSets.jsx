@@ -4,9 +4,9 @@ import { StudySetsContext } from "../context/StudySetsContext";
 import { AuthContext } from "../context/AuthContext";
 import { UserStudySetsContext } from "../context/UserStudySetsContext";
 import "../components/css/form.css";
-import Back from "../components/Back";
 import Card from "../components/FormCard";
 import TopicList from "../components/TopicList";
+import BackLink from "../components/BackLink";
 
 function CreateSets() {
   const {
@@ -101,7 +101,7 @@ function CreateSets() {
 
   return (
     <div className='max-container padding-container regal-blue flex flex-col'>
-     <Back />
+     <BackLink />
       {hasToken && (  
           <form className='flex flex-col justify-center mx-auto md:w-[1128px] my-auto' onSubmit={handleCreateSets}>
             <h2 className='dm-sans-medium mb-6 text-[20px]'>
@@ -141,10 +141,10 @@ function CreateSets() {
               placeholder='Add description*'
               name='description'
             />
-            <Card removeLine={removeLine} lines={lines} />
+            <Card removeLine={removeLine} lines={lines}  mode="create"/>
             <div className='flex justify-center md:justify-end '>
               <button
-                className='flex justify-center md:justify-center md: items-center  flex-shrink-0 create-btn-color w-[172px] h-[56px] p-[8px 16px]  text-black text-xs leading-120 uppercase cursor-pointer rounded-[8px] dm-sans-bold  '
+                className='flex justify-center md:justify-center md: items-center  flex-shrink-0 btn-hover-color create-btn-color w-[172px] h-[56px] p-[8px 16px]  text-black text-xs leading-120 uppercase cursor-pointer rounded-[8px] dm-sans-bold  '
                 type='submit'
               >
                 create new set
