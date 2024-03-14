@@ -15,6 +15,7 @@ function HomePageButtons() {
   }
 
   return (
+
     <section className='pt-12 pb-4 mt-20 flex justify-between '>
       <button onClick={() => navigate("/studySets")} className='bg-[#000] text-white rounded-[36px] flex justify-center items-center flex-shrink-0 w-48 h-16 text-white font-dm-sans font-bold text-base'>STUDY SETS</button>
       <button onClick={onClickHandler} className='bg-[#FFF] rounded-[36px] w-60 h-16 flex justify-center items-center flex-shrink-0 text-black font-dm-sans font-bold text-base'>
@@ -25,6 +26,9 @@ function HomePageButtons() {
         </svg>
       </button>
     </section>
+
+   
+
   )
 }
 
