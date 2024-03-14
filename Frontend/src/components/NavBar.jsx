@@ -1,45 +1,72 @@
-import React, { useContext, useEffect } from 'react'
-import { AuthContext } from '../context/AuthContext'
+
+import React, { useContext, useEffect } from 'react';
+import { AuthContext } from '../context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
+import logo from '../assets/logo.jpg';
 
 function NavBar() {
-    const {showLoginForm, setShowLoginForm, showSignUpForm, setShowSignUpForm, hasToken, logoutHandler, getUserInfo, user} = useContext(AuthContext);
+    const { showLoginForm, setShowLoginForm, showSignUpForm, setShowSignUpForm, hasToken, logoutHandler, getUserInfo, user } = useContext(AuthContext);
     const navigate = useNavigate();
 
     useEffect(() => {
         getUserInfo();
-    },[])
+    }, []);
 
     const userId = user?._id;
 
     const onClickLoginHandler = () => {
         setShowLoginForm(true);
         setShowSignUpForm(false);
-    }
+    };
 
     const onClickSignUpHandler = () => {
         setShowSignUpForm(true);
         setShowLoginForm(false);
-    }
+    };
 
-  return (
-    <nav className='p-[30px] flex justify-end'>
-        <ul className='flex gap-[20px] items-center'>
-        <li className={hasToken ? "hidden" : "block"}>
-                <button onClick={onClickSignUpHandler} className='bg-[#a39a9a] py-[10px] px-[20px] rounded-[10px]'>SignUp</button>
-            </li>
-            <li className={hasToken ? "hidden" : "block"}>
-                <button onClick={onClickLoginHandler} className='bg-[#a39a9a] py-[10px] px-[20px] rounded-[10px]'>Login</button>
-            </li>
-            <li className={!hasToken ? "hidden" : "block"}>
-                <Link to={`/user/${userId}`} className='block bg-[#a39a9a] py-[10px] px-[20px] rounded-[10px]'>My Account</Link>
-            </li>
-            <li className={!hasToken ? "hidden" : "block"}>
-                <button className='bg-[#a39a9a] py-[10px] px-[20px] rounded-[10px]' onClick={(e) => {logoutHandler(e); navigate("/");}} type='submit'>Logout</button>
-            </li>
-        </ul>
-    </nav>
-  )
+    const renderAuthButtons = () => {
+        if (!hasToken) {
+            return (
+                <>
+                    <li className="block">
+                        <button onClick={onClickLoginHandler} className=" w-[4em] h-[1.4em] auth-button text-black font-dm-sans text-xs font-bold uppercase">Login</button>
+                    </li>
+                    <li className="block">
+                        <button onClick={onClickSignUpHandler} className=" w-[4.7em] h-[1.4em] auth-button inline-flex items-center gap-2 px-9 py-4 justify-center bg-black text-white rounded-full">SignUp</button>
+                    </li>
+                </>
+            );
+        } else {
+            return (
+                <>
+                    <li className="block">
+                        <Link to={`/user/${userId}`} className="auth-button">My Account</Link>
+                    </li>
+                    <li className="block">
+                        <button onClick={(e) => { logoutHandler(e); navigate("/"); }} className="auth-button">Logout</button>
+                    </li>
+                </>
+            );
+        }
+    };
+
+    return (
+        <nav className="p-4 flex justify-between items-center padding-container max-container"> 
+            <div className="flex items-center "> 
+                <div className="w-[58px] h-[48px] bg-cover bg-no-repeat " style={{ backgroundImage: `url(${logo})` }}></div>
+                <div className="w-[112px] h-[19px] text-lg font-semibold ml-2 text-black font-dm-sans text-xs font-bold uppercase">Memory Hub</div>
+            </div>
+            <ul className="flex gap-4 items-center">
+                {renderAuthButtons()}
+            </ul>
+        </nav>
+    );
 }
 
-export default NavBar
+export default NavBar;
+
+
+
+
+
+
