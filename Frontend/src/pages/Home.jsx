@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useContext } from 'react';
 import HomePageButtons from '../components/HomePageButtons';
 import image1 from "../assets/image1.jpg";
 import image2 from "../assets/image2.jpg";
@@ -11,8 +10,45 @@ import image7 from "../assets/image7.png";
 import image8 from "../assets/image8.png";
 import image9 from "../assets/image9.png";
 import image10 from "../assets/image10.jpeg";
+//import arrow from "../assets/images/arrow-forward.svg";
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
+import arrow from "../assets/arrow.svg";
+import forward from "../assets/forward.svg";
+import Footer from '../components/Footer';
+
 
 function Home() {
+
+  const navigate = useNavigate();
+  const { hasToken, setShowLoginForm, setIsCreateCardsClicked } = useContext(AuthContext);
+  
+  const onClickHandler = () => {
+    hasToken ? navigate("/createSet") : setShowLoginForm(true);
+    setIsCreateCardsClicked(true);
+  }
+
+  const slideLeft = () => {
+    var slider = document.getElementById('slider');
+    var scroll = document.getElementById('scroll');
+    slider.scrollLeft = slider.scrollLeft - 500;
+    var currentLeft = parseInt(scroll.style.left || 0);
+    var newLeft = Math.max(currentLeft - 300, 0); 
+    var maxLeft = slider.offsetWidth - scroll.offsetWidth; 
+    scroll.style.left = Math.min(newLeft, maxLeft) + 'px'; 
+};
+
+const slideRight = () => {
+  var slider = document.getElementById('slider');
+  var scroll = document.getElementById('scroll');
+  slider.scrollLeft = slider.scrollLeft + 500;
+  var currentLeft = parseInt(scroll.style.left || 0);
+  var newLeft = currentLeft + 300;
+  var container = document.querySelector('.container');
+  var maxLeft = container.offsetWidth - scroll.offsetWidth; 
+  scroll.style.left = Math.min(newLeft, maxLeft) + 'px'; 
+};
+
   return (
     <div className='max-container'>
       <section className='padding-container relative'>
@@ -40,9 +76,6 @@ function Home() {
           <p className=" mt-[80px] text-black font-dm-sans whitespace-nowrap text-[4em]  ">Let us explain how it works!</p>
         </div>
         <div className='flex flex-row justify-center items-center mt-[40%] gap-10'>
-
-
-
         
   <div className="relative w-[432px] h-[560px] ">
     <div style={{ backgroundImage: `url(${image3})` }} className="bg-cover bg-center rounded-lg w-full h-full "></div>
@@ -55,8 +88,6 @@ function Home() {
       </p>
     </div>
   </div>
-
-
 
   <div className="relative w-[432px]">
     <div style={{ backgroundImage: `url(${image4})` }} className="bg-cover bg-center rounded-lg w-full h-[560px]"></div>
@@ -92,7 +123,7 @@ function Home() {
   <div className="flex items-start mt-[10%] ml-[5%]">
     <img src={image7} className="w-[500px] h-[600px] rounded-[8px] mr-4"/>
 
-    <div className="flex flex-col ml-[20%]">
+    <div className="flex flex-col ml-[15%]">
       <p className="text-black font-bold text-[1.7em] font-sans whitespace-nowrap ">Our advantages</p>
       <p className="text-black font-normal text-[4em] font-sans leading-[48px] mt-[15%] " style={{ letterSpacing: '-2px' }}>Efficiency</p>
       <p className="text-black font-normal text-[4em] font-sans leading-[48px] mt-3 " style={{ letterSpacing: '-2px' }}>Flexibility</p>
@@ -115,44 +146,74 @@ function Home() {
   </div>
 </div>
 
-<div className='flex flex-row justify-center items-start gap-4 mt-10 flex-wrap'>
+<div className='flex flex-col items-end  '> 
+<div className='flex justify-center gap-6 mb-4'> 
 <div className="flex flex-col items-start gap-2">
         <img src={image8} className="w-[548px] h-[408px] flex-shrink-0 rounded-[8px] " />
     
-    <p className="text-black font-dm-sans font-bold text-[1.7em] leading-[25.5px]">
+    <p className="text-black font-dm-sans font-bold text-[1.7em] leading-[25.5px] mb-6">
     Anna, University of Chicago student, 23 y.o.
     </p>
-    <p className="text-gray-600 font-dm-sans font-normal text-[1.7em] leading-[25.5px]">
-    Memory Hub is a life-saver when everything I have to know seems<br /> endless. I can focus on one chunk at a time and make real progress,<br /> instead of drowning.
+    <p className="text-gray-600 font-dm-sans font-normal text-[1.7em] leading-[25.5px]  ">
+    Memory Hub is a life-saver when everything I have to know seems endless. I can focus on one chunk at a time and make real progress, instead of drowning.
     </p>
     </div>
     <div className="flex flex-col items-start gap-2">
     <img src={image9} className="w-[548px] h-[408px] flex-shrink-0 rounded-[8px] " />
     
-    <p className="text-black font-dm-sans font-bold text-[1.7em] leading-[25.5px]">
+    <p className="text-black font-dm-sans font-bold text-[1.7em] leading-[25.5px] whitespace-nowrap mb-6">
     Luca, Ludwig Maximilian University of Munich, 21 y.o.
     </p>
     <p className="text-gray-600 font-dm-sans font-normal text-[1.7em] leading-[25.5px]">
-    Memory Hub has truly revolutionized the way I study. The flashcard<br /> system is incredibly intuitive, allowing me to absorb information<br /> efficiently. The variety of subjects covered is impressive, and the<br /> platform's user-friendly interface makes learning enjoyable.
+    Memory Hub has truly revolutionized the way I study. The flashcard system is incredibly intuitive, allowing me to absorb information efficiently. The variety of subjects covered is impressive, and the platform's user-friendly interface makes learning enjoyable.
     </p>
     </div>
     <div className="flex flex-col items-start gap-2">
     <img src={image10} className="w-[548px] h-[408px] flex-shrink-0 rounded-[8px] " />
     
-    <p className="text-black font-dm-sans font-bold text-[1.7em] leading-[25.5px]">
+    <p className="text-black font-dm-sans font-bold text-[1.7em] leading-[25.5px] mb-6">
     Johanna, Heidelberg University, 26 y.o.
     </p>
     <p className="text-gray-600 font-dm-sans font-normal text-[1.7em] leading-[25.5px]">
-    s a student, I can't recommend Memory Hub enough. The flashcard<br /> feature has been instrumental in helping me grasp complex concepts<br /> and retain information effectively.
+    s a student, I can't recommend Memory Hub enough. The flashcard feature has been instrumental in helping me grasp complex concepts and retain information effectively.
     </p>
     </div>
+    </div>  
+    
+    
+<div className='flex w-[20px] h-[20.003px] gap-[32px] justify-end mt-10'>
+    <img src={forward} className='cursor-pointer rotate-180' onClick={slideLeft}  />
+     <img src={forward} className='cursor-pointer' onClick={slideRight}  />
+  </div>
 
+  
+  <div className="mt-[10%] w-[1370px] h-[700px] flex-shrink-0 rounded-[8px] bg-black p-8" style={{ background: 'linear-gradient(180deg, rgba(235,225,139,1) 0%, rgba(238,205,108,1) 47%, rgba(226,159,134,1) 100%)' }}>
+  <p className="text-black font-bold text-[8.8em] leading-[120%] tracking-tighter" style={{ fontFamily: "'DM Sans', sans-serif", letterSpacing: '-2px', fontWeight: 700 }}>
+    Are you ready to turn <br /> learning into fun?
+  </p>
+
+  <button onClick={onClickHandler} className='bg-[#FFF] rounded-[36px] w-60 h-16 flex justify-center items-center flex-shrink-0 text-black font-dm-sans font-bold text-base mt-[7%] gap-3'>
+        CREATE CARDS
+        <svg onClick={() => navigate("/studySets")} className="w-8 h-8 ml-2">
+          <image href={arrow} x="0" y="0" width="100%" height="100%" />
+          <image href={forward} x="0" y="0" width="100%" height="100%" />
+        </svg>
+      </button>
+
+      <p className="text-black  font-semibold font-dm-sans text-[1.7em] leading-relaxed tracking-tight mt-[8%]" >
+       Sign in or register to create your own flashcard set
+</p>
+
+<p className="text-gray-600 mt-4 font-dm font-normal text-[1.7em] leading-relaxed">
+  Create your first flashcard set and experience how easy and fast you can improve your skills.
+</p>
 
 </div>
 
+<div className="w-full bg-gray-400 h-px mt-[7%] mb-[5%]" style={{ maxWidth: '1360px' }}></div>
+</div>
 
-
-
+<Footer/>
 
       </section>
       
