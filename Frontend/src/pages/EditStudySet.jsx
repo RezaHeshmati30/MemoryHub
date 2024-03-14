@@ -8,6 +8,8 @@ import openIcon from "../assets/open.svg";
 import closeIcon from "../assets/close.svg";
 import BackLink from "../components/BackLink";
 import group from "../assets/group.svg";
+import EditBtn from "../components/EditBtn";
+import EditBtns from "../components/EditBtn";
 
 const EditStudySet = () => {
   const { editStudySet, deleteCard } = useContext(StudySetsContext);
@@ -15,6 +17,8 @@ const EditStudySet = () => {
   const { id } = useParams();
   const { userId, user, getUserInfo, hasToken } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [isOpen, setOpen] = useState(false);
+
   const savedStudySet = user?.savedStudySets?.find(
     (studySet) => studySet._id === id
   );
@@ -47,13 +51,15 @@ const EditStudySet = () => {
       navigate("/");
     } else {
       getUserInfo();
-      setFormState((prevFormState) => ({
-        ...prevFormState,
-        topicTitle: savedStudySet?.topic?.title || "",
-        title: savedStudySet?.studySet?.title || "",
-        description: savedStudySet?.studySet?.description || "",
-        cards: cardsInfo,
-      }));
+      if (studySetId !== -1 && savedStudySet && cardsInfo) {
+        setFormState((prevFormState) => ({
+          ...prevFormState,
+          topicTitle: savedStudySet.topic?.title || "",
+          title: savedStudySet.studySet?.title || "",
+          description: savedStudySet.studySet?.description || "",
+          cards: cardsInfo,
+        }));
+      }
     }
   }, [userId]);
 
@@ -78,8 +84,6 @@ const EditStudySet = () => {
       console.log("topic is new. The current topicId is:", topicId);
     }
   };
-
-  console.log("topicId", topicId);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -150,14 +154,17 @@ const EditStudySet = () => {
       console.error("Error deleting card");
     }
   };
-  const [isOpen, setOpen] = useState(false);
 
   const toggleList = () => {
     setOpen(!isOpen);
   };
+ 
+  const setId = savedStudySet?.studySet?._id;
+  console.log("setId", setId);
+  console.log("userId", userId);
 
   return (
-    <div className='max-container padding-container regal-blue flex flex-col'>
+    <div className='max-container padding-container  regal-blue flex flex-col'>
       <BackLink />
       {hasToken && (
         <form
@@ -186,7 +193,9 @@ const EditStudySet = () => {
             </p>
             <div className='container max-h-[78px] min-h-[78px] basis-19/40 border border-solid border-gray-300 rounded-lg bg-white flex-shrink-0 pl-[40px]'>
               <div className='flex items-center'>
-                <div className={`dm-sans-regular w-full py-5 cursor-pointer mt-2 `}>
+                <div
+                  className={`dm-sans-regular w-full py-5 cursor-pointer mt-2 `}
+                >
                   Choose from already created topics
                 </div>
                 {!isOpen ? (
@@ -299,7 +308,6 @@ const EditStudySet = () => {
                           alt='insert image'
                           className='object-cover min-w-24 h-16'
                         />
-                    
                       </label>
                     ) : (
                       <label
@@ -328,25 +336,13 @@ const EditStudySet = () => {
               </div>
             ))}
           <div
-            className='dm-sans-medium hover:underline cursor-pointer flex justify-center py-[40px]'
+            className='dm-sans-medium  hover:underline cursor-pointer flex justify-center py-[40px]'
             onClick={handleAddCard}
           >
             + Add new Card
           </div>
-          <div className='flex flex-col justify-center md:flex-row md:justify-end mx-auto md:mr-0 gap-8'>
-            <button
-              className='flex justify-center md:justify-center  md: items-center  flex-shrink-0 bg-white w-[172px] btn-hover-color h-[56px] p-[8px 16px]  text-black text-xs leading-120 uppercase cursor-pointer rounded-[8px] dm-sans-bold  '
-              type='submit'
-            >
-              delete study set
-            </button>
-            <button
-              className='flex justify-center md:justify-center md: items-center  flex-shrink-0 btn-hover-color  create-btn-color w-[172px] h-[56px] p-[8px 16px]  text-black text-xs leading-120 uppercase cursor-pointer rounded-[8px] dm-sans-bold  '
-              type='submit'
-            >
-              SAVE CHANGES
-            </button>
-          </div>
+          <EditBtns userId={userId} setId={setId} />
+
         </form>
       )}
     </div>

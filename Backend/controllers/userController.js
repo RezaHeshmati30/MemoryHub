@@ -4,46 +4,45 @@ import StudySetModel from "../models/StudySetModel.js";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 import mongoose from "mongoose";
-import { v2 as cloudinary } from 'cloudinary';
+import { v2 as cloudinary } from "cloudinary";
 import "dotenv/config";
-import formidable from 'formidable';
+import formidable from "formidable";
 
 cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET
-  });
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 export const getUserInfo = async (req, res) => {
-    try {
-        if (!req.userId) {
-            return res.status(401).send("Unauthorized"); 
-        }
-        const loggedUser = await UserModel.findById(req.userId).populate({
-          path: 'savedStudySets',
-          populate: [
-            { path: 'topic', model: 'Topic' },
-            { path: 'studySet', model: 'StudySet' },
-            { path: 'cards.card', model: 'Card' }
-          ]
-        });
+  try {
+    if (!req.userId) {
+      return res.status(401).send("Unauthorized");
+    }
+    const loggedUser = await UserModel.findById(req.userId).populate({
+      path: "savedStudySets",
+      populate: [
+        { path: "topic", model: "Topic" },
+        { path: "studySet", model: "StudySet" },
+        { path: "cards.card", model: "Card" },
+      ],
+    });
 
-        if (!loggedUser) {
-            return res.status(404).send("User not found"); 
-        }
-        res.send({
-            firstName: loggedUser.firstName,
-            lastName: loggedUser.lastName,
-            nickName: loggedUser.nickName,
-            _id: loggedUser._id,
-            email: loggedUser.email,
-            photo: loggedUser.photo,
-            savedStudySets: loggedUser.savedStudySets,
-          });
-
-    } catch (error) {
-        console.error("Error retrieving user information:", error);
-        res.status(500).send("Internal Server Error"); 
+    if (!loggedUser) {
+      return res.status(404).send("User not found");
+    }
+    res.send({
+      firstName: loggedUser.firstName,
+      lastName: loggedUser.lastName,
+      nickName: loggedUser.nickName,
+      _id: loggedUser._id,
+      email: loggedUser.email,
+      photo: loggedUser.photo,
+      savedStudySets: loggedUser.savedStudySets,
+    });
+  } catch (error) {
+    console.error("Error retrieving user information:", error);
+    res.status(500).send("Internal Server Error");
   }
 };
 
@@ -116,7 +115,6 @@ export const addStudySetToUser = async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 };
-
 export const deleteSavedStudySet = async (req, res) => {
   const userId = req.params.userId;
   const studySetId = req.params.setId;
@@ -125,27 +123,57 @@ export const deleteSavedStudySet = async (req, res) => {
     const user = await UserModel.findById(userId);
 
     if (!user) {
-      res.status(404).send("User not found");
+      return res.status(404).send("User not found");
     }
 
     const studySetIndex = user.savedStudySets.findIndex(
-      (set) => set._id.toString() === studySetId
+      (set) => set.studySet.toString() === studySetId
     );
 
     if (studySetIndex === -1) {
-      res.status(404).send("Study set not found in saved study sets");
+      return res.status(404).send("Study set not found in saved study sets");
     }
 
     user.savedStudySets.splice(studySetIndex, 1);
 
     await user.save();
 
-    res.status(200).send("Study set deleted successfully");
+    return res.status(200).send("Study set deleted successfully");
   } catch (error) {
-    console.error("Error retrieving user information:", error);
-    res.status(500).send("Internal Server Error");
+    console.error("Error deleting study set:", error);
+    return res.status(500).send("Internal Server Error");
   }
 };
+
+// export const deleteSavedStudySet = async (req, res) => {
+//   const userId = req.params.userId;
+//   const studySetId = req.params.setId;
+
+//   try {
+//     const user = await UserModel.findById(userId);
+
+//     if (!user) {
+//       res.status(404).send("User not found");
+//     }
+
+//     const studySetIndex = user.savedStudySets.findIndex(
+//       (set) => set._id.toString() === studySetId
+//     );
+
+//     if (studySetIndex === -1) {
+//       res.status(404).send("Study set not found in saved study sets");
+//     }
+
+//     user.savedStudySets.splice(studySetIndex, 1);
+
+//     await user.save();
+
+//     res.status(200).send("Study set deleted successfully");
+//   } catch (error) {
+//     console.error("Error retrieving user information:", error);
+//     res.status(500).send("Internal Server Error");
+//   }
+// };
 
 export const updateCardStatus = async (req, res) => {
   const userId = req.params.userId;
@@ -184,84 +212,84 @@ export const updateCardStatus = async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 };
-      export const updateUser = async (req, res) => {
-        const userId = req.params.id;
-        const { email, firstName, lastName } = req.body;
-    
-        if (!mongoose.Types.ObjectId.isValid(userId)) {
-          return res.status(404).send(`No user with id: ${userId}`);
-        }
-    
-        try {
-          let updatedUser = { email, firstName, lastName };   
-          updatedUser = await UserModel.findByIdAndUpdate(userId, updatedUser, { new: true });
-          res.status(200).send(updatedUser);
-        } catch (error) {
-          console.error("Error updating user:", error);
-          res.status(500).send("Internal Server Error");
-        }
-    };
+export const updateUser = async (req, res) => {
+  const userId = req.params.id;
+  const { email, firstName, lastName } = req.body;
 
-      export const updateUserPhoto = async (req, res) => {
-        const userId = req.params.id;
-        const form = formidable({});
-        const [fields, files] = await form.parse(req);
-        let filePath;
-        try {
-           filePath = files?.photo[0]?.filepath;
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    return res.status(404).send(`No user with id: ${userId}`);
+  }
 
-        } catch (err) {
-          console.error(err);
-        }
-        
-        if (!mongoose.Types.ObjectId.isValid(userId)) {
-          return res.status(404).send(`No user with id: ${userId}`);
-        }
-    
-        try {
-          let updatedUser = { };
-          if (filePath) {
-            const result = await cloudinary.uploader.upload(filePath);
-            updatedUser.photo = result.secure_url;
-          }
-    
-          updatedUser = await UserModel.findByIdAndUpdate(userId, updatedUser, { new: true });
-          res.status(200).send(updatedUser);
-        } catch (error) {
-          console.error("Error updating user Photo:", error);
-          res.status(500).send("Internal Server Error");
-        }
-    };
+  try {
+    let updatedUser = { email, firstName, lastName };
+    updatedUser = await UserModel.findByIdAndUpdate(userId, updatedUser, {
+      new: true,
+    });
+    res.status(200).send(updatedUser);
+  } catch (error) {
+    console.error("Error updating user:", error);
+    res.status(500).send("Internal Server Error");
+  }
+};
 
-    export const deleteUserAccount = async (req, res) => {
-      const userId = req.params.id;
-      try {
-        const deletedUser = await UserModel.findByIdAndDelete(userId);
-        res.status(200).send(deletedUser);
-      } catch (error) {
-        console.error("Error deleting user:", error);
-        res.status(500).send("Internal Server Error");
-      }
-  };
-    
+export const updateUserPhoto = async (req, res) => {
+  const userId = req.params.id;
+  const form = formidable({});
+  const [fields, files] = await form.parse(req);
+  let filePath;
+  try {
+    filePath = files?.photo[0]?.filepath;
+  } catch (err) {
+    console.error(err);
+  }
 
-      export const getUserShortData = async (req, res) => {
-        const userId = req.params.id;
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    return res.status(404).send(`No user with id: ${userId}`);
+  }
 
-        try {
-          const user = await UserModel.findById(userId);
-  
-          if (!user) {
-              return res.status(404).send("User not found"); 
-          }
-          res.send({
-              nickName: user.nickName,
-              photo: user.photo
-            });
-  
-      } catch (error) {
-          console.error("Error retrieving user information:", error);
-          res.status(500).send("Internal Server Error"); 
-      }
-      }
+  try {
+    let updatedUser = {};
+    if (filePath) {
+      const result = await cloudinary.uploader.upload(filePath);
+      updatedUser.photo = result.secure_url;
+    }
 
+    updatedUser = await UserModel.findByIdAndUpdate(userId, updatedUser, {
+      new: true,
+    });
+    res.status(200).send(updatedUser);
+  } catch (error) {
+    console.error("Error updating user Photo:", error);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
+export const deleteUserAccount = async (req, res) => {
+  const userId = req.params.id;
+  try {
+    const deletedUser = await UserModel.findByIdAndDelete(userId);
+    res.status(200).send(deletedUser);
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
+export const getUserShortData = async (req, res) => {
+  const userId = req.params.id;
+
+  try {
+    const user = await UserModel.findById(userId);
+
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+    res.send({
+      nickName: user.nickName,
+      photo: user.photo,
+    });
+  } catch (error) {
+    console.error("Error retrieving user information:", error);
+    res.status(500).send("Internal Server Error");
+  }
+};

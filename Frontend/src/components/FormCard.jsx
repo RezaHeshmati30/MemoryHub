@@ -73,7 +73,7 @@ function Card({ removeLine }) {
                   <img
                     src={group}
                     alt='default image'
-                    className='object-cover'
+                    className='object-cover '
                   />
                 </label>
               )}
