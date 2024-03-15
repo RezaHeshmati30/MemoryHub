@@ -21,16 +21,16 @@ const EditBtns = (props) => {
 
   return (
     <div>
-      <div className='flex flex-col justify-center md:flex-row mx-auto md:mr-0 gap-8'>
+      <div className='flex items-center md:flex-row md:justify-end flex-col mx-auto  gap-8'>
         <button
-          className='flex justify-center md:justify-center  items-center  flex-shrink-0 bg-white w-[172px] btn-hover-color h-[56px] p-[8px 16px]  text-black text-xs leading-120 uppercase cursor-pointer rounded-[8px] dm-sans-bold  '
+          className='flex justify-center items-center  bg-white w-[172px] btn-hover-color h-[56px] p-[8px 16px]  text-black text-xs leading-120 uppercase cursor-pointer rounded-[8px] dm-sans-bold  '
           type='button'
           onClick={deleteSavedStudySet}
         >
           delete study set
         </button>
         <button
-          className='flex justify-center md:justify-center md: items-center  flex-shrink-0 btn-hover-color  create-btn-color w-[172px] h-[56px] p-[8px 16px]  text-black text-xs leading-120 uppercase cursor-pointer rounded-[8px] dm-sans-bold  '
+          className='flex justify-center  md: items-center   btn-hover-color  create-btn-color w-[172px] h-[56px] p-[8px 16px]  text-black text-xs leading-120 uppercase cursor-pointer rounded-[8px] dm-sans-bold  '
           type='submit'
         >
           SAVE CHANGES
