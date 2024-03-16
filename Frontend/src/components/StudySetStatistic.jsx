@@ -29,20 +29,20 @@ function StudySetStatistic() {
             <h2
               className={
                 locate.pathname === `/studySet/endPractice/${id}`
-                  ? "block"
+                  ? "block dm-sans-medium text-[2em] mb-6"
                   : "hidden"
               }
             >
               Round: {round}
             </h2>
-            <div className="container px-6 m-auto">
-            <div className="grid grid-cols-4 gap-6 md:grid-cols-8 lg:grid-cols-12">
+            <div className="container px-6">
+            <div className="grid grid-cols-4 gap-20 lg:grid-cols-12">
             <div className='col-span-4'>
                 
             {/* <h2>Topic: {studySet.topicTitle}</h2> */}
             <h3 className='dm-sans-medium text-[2.4em] mb-[20px]'>{studySet.studySet.title}</h3>
             <h3 className='dm-sans-medium text-[2em] mb-[10px]'>Description</h3>
-            <p className='dm-sans-regular text-[1.4em] w-80'>{studySet.studySet.description}</p>
+            <p className='dm-sans-regular text-[1.4em] w-60'>{studySet.studySet.description}</p>
             </div>
             <section className='col-span-4'>
               <h2 className="dm-sans-medium text-[2em]">
@@ -98,7 +98,7 @@ function StudySetStatistic() {
                 <p className="ml-[10px] dm-sans-medium text-[1.4em]">Cards</p>
               </div>
             </section>
-            <div className="col-span-4">
+            <div className="col-span-3 ">
             <StartPracticeButtons edit={studySet?.edit} studySetId={studySet?._id} userId={user?._id}/>
             </div>
             </div>

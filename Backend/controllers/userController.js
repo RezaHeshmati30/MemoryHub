@@ -202,36 +202,45 @@ export const updateCardStatus = async (req, res) => {
         }
     };
 
-      export const updateUserPhoto = async (req, res) => {
-        const userId = req.params.id;
-        const form = formidable({});
-        const [fields, files] = await form.parse(req);
-        let filePath;
-        try {
-           filePath = files?.photo[0]?.filepath;
-
-        } catch (err) {
-          console.error(err);
-        }
-        
-        if (!mongoose.Types.ObjectId.isValid(userId)) {
-          return res.status(404).send(`No user with id: ${userId}`);
-        }
+    export const updateUserPhoto = async (req, res) => {
+      const userId = req.params.id;
+      const form = formidable({});
+      const [fields, files] = await form.parse(req);
+      let photoUrl;
     
-        try {
-          let updatedUser = { };
-          if (filePath) {
-            const result = await cloudinary.uploader.upload(filePath);
-            updatedUser.photo = result.secure_url;
-          }
-    
-          updatedUser = await UserModel.findByIdAndUpdate(userId, updatedUser, { new: true });
-          res.status(200).send(updatedUser);
-        } catch (error) {
-          console.error("Error updating user Photo:", error);
-          res.status(500).send("Internal Server Error");
+      try {
+        // Überprüfen, ob ein Foto hochgeladen wurde
+        if (files.photo) {
+          const filePath = files.photo[0]?.filepath;
+          // Bild mit Cloudinary hochladen
+          const result = await cloudinary.uploader.upload(filePath);
+          // URL des hochgeladenen Bildes erhalten
+          photoUrl = result.secure_url;
+        } else if (fields.photoUrl) {
+          // Wenn kein Foto hochgeladen wurde, aber eine URL im Formularfeld übergeben wurde
+          photoUrl = fields.photoUrl.toString();
         }
-    };
+      } catch (err) {
+        console.error(err);
+      }
+      
+      if (!mongoose.Types.ObjectId.isValid(userId)) {
+        return res.status(404).send(`No user with id: ${userId}`);
+      }
+    
+      try {
+        // Aktualisierten Benutzer mit dem neuen Profilbild erstellen
+        const updatedUser = await UserModel.findByIdAndUpdate(
+          userId,
+          { photo: photoUrl },
+          { new: true }
+        );
+        res.status(200).send(updatedUser);
+      } catch (error) {
+        console.error("Error updating user Photo:", error);
+        res.status(500).send("Internal Server Error");
+      }
+    };    
 
     export const deleteUserAccount = async (req, res) => {
       const userId = req.params.id;

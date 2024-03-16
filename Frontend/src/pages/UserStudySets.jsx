@@ -3,6 +3,7 @@ import { AuthContext } from '../context/AuthContext';
 import { UserStudySetsContext } from '../context/UserStudySetsContext';
 import { useNavigate } from 'react-router-dom';
 import UserStudySetsSearchBar from '../components/UserStudySetsSearchBar';
+import arrow from "../assets/arrow-forward.svg";
 
 
 function UserStudySets() {
@@ -68,23 +69,22 @@ function UserStudySets() {
                             }, {}) || {}
                         ).map(([topicTitle, studySetsUnderTopic]) => (
                             <li className='' key={topicTitle}>
-                                <h3 className='dm-sans-bold text-[2em]'>{topicTitle}</h3>
+                                <h3 className='dm-sans-bold text-[2em] flex items-center'>{topicTitle}
+                                <img src={arrow} alt="arrow" className='w-6 h-6 ml-3 rotate-45'/>
+                                </h3>
                                 <ul className='divide-y divide-slate-100'>
                                     {studySetsUnderTopic.map(studySet => (
-                                        <li key={studySet._id} className='flex items-center justify-between gap-4 px-4 py-3 hover:bg-slate-300'>
-                                            <div onClick={() => onClickHandler(studySet._id, topicTitle)} className='flex items-center justify-between cursor-pointer'>
-
-                                                <div className="flex min-h-[2rem] items-center justify-center gap-0">
-
+                                        <li key={studySet._id} className='group flex items-center justify-between   '>
+                                            <div onClick={() => onClickHandler(studySet._id, topicTitle)} className='flex items-center w-full justify-between cursor-pointer h-full px-4 py-3  group-hover:bg-gradient-to-r from-emerald-400 to-cyan-400 mr-36 rounded-l-lg hover:translate-x-2 transition duration-300'>
                                                     <p className='dm-sans-medium text-[1.7em]'>{studySet.studySet.title}</p>
-                                                </div>
-                                                {/* <p className='dm-sans-medium text-[1.4em]'>GO TO SET</p> */}
+                                                <p className='dm-sans-medium text-[1.4em] flex'>GO TO SET
+                                                <img src={arrow} alt="arrow" className='w-5 h-5 ml-3'/>
+                                                </p>
                                             </div>
-                                            {/* <button onClick={() => handleDeleteStudySet(studySet._id)}>X</button> */}
                                             {studySet?.edit === "no" ? (
-                                                <button onClick={() => handleDeleteStudySet(studySet._id)} className='bg-black text-[1.2em] text-white px-6 py-2 rounded-md'>Delete</button>
+                                                <button onClick={() => handleDeleteStudySet(studySet._id)} className='bg-black text-[1.2em] text-white px-6 py-2 rounded-md hover:bg-white hover:text-black hover:border-black border-2'>Delete</button>
                                             ) : (
-                                                <button onClick={() => onClickEdit(studySet._id)} className='bg-[#a95b5b] text-[1.2em] text-white px-6 py-2 rounded-md'>Edit</button>
+                                                <button onClick={() => onClickEdit(studySet._id)} className='bg-[#a95b5b] text-[1.2em] text-white px-8 py-2 rounded-md hover:bg-white hover:text-black hover:border-[#a95b5b] border-2'>Edit</button>
                                             )}
                                         </li>
                                     ))}

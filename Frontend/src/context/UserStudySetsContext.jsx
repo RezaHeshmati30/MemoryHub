@@ -1,5 +1,6 @@
 import { createContext, useState } from "react";
 import axios from "axios";
+import AlertDismissibleSuccess from "../components/AlertDismissibleSuccess";
 
 const UserStudySetsContext = createContext();
 
@@ -9,8 +10,15 @@ const UserStudySetsContextProvider = ({ children }) => {
   const [currentCard, setCurrentCard] = useState({});
   const [isFlipped, setIsFlipped] = useState(false);
   const [round, setRound] = useState(1);
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [message, setMessage] = useState("");
   // const backendApiUrl = "http://localhost:3001";
   const backendApiUrl = import.meta.env.VITE_SERVER_URL;
+
+  const handleShowAlert = (msg) => {
+    setMessage(msg);
+    setShowSuccessAlert(true);
+  };
 
   const countCardsByStatus = (studySets) => {
     const cardsCount = { mastered: 0, needPractice: 0, notStudied: 0 };
@@ -38,7 +46,8 @@ const UserStudySetsContextProvider = ({ children }) => {
   const deleteSavedStudySet = async (userId, setId) => {
     try {
       await axios.delete(`${backendApiUrl}/user/${userId}/${setId}`);
-      alert("Study set was deleted");
+      // alert("Study set was deleted");
+      handleShowAlert("Study set was deleted");
     } catch (error) {
       console.log("error while logging in:", error);
     }
@@ -104,7 +113,13 @@ const UserStudySetsContextProvider = ({ children }) => {
         round,
         setRound,readImageAsBase64
       }}
-    >
+      >
+      {showSuccessAlert && (
+        <AlertDismissibleSuccess
+          message={message}
+          onClose={() => setShowSuccessAlert(false)} // Set showSuccessAlert to false when alert is closed
+        />
+      )}
       {children}
     </UserStudySetsContext.Provider>
   );

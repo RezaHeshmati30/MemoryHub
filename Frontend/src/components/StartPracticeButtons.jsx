@@ -37,9 +37,9 @@ function StartPracticeButtons({edit, studySetId, userId}) {
         ) : (
             <button onClick={() => onClickEdit(studySetId)} className='bg-[#a95b5b] py-[5px] px-[10px] rounded-[10px]'>Edit study set</button>
         )} */}
-        <button onClick={() => onClickPractice(studySetId)} className='border-solid border-[1px] border-black text-[1.2em] text-black py-[12px] px-[8px] rounded-[8px]'>Start practice</button>
-        <button onClick={() => onClickLearn(studySetId)} className='border-solid border-[1px] border-black text-[1.2em] text-black py-[12px] px-[8px] rounded-[8px]'>Test your knowledge</button>
-        <button onClick={() => onClickWrite(studySetId)} className='border-solid border-[1px] border-black text-[1.2em] text-black py-[12px] px-[8px] rounded-[8px]'>Write mode</button>
+        <button onClick={() => onClickPractice(studySetId)} className='border-solid border-[1px] border-black text-[1.2em] text-black py-[12px] px-[8px] rounded-[8px] hover:bg-black hover:text-white'>Start practice</button>
+        <button onClick={() => onClickLearn(studySetId)} className='border-solid border-[1px] border-black text-[1.2em] text-black py-[12px] px-[8px] rounded-[8px] hover:bg-black hover:text-white'>Test your knowledge</button>
+        <button onClick={() => onClickWrite(studySetId)} className='border-solid border-[1px] border-black text-[1.2em] text-black py-[12px] px-[8px] rounded-[8px] hover:bg-black hover:text-white'>Write mode</button>
     </div>
   )
 }

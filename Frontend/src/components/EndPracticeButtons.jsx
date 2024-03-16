@@ -19,8 +19,8 @@ function EndPracticeButtons() {
 
   return (
     <div className='flex gap-[20px] p-[20px]'>
-        <button className='p-[15px] bg-blue-400 rounded-[8px]' onClick={onClickNextRound}>Next round</button>
-        <button className='p-[15px] bg-blue-400 rounded-[8px]' onClick={onClickFinish}>Finish</button>
+        <button className='mb-10 bg-black text-white px-10 py-3 dm-sans-bold text-[1.2em] rounded-md mt-4 hover:bg-white hover:text-black hover:border-black border-2 ' onClick={onClickNextRound}>Next round</button>
+        <button className='mb-10 bg-black text-white px-10 py-3 dm-sans-bold text-[1.2em] rounded-md mt-4 hover:bg-white hover:text-black hover:border-black border-2 ' onClick={onClickFinish}>Finish</button>
     </div>
   )
 }
