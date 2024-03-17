@@ -26,9 +26,9 @@ function EndPracticeButtons() {
     const btnStyle = "bg-black text-white py-[19px] px-[35px] rounded-[8px] uppercase text-[1.4em] dm-sans-bold border-[1px] border-transparent hover:bg-white hover:text-black hover:border-[1px] hover:border-black"
 
   return (
-    <div className='flex justify-center gap-[32px]'>
-        <button className={btnStyle} onClick={onClickNextRound}>Next round</button>
-        <button className={btnStyle} onClick={onClickFinish}>Finish</button>
+    <div className='flex gap-[20px] p-[20px]'>
+        <button className='mb-10 bg-black text-white px-10 py-3 dm-sans-bold text-[1.2em] rounded-md mt-4 hover:bg-white hover:text-black hover:border-black border-2 ' onClick={onClickNextRound}>Next round</button>
+        <button className='mb-10 bg-black text-white px-10 py-3 dm-sans-bold text-[1.2em] rounded-md mt-4 hover:bg-white hover:text-black hover:border-black border-2 ' onClick={onClickFinish}>Finish</button>
     </div>
   )
 }
