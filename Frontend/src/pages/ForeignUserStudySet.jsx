@@ -3,7 +3,7 @@ import { StudySetsContext } from "../context/StudySetsContext";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext"; 
 
-import "../components/cards.css";
+import "../components/css/cards.css";
 
 
 function ForeignUserStudySet() {

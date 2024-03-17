@@ -3,6 +3,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import { StudySetsContext } from "../context/StudySetsContext";
 import { AuthContext } from "../context/AuthContext";
 import { UserStudySetsContext } from "../context/UserStudySetsContext";
+import trash from "../assets/trash.png";
+import openIcon from "../assets/open.svg";
+import closeIcon from "../assets/close.svg";
+import BackLink from "../components/BackLink";
+import group from "../assets/group.svg";
+import EditBtn from "../components/EditBtn";
+import EditBtns from "../components/EditBtn";
 
 const EditStudySet = () => {
   const { editStudySet, deleteCard } = useContext(StudySetsContext);
@@ -10,6 +17,8 @@ const EditStudySet = () => {
   const { id } = useParams();
   const { userId, user, getUserInfo, hasToken } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [isOpen, setOpen] = useState(false);
+
   const savedStudySet = user?.savedStudySets?.find(
     (studySet) => studySet._id === id
   );
@@ -42,23 +51,26 @@ const EditStudySet = () => {
       navigate("/");
     } else {
       getUserInfo();
-      setFormState((prevFormState) => ({
-        ...prevFormState,
-        topicTitle: savedStudySet?.topic?.title || "",
-        title: savedStudySet?.studySet?.title || "",
-        description: savedStudySet?.studySet?.description || "",
-        cards: cardsInfo,
-      }));
+      if (studySetId !== -1 && savedStudySet && cardsInfo) {
+        setFormState((prevFormState) => ({
+          ...prevFormState,
+          topicTitle: savedStudySet.topic?.title || "",
+          title: savedStudySet.studySet?.title || "",
+          description: savedStudySet.studySet?.description || "",
+          cards: cardsInfo,
+        }));
+      }
     }
   }, [userId]);
 
   const topicHandler = (e) => {
-    const chosenTopic = e.target.value;
+    const chosenTopic = e.target.textContent || e.target.value;
     setUpdatedTopicTitle(chosenTopic);
     setFormState((prevState) => ({
       ...prevState,
       topicTitle: chosenTopic,
     }));
+    setOpen(false);
   };
 
   const topicIdFinder = async () => {
@@ -72,8 +84,10 @@ const EditStudySet = () => {
       console.log("topic is new. The current topicId is:", topicId);
     }
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       topicIdFinder();
       await editStudySet(
@@ -141,96 +155,99 @@ const EditStudySet = () => {
     }
   };
 
+  const toggleList = () => {
+    setOpen(!isOpen);
+  };
+ 
+  const setId = savedStudySet?.studySet?._id;
+
   return (
-    <div className='flex justify-center items-center '>
+    <div className='max-container padding-container  regal-blue flex flex-col'>
+      <BackLink />
       {hasToken && (
         <form
-          className='bg-blue-100 shadow-md rounded px-8 pt-6 pb-8 mb-4'
+          className='flex flex-col justify-center mx-auto md:w-[1128px] my-auto'
           onSubmit={handleSubmit}
         >
-          <div onClick={() => navigate("/user/:id/studySets")}>
-            <svg
-              width='48'
-              height='48'
-              viewBox='0 0 48 48'
-              fill='none'
-              xmlns='http://www.w3.org/2000/svg'
-            >
-              <path
-                d='M29.6598 24.8333H20.3515L24.4182 28.8999C24.7432 29.2249 24.7432 29.7583 24.4182 30.0833C24.0932 30.4083 23.5682 30.4083 23.2432 30.0833L17.7515 24.5916C17.4265 24.2666 17.4265 23.7416 17.7515 23.4166L23.2348 17.9166C23.3905 17.7605 23.6019 17.6729 23.8223 17.6729C24.0428 17.6729 24.2541 17.7605 24.4098 17.9166C24.7348 18.2416 24.7348 18.7666 24.4098 19.0916L20.3515 23.1666H29.6598C30.1182 23.1666 30.4932 23.5416 30.4932 23.9999C30.4932 24.4583 30.1182 24.8333 29.6598 24.8333Z'
-                fill='black'
-              />
-            </svg>
-            BACK
-          </div>
-          <h2 className='text-center text-lg font-bold mb-4'>Edit Study Set</h2>
-          <div className='mb-4'>
-            <label
-              className='block text-gray-700 text-sm font-bold mb-2'
-              htmlFor='topicTitle'
-            >
-              Topic
-              <input
-                type='text'
-                name='topicTitle'
-                value={formState.topicTitle}
-                onChange={topicHandler}
-              />
-            </label>
-            <label
-              className='block text-gray-700 text-sm font-bold mb-2'
-              htmlFor='topicDropdown'
-            >
-              Select Topic
-              <select
-                id='topicDropdown'
-                name='topicDropdown'
-                onChange={topicHandler}
-                className='border border-gray-400 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-              >
-                <option>Select Topic</option>
-                {[
-                  ...new Set(
-                    user?.savedStudySets?.map(
-                      (studySet) => studySet.topic?.title
-                    )
-                  ),
-                ].map((topicTitle) => (
-                  <option key={topicTitle} value={topicTitle}>
-                    {topicTitle}
-                  </option>
-                ))}
-              </select>
-            </label>
-          </div>
-          <div className='mb-4'>
-            <label
-              className='block text-gray-700 text-sm font-bold mb-2'
-              htmlFor='title'
-            >
-              Title
-            </label>
+          <h2 className='dm-sans-medium mb-6 text-[20px]'>Edit Study Set</h2>
+          <div className='container flex md:flex-row flex-col justify-between md:mb-6 mb-9 items-center'>
             <input
-              className='shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-              id='title'
+              className='container min-h-[78px] basis-19/40 border border-solid border-gray-300 rounded-lg bg-white pl-[40px]'
+              placeholder='Create your own topic*'
               type='text'
-              placeholder='Enter title'
-              name='title'
-              value={formState.title}
-              onChange={handleChange}
+              name='topicTitle'
+              value={formState.topicTitle}
+              onChange={topicHandler}
             />
+            <div className='container flex justify-between items-center md:hidden'>
+              <div className='w-auto border-b-2 line-color block basis-3/6'></div>
+              <p className='md:basis-1/20 leading-150 dm-sans-regular text-center basis-1/6'>
+                or
+              </p>
+              <div className='w-auto border-b-2 block basis-3/6'></div>
+            </div>
+            <p className='basis-1/20 leading-150 dm-sans-regular text-center hidden md:block'>
+              or
+            </p>
+            <div className='container max-h-[78px] min-h-[78px] basis-19/40 border border-solid border-gray-300 rounded-lg bg-white flex-shrink-0 pl-[40px]'>
+              <div className='flex items-center'>
+                <div
+                  className={`dm-sans-regular w-full py-5 cursor-pointer mt-1 `}
+                >
+                  Choose from already created topics
+                </div>
+                {!isOpen ? (
+                  <img
+                    src={openIcon}
+                    alt='click to hide options'
+                    onClick={toggleList}
+                    className='cursor-pointer mx-5 mt-2'
+                  />
+                ) : (
+                  <img
+                    src={closeIcon}
+                    alt='click to show options'
+                    onClick={toggleList}
+                    className='cursor-pointer mx-5 mt-2 '
+                  />
+                )}
+              </div>
+              {isOpen && (
+                <ul className='dm-sans-regular w-full bg-transparent relative mt-1 border  border-gray-300 overflow-y-auto max-h-80 custom-scrollbar rounded-md'>
+                  {[
+                    ...new Set(
+                      user?.savedStudySets?.map(
+                        (studySet) => studySet.topic?.title
+                      )
+                    ),
+                  ].map((topicTitle) => (
+                    <li
+                      key={topicTitle}
+                      value={topicTitle}
+                      onClick={topicHandler}
+                      className='cursor-pointer dm-sans-regular px-4 py-2 hover:bg-gray-100 bg-white'
+                    >
+                      {topicTitle}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
           </div>
+          <input
+            className='container h-[78px] mb-6 border border-solid border-gray-300 rounded-lg bg-white  flex-shrink-0 pl-[40px] '
+            id='title'
+            type='text'
+            placeholder='Add Title*'
+            name='title'
+            value={formState.title}
+            onChange={handleChange}
+          />
           <div className='mb-6'>
-            <label
-              className='block text-gray-700 text-sm font-bold mb-2'
-              htmlFor='description'
-            >
-              Description
-            </label>
             <textarea
-              className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+              className='container h-[190px] mb-6 flex-shrink-0 border border-solid border-gray-300 rounded-lg bg-white pl-[40px] pt-[24px]'
               id='description'
-              placeholder='Enter description'
+              placeholder='Add description*'
               name='description'
               value={formState.description}
               onChange={handleChange}
@@ -240,60 +257,73 @@ const EditStudySet = () => {
             formState.cards.map((card, index) => (
               <div
                 key={index}
-                className='flex flex-wrap justify-between mb-4 relative'
+                className='container flex flex-col border border-solid border-gray-300 rounded-lg bg-white mb-6 '
               >
-                <div className='w-full sm:w-1/2 md:w-1/3 mb-4 px-2'>
-                  <label
-                    className='block text-gray-700 text-sm font-bold mb-2'
-                    htmlFor={`question${index + 1}`}
-                  >
-                    Question {index + 1}
-                  </label>
-                  <input
-                    className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                    id={`question${index + 1}`}
-                    type='text'
-                    placeholder={`Enter question ${index + 1}`}
-                    name={`question${index + 1}`}
-                    value={card.question}
-                    onChange={(e) =>
-                      handleCardChange(index, "question", e.target.value)
-                    }
+                <div className='flex justify-between items-center pt-5 pb-1 border-b-2'>
+                  <p className='dm-sans-bold text-[20px] pl-10'>{index + 1}</p>
+                  <img
+                    src={trash}
+                    className='pr-10'
+                    alt='trashcan'
+                    onClick={() => handleRemoveCard(card.id)}
                   />
                 </div>
-                <div className='w-full sm:w-1/2 md:w-1/3 mb-4 px-2'>
-                  <label
-                    className='block text-gray-700 text-sm font-bold mb-2'
-                    htmlFor={`answer${index + 1}`}
-                  >
-                    Answer {index + 1}
-                  </label>
-                  <input
-                    className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                    id={`answer${index}`}
-                    type='text'
-                    placeholder={`Enter answer ${index + 1}`}
-                    name={`answer${index + 1}`}
-                    value={card.answer}
-                    onChange={(e) =>
-                      handleCardChange(index, "answer", e.target.value)
-                    }
-                  />
-                </div>
-                <div className='w-full sm:w-1/2 md:w-1/3 mb-4 px-2'>
-                  <label
-                    className='block text-gray-700 text-sm font-bold mb-2'
-                    htmlFor={`image${index}`}
-                  >
-                    Image {index + 1}
-                  </label>
-                  <div className='flex gap-[10px]'>
-                    <img className='w-[40px]' src={card.image} alt='' />
+                <div className='flex md:flex-row flex-col justify-evenly px-10 gap-9 py-5'>
+                  <div className='border-b-2 basis-2/6'>
+                    <textarea
+                      className='w-full h-[100px] custom-scrollbar'
+                      id={`question${index}`}
+                      type='text'
+                      placeholder={`Write your Question*`}
+                      name={`question${index}`}
+                      value={card.question}
+                      onChange={(e) =>
+                        handleCardChange(index, "question", e.target.value)
+                      }
+                    />
+                  </div>
+                  <div className='border-b-2 basis-2/6 '>
+                    <textarea
+                      className='w-full h-[100px] custom-scrollbar basis-2/6'
+                      id={`answer${index}`}
+                      type='text'
+                      placeholder={`Write your Answer*`}
+                      name={`answer${index}`}
+                      value={card.answer}
+                      onChange={(e) =>
+                        handleCardChange(index, "answer", e.target.value)
+                      }
+                    />
+                  </div>
+                  <div className='min-w-24 h-16 flex justify-center items-center outline-dashed outline-2 outline-offset-1 mx-auto my-auto'>
+                    {card.image ? (
+                      <label
+                        htmlFor={`image${index}`}
+                        className='cursor-pointer '
+                      >
+                        <img
+                          src={card.image}
+                          alt='insert image'
+                          className='object-cover min-w-24 h-16'
+                        />
+                      </label>
+                    ) : (
+                      <label
+                        htmlFor={`image${index}`}
+                        className='cursor-pointer'
+                      >
+                        <img
+                          src={group}
+                          alt='default image'
+                          className='object-cover'
+                        />
+                      </label>
+                    )}
                     <input
-                      className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                      id={`image${index}`}
                       type='file'
+                      id={`image${index}`}
                       accept='image/*'
+                      className='hidden '
                       name={`image${index}`}
                       onChange={(e) =>
                         handleFileUpload(e.target.files[0], index)
@@ -301,31 +331,16 @@ const EditStudySet = () => {
                     />
                   </div>
                 </div>
-                <div className='w-full sm:w-1/2 md:w-1/3 mb-4 px-2'></div>
-                <button
-                  className='absolute right-0 top-0 mt-2 mr-2 text-red-600 hover:text-red-700 focus:outline-none'
-                  type='button'
-                  onClick={() => handleRemoveCard(card.id)}
-                >
-                  X
-                </button>
               </div>
             ))}
-          <div className='flex justify-between'>
-            <button
-              className='bg-blue-900 hover:shadow-md cursor-pointer text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
-              type='button'
-              onClick={handleAddCard}
-            >
-              Add new Card
-            </button>
-            <button
-              className='bg-green-500 hover:bg-green-700 text-white font-bold py-4 px-8 rounded-lg focus:outline-none focus:shadow-outline'
-              type='submit'
-            >
-              Save Set
-            </button>
+          <div
+            className='dm-sans-medium  hover:underline cursor-pointer flex justify-center py-[40px]'
+            onClick={handleAddCard}
+          >
+            + Add new Card
           </div>
+          <EditBtns userId={userId} setId={setId} />
+
         </form>
       )}
     </div>

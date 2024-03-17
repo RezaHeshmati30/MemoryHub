@@ -35,10 +35,12 @@ const UserStudySetsContextProvider = ({ children }) => {
     return cardsCount;
   };
 
+  
   const deleteSavedStudySet = async (userId, setId) => {
     try {
+      console.log("userId and setId received to axios", userId, setId);
       await axios.delete(`${backendApiUrl}/user/${userId}/${setId}`);
-      alert("Study set was deleted");
+       alert("Study set was deleted");
     } catch (error) {
       console.log("error while logging in:", error);
     }

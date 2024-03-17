@@ -2,9 +2,10 @@ import React, { useContext, useEffect, useState } from "react";
 import { StudySetsContext } from "../context/StudySetsContext";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext"; 
+import BackLink from "../components/BackLink";
 import arrow from "../assets/images/arrow-forward.svg";
-import "./cards.css";
-import BackLink from "./BackLink";
+
+import "./css/cards.css";
 
 function Cards() {
   const [isFlipped, setIsFlipped] = useState(false);
