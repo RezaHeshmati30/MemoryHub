@@ -72,14 +72,6 @@ function Cards() {
     setIsFlipped(!isFlipped);
   };
 
-  function getRandomNumber() {
-    return Math.floor(Math.random() * 6) + 1; // Returns a random integer between 1 and 6 (inclusive)
-}
-  const randomNumber = getRandomNumber();
-
-  
-  console.log("randombg:", randomNumber)
-
   return (
     <div>
       <section className='max-container padding-container'>

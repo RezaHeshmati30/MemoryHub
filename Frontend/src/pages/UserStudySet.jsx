@@ -23,11 +23,11 @@ function UserStudySet() {
   return (
     <>
     {hasToken && (
-    <section className='p-[30px] flex flex-col gap-[20px]'>
+    <section className='p-[30px] flex gap-[20px]'>
             {studySet && (
               <>
                     <StudySetStatistic />
-                    <StartPracticeButtons edit={studySet?.edit} studySetId={studySet?._id} userId={user?._id}/>
+                    {/* <StartPracticeButtons edit={studySet?.edit} studySetId={studySet?._id} userId={user?._id}/> */}
                 </>
             )}
         </section>
