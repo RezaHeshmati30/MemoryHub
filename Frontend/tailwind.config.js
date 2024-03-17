@@ -3,6 +3,10 @@ export default {
   content: ["./src/**/*.{html,js,ts,jsx,tsx}"],
   theme: {
     extend: {
+       flexBasis: {
+        "19/40": "47.5%",
+        "1/20" : "5%",
+      },
       animation: {
         rotate: 'rotate 10s linear infinite',
       },
@@ -13,8 +17,9 @@ export default {
         '100%': { transform: 'rotate(-360deg) scale(10)' },
       },
       },
-
   },
-  plugins: [],
+  plugins: [
+    require('tailwind-scrollbar-hide'),
+  ],
 }
 

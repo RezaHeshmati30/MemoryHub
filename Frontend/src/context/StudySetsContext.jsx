@@ -5,6 +5,7 @@ const StudySetsContext = createContext();
 
 const StudySetsContextProvider = ({ children }) => {
   const [moduleData, setModuleData] = useState({});
+  const [modulesData, setModulesData] = useState([]);
   const [studySetId, setStudySetId] = useState("");
   const [topicId, setTopicId] = useState("");
   const [question, setQuestion] = useState([]);
@@ -15,16 +16,29 @@ const StudySetsContextProvider = ({ children }) => {
   const [studyData, setStudyData] = useState([]);
   const [userStudySets, setUserStudySets] = useState({});
   const [userShortData, setUserShortData] = useState({});
-  const moduleId = "65cf67756f6a0e0ef199b5ca";
+  
 
   // const backendApiUrl = "http://localhost:3001";
   const backendApiUrl = import.meta.env.VITE_SERVER_URL;
 
-  const getModuleData = async () => {
+  const getModulesData = async () => {
+    const response = await axios.get(`${backendApiUrl}/modules`);
+    console.log(response.data);
+    setModulesData(response.data);
+  };
+
+
+  const getModuleData = async (moduleId) => {
+  try {
+    console.log(moduleId)
     const response = await axios.get(`${backendApiUrl}/modules/${moduleId}`);
     console.log(response.data);
     setModuleData(response.data);
-  };
+  } catch (error) {
+    console.error('Error fetching module data:', error);
+  }
+};
+
 
   const getStudyData = async () => {
     const response = await axios.get(`${backendApiUrl}/topics`);
@@ -194,6 +208,8 @@ const StudySetsContextProvider = ({ children }) => {
         getUserShortData,
         editStudySet,
         deleteCard,
+        getModulesData,
+        modulesData, setModulesData,
       }}
     >
       {children}

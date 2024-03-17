@@ -12,6 +12,11 @@ const UserStudySetsContextProvider = ({ children }) => {
   const [round, setRound] = useState(1);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const [message, setMessage] = useState("");
+  const [isRoundFinished, setIsRoundFinished] = useState(false);
+  const [correctAnswers, setCorrectAnswers] = useState(0);
+  const [wrongAnswers, setWrongAnswers] = useState(0);
+  const [progress, setProgress] = useState(0);
+
   // const backendApiUrl = "http://localhost:3001";
   const backendApiUrl = import.meta.env.VITE_SERVER_URL;
 
@@ -43,8 +48,10 @@ const UserStudySetsContextProvider = ({ children }) => {
     return cardsCount;
   };
 
+  
   const deleteSavedStudySet = async (userId, setId) => {
     try {
+      console.log("userId and setId received to axios", userId, setId);
       await axios.delete(`${backendApiUrl}/user/${userId}/${setId}`);
       // alert("Study set was deleted");
       handleShowAlert("Study set was deleted");
@@ -111,7 +118,11 @@ const UserStudySetsContextProvider = ({ children }) => {
         handleNextCard,
         handlePreviousCard,
         round,
-        setRound,readImageAsBase64
+        setRound,readImageAsBase64,
+        isRoundFinished, setIsRoundFinished,
+        correctAnswers, setCorrectAnswers,
+        wrongAnswers, setWrongAnswers,
+        progress, setProgress
       }}
       >
       {showSuccessAlert && (
