@@ -21,6 +21,11 @@ body {
   font-size: 10px;
 }
 
+body, .max-container {
+  overflow-x: hidden;
+}
+
+
 ul {
   list-style: none;
 }
@@ -74,6 +79,7 @@ ul {
     font-weight: 700;
     font-style: normal;
 }
+
 
 .set-box-shadow {
   box-shadow: 0px 1px 0px 0px #B3AEAE;
@@ -178,4 +184,7 @@ ul {
  .btn-hover-color:hover {
   border: 2px solid #BCC0C1; 
  }
+
+
+
 
