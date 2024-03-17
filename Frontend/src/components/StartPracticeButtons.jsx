@@ -14,7 +14,7 @@ function StartPracticeButtons({edit, studySetId, userId}) {
 
     const onClickPractice = (setId) => {
         setStudySetId(studySetId);
-        navigate(`/studySet/practice/${setId}`);
+        navigate(`/user/${userId}/studySet/practice/${setId}`);
     }
 
     const onClickDelete = () => {

@@ -20,9 +20,6 @@ function UserStudySets() {
         }
     }, []);
 
-    // useEffect(() => {
-    //     getUserInfo();
-    // }, [savedStudySets])
 
     const userId = user?._id;
 
