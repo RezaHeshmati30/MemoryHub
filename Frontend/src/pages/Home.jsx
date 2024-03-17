@@ -1,4 +1,3 @@
-
 import React, { useContext } from "react";
 import HomePageButtons from "../components/HomePageButtons";
 import image1 from "../assets/image1.jpg";
@@ -25,15 +24,9 @@ function Home() {
     setIsCreateCardsClicked(true);
   };
 
-  
-
   return (
     <div className='max-container'>
-      
       <section className='padding-container relative'>
-      
-      
-
         <img
           src={image1}
           className='w-[1440px] h-[695px] flex-shrink-0 brightness-50'
@@ -44,8 +37,8 @@ function Home() {
           with our free
           <br />
           flashcard platform!
-          <div className='absolute text-black font-dm-sans font-normal text-xl leading-normal tracking-wide  pt-8'>
-            <p className=' text-base font-normal leading-normal text-white font-dm-sans text-xl'>
+          <div className='absolute font-dm-sans font-normal text-xl leading-normal tracking-wide  pt-8'>
+            <p className=' tfont-normal leading-normal text-white font-dm-sans text-xl'>
               Make studying fun,fast and super effective with
               <br /> our intelligent flashcards feature. Create your
               <br /> own or search for what you need in our extensive
@@ -55,7 +48,7 @@ function Home() {
           </div>
         </div>
         <div className='absolute mt-16 left-20 w-[78em] h-[14.4em]'>
-          <p className='text-black font-dm-sans text-xl text-2xl md:text-3xl'>
+          <p className='text-black font-dm-sans text-xl  md:text-3xl'>
             We see it as our responsibility to provide all
             <br /> students with the confidence and tools they
             <br /> need to achieve their goals.
@@ -233,10 +226,7 @@ function Home() {
               className='bg-[#FFF] rounded-[36px] w-60 h-16 flex justify-center items-center flex-shrink-0 text-black font-dm-sans font-bold text-base mt-[7%] gap-3'
             >
               CREATE CARDS
-              <svg
-                onClick={() => navigate("/")}
-                className='w-8 h-8 ml-2'
-              >
+              <svg onClick={() => navigate("/")} className='w-8 h-8 ml-2'>
                 <image href={arrow} x='0' y='0' width='100%' height='100%' />
                 <image href={forward} x='0' y='0' width='100%' height='100%' />
               </svg>
@@ -265,48 +255,3 @@ function Home() {
 }
 
 export default Home;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

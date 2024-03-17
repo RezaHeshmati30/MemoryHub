@@ -9,7 +9,7 @@ function Footer() {
   };
 
   return (
-    <div >
+    <div className='relative'>
       <div className="flex items-center "> 
         <div className="w-[58px] h-[48px] bg-cover bg-no-repeat " style={{ backgroundImage: `url(${logo})` }}></div>
         <div className="w-[112px] h-[19px] text-lg font-semibold ml-2 text-black font-dm-sans text-xs font-bold uppercase">Memory Hub</div>
@@ -65,7 +65,7 @@ function Footer() {
       <div className=" mt-4 text-black font-normal text-[1.4em] leading-6">
         Copyright © Memory Hub 2024
       </div>
-      <div  className="bg-[#FFC2FF] w-full h-[8px] mt-10  " />
+      <div  className="bg-[#FFC2FF]  w-full h-[8px] mt-10  " />
 
     </div>
   )

@@ -121,10 +121,10 @@ function Practice() {
                       isFlipped ? "flipped" : ""
                     } w-[60vw] h-[50vh]`}
                   >
-                    <div className="flip-content">
+                    <div className="flip-content text-center pt-10 gap-5">
                       <strong>Question</strong>
                       <p>{currentCard?.card?.question}</p>
-                      <img src={currentCard?.card?.image} alt="" />
+                      <img src={currentCard?.card?.image} alt="" className="w-[200px] h-auto mx-auto"/>
                     </div>
                     <div className="flip-content">
                       <strong>Answer</strong>

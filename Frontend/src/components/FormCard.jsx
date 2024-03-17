@@ -65,7 +65,7 @@ function Card({ removeLine }) {
                   <img
                     src={line.image}
                     alt='insert image'
-                    className='object-cover'
+                    className='object-cover min-w-24 h-16'
                   />
                 </label>
               ) : (

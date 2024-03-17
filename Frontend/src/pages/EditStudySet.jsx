@@ -4,11 +4,10 @@ import { StudySetsContext } from "../context/StudySetsContext";
 import { AuthContext } from "../context/AuthContext";
 import { UserStudySetsContext } from "../context/UserStudySetsContext";
 import trash from "../assets/trash.png";
-import openIcon from "../assets/open.svg";
-import closeIcon from "../assets/close.svg";
+import openIcon from "../assets/openForm.svg";
+import closeIcon from "../assets/closeForm.png";
 import BackLink from "../components/BackLink";
 import group from "../assets/group.svg";
-import EditBtn from "../components/EditBtn";
 import EditBtns from "../components/EditBtn";
 
 const EditStudySet = () => {
@@ -145,20 +144,24 @@ const EditStudySet = () => {
     });
   };
 
-  const handleRemoveCard = async (cardId) => {
-    const success = await deleteCard(userId, studySetId, cardId);
-    getUserInfo();
-    if (success) {
+  const handleRemoveCard = (cardId) => {
+    deleteCard(userId, studySetId, cardId);
+    if (studySetId !== -1 && savedStudySet && cardsInfo) {
+      setFormState((prevFormState) => ({
+        ...prevFormState,
+        topicTitle: savedStudySet.topic?.title || "",
+        title: savedStudySet.studySet?.title || "",
+        description: savedStudySet.studySet?.description || "",
+        cards: cardsInfo,
+      }));
       console.log("Card deleted successfully");
-    } else {
-      console.error("Error deleting card");
     }
   };
-
+  
   const toggleList = () => {
     setOpen(!isOpen);
   };
- 
+
   const setId = savedStudySet?.studySet?._id;
 
   return (
@@ -263,7 +266,7 @@ const EditStudySet = () => {
                   <p className='dm-sans-bold text-[20px] pl-10'>{index + 1}</p>
                   <img
                     src={trash}
-                    className='pr-10'
+                    className='pr-10 cursor-pointer'
                     alt='trashcan'
                     onClick={() => handleRemoveCard(card.id)}
                   />
@@ -340,7 +343,6 @@ const EditStudySet = () => {
             + Add new Card
           </div>
           <EditBtns userId={userId} setId={setId} />
-
         </form>
       )}
     </div>
