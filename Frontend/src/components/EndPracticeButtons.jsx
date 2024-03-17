@@ -6,10 +6,13 @@ import { AuthContext } from '../context/AuthContext';
 function EndPracticeButtons() {
     const {id} = useParams();
     const navigate = useNavigate();
-    const {setRound, setIsRoundFinished, setCurrentIndex} = useContext(UserStudySetsContext);
+    const {setRound, setIsRoundFinished, setCurrentIndex, setCorrectAnswers, setWrongAnswers, setProgress} = useContext(UserStudySetsContext);
     const {userId} = useContext(AuthContext);
 
     const onClickNextRound = () => {
+        setCorrectAnswers(0);
+        setWrongAnswers(0); 
+        setProgress(0);
         setIsRoundFinished(false);
         setCurrentIndex(0);
         setRound(prev => prev + 1);

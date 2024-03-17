@@ -5,7 +5,7 @@ import { AuthContext } from '../context/AuthContext';
 import close from "../assets/close.svg"
 import EndPracticeButtons from '../components/EndPracticeButtons'
 
-function FinishPracticeWindow({correctAnswers, progress}) {
+function FinishLearnWindow() {
     const {countCardsByStatus, round} = useContext(UserStudySetsContext);
     const {getUserInfo, user} = useContext(AuthContext);
     const {setRound, isRoundFinished} = useContext(UserStudySetsContext);
@@ -35,8 +35,8 @@ function FinishPracticeWindow({correctAnswers, progress}) {
                             <h2 className='text-[3.2em]'>Finish</h2>
                             <img onClick={onClickFinish} className='cursor-pointer' src={close} alt="finish" />
                         </div>
-                        <h3 className={"block text-[2em] dm-sans-medium mb-[34px]"}>Number of rounds: {round}</h3>
-                        <div className={`${locate.pathname === `/studySet/practice/${id}` ? "flex" : "hidden"} text-[1.7em] mb-[56px] flex-col gap-[27px]`}>
+                        <h3 className={locate.pathname === `/studySet/endPractice/${id}` ? "block text-[2em] dm-sans-medium mb-[34px]" : "hidden"}>Number of rounds: {round}</h3>
+                        <div className='text-[1.7em] mb-[56px] flex flex-col gap-[27px]'>
                             <div className='flex justify-between'>
                                 <p>Mastered</p>
                                 <p>{cardsCount.mastered} cards</p>
@@ -48,12 +48,9 @@ function FinishPracticeWindow({correctAnswers, progress}) {
                             <div className='flex justify-between'>
                                 <p>Not studied</p>
                                 <p>{cardsCount.notStudied} cards</p> 
-                            </div>  
+                            </div>
+                             
                         </div>   
-                        <div className={`${locate.pathname !== `/studySet/endPractice/${id}` ? "flex flex-col" : "hidden"} text-[1.7em] gap-[27px] mb-[56px]`}>
-                            <p>You answered {correctAnswers} out of {studySet?.cards?.length} {correctAnswers > 1 ? "questions" : "question"} correctly</p>
-                            <p>Your progress: {progress}%</p>
-                        </div>
                            <EndPracticeButtons />
                     </div>
                 )}
@@ -61,4 +58,4 @@ function FinishPracticeWindow({correctAnswers, progress}) {
     )
 }
 
-export default FinishPracticeWindow
+export default FinishLearnWindow

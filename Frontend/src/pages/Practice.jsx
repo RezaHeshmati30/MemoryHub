@@ -17,7 +17,8 @@ function Practice() {
     handlePreviousCard,
     setCurrentIndex,
     isRoundFinished,
-    setIsRoundFinished
+    setIsRoundFinished,
+    setRound
   } = useContext(UserStudySetsContext);
   const { hasToken, getUserInfo, user } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -33,6 +34,7 @@ function Practice() {
     async function fetchData() {
       await getUserInfo();
       setCurrentIndex(0);
+      setRound(1);
       setIsRoundFinished(false);
       setLoading(false); // Set loading to false once user data is fetched
     }
