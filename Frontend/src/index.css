@@ -181,10 +181,15 @@ ul {
 .line-color{
   background: #BCC0C1
 }
- .btn-hover-color:hover {
+
+.btn-hover-color:hover {
   border: 2px solid #BCC0C1; 
  }
 
-
+#statusFilter {
+  background: url(./assets/images/card-select.svg) no-repeat right;
+  -webkit-appearance: none;
+  background-position-x: 160px;
+}
 
 
