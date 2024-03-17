@@ -1,4 +1,4 @@
-import React, { useContext, useEffect,useState, useRef, } from "react";
+import React, { useContext, useEffect,useState, useRef } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import UserStatistic from "../components/UserStatistic";
@@ -74,7 +74,7 @@ function UserProfile() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown)
     }
-  })
+  },[])
   return (
     <>
     {hasToken && (
