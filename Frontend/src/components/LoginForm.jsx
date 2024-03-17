@@ -37,7 +37,7 @@ function LoginForm() {
     }
       <div className="w-full flex justify-between items-center px-6  ">
       
-        <h2 className='text-black font-normal font-sans text-[3.2em]'>Log In</h2>
+        <h2 className='text-black font-normal font-sans text-[3em]'>Log In</h2>
         <button onClick={onClickCloseHandler} className="w-[28px] h-[28px]">
           <img src={close} />
         </button>
@@ -49,17 +49,17 @@ function LoginForm() {
       
   
       <form onSubmit={loginHandler} className='flex flex-col items-start gap-4 mt-4' style={{ width: '434px' }}>
-        <label htmlFor="email" className="text-black font-sans text-base font-normal" style={{ fontFamily: '"DM Sans"', fontSize: '14px' }}>Email or phone number</label>
-        <input className='w-full h-12 rounded-lg font-sans border border-gray-200 bg-white text-[1.4em]' onChange={(e) => setEmailLogin(e.target.value)} type="email" name="email" value={emailLogin} style={{ height: '48px' }} />
+        <label htmlFor="email" className="text-black font-sans text-base font-normal text-[1.4em]" >Email or phone number</label>
+        <input className='w-full h-12 rounded-lg font-sans border border-gray-200 bg-white text-[1.em] ' onChange={(e) => setEmailLogin(e.target.value)} type="email" name="email" value={emailLogin} style={{ height: '48px' }} />
 
 
-        <label htmlFor="password" className="text-black font-sans text-base font-normal" style={{ fontFamily: '"DM Sans"', fontSize: '14px' }}>Password</label>
+        <label htmlFor="password" className="text-black font-sans text-base font-normal text-[1.4em]" >Password</label>
         <input className='w-full h-12 font-sans text-[1.4em]  rounded-lg border border-gray-200 bg-white' onChange={(e) => setPasswordLogin(e.target.value)} type="password" name="password" value={passwordLogin} style={{ height: '48px' }} />
 
 
-        <button className='w-full h-14 rounded-lg bg-black text-white text-[1.4em]' type="submit" style={{ height: '56px' }}>LOG IN</button>
-        <p className='text-black font-sans' style={{ fontSize: '14px' }}>Don’t have an account?</p>
-        <button onClick={onClickHandler} className='w-full h-14 rounded-lg bg-black text-white text-[1.4em]' type="button" style={{ height: '56px' }}>SIGN UP</button>
+        <button className='w-full h-14 rounded-lg bg-black text-white text-[1em]' type="submit" >LOG IN</button>
+        <p className='text-black font-sans'>Don’t have an account?</p>
+        <button onClick={onClickHandler} className='w-full h-14 rounded-lg bg-black text-white text-[1.]' type="button" >SIGN UP</button>
       </form>
     </div>
     </div>

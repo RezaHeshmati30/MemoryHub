@@ -18,47 +18,58 @@ function SignUpForm() {
     }
 
     return (
-      <div className='max-container mx-auto ' >
-        <div className={`${showSignUpForm && !hasToken ? "flex" : "hidden"} fixed top-[20%] right-0 left-0 z-50 mx-auto flex-col justify-center items-center w-[482px] h-[606px]  rounded-[8px] border-2  bg-white`}>
+      <div className='max-container  ' >
+        <div className={`${showSignUpForm && !hasToken ? "flex" : "hidden"} fixed top-[15%] right-0 left-0 z-50 mx-auto flex-col justify-center items-center w-[482px] h-[650px]  rounded-[8px] border-2  bg-white`}>
 
-        <div className="w-full flex justify-between items-center px-6 ">
-          <h2 className='text-black font-sans text-[3.2em] leading-normal'>Sign up</h2>
+        <div className="w-full flex justify-between items-center px-6 mt-[] ">
+          <h2 className='text-black font-sans text-[3em] leading-normal '>Sign up</h2>
           <button onClick={onClickCloseHandler} className="w-[28px] h-[28px]">
-            <img src={close} alt="Close" />
+            <img src={close}  />
           </button>
+          
         </div>
-        <div style={{ width: '434px', height: '1px', background: '#000', alignSelf: 'center' }}></div>
+        <div className="w-[434px] h-[1px] bg-black mx-auto "></div>
 
-        <form onSubmit={signUpHandler} className='flex flex-col items-start  mt-4 w-[434px]' >
-          <label htmlFor="firstName" className="text-black font-sans text-[1.4em] font-normal" >First name </label>
-          <input className='w-full h-12 rounded-lg font-sans border border-gray-200 bg-white text-[1.4em] ' onChange={(e) => setFirstName(e.target.value)} type="text" name="firstName" value={firstName} />
+       
+        <form onSubmit={signUpHandler} className='flex flex-col items-start  w-[434px] ' >
+          <label htmlFor="firstName" className="text-black font-sans mt-5 " >First name </label>
+          <input className='w-full h-12 rounded-lg font-sans border border-gray-200 bg-white  ' onChange={(e) => setFirstName(e.target.value)} type="text" name="firstName" value={firstName} />
           <br />
 
-          <label htmlFor="lastName" className="text-black font-sans text-[1.4em] font-normal" >Last name </label>
-          <input className='w-full h-12 rounded-lg font-sans border border-gray-200 bg-white text-[1.4em]' onChange={(e) => setLastName(e.target.value)} type="text" name="lastName" value={lastName} />
+          <label htmlFor="lastName" className="text-black font-sans  font-normal" >Last name </label>
+          <input className='w-full h-12 rounded-lg font-sans border border-gray-200 bg-white ' onChange={(e) => setLastName(e.target.value)} type="text" name="lastName" value={lastName} />
           <br />
 
-          <label htmlFor="nickName" className="text-black font-sans text-[1.4em] font-normal" >Nick name </label>
+          <label htmlFor="nickName" className="text-black font-sans  font-normal" >Nick name </label>
           <input className='w-full h-12 rounded-lg font-sans border border-gray-200 bg-white text-[1.4em]' onChange={(e) => setNickName(e.target.value)} type="text" name="nickName" value={nickName} />
           <br />
 
-          <label htmlFor="email" className="text-black font-sans text-[1.4em] font-normal" >Email </label>
-          <input className='w-full h-12 rounded-lg font-sans border border-gray-200 bg-white text-[1.4em]' onChange={(e) => setEmailSignUp(e.target.value)} type="email" name="email" value={emailSignUp} />
+          <label htmlFor="email" className="text-black font-sans  font-normal" >Email </label>
+          <input className='w-full h-12 rounded-lg font-sans border border-gray-200 bg-white ' onChange={(e) => setEmailSignUp(e.target.value)} type="email" name="email" value={emailSignUp} />
           <br />
 
-          <label htmlFor="password" className="text-black font-sans text-[1.4em] font-normal" >Password </label>
-          <input className='w-full h-12 rounded-lg font-sans border border-gray-200 bg-white text-[1.4em]' onChange={(e) => setPasswordSignUp(e.target.value)} type="password" name="password" value={passwordSignUp} />
+          <label htmlFor="password" className="text-black font-sans  font-normal" >Password </label>
+          <input className='w-full h-12 rounded-lg font-sans border border-gray-200 bg-white ' onChange={(e) => setPasswordSignUp(e.target.value)} type="password" name="password" value={passwordSignUp} />
           <br />
           
-          <button className='w-full h-14 rounded-lg bg-black text-white text-[1.4em] ' onClick={onClickHandler} type="submit" >SIGN UP</button>
+          <button className='w-full h-14 rounded-lg bg-black text-white font-sans ' onClick={onClickHandler} type="submit" >SIGN UP</button>
         </form>
         
         </div>
       </div>
+     
     )
 }
 
-export default SignUpForm
+export default SignUpForm 
+
+
+
+
+
+
+
+
 
 
 
