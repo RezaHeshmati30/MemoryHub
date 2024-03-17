@@ -9,6 +9,10 @@ const UserStudySetsContextProvider = ({ children }) => {
   const [currentCard, setCurrentCard] = useState({});
   const [isFlipped, setIsFlipped] = useState(false);
   const [round, setRound] = useState(1);
+  const [isRoundFinished, setIsRoundFinished] = useState(false);
+  const [correctAnswers, setCorrectAnswers] = useState(0);
+  const [wrongAnswers, setWrongAnswers] = useState(0);
+  const [progress, setProgress] = useState(0);
   // const backendApiUrl = "http://localhost:3001";
   const backendApiUrl = import.meta.env.VITE_SERVER_URL;
 
@@ -104,7 +108,11 @@ const UserStudySetsContextProvider = ({ children }) => {
         handleNextCard,
         handlePreviousCard,
         round,
-        setRound,readImageAsBase64
+        setRound,readImageAsBase64,
+        isRoundFinished, setIsRoundFinished,
+        correctAnswers, setCorrectAnswers,
+        wrongAnswers, setWrongAnswers,
+        progress, setProgress
       }}
     >
       {children}
