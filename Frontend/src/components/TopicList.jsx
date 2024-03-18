@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import openIcon from "../assets/open.svg";
-import closeIcon from "../assets/close.svg";
+import openIcon from "../assets/openForm.svg";
+import closeIcon from "../assets/closeForm.png";
 
 function TopicList({ onSelectTopic, mode }) {
   const { user } = useContext(AuthContext);
