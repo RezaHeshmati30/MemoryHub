@@ -7,6 +7,7 @@ import { set } from "mongoose";
 import { useNavigate } from "react-router-dom";
 import { UserStudySetsContext } from "../context/UserStudySetsContext";
 import AlertDismissibleSuccess from "../components/AlertDismissibleSuccess";
+import BackLink from '../components/BackLink';
 
 function ProfileSettings() {
   const [firstName, setFirstName] = useState("");
@@ -165,8 +166,11 @@ function ProfileSettings() {
 
   return (
     <div className="bg-[#F6F7FB]">
+          <div className="ml-4">
+                <BackLink />
+              </div>
       {hasToken && (
-    <section className="max-w-4xl mr-[80px] ml-[80px] my-8 p-2">
+        <section className="max-w-4xl mr-[80px] ml-[80px] my-8 p-2">
       <form onSubmit={handleSubmit}>
       <div className="flex gap-4">
         <div className="mr-[40px] w-52">
@@ -176,13 +180,13 @@ function ProfileSettings() {
             alt="id-card"
             border="0"
           ></img>
-          <p className="dm-sans-medium text-[2em] mt-2">User name</p>
+          <p className="dm-sans-medium text-[20px] mt-2">User name</p>
         </div>
         <div className="border-[1px] w-full border-[#BCC0C1] rounded-md p-4 bg-white">
-          <p className="dm-sans-medium text-[2em]">
+          <p className="dm-sans-medium text-[20px]">
             Change user name
           </p>
-          <p className="dm-sans-regular text-[1.4em]">
+          <p className="dm-sans-regular text-[14px]">
             Your current user name is{" "}
             <b>
               {user.firstName} {user.lastName}
@@ -226,10 +230,10 @@ function ProfileSettings() {
             alt="Profile-photo"
             border="0"
           ></img>
-          <p className="dm-sans-medium text-[2em] mt-2">Profile photo</p>
+          <p className="dm-sans-medium text-[20px] mt-2">Profile photo</p>
         </div>
         <div className="border-[1px] w-full border-[#BCC0C1] rounded-md p-4 bg-white">
-          <p className="dm-sans-medium text-[2em]">
+          <p className="dm-sans-medium text-[20px]">
             Choose your profile picture
           </p>
           <div className="flex justify-center gap-10 my-6 mx-10">
@@ -278,12 +282,12 @@ function ProfileSettings() {
           </div>
           <div className="flex items-center justify-center gap-6">
             <hr className="flex-grow border border-gray-200 border-t-0"></hr>
-            <span className="dm-sans-regular text-[1.4em]">or</span>
+            <span className="dm-sans-regular text-[14px]">or</span>
             <hr className="flex-grow border border-gray-200 border-t-0"></hr>
           </div>
           <label
             htmlFor="photo"
-            className="flex items-center justify-center bg-black dm-sans-bold text-[1.2em] text-white rounded-md cursor-pointer px-4 py-2 max-w-[200px] mx-auto mt-2 hover:bg-white hover:text-black hover:border-black border-2"
+            className="flex items-center justify-center bg-black dm-sans-bold text-[12px] text-white rounded-md cursor-pointer px-4 py-2 max-w-[200px] mx-auto mt-2 hover:bg-white hover:text-black hover:border-black border-2"
           >
             <input
               type="file"
@@ -304,18 +308,18 @@ function ProfileSettings() {
             alt="id-card"
             border="0"
           ></img>
-          <p className="dm-sans-medium text-[2em] mt-2">Art of account</p>
+          <p className="dm-sans-medium text-[20px] mt-2">Art of account</p>
         </div>
         <div className="border-[1px] w-full border-[#BCC0C1] rounded-md bg-white">
-          <p className="dm-sans-medium text-[2em] mx-[20px] mt-[10px]">
+          <p className="dm-sans-medium text-[20px] mx-[20px] mt-[10px]">
             Teacher or student account
           </p>
-          <p className="dm-sans-regular text-[1.4em] mx-[20px]">
+          <p className="dm-sans-regular text-[14px] mx-[20px]">
             Select your account type here:
           </p>
           <div className="flex flex-col ml-6 my-6">
             <div className="flex flex-col gap-2">
-              <label htmlFor="teacher" className="dm-sans-medium text-[2em]">
+              <label htmlFor="teacher" className="dm-sans-medium text-[20px]">
                 <input
                   type="radio"
                   id="teacher"
@@ -325,7 +329,7 @@ function ProfileSettings() {
                 />
                 Teacher
               </label>
-              <label htmlFor="student" className="dm-sans-medium text-[2em]">
+              <label htmlFor="student" className="dm-sans-medium text-[20px]">
                 <input
                   type="radio"
                   id="student"
@@ -347,13 +351,13 @@ function ProfileSettings() {
             alt="id-card"
             border="0"
           ></img>
-          <p className="dm-sans-medium text-[2em] mt-2">Email address</p>
+          <p className="dm-sans-medium text-[20px] mt-2">Email address</p>
         </div>
         <div className="border-[1px] w-full border-[#BCC0C1] rounded-md p-4 bg-white">
-          <p className="dm-sans-medium text-[2em]">
+          <p className="dm-sans-medium text-[20px]">
             Change Email address
           </p>
-          <p className="dm-sans-regular text-[1.4em]">
+          <p className="dm-sans-regular text-[14px]">
             Your current email address is <b>{user.email}</b>{" "}
           </p>
           <div className="relative mb-6 ">
@@ -371,7 +375,7 @@ function ProfileSettings() {
           </div>
         </div>
       </div>
-      <button type="submit" className="ml-52 mb-8 bg-black text-white px-12 py-3 dm-sans-bold text-[1.2em] rounded-md mt-4 hover:bg-white hover:border-black border-2 hover:text-black">
+      <button type="submit" className="ml-52 mb-8 bg-black text-white px-12 py-3 dm-sans-bold text-[12px] rounded-md mt-4 hover:bg-white hover:border-black border-2 hover:text-black">
         Save</button>
         {showSuccessAlert && (
       <AlertDismissibleSuccess
