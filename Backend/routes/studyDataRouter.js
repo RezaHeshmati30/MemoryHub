@@ -22,6 +22,7 @@ import {
   createStudySetsAndCards,
   editStudySet,
   deleteCard,
+  deleteSavedStudySetInEdit,
 } from "../controllers/newSetsController.js";
 
 const router = express.Router();
@@ -37,11 +38,11 @@ router
   .post("/studySets", addStudySet)
   .patch("/topics/:id", addStudySetToTopic)
   .post("/cards", addCard)
-  // .patch("/studySets/:id", addCardToStudySet)
   .patch("/studySets/:id", addCardsToStudySet)
   .patch("/addAllStudySets/:id", addAllStudySetsWithCardsToTopic)
   .post("/createSet/:userId", createStudySetsAndCards)
   .patch("/editSet/:userId/:topicId/:studySetId", editStudySet)
-  .delete("/deleteCard/:userId/:studySetId/:cardId", deleteCard);
+  .delete("/deleteCard/:userId/:studySetId/:cardId", deleteCard)
+  .delete("/user/:userId/:setId", deleteSavedStudySetInEdit)
 
 export default router;

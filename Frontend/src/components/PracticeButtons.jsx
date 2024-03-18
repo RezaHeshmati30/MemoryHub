@@ -1,25 +1,26 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate, useParams } from 'react-router-dom';
 import { UserStudySetsContext } from '../context/UserStudySetsContext';
+import mastered from "../assets/images/btn-mastered.svg";
+import needPractice from "../assets/images/btn-need-practice.svg";
+import notStudied from "../assets/images/btn-not-studied.svg";
 
 function PracticeButtons({currentSet}) {
     const {getUserInfo, user} = useContext(AuthContext);
     const {id} = useParams();
-    const {currentIndex, backendApiUrl, handleNextCard} = useContext(UserStudySetsContext);
+    const {currentIndex, backendApiUrl, handleNextCard, setIsRoundFinished} = useContext(UserStudySetsContext);
     const navigate = useNavigate();
-
-    // const currentCardsSet = user?.savedStudySets?.filter(studySet => studySet?._id === id)[0]?.cards || [];
     const currentCard = currentSet[currentIndex];
     const currentCardId = currentCard?._id;
-    //console.log("CurrentCard ID:", currentCardId)
 
     useEffect(() => {
         getUserInfo();
     }, [])
 
     const userId = user?._id;
+    const buttonStyle = "py-[17px] px-[27px] set-box-shadow border-[1px] border-[#BCC0C1] rounded-[8px] uppercase text-[1.2em] dm-sans-bold flex gap-[8px] items-center"
 
     const onClickHandler = async(status) => {
         try {
@@ -27,23 +28,30 @@ function PracticeButtons({currentSet}) {
                 newStatus: status
             });
             if (currentIndex === currentSet.length - 1) {
-                navigate(`/studySet/endPractice/${id}`)
+                setIsRoundFinished(true);
             } else {
                 handleNextCard(currentSet);
             }
-            
             console.log("Status changed");
         } catch (error) {
             console.log("error while changing status:", error);
         }
-        
     }
 
   return (
-    <div className='flex justify-end gap-[10px]'>
-        <button onClick={() => onClickHandler("mastered")} className='bg-[#2ca055] p-[15px] rounded-[8px]'>mastered</button>
-        <button onClick={() => onClickHandler("need practice")} className='bg-[#e7f33b] p-[15px] rounded-[8px]'>need practice</button>
-        <button onClick={() => onClickHandler("not studied")} className='bg-[#b43434] p-[15px] rounded-[8px]'>not studied</button>
+    <div className='flex justify-center gap-[32px]'>
+        <button onClick={() => onClickHandler("mastered")} className={`${buttonStyle} hover:border-[#69CA61]`}>
+            <img src={mastered} alt="mastered button" />
+            <p>mastered</p>
+        </button>
+        <button onClick={() => onClickHandler("need practice")} className={`${buttonStyle} hover:border-[#FFCC29]`}>
+            <img src={needPractice} alt="need practice button" />
+            <p>need practice</p>
+        </button>
+        <button onClick={() => onClickHandler("not studied")} className={`${buttonStyle} hover:border-[#FF5E5E]`}>
+            <img src={notStudied} alt="not studied button" />
+            <p>not studied</p>
+        </button>
     </div>
   )
 }
