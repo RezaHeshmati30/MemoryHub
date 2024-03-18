@@ -44,7 +44,7 @@ function LoginForm() {
 
       </div>
 
-      <div class="w-[434px] h-[1px] bg-black self-center"></div>
+      <div className="w-[434px] h-[1px] bg-black mx-auto"></div>
 
       
   

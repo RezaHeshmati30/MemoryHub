@@ -38,7 +38,7 @@ function Home() {
           src={image1}
           className='w-[1440px] h-[695px] flex-shrink-0 brightness-50'
         />
-        <div className=' w-[99.8em] h-[28.8em] absolute top-10 left-20 text-white text-3xl sm:text-5xl md:text-6xl text-center font-dm-sans font-bold  tracking-wide text-justify '>
+        <div className=' absolute top-10 left-20 text-white text-3xl sm:text-5xl md:text-6xl text-center font-dm-sans font-bold  tracking-wide text-justify '>
           Unleash your full potential
           <br />
           with our free

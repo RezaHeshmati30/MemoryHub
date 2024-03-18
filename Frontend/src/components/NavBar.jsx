@@ -27,6 +27,7 @@ function NavBar() {
     const renderAuthButtons = () => {
         if (!hasToken) {
             return (
+                
                 <>
                 
                     <li className="block ">

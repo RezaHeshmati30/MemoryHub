@@ -41,7 +41,7 @@ function SignUpForm() {
           <br />
 
           <label htmlFor="nickName" className="text-black font-sans  font-normal" >Nick name </label>
-          <input className='w-full h-12 rounded-lg font-sans border border-gray-200 bg-white text-[1.4em]' onChange={(e) => setNickName(e.target.value)} type="text" name="nickName" value={nickName} />
+          <input className='w-full h-12 rounded-lg font-sans border border-gray-200 bg-white ' onChange={(e) => setNickName(e.target.value)} type="text" name="nickName" value={nickName} />
           <br />
 
           <label htmlFor="email" className="text-black font-sans  font-normal" >Email </label>
