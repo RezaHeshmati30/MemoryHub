@@ -2,8 +2,8 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
-import arrow from "../assets/arrow.svg";
-import forward from "../assets/forward.svg";
+import arrow from "../assets/images/arrow.svg";
+import forward from "../assets/images/forward.svg";
 
 function HomePageButtons() {
   const navigate = useNavigate();

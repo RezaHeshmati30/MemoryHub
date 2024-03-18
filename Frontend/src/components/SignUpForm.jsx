@@ -1,7 +1,7 @@
 
 import { useContext } from 'react'
 import { AuthContext } from '../context/AuthContext'
-import close from "../assets/close.svg";
+import close from "../assets/images/close.svg";
 
 function SignUpForm() {
     const { signUpHandler, showSignUpForm, setShowLoginForm, setShowSignUpForm, hasToken, emailSignUp, passwordSignUp, 

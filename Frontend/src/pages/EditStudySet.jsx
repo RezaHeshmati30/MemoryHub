@@ -3,12 +3,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import { StudySetsContext } from "../context/StudySetsContext";
 import { AuthContext } from "../context/AuthContext";
 import { UserStudySetsContext } from "../context/UserStudySetsContext";
-import trash from "../assets/trash.png";
-import openIcon from "../assets/openForm.svg";
-import closeIcon from "../assets/closeForm.png";
+import trash from "../assets/images/trash.png";
+import openIcon from "../assets/images/openForm.svg";
+import closeIcon from "../assets/images/closeForm.png";
 import BackLink from "../components/BackLink";
-import group from "../assets/group.svg";
+import group from "../assets/images/group.svg";
 import EditBtns from "../components/EditBtn";
+import MessageAlert from "../components/MessageAlert";
 
 const EditStudySet = () => {
   const { editStudySet, deleteCard } = useContext(StudySetsContext);
@@ -17,6 +18,7 @@ const EditStudySet = () => {
   const { userId, user, getUserInfo, hasToken } = useContext(AuthContext);
   const navigate = useNavigate();
   const [isOpen, setOpen] = useState(false);
+  const [messageShow, setmessageShow] = useState(false);
 
   const savedStudySet = user?.savedStudySets?.find(
     (studySet) => studySet._id === id
@@ -86,7 +88,6 @@ const EditStudySet = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       topicIdFinder();
       await editStudySet(
@@ -99,8 +100,8 @@ const EditStudySet = () => {
         formState.cards
       );
       getUserInfo();
-      alert("Study Set updated successfully");
-      navigate("/user/:id/studySets");
+      setmessageShow(true);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (error) {
       console.log(error.message);
     }
@@ -157,7 +158,7 @@ const EditStudySet = () => {
       console.log("Card deleted successfully");
     }
   };
-  
+
   const toggleList = () => {
     setOpen(!isOpen);
   };
@@ -165,12 +166,14 @@ const EditStudySet = () => {
   const setId = savedStudySet?.studySet?._id;
 
   return (
-    <div className='max-container padding-container  regal-blue flex flex-col'>
+    <div className=' max-container padding-container regal-blue flex flex-col relative '>
       <BackLink />
-      {hasToken && (
-        <form
-          className='flex flex-col justify-center mx-auto md:w-[1128px] my-auto'
-          onSubmit={handleSubmit}
+      <MessageAlert  messageShow={messageShow} userId={userId} message="The study set has been edited!" />
+            {hasToken && (
+            <form
+            className={`flex flex-col justify-center text-[1.7em] mx-auto md:w-[1128px] my-auto ${
+              !messageShow ? "display" : "blur"
+            }`} onSubmit={handleSubmit}
         >
           <h2 className='dm-sans-medium mb-6 text-[20px]'>Edit Study Set</h2>
           <div className='container flex md:flex-row flex-col justify-between md:mb-6 mb-9 items-center'>
@@ -248,6 +251,7 @@ const EditStudySet = () => {
           />
           <div className='mb-6'>
             <textarea
+              style={{ resize: "none", overflow: "auto" }}
               className='container h-[190px] mb-6 flex-shrink-0 border border-solid border-gray-300 rounded-lg bg-white pl-[40px] pt-[24px]'
               id='description'
               placeholder='Add description*'
@@ -274,6 +278,7 @@ const EditStudySet = () => {
                 <div className='flex md:flex-row flex-col justify-evenly px-10 gap-9 py-5'>
                   <div className='border-b-2 basis-2/6'>
                     <textarea
+                      style={{ resize: "none", overflow: "auto" }}
                       className='w-full h-[100px] custom-scrollbar'
                       id={`question${index}`}
                       type='text'
@@ -287,6 +292,7 @@ const EditStudySet = () => {
                   </div>
                   <div className='border-b-2 basis-2/6 '>
                     <textarea
+                      style={{ resize: "none", overflow: "auto" }}
                       className='w-full h-[100px] custom-scrollbar basis-2/6'
                       id={`answer${index}`}
                       type='text'
@@ -336,8 +342,9 @@ const EditStudySet = () => {
                 </div>
               </div>
             ))}
+     
           <div
-            className='dm-sans-medium  hover:underline cursor-pointer flex justify-center py-[40px]'
+            className='dm-sans-medium hover:underline cursor-pointer flex justify-center py-[40px]'
             onClick={handleAddCard}
           >
             + Add new Card
@@ -345,6 +352,7 @@ const EditStudySet = () => {
           <EditBtns userId={userId} setId={setId} />
         </form>
       )}
+ 
     </div>
   );
 };

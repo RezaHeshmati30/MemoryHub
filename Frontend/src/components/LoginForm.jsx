@@ -1,7 +1,6 @@
-
 import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
-import close from "../assets/close.svg";
+import close from "../assets/images/close.svg";
 
 function LoginForm() {
   const {
@@ -31,9 +30,7 @@ function LoginForm() {
   return (
     <div className='max-container mx-auto '>
     <div className={`${showLoginForm && !hasToken ? "flex" : "hidden"} fixed top-[15%] right-0 left-0 z-50 mx-auto flex-col justify-center items-center rounded-lg border border-gray-300 bg-white w-[482px] h-[606px] `}>
-    {isCreateCardsClicked && <h2 className=" text-[#F70000] font-sans text-[1.4em] mb-5 ">Please log in or sign up first to have the possibility to create your own set. </h2>
-    
-    
+    {isCreateCardsClicked && <h2 className=" text-[#F70000] font-sans text-[1.4em] mt-2 mb-5 mx-auto">Please log in or sign up first to have the possibility to create your own set. </h2>
     }
       <div className="w-full flex justify-between items-center px-6  ">
       

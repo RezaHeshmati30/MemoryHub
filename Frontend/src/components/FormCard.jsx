@@ -1,7 +1,6 @@
 import React from "react";
-import trash from "../assets/trash.png";
-import { useState } from "react";
-import group from "../assets/group.svg";
+import trash from "../assets/images/trash.png";
+import group from "../assets/images/group.svg";
 
 function Card(props) {
 
@@ -43,7 +42,8 @@ function Card(props) {
           <div className='flex md:flex-row flex-col justify-evenly px-10 gap-9 py-5'>
             <div className='border-b-2 basis-2/6'>
               <textarea
-                className='w-full h-[100px] custom-scrollbar'
+              style={{ resize: 'none', overflow: 'auto' }}
+                className='w-full h-[100px] custom-scrollbar '
                 id={`question${index}`}
                 type='text'
                 placeholder={`Write your Question*`}
@@ -52,7 +52,8 @@ function Card(props) {
             </div>
             <div className='border-b-2 basis-2/6 '>
               <textarea
-                className='w-full h-[100px] custom-scrollbar basis-2/6'
+              style={{ resize: 'none', overflow: 'auto' }}
+                className='w-full h-[100px] custom-scrollbar resize-none'
                 id={`answer${index}`}
                 type='text'
                 placeholder={`Write your Answer*`}

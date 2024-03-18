@@ -66,6 +66,7 @@ const Contact = () => {
           />
           <span>Message</span>
           <textarea
+          rows="5" cols="15"
             name='message'
             value={message}
             onChange={handleChange}

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { UserStudySetsContext } from '../context/UserStudySetsContext';
 import { AuthContext } from '../context/AuthContext';
-import close from "../assets/close.svg"
+import close from "../assets/images/close.svg"
 import EndPracticeButtons from '../components/EndPracticeButtons'
 
 function FinishPracticeWindow({correctAnswers, progress}) {
