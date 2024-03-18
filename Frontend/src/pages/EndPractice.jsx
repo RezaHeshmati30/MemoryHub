@@ -6,7 +6,6 @@ function EndPractice() {
   return (
     <section>
         <StudySetStatistic />
-        <EndPracticeButtons />
     </section>
   )
 }

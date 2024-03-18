@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext"; 
 import BackLink from "../components/BackLink";
 import arrow from "../assets/images/arrow-forward.svg";
+import "../components/css/cards.css";
 
 import "./css/cards.css";
 
@@ -72,14 +73,6 @@ function Cards() {
     setIsFlipped(!isFlipped);
   };
 
-  function getRandomNumber() {
-    return Math.floor(Math.random() * 6) + 1; // Returns a random integer between 1 and 6 (inclusive)
-}
-  const randomNumber = getRandomNumber();
-
-  
-  console.log("randombg:", randomNumber)
-
   return (
     <div>
       <section className='max-container padding-container'>
@@ -110,9 +103,9 @@ function Cards() {
                   isFlipped ? "flipped " : ""
                 } w-[60vw] min-h-[50vh] next-card`}
               >
-                <div className={`flip-content flex flex-col justify-between pt-[40px] px-[32px] pb-[32px]`}>
-                  <p className="text-[2em] text-leading-[100%]">{currentCard?.question}</p>
-                  <img src={currentCard?.image} alt="" />
+                <div className={`flip-content flex flex-col justify-between pt-[40px] px-[32px] pb-[32px]`} >
+                  <p className="text-[2em] text-leading-[100%]" >{currentCard?.question}</p>
+                  <img src={currentCard?.image} alt=""  />
                   <p className="text-[1.4em] text-leading-[150%] self-center">Show the answer</p>
                 </div>
                 <div className={`flip-content flex flex-col justify-between pt-[40px] px-[32px] pb-[32px]`}>

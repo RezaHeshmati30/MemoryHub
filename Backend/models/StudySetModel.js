@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 const StudySetSchema = new mongoose.Schema({
   title: {
     type: String,
-    unique: true,
   },
   description: { type: String },
   createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },

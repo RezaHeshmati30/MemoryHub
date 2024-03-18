@@ -83,6 +83,7 @@ const StudySetsContextProvider = ({ children }) => {
     createdBy,
     cards
   ) => {
+    console.log("cards:", cards);
     try {
       const savedStudySets = {
         topic: topic,
@@ -95,7 +96,8 @@ const StudySetsContextProvider = ({ children }) => {
           image: card.image,
         })),
       };
-      console.log("Request Payload:", { ...savedStudySets });
+
+      console.log("Request Payload in :", { ...savedStudySets });
       const response = await axios.post(
         `${backendApiUrl}/createSet/${userId}`,
         { ...savedStudySets }
@@ -126,7 +128,7 @@ const StudySetsContextProvider = ({ children }) => {
         title: title,
         description: description,
         cards: cardsInfo.map((card) => {
-          // console.log("card:", card);
+          //console.log("card:", card);
           return {
           question: card.question,
           answer: card.answer,
@@ -135,6 +137,7 @@ const StudySetsContextProvider = ({ children }) => {
       }
       })
     }
+
       const response = await axios.patch(
         `${backendApiUrl}/editSet/${userId}/${topicId}/${studySetId}`,
         updatedStudySets,

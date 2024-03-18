@@ -141,7 +141,7 @@ function CreateSets() {
               placeholder='Add description*'
               name='description'
             />
-            <Card removeLine={removeLine} lines={lines}  mode="create"/>
+            <Card lines={lines} setLines={setLines}  />
             <div className='flex justify-center md:justify-end '>
               <button
                 className='flex justify-center md:justify-center md: items-center  flex-shrink-0 btn-hover-color create-btn-color w-[172px] h-[56px] p-[8px 16px]  text-black text-xs leading-120 uppercase cursor-pointer rounded-[8px] dm-sans-bold  '
