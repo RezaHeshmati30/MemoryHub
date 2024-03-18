@@ -130,8 +130,8 @@ const slideRight = () => {
                     <li key={studySet._id} onClick={() => goToSetHandler(studySet.topicId, studySet._id)} className={`cursor-pointer border-[1px] set-box-shadow-${index+1} border-[#BCC0C1] study-set-line-${index+1}-hover rounded-[8px] px-[16px] flex flex-col justify-between pt-[16px] pb-[21px] set-box-shadow`}>
                         <p className='dm-sans-medium text-[2em]'>{studySet.title}</p>
                         <div className={`study-set-line-${index+1} border-[2px] w-full mb-[8px]`}/>
-                        <p className='max-w-[300px] overflow-hidden text-ellipsis'>{studySet.description}</p>
-                        <div className='flex justify-between items-center'>
+                        <p className='min-w-[200px] max-w-[300px] overflow-hidden text-ellipsis'>{studySet.description}</p>
+                        <div className='flex justify-between items-center gap-[10px]'>
                             <p className='text-[#9A9A9A] text-leading-[150%]'>{studySet.cards.length} cards</p>
                             <div className='flex hover:underline items-center gap-[8px]'>
                                 <button className='dm-sans-bold text-[1.2em] uppercase' onClick={() => goToSetHandler(studySet.topicId, studySet._id)}>Go to set</button>
@@ -142,10 +142,6 @@ const slideRight = () => {
                 ))}
             </ul>
         <div className='flex items-center justify-between gap-[32px]'>
-            {/* <div className='container relative w-[100%]'>
-                <div id='scroll' className='absolute top-0 left-0 z-30 h-[1px] w-[50%] bg-black'/>
-                <div className='absolute top-0 left-0 h-[1px] w-full bg-[#BCC0C1]'/>
-            </div> */}
             <div className='h-[1px] basis-[90%] bg-[#BCC0C1]'/>
             <div className='flex gap-[44px] justify-end items-center'>
                     <img src={arrow} className='cursor-pointer rotate-180' onClick={slideLeft} alt="" />
