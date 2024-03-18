@@ -22,7 +22,7 @@ function Practice() {
   } = useContext(UserStudySetsContext);
   const { hasToken, getUserInfo, user } = useContext(AuthContext);
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { userId, id } = useParams();
   const [filterStatus, setFilterStatus] = useState("all");
   const [noCardsMessage, setNoCardsMessage] = useState("");
   const [currentCardsSet, setCurrentCardsSet] = useState([]);
@@ -122,7 +122,7 @@ function Practice() {
           <FinishPracticeWindow />
           <div className="flex justify-between items-center mb-[32px]">
               <div className="basis-[30%]">
-                <BackLink />
+                <BackLink path={`/user/${userId}/studySet/${id}`} />
               </div>
               {console.log("wtf:", currentStudySet?.studySet?.createdBy)}
               <p className='basis-[30%] text-center text-[3em] text-leading-[120%]'>{currentStudySet?.studySet?.title}</p>

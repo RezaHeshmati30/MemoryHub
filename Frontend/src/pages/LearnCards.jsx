@@ -10,16 +10,13 @@ import FinishPracticeWindow from '../components/FinishPracticeWindow';
 
 function LearnCards() {
     const {currentIndex, setCurrentIndex, isRoundFinished, setIsRoundFinished, setRound, correctAnswers, setCorrectAnswers, wrongAnswers, setWrongAnswers, progress, setProgress} = useContext(UserStudySetsContext);
-    const { hasToken, getUserInfo, user, userId } = useContext(AuthContext);
+    const { hasToken, getUserInfo, user } = useContext(AuthContext);
     const navigate = useNavigate();
-    const {id} = useParams();
+    const { userId,id} = useParams();
     const [answerOptions, setAnswerOptions] = useState([]);
     const [currentCard, setCurrentCard] = useState(null);
     const [currentCardsSet, setCurrentCardsSet] = useState(null);
     const [correctAnswer, setCorrectAnswer] =  useState(null);
-    // const [correctAnswers, setCorrectAnswers] = useState(0);
-    // const [wrongAnswers, setWrongAnswers] = useState(0);
-    // const [progress, setProgress] = useState(0);
     const [isCorrect, setIsCorrect] = useState(false);
     const [selectedAnswer, setSelectedAnswer] = useState(null);
     const [message, setMessage] = useState("");
@@ -134,7 +131,7 @@ function LearnCards() {
         <div>
             <div className="flex justify-between items-center mb-[32px]">
               <div className="basis-[30%]">
-                <BackLink />
+              <BackLink path={`/user/${userId}/studySet/${id}`} />
               </div>
               <p className='basis-[30%] text-center text-[3em] text-leading-[120%]'>{currentStudySet?.studySet?.title}</p>
               <div className="basis-[30%] flex flex-col items-end">

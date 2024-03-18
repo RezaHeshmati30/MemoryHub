@@ -80,7 +80,8 @@ if (!Array.isArray(studySets)) {
 
 
 const goToSetHandler = (topicId, studySetId) => {
-    navigate(`/studySet/${topicId}/${studySetId}`);
+    // navigate(`/studySet/${topicId}/${studySetId}`);
+    navigate(`/module/${moduleId}/studySet/${topicId}/${studySetId}`)
     setTopicId(topicId);
     setStudySetId(studySetId);
   };
@@ -108,8 +109,7 @@ const slideRight = () => {
 
   return (
     <section className='flex flex-col p-[20px] bg-[#F6F7FB] max-container padding-container'>
-        <BackLink />
-
+        <BackLink path="/modules" />
         <div className='flex flex-col items-center'>
             <StudySetsSearchBar value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
         </div>

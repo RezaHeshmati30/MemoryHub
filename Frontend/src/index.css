@@ -26,9 +26,9 @@ body {
   font-size: 10px;
 }
 
-body, .max-container {
+/* body, .max-container {
   overflow-x: hidden;
-}
+} */
 
 
 ul {
