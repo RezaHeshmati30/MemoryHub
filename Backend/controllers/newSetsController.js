@@ -9,7 +9,7 @@ export const createStudySetsAndCards = async (req, res) => {
   try {
     const userId = req.params.userId;
     const { topic, title, description, createdBy, cards } = req.body;
-    
+
     const user = await UserModel.findById(userId);
     if (!user) {
       return res.status(404).json({ error: "User not found" });
@@ -21,17 +21,11 @@ export const createStudySetsAndCards = async (req, res) => {
     try {
       const savedCards = await Promise.all(
         cards.map(async (cardData) => {
-
-          if (cardData.image ) {
-            const cloudinaryLink = await cloudinary.uploader.upload(cardData.image);
-            const newCard = new CardModel({question:cardData.question, answer:cardData.answer, image:cloudinaryLink.secure_url});
-            return await newCard.save();
-          }
-          const newCard = new CardModel({question:cardData.question, answer:cardData.answer, image:""});
+          const newCard = new CardModel(cardData);
           return await newCard.save();
         })
-        );
-        
+      );
+     
       let topicObject;
       if (topic && typeof topic === "string") {
         // Find or create topic

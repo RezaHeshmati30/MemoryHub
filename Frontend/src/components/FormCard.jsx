@@ -3,22 +3,22 @@ import trash from "../assets/trash.png";
 import { useState } from "react";
 import group from "../assets/group.svg";
 
-function Card({ removeLine }) {
-  const [lines, setLines] = useState([1]);
+function Card(props) {
+
 
   const addLine = () => {
-    const newLines = [...lines, lines.length + 1];
-    setLines(newLines);
+    const newLines = [...props.lines, props.lines.length + 1];
+    props.setLines(newLines);
   };
 
   const handleRemoveLine = (index) => {
-    const newLines = lines.filter((line, i) => i !== index);
-    setLines(newLines);
+    const newLines = props.lines.filter((line, i) => i !== index);
+    props.setLines(newLines);
   };
 
   const handleImageChange = (event, index) => {
     const file = event.target.files[0];
-    setLines((prevLines) =>
+    props.setLines((prevLines) =>
       prevLines.map((line, i) =>
         i === index ? { ...line, image: URL.createObjectURL(file) } : line
       )
@@ -27,7 +27,7 @@ function Card({ removeLine }) {
 
   return (
     <div >
-      {lines.map((line, index) => (
+      {props.lines.map((line, index) => (
        
         <div key={index} className='container flex flex-col border border-solid border-gray-300 rounded-lg bg-white mb-6 '>
           <div className='flex justify-between items-center pt-5 pb-1 border-b-2'>
