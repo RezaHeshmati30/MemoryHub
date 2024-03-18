@@ -50,7 +50,7 @@ function FinishPracticeWindow({correctAnswers, progress}) {
                                 <p>{cardsCount.notStudied} cards</p> 
                             </div>  
                         </div>   
-                        <div className={`${locate.pathname !== `/studySet/endPractice/${id}` ? "flex flex-col" : "hidden"} text-[1.7em] gap-[27px] mb-[56px]`}>
+                        <div className={`${locate.pathname !== `/studySet/practice/${id}` ? "flex flex-col" : "hidden"} text-[1.7em] gap-[27px] mb-[56px]`}>
                             <p>You answered {correctAnswers} out of {studySet?.cards?.length} {correctAnswers > 1 ? "questions" : "question"} correctly</p>
                             <p>Your progress: {progress}%</p>
                         </div>
