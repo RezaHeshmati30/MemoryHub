@@ -119,30 +119,16 @@ export const addStudySetToUser = async (req, res) => {
 export const deleteSavedStudySet = async (req, res) => {
   const userId = req.params.userId;
   const studySetId = req.params.setId;
-
+  console.log(userId, studySetId)
   try {
-    const user = await UserModel.findById(userId);
-
-    if (!user) {
-      res.status(404).send("User not found");
-    }
-
-    const studySetIndex = user.savedStudySets.findIndex(
-      (set) => set._id.toString() === studySetId
-    );
-
-    if (studySetIndex === -1) {
-      res.status(404).send("Study set not found in saved study sets");
-    }
-
-    user.savedStudySets.splice(studySetIndex, 1);
-
-    await user.save();
-
-    res.status(200).send("Study set deleted successfully");
+      await UserModel.findByIdAndUpdate(userId, {
+        $pull: { savedStudySets: { _id: studySetId } }
+    });
+    const updatedUser = await UserModel.findById(userId);
+      res.status(200).send("Study set deleted successfully");
   } catch (error) {
-    console.error("Error retrieving user information:", error);
-    res.status(500).send("Internal Server Error");
+      console.error('Error deleting study set:', error.message);
+      res.status(500).send("Internal Server Error");
   }
 };
 

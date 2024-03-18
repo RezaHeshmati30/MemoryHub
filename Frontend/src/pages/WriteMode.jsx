@@ -112,7 +112,7 @@ function WriteMode() {
     return (
         <>
         {hasToken && (
-        <section className='p-[30px]'>
+        <section className='p-[30px] text-[1.7em]'>
             {currentCardsSet && currentCardsSet.length - 1 >= currentIndex && (
                 <div className='p-[40px]'>
                     <p className='text-center mb-[50px]'>Question: {currentCard?.card?.question}</p>
@@ -126,7 +126,6 @@ function WriteMode() {
                         </form>
                         <p>{currentIndex + 1} / {currentCardsSet?.length}</p>
                     </div>
-                    
                 </div>
             )}
             {showStatistic && 

@@ -1,13 +1,11 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { UserStudySetsContext } from '../context/UserStudySetsContext';
-import { AuthContext } from '../context/AuthContext';
 
 function EndPracticeButtons() {
-    const {id} = useParams();
+    const {userId, id} = useParams();
     const navigate = useNavigate();
     const {setRound, setIsRoundFinished, setCurrentIndex, setCorrectAnswers, setWrongAnswers, setProgress} = useContext(UserStudySetsContext);
-    const {userId} = useContext(AuthContext);
 
     const onClickNextRound = () => {
         setCorrectAnswers(0);
@@ -19,7 +17,7 @@ function EndPracticeButtons() {
     }
 
     const onClickFinish = () => {
-        navigate(`/user/${userId}/studySets`);
+        navigate(`/user/${userId}/studySet/${id}`);
         setRound(1);
     }
 
