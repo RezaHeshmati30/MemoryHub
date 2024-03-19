@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect ,  } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.jpg";
@@ -39,7 +39,7 @@ function NavBar() {
           <li className='block '>
             <button
               onClick={onClickLoginHandler}
-              className=' w-[45px] h-[18px] auth-button text-black font-dm-sans text-[1.2em] font-bold uppercase'
+              className=' auth-button text-black font-dm-sans text-[1.4em] font-bold uppercase hover:underline focus:underline  '
             >
               Login
             </button>
@@ -47,7 +47,7 @@ function NavBar() {
           <li className='block'>
             <button
               onClick={onClickSignUpHandler}
-              className=' w-[4.7em] h-[1.2em] auth-button inline-flex items-center gap-2 px-9 py-4 justify-center bg-black text-white text-[1.2em] rounded-full'
+              className=' w-[47px] h-[12px] auth-button inline-flex items-center font-bold gap-2 px-9 py-4 justify-center bg-black text-white text-[1.2em] rounded-full hover:bg-white hover:text-black hover:border-2 hover:border-black '
             >
               SignUp
             </button>
@@ -91,7 +91,7 @@ function NavBar() {
           className='w-[58px] h-[48px] bg-cover bg-no-repeat '
           style={{ backgroundImage: `url(${logo})` }}
         ></div>
-        <div className='w-[112px] h-[19px] text-lg font-semibold ml-2 text-black font-dm-sans text-xs font-bold uppercase'>
+        <div className=' text-[1.6em] font-semibold ml-2 text-black font-dm-sans  font-bold uppercase'>
           Memory Hub
         </div>
       </div>

@@ -57,9 +57,9 @@ function LoginForm() {
         <input className='w-full h-12 font-sans text-[1.4em]  rounded-lg border border-gray-200 bg-white' onChange={(e) => setPasswordLogin(e.target.value)} type="password" name="password" value={passwordLogin} style={{ height: '48px' }} />
 
 
-        <button className='w-full h-14 rounded-lg bg-black text-white text-[1em]' type="submit" >LOG IN</button>
+        <button className='w-full h-14 rounded-lg bg-black text-white text-[1em] font-bold ' type="submit" >LOG IN</button>
         <p className='text-black font-sans'>Don’t have an account?</p>
-        <button onClick={onClickHandler} className='w-full h-14 rounded-lg bg-black text-white text-[1.]' type="button" >SIGN UP</button>
+        <button onClick={onClickHandler} className='w-full h-14 rounded-lg bg-black text-white text-[1.] font-bold ' type="button" >SIGN UP</button>
       </form>
     </div>
     </div>

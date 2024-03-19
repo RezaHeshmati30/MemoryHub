@@ -1,8 +1,8 @@
 import React, { useRef } from "react";
-import image8 from "../assets/image8.png";
-import image9 from "../assets/image9.png";
-import image10 from "../assets/image10.jpeg";
-import imageStudent from "../assets/imageStudent.jpg";
+import image8 from "../assets/images/image8.png";
+import image9 from "../assets/images/image9.png";
+import image10 from "../assets/images/image10.jpeg";
+import imageStudent from "../assets/images/imageStudent.jpg";
 import forward from "../assets/forward.svg";
 
 function HomeScrollImages() {

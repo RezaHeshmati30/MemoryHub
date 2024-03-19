@@ -52,7 +52,7 @@ function SignUpForm() {
           <input className='w-full h-12 rounded-lg font-sans border border-gray-200 bg-white ' onChange={(e) => setPasswordSignUp(e.target.value)} type="password" name="password" value={passwordSignUp} />
           <br />
           
-          <button className='w-full h-14 rounded-lg bg-black text-white font-sans ' onClick={onClickHandler} type="submit" >SIGN UP</button>
+          <button className='w-full h-14 rounded-lg bg-black text-white font-sans font-bold ' onClick={onClickHandler} type="submit" >SIGN UP</button>
         </form>
         
         </div>

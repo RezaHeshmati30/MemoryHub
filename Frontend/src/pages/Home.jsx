@@ -1,13 +1,13 @@
 
 import React, { useContext } from "react";
 import HomePageButtons from "../components/HomePageButtons";
-import image1 from "../assets/image1.jpg";
-import image2 from "../assets/image2.jpg";
-import image3 from "../assets/image3.png";
-import image4 from "../assets/image4.png";
-import image5 from "../assets/image5.png";
-import image6 from "../assets/image6.png";
-import image7 from "../assets/image7.png";
+import image1 from "../assets/images/image1.jpg";
+import image2 from "../assets/images/image2.jpg";
+import image3 from "../assets/images/image3.png";
+import image4 from "../assets/images/image4.png";
+import image5 from "../assets/images/image5.png";
+import image6 from "../assets/images/image6.png";
+import image7 from "../assets/images/image7.png";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import arrow from "../assets/arrow.svg";
@@ -28,7 +28,7 @@ function Home() {
   
 
   return (
-    <div className='max-container'>
+    <div className='max-container  '>
       
       <section className='padding-container relative'>
       
@@ -36,21 +36,22 @@ function Home() {
 
         <img
           src={image1}
-          className='w-[1440px] h-[695px] flex-shrink-0 brightness-50'
+          className=' w-full h-auto max-w-[1440px] max-h-[695px] flex-shrink-0 brightness-50 object-cover  '
         />
-        <div className=' absolute top-10 left-20 text-white text-3xl sm:text-5xl md:text-6xl text-center font-dm-sans font-bold  tracking-wide text-justify '>
-          Unleash your full potential
+        <div className=' absolute mt-3 left-4 sm:left-10 md:left-20 lg:top-10 lg:left-20 text-white  sm:text-2xl md:text-3xl lg:text-[8em] text-center font-dm-sans font-bold tracking-wide text-justify  '>
+         <p className="leading-none "> Unleash your full potential
           <br />
           with our free
           <br />
           flashcard platform!
-          <div className='absolute text-black font-dm-sans font-normal text-xl leading-normal tracking-wide  pt-8'>
-            <p className=' text-base font-normal leading-normal text-white font-dm-sans text-xl'>
+          </p>
+          <div className='  sm:text-base md:text-lg lg:text-xl xl:text-2xl absolute text-white font-dm-sans tracking-wide pt-4 sm:pt-6 md:pt-[]'>
+            <p className=" mt-6 ">
               Make studying fun,fast and super effective with
               <br /> our intelligent flashcards feature. Create your
               <br /> own or search for what you need in our extensive
               <br /> flashcards library.
-            </p>
+              </p>
             <HomePageButtons />
           </div>
         </div>
