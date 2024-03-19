@@ -79,7 +79,7 @@ function UserProfile() {
     <>
     {hasToken && (
     <div className="flex flex-col justify-center">
-      <div className="flex justify-center items-center">
+      <div className="flex flex-col md:flex-row justify-center items-center">
         <img
           src={user?.photo}
           alt="profile picture"
@@ -92,7 +92,7 @@ function UserProfile() {
       </div>
       <section className="w-[80%] m-auto" aria-multiselectable="false">
         <ul
-          className="flex justify-center items-center border-b border-slate-200"
+          className="flex flex-col md:flex-row justify-center items-center border-b border-slate-200"
           role="tablist"
           ref={wrapperRef}
         >
@@ -162,7 +162,7 @@ function UserProfile() {
         </ul>
         <div className="flex justify-center items-center">
           <div
-            className={` w-[60%] border-solid border-2 border-gray-300 rounded-3xl mt-[30px] p-4 shadow-lg ${
+            className={` w-[600px] border-solid border-2 border-gray-300 rounded-3xl mt-[30px] p-4 shadow-lg ${
               tabSelected.currentTab === 1 ? "" : "hidden"
             }`}
             id="tab-panel-1a"
@@ -196,7 +196,7 @@ function UserProfile() {
               <div className="dm-sans-bold text-[1.2em] flex justify-end">
                 <Link
                   to="/userProfileUpdate"
-                  className="bg-black text-white px-6 py-2 rounded-3xl mt-[-40px] absolute"
+                  className="bg-gray-800 text-white px-6 py-2 rounded-3xl mt-[-40px] absolute hover:bg-white hover:text-black hover:border-black border-2"
                 >
                   Edit
                 </Link>
@@ -204,7 +204,7 @@ function UserProfile() {
             </div>
           </div>
           <div
-            className={`w-[60%] rounded-lg mt-[30px] ${
+            className={`w-[600px] rounded-lg mt-[30px] ${
               tabSelected.currentTab === 2 ? "" : "hidden"
             }`}
             id="tab-panel-2a"
@@ -225,7 +225,7 @@ function UserProfile() {
             </div>
           </div>
           <div
-            className={`w-full px-6 py-4 ${
+            className={`w-full py-4 ${
               tabSelected.currentTab === 3 ? "" : "hidden"
             }`}
             id="tab-panel-3a"
