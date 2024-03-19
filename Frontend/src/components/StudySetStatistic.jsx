@@ -25,7 +25,7 @@ function StudySetStatistic() {
       <div className='flex justify-center w-full'>
       <div className="mt-8 p-6 w-full bg-white rounded shadow-lg">
         <div className="basis-[30%]">
-          <BackLink />
+          <BackLink path={`/user/${user.id}/studySets`} />
         </div>
         {studySet && (
           <>

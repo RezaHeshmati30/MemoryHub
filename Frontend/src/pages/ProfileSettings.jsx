@@ -166,7 +166,7 @@ function ProfileSettings() {
   return (
     <div>
       <div className="ml-4">
-        <BackLink />
+        <BackLink path={`/user/${user.id}`} />
       </div>
     <div className="bg-[#F6F7FB] flex justify-center">
       {hasToken && (

@@ -43,6 +43,6 @@ router
   .post("/createSet/:userId", createStudySetsAndCards)
   .patch("/editSet/:userId/:topicId/:studySetId", editStudySet)
   .delete("/deleteCard/:userId/:studySetId/:cardId", deleteCard)
-  .delete("/user/:userId/:setId", deleteSavedStudySetInEdit)
+  // .delete("/user/:userId/:setId", deleteSavedStudySetInEdit)
 
 export default router;
