@@ -7,7 +7,7 @@ import "../components/css/form.css";
 import Card from "../components/FormCard";
 import TopicList from "../components/TopicList";
 import BackLink from "../components/BackLink";
-
+import Loader from "../components/Loader";
 import MessageAlert from "../components/MessageAlert";
 
 function CreateSets() {
@@ -28,6 +28,7 @@ function CreateSets() {
   const [lines, setLines] = useState([1]);
   const [messageShow, setmessageShow] = useState(false);
   const navigate = useNavigate();
+  const [loader, setLoader] = useState(false);
 
   useEffect(() => {
     if (hasToken) {
@@ -65,6 +66,12 @@ function CreateSets() {
       }
 
       if (formObject) {
+        setLoader(true);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        setTimeout(() => {
+          setLoader(false);
+          setmessageShow(true);
+        }, 3000);
         await createStudySetsAndCards(
           userId,
           updatedTopicTitle,
@@ -73,13 +80,12 @@ function CreateSets() {
           formObject.createdBy,
           formObject.cards
         );
-        setmessageShow(true);
+
         setQuestion([""]);
         setAnswer([""]);
         setImage([""]);
         setTitle("");
         setDescription("");
-        window.scrollTo({ top: 0, behavior: "smooth" });
       } else {
         console.error("formObject is not defined.");
       }
@@ -99,6 +105,7 @@ function CreateSets() {
   return (
     <div className=' max-container padding-container regal-blue flex flex-col relative '>
       <BackLink />
+      <Loader loader={loader} />
       <MessageAlert
         messageShow={messageShow}
         userId={userId}
@@ -107,7 +114,7 @@ function CreateSets() {
       {hasToken && (
         <form
           className={`relative flex flex-col justify-center text-[1.7em] mx-auto md:w-[1128px] my-auto ${
-            !messageShow ? "display" : "blur"
+            !messageShow && !loader ? "display" : "blur"
           }`}
           onSubmit={handleCreateSets}
         >
@@ -148,9 +155,9 @@ function CreateSets() {
             style={{ resize: "none", overflow: "auto" }}
           />
           <Card lines={lines} setLines={setLines} />
-          <div className='flex justify-center md:justify-end '>
+          <div className='container flex justify-center items-center sm:flex-row md:justify-end flex-col gap-8'>
             <button
-              className='flex justify-center md: items-center flex-shrink-0 btn-hover-color create-btn-color w-[172px] h-[56px] p-[8px 16px]  text-black text-xs leading-120 uppercase cursor-pointer rounded-[8px] dm-sans-bold  '
+              className='flex justify-center items-center flex-shrink-0 btn-hover-color create-btn-color w-[172px] h-[56px] p-[8px 16px]  text-black text-xs leading-120 uppercase cursor-pointer rounded-[8px] dm-sans-bold  '
               type='submit'
             >
               create new set

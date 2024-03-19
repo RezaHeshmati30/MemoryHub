@@ -10,7 +10,8 @@ import BackLink from "../components/BackLink";
 import group from "../assets/images/group.svg";
 import EditBtns from "../components/EditBtns";
 import MessageAlert from "../components/MessageAlert";
-import { get } from "mongoose";
+import { get, set } from "mongoose";
+import Loader from "../components/Loader";
 
 const EditStudySet = () => {
   const { editStudySet, deleteCard } = useContext(StudySetsContext);
@@ -21,6 +22,7 @@ const EditStudySet = () => {
   const [isOpen, setOpen] = useState(false);
   const [messageShow, setmessageShow] = useState(false);
   const [studySetDeleted, setStudySetDeleted] = useState(false);
+  const [loader, setLoader] = useState(false);
   const savedStudySet = user?.savedStudySets?.find(
     (studySet) => studySet._id === id
   );
@@ -90,6 +92,12 @@ const EditStudySet = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setLoader(true); 
+      setTimeout(() => {
+        setLoader(false);
+        setmessageShow(true);
+      }, 3000);
       topicIdFinder();
       await editStudySet(
         userId,
@@ -100,7 +108,13 @@ const EditStudySet = () => {
         formState.description,
         formState.cards
       );
-      getUserInfo();
+      
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setLoader(true); 
+      setTimeout(() => {
+        setLoader(false);
+        setmessageShow(true);
+      }, 3000);
       setFormState((prevFormState) => ({
         ...prevFormState,
         topicTitle: savedStudySet.topic?.title || "",
@@ -108,9 +122,7 @@ const EditStudySet = () => {
         description: savedStudySet.studySet?.description || "",
         cards: cardsInfo,
       }));
-
-      setmessageShow(true);
-      window.scrollTo({ top: 0, behavior: "smooth" });
+     
     } catch (error) {
       console.log(error.message);
     }
@@ -132,7 +144,7 @@ const EditStudySet = () => {
           cardIndex === index ? { ...card, image: base64Data } : card
         ),
       }));
-      console.log("FORM", formState);
+      
     } catch (error) {
       console.error("Error uploading file:", error);
     }
@@ -154,21 +166,23 @@ const EditStudySet = () => {
     });
   };
 
-  const handleRemoveCard = (cardId) => {
-    deleteCard(userId, studySetId, cardId);
-    getUserInfo();
-    if (studySetId !== -1 && savedStudySet && cardsInfo) {
+  const handleRemoveCard = async (cardId) => {
+    try {
+      await deleteCard(userId, studySetId, cardId);
+      getUserInfo();
       setFormState((prevFormState) => ({
         ...prevFormState,
         topicTitle: savedStudySet.topic?.title || "",
         title: savedStudySet.studySet?.title || "",
         description: savedStudySet.studySet?.description || "",
-        cards: cardsInfo,
+        cards: cardsInfo.filter(card => card.id !== cardId), 
       }));
+ 
+    } catch (error) {
+      console.error("Error deleting card:", error);
     }
-    console.log("Card deleted successfully");
   };
-
+  
   const toggleList = () => {
     setOpen(!isOpen);
   };
@@ -178,6 +192,7 @@ const EditStudySet = () => {
   return (
     <div className=' max-container padding-container regal-blue flex flex-col '>
       <BackLink />
+      <Loader loader={loader} />
       <MessageAlert
         messageShow={messageShow}
         userId={userId}
@@ -187,7 +202,7 @@ const EditStudySet = () => {
       {hasToken && (
         <form
           className={`relative flex flex-col justify-center text-[1.7em] mx-auto md:w-[1128px] my-auto ${
-            !messageShow && !studySetDeleted ? "display" : "blur"
+            !messageShow && !studySetDeleted && !loader ? "display" : "blur"
           }`}
           onSubmit={handleSubmit}
         >
@@ -214,7 +229,7 @@ const EditStudySet = () => {
             <div className='container max-h-[78px] min-h-[78px] basis-19/40 border border-solid border-gray-300 rounded-lg bg-white flex-shrink-0 pl-[40px]'>
               <div className='flex items-center'>
                 <div
-                  className={`dm-sans-regular w-full py-5 cursor-pointer mt-1 md:text-[17px] text-[14px] `}
+                  className={`dm-sans-regular w-full py-5 cursor-pointer mt-1 sm:text-[17px] sm:px-1 text-[14px] `}
                 >
                   Choose from already created topics
                 </div>
@@ -223,14 +238,14 @@ const EditStudySet = () => {
                     src={openIcon}
                     alt='click to hide options'
                     onClick={toggleList}
-                    className='cursor-pointer mx-5 mt-2'
+                    className='cursor-pointer mx-5 mt-1  '
                   />
                 ) : (
                   <img
                     src={closeIcon}
                     alt='click to show options'
                     onClick={toggleList}
-                    className='cursor-pointer mx-5 mt-2 '
+                    className='cursor-pointer mx-5 mt-2  '
                   />
                 )}
               </div>

@@ -97,7 +97,6 @@ const StudySetsContextProvider = ({ children }) => {
         })),
       };
 
-      console.log("Request Payload in :", { ...savedStudySets });
       const response = await axios.post(
         `${backendApiUrl}/createSet/${userId}`,
         { ...savedStudySets }
@@ -137,7 +136,6 @@ const StudySetsContextProvider = ({ children }) => {
       }
       })
     }
-
       const response = await axios.patch(
         `${backendApiUrl}/editSet/${userId}/${topicId}/${studySetId}`,
         updatedStudySets,
@@ -147,15 +145,12 @@ const StudySetsContextProvider = ({ children }) => {
           },
         }
       );
-
-      console.log("Study set updated successfully!");
     } catch (error) {
       console.error("Error updating study set:", error.message);
 
       if (error.response) {
         console.log("Response Data from backend:", error.response.data);
       }
-
       throw error;
     }
   };
@@ -167,7 +162,7 @@ const StudySetsContextProvider = ({ children }) => {
       );
 
       if (response.status === 200) {
-        console.log("Card deleted successfully");
+        
         return true;
       } else {
         console.error("Error deleting card. Server response:", response);
