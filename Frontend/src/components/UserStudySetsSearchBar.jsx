@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 function UserStudySetsSearchBar({ value, onChange }) {
   return (
     <>
-     <div className="relative my-6 w-[60%]">
+     <div className="relative my-6 w-full md:w-[500px]">
     <input
     d="id-s03"
     type="search"

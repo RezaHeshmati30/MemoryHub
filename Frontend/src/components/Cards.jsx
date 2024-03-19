@@ -19,10 +19,8 @@ function Cards() {
 
 
   const navigate = useNavigate();
-  const {topicId} = useParams();
-  const {studySetId} = useParams();
-
-
+  const {moduleId, topicId, studySetId} = useParams();
+  
   useEffect(() => {
     getStudyData();
     console.log("Topic Id:", topicId);
@@ -32,6 +30,8 @@ function Cards() {
 
   const currentTopic = studyData?.topics
   ?.filter((topic) => topic._id === topicId)[0].title;
+
+  console.log("cur topic:", studyData)
 
   const currentCardsSet = studyData?.topics
     ?.filter((topic) => topic._id === topicId)[0]
@@ -80,7 +80,7 @@ function Cards() {
           <div key={currentCardsSet._id}>
             <div className="flex justify-between items-center">
               <div className="basis-[30%]">
-                <BackLink />
+                <BackLink path={`/module/${moduleId}`} />
               </div>
               <p className='basis-[30%] text-center text-[3em] text-leading-[120%]'>{currentCardsSet.title}</p>
               <div className="basis-[30%] flex flex-col items-end">
