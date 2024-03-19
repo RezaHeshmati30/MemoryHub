@@ -6,7 +6,7 @@ import BackLink from '../components/BackLink';
 import arrow from "../assets/images/arrow-forward.svg";
 
 function ForeignUserStudySets() {
-    const { getUserStudySets, userStudySets, getUserShortData, userShortData, setTopicId, setStudySetId } = useContext(StudySetsContext);
+    const { getUserStudySets, userStudySets, getUserShortData, userShortData, moduleId, topicId, studySetId } = useContext(StudySetsContext);
     const { userId } = useParams();
     const [groupedStudySets, setGroupedStudySets] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
@@ -82,17 +82,13 @@ function ForeignUserStudySets() {
     //     return acc;
     //   }, []);
     
-    
-console.log("gg:", groupedStudySets)
     const onClickHandler = (topicId, studySetId) => {
         navigate(`/users/${userId}/topic/${topicId}/study-set/${studySetId}`);
-        // setTopicId(topicId);
-        // setStudySetId(studySetId);
       };
 
     return (
         <section className='p-[40px]'>
-            <BackLink />
+            <BackLink path={`/module/${moduleId}/studySet/${topicId}/${studySetId}`} />
             {userStudySets && userShortData && (
                 <div>
                     <div className='flex justify-center items-center gap-[10px] mb-[42px]'>

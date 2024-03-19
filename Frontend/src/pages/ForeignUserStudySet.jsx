@@ -72,7 +72,7 @@ function ForeignUserStudySet() {
           <div key={currentCardsSet._id}>
             <div className="flex justify-between items-center">
               <div className="basis-[30%]">
-                <BackLink />
+                <BackLink path={`/users/${userId}/all-study-sets`} />
               </div>
               <p className='basis-[30%] text-center text-[3em] text-leading-[120%]'>{currentCardsSet.title}</p>
               <div className="basis-[30%] flex flex-col items-end">

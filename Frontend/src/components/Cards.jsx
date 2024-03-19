@@ -14,7 +14,7 @@ function Cards() {
 
   const [isAnimated, setAnimated] = useState(false);
   const {user} = useContext(AuthContext);
-  const { addStudySetToUser, getStudyData, studyData} = useContext(StudySetsContext);
+  const { addStudySetToUser, getStudyData, studyData, setModuleId, setTopicId, setStudySetId} = useContext(StudySetsContext);
   const { hasToken, getUserInfo } = useContext(AuthContext);
 
 
@@ -26,6 +26,9 @@ function Cards() {
     console.log("Topic Id:", topicId);
     console.log("StudySet Id:", studySetId);
     getUserInfo();
+    setModuleId(moduleId);
+    setTopicId(topicId);
+    setStudySetId(studySetId);
   }, []);
 
   const currentTopic = studyData?.topics
@@ -78,12 +81,12 @@ function Cards() {
       <section className='max-container padding-container'>
         {currentCardsSet && (
           <div key={currentCardsSet._id}>
-            <div className="flex justify-between items-center">
-              <div className="basis-[30%]">
+            <div className="flex justify-between items-start">
+              <div className="basis-[20%]">
                 <BackLink path={`/module/${moduleId}`} />
               </div>
-              <p className='basis-[30%] text-center text-[3em] text-leading-[120%]'>{currentCardsSet.title}</p>
-              <div className="basis-[30%] flex flex-col items-end">
+              <p className='basis-[60%] text-center text-[3em] text-leading-[120%]'>{currentCardsSet.title}</p>
+              <div className="basis-[20%] flex flex-col items-end">
                 <p className='text-right dm-sans-bold text-[1.7em]'>{currentTopic}</p>
                 <Link className={`${author?.nickName ? "block": "hidden"} flex flex-col items-end text-[1.4em] text-leading-[150%]`} to={hasToken && user?._id === author?._id ? `/user/${user?._id}` : `/users/${author?._id}/all-study-sets` }>  
                   <p className='text-right'>Created by: {author?.nickName}</p>
@@ -104,12 +107,12 @@ function Cards() {
                 } w-[60vw] min-h-[50vh] next-card`}
               >
                 <div className={`flip-content flex flex-col justify-between pt-[40px] px-[32px] pb-[32px]`} >
-                  <p className="text-[2em] text-leading-[100%]" >{currentCard?.question}</p>
+                  <p className="text-[3em] text-center text-leading-[100%]" >{currentCard?.question}</p>
                   <img src={currentCard?.image} alt=""  />
                   <p className="text-[1.4em] text-leading-[150%] self-center">Show the answer</p>
                 </div>
-                <div className={`flip-content flex flex-col justify-between pt-[40px] px-[32px] pb-[32px]`}>
-                  <p className="text-[2em] text-leading-[100%]">{currentCard?.answer}</p>
+                <div className={`flip-content flex justify-center items-center p-[10px]`}>
+                  <p className="text-[3em] text-leading-[100%]">{currentCard?.answer}</p>
                 </div>
               </div>
             </div>

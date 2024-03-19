@@ -88,15 +88,9 @@ function WriteMode() {
         if (answer === correctAnswer) {
             setMessage("Correct!");
             setCorrectAnswers(prevValue => prevValue + 1);
-            // setTimeout(() => {
-            //     setCurrentIndex(prevValue => prevValue + 1);
-            // }, 2000);
         } else {
             setMessage(`Almost!<br />The correct answer is:<br />${correctAnswer}`);
             setWrongAnswers(prevValue => prevValue + 1);
-            // setTimeout(() => {
-            //     setCurrentIndex(prevValue => prevValue + 1);
-            // }, 3000);
         }
     }
 

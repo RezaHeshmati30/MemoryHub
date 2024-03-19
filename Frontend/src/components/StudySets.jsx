@@ -113,8 +113,8 @@ const slideRight = () => {
             <StudySetsSearchBar value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
         </div>
 
-        <h2 className='text-center text-[4em] mb-[1.6px]'>{location.pathname === "/all-study-sets" ? "All topics" : moduleData?.title}</h2>
-            <ul className='flex justify-center gap-[5em] mb-[5.6em]'>
+        <h2 className='text-center text-[4em] mb-[50px]'>{location.pathname === "/all-study-sets" ? "All topics" : moduleData?.title}</h2>
+            <ul className='flex justify-center flex-wrap gap-[20px] mb-[50px]'>
                 {location.pathname === "/all-study-sets" ? (modulesData?.map(module => (
                     <li className='text-center dm-sans-medium text-[1.7em]' key={module._id}>{module?.title}</li>
                 ))) : 
