@@ -52,19 +52,20 @@ function UserStudySets() {
     return (
         <>
             {hasToken && (
-                <section className='max-container padding-container flex flex-col gap-[20px]'>
+                <section className='md:max-container md:padding-container flex flex-col gap-[20px]'>
                     <div className='flex justify-center'>
                         <UserStudySetsSearchBar value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
                     </div>
                     <div className='flex justify-center'>
-                        <a href="/createSet"
-                            className="group relative inline-block overflow-hidden rounded border border-gray-100 bg-gradient-to-r from-emerald-400 to-cyan-400  px-12 py-3 text-sm font-medium text-slate-800 hover:text-violet-600 focus:outline-none focus:ring active:bg-indigo-600 active:text-white">
+                        <div
+                            onClick={() => navigate('/createSet')}
+                            className="group cursor-pointer relative inline-block overflow-hidden rounded border border-gray-100 bg-gradient-to-r from-emerald-400 to-cyan-400  px-12 py-3 text-sm font-medium text-slate-800 hover:text-violet-600 focus:outline-none focus:ring active:bg-indigo-600 active:text-white">
                             <span className="ease absolute left-0 top-0 h-0 w-0 border-t-[3px] border-violet-600 transition-all duration-200 group-hover:w-full"></span>
                             <span className="ease absolute right-0 top-0 h-0 w-0 border-r-[3px] border-violet-600 transition-all duration-200 group-hover:h-full"></span>
                             <span className="ease absolute bottom-0 right-0 h-0 w-0 border-b-[3px] border-violet-600 transition-all duration-200 group-hover:w-full"></span>
                             <span className="ease absolute bottom-0 left-0 h-0 w-0 border-l-[3px] border-violet-600 transition-all duration-200 group-hover:h-full"></span>
                             Create cards
-                        </a>
+                        </div>
                     </div>
                     <ul className='flex flex-col gap-[15px] '>
                         {Object.entries(
@@ -86,7 +87,7 @@ function UserStudySets() {
                                         <li key={studySet._id} className='group flex items-center justify-between   '>
                                             <div onClick={() => onClickHandler(studySet._id, topicTitle)} className='flex items-center w-full justify-between cursor-pointer h-full px-4 py-3  group-hover:bg-gradient-to-r from-emerald-400 to-cyan-400 mr-36 rounded-l-lg hover:translate-x-2 transition duration-300'>
                                                     <p className='dm-sans-medium text-[1.7em]'>{studySet.studySet.title}</p>
-                                                <p className='dm-sans-medium text-[1.4em] flex'>GO TO SET
+                                                <p className='hidden md:flex dm-sans-medium text-[1.4em]'>GO TO SET
                                                 <img src={arrow} alt="arrow" className='w-5 h-5 ml-3'/>
                                                 </p>
                                             </div>

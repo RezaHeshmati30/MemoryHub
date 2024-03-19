@@ -24,7 +24,8 @@ function StudySetStatistic() {
     const totalCards = cardsCount.mastered + cardsCount.needPractice + cardsCount.notStudied;
     
     return (
-      <div className=" mx-auto mt-8 p-6 bg-white rounded shadow-lg">
+      <div className='flex justify-center w-full'>
+      <div className="mt-8 p-6 w-full bg-white rounded shadow-lg">
         <div className="basis-[30%]">
           <BackLink />
         </div>
@@ -39,9 +40,9 @@ function StudySetStatistic() {
             >
               Round: {round}
             </h2>
-            <div className="container px-6">
-              <div className="grid grid-cols-4 gap-20 lg:grid-cols-12">
-                <div className="col-span-4">
+            <div className="flex flex-col md:flex-row justify-center gap-20">
+              {/* <div className="gap-20 lg:grid-cols-12"> */}
+                <div className="">
                   {/* <h2>Topic: {studySet.topicTitle}</h2> */}
                   <h3 className="dm-sans-medium text-[2.4em] mb-[20px]">
                     {studySet.studySet.title}
@@ -53,7 +54,7 @@ function StudySetStatistic() {
                     {studySet.studySet.description}
                   </p>
                 </div>
-                <section className="col-span-4">
+                <section className="">
                   <h2 className="dm-sans-medium text-[2em]">
                     Number of flashcards: {totalCards}{" "}
                   </h2>
@@ -113,17 +114,18 @@ function StudySetStatistic() {
                     </p>
                   </div>
                 </section>
-                <div className="col-span-3 ">
+                <div className="">
                   <StartPracticeButtons
                     edit={studySet?.edit}
                     studySetId={studySet?._id}
                     userId={user?._id}
                   />
                 </div>
-              </div>
+              {/* </div> */}
             </div>
           </>
         )}
+      </div>
       </div>
     );
 }
