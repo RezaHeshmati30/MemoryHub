@@ -88,15 +88,9 @@ function WriteMode() {
         if (answer === correctAnswer) {
             setMessage("Correct!");
             setCorrectAnswers(prevValue => prevValue + 1);
-            // setTimeout(() => {
-            //     setCurrentIndex(prevValue => prevValue + 1);
-            // }, 2000);
         } else {
             setMessage(`Almost!<br />The correct answer is:<br />${correctAnswer}`);
             setWrongAnswers(prevValue => prevValue + 1);
-            // setTimeout(() => {
-            //     setCurrentIndex(prevValue => prevValue + 1);
-            // }, 3000);
         }
     }
 
@@ -151,7 +145,7 @@ function WriteMode() {
                                 aria-label="loading"
                                 max={currentCardsSet.length}
                                 value={currentIndex +1}
-                                className="h-[1px] w-full overflow-hidden bg-slate-100 [&::-webkit-progress-bar]:bg-slate-100 [&::-webkit-progress-value]:bg-идфсл"> 
+                                className="h-[1px] w-full overflow-hidden bg-slate-100 [&::-webkit-progress-bar]:bg-slate-100 [&::-webkit-progress-value]:bg-black"> 
                             </progress>
                         </div>
                     </div>

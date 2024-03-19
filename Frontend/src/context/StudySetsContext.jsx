@@ -7,6 +7,7 @@ const StudySetsContextProvider = ({ children }) => {
   const [moduleData, setModuleData] = useState({});
   const [modulesData, setModulesData] = useState([]);
   const [studySetId, setStudySetId] = useState("");
+  const [moduleId, setModuleId] = useState("");
   const [topicId, setTopicId] = useState("");
   const [question, setQuestion] = useState([]);
   const [answer, setAnswer] = useState([]);
@@ -208,6 +209,7 @@ const StudySetsContextProvider = ({ children }) => {
         deleteCard,
         getModulesData,
         modulesData, setModulesData,
+        moduleId, setModuleId
       }}
     >
       {children}
