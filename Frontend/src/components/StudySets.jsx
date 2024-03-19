@@ -80,7 +80,6 @@ if (!Array.isArray(studySets)) {
 
 
 const goToSetHandler = (topicId, studySetId) => {
-    // navigate(`/studySet/${topicId}/${studySetId}`);
     navigate(`/module/${moduleId}/studySet/${topicId}/${studySetId}`)
     setTopicId(topicId);
     setStudySetId(studySetId);
