@@ -106,7 +106,7 @@ function CreateSets() {
       />
       {hasToken && (
         <form
-          className={`flex flex-col justify-center text-[1.7em] mx-auto md:w-[1128px] my-auto ${
+          className={`relative flex flex-col justify-center text-[1.7em] mx-auto md:w-[1128px] my-auto ${
             !messageShow ? "display" : "blur"
           }`}
           onSubmit={handleCreateSets}

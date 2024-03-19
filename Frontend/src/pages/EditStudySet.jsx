@@ -8,8 +8,9 @@ import openIcon from "../assets/images/openForm.svg";
 import closeIcon from "../assets/images/closeForm.png";
 import BackLink from "../components/BackLink";
 import group from "../assets/images/group.svg";
-import EditBtns from "../components/EditBtn";
+import EditBtns from "../components/EditBtns";
 import MessageAlert from "../components/MessageAlert";
+import { get } from "mongoose";
 
 const EditStudySet = () => {
   const { editStudySet, deleteCard } = useContext(StudySetsContext);
@@ -19,7 +20,7 @@ const EditStudySet = () => {
   const navigate = useNavigate();
   const [isOpen, setOpen] = useState(false);
   const [messageShow, setmessageShow] = useState(false);
-
+  const [studySetDeleted, setStudySetDeleted] = useState(false);
   const savedStudySet = user?.savedStudySets?.find(
     (studySet) => studySet._id === id
   );
@@ -100,6 +101,14 @@ const EditStudySet = () => {
         formState.cards
       );
       getUserInfo();
+      setFormState((prevFormState) => ({
+        ...prevFormState,
+        topicTitle: savedStudySet.topic?.title || "",
+        title: savedStudySet.studySet?.title || "",
+        description: savedStudySet.studySet?.description || "",
+        cards: cardsInfo,
+      }));
+
       setmessageShow(true);
       window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (error) {
@@ -147,6 +156,7 @@ const EditStudySet = () => {
 
   const handleRemoveCard = (cardId) => {
     deleteCard(userId, studySetId, cardId);
+    getUserInfo();
     if (studySetId !== -1 && savedStudySet && cardsInfo) {
       setFormState((prevFormState) => ({
         ...prevFormState,
@@ -155,8 +165,8 @@ const EditStudySet = () => {
         description: savedStudySet.studySet?.description || "",
         cards: cardsInfo,
       }));
-      console.log("Card deleted successfully");
     }
+    console.log("Card deleted successfully");
   };
 
   const toggleList = () => {
@@ -166,14 +176,20 @@ const EditStudySet = () => {
   const setId = savedStudySet?.studySet?._id;
 
   return (
-    <div className=' max-container padding-container regal-blue flex flex-col relative '>
+    <div className=' max-container padding-container regal-blue flex flex-col '>
       <BackLink />
-      <MessageAlert  messageShow={messageShow} userId={userId} message="The study set has been edited!" />
-            {hasToken && (
-            <form
-            className={`flex flex-col justify-center text-[1.7em] mx-auto md:w-[1128px] my-auto ${
-              !messageShow ? "display" : "blur"
-            }`} onSubmit={handleSubmit}
+      <MessageAlert
+        messageShow={messageShow}
+        userId={userId}
+        studySetDeleted={studySetDeleted}
+        message='The study set has been edited!'
+      />
+      {hasToken && (
+        <form
+          className={`relative flex flex-col justify-center text-[1.7em] mx-auto md:w-[1128px] my-auto ${
+            !messageShow && !studySetDeleted ? "display" : "blur"
+          }`}
+          onSubmit={handleSubmit}
         >
           <h2 className='dm-sans-medium mb-6 text-[20px]'>Edit Study Set</h2>
           <div className='container flex md:flex-row flex-col justify-between md:mb-6 mb-9 items-center'>
@@ -198,7 +214,7 @@ const EditStudySet = () => {
             <div className='container max-h-[78px] min-h-[78px] basis-19/40 border border-solid border-gray-300 rounded-lg bg-white flex-shrink-0 pl-[40px]'>
               <div className='flex items-center'>
                 <div
-                  className={`dm-sans-regular w-full py-5 cursor-pointer mt-1 `}
+                  className={`dm-sans-regular w-full py-5 cursor-pointer mt-1 md:text-[17px] text-[14px] `}
                 >
                   Choose from already created topics
                 </div>
@@ -275,7 +291,7 @@ const EditStudySet = () => {
                     onClick={() => handleRemoveCard(card.id)}
                   />
                 </div>
-                <div className='flex md:flex-row flex-col justify-evenly px-10 gap-9 py-5'>
+                <div className='container flex sm:flex-row flex-col justify-evenly px-10 gap-9 py-5'>
                   <div className='border-b-2 basis-2/6'>
                     <textarea
                       style={{ resize: "none", overflow: "auto" }}
@@ -342,17 +358,20 @@ const EditStudySet = () => {
                 </div>
               </div>
             ))}
-     
+
           <div
-            className='dm-sans-medium hover:underline cursor-pointer flex justify-center py-[40px]'
+            className='container dm-sans-medium flex justify-center  cursor-pointer py-[40px] hover:underline '
             onClick={handleAddCard}
           >
             + Add new Card
           </div>
-          <EditBtns userId={userId} setId={setId} />
+          <EditBtns
+            userId={userId}
+            setId={setId}
+            setStudySetDeleted={setStudySetDeleted}
+          />
         </form>
       )}
- 
     </div>
   );
 };

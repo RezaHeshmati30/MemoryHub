@@ -25,7 +25,7 @@ function Card(props) {
   };
 
   return (
-    <div >
+    <div className="container flex flex-col justify-center items-center">
       {props.lines.map((line, index) => (
        
         <div key={index} className='container flex flex-col border border-solid border-gray-300 rounded-lg bg-white mb-6 '>
@@ -92,7 +92,7 @@ function Card(props) {
       ))}
 
       <div
-        className='dm-sans-medium hover:underline cursor-pointer flex justify-center py-[40px]'
+        className='dm-sans-medium flex  hover:underline cursor-pointer py-[40px] '
         onClick={addLine}
       >
         + Add new Card
