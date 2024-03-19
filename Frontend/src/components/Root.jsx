@@ -6,7 +6,7 @@ import SignUpForm from './SignUpForm'
 function Root() {
   return (
       <>
-        {/* <NavBar /> */}
+        <NavBar />
         <LoginForm />
         <SignUpForm />
         <Outlet />
