@@ -6,10 +6,9 @@ import close from "../assets/close.svg"
 import EndPracticeButtons from '../components/EndPracticeButtons'
 
 function FinishPracticeWindow({correctAnswers, progress}) {
-    const {countCardsByStatus, round} = useContext(UserStudySetsContext);
+    const {countCardsByStatus, round, setRound, isRoundFinished} = useContext(UserStudySetsContext);
     const {getUserInfo, user} = useContext(AuthContext);
-    const {setRound, isRoundFinished} = useContext(UserStudySetsContext);
-    const {id} = useParams();
+    const {userId, id} = useParams();
     const locate = useLocation();
     const navigate = useNavigate();
 
@@ -17,16 +16,15 @@ function FinishPracticeWindow({correctAnswers, progress}) {
         getUserInfo();
     }, [])
 
-    const onClickFinish = () => {
-        navigate(`/user/studySets`);
-        setRound(1);
-    }
-
     const studySet = user?.savedStudySets?.filter(studySet => studySet._id === id)[0];
     const cardsCount = studySet ? countCardsByStatus([studySet]) : { mastered: 0, needPractice: 0, notStudied: 0 };
     const totalCards = cardsCount.mastered + cardsCount.needPractice + cardsCount.notStudied;
-    const userId = user?._id;
     const studySetId = studySet?._id;
+
+    const onClickFinish = () => {
+        navigate(`/user/${userId}/studySets/${studySetId}`);
+        setRound(1);
+    }
 
     return (
         <>

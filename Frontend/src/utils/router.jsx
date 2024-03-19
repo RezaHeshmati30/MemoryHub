@@ -3,7 +3,6 @@ import Root from "../components/Root";
 import PageNotFound from "../pages/PageNotFound";
 import Home from "../pages/Home";
 import UserProfile from "../pages/UserProfile"
-import StudySets from "../pages/Module";
 import CreateSets from "../pages/CreateSets";
 import StudySet from "../pages/StudySet";
 import Contact from "../pages/Contact";
