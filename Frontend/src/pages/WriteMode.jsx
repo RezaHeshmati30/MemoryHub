@@ -145,7 +145,7 @@ function WriteMode() {
                                 aria-label="loading"
                                 max={currentCardsSet.length}
                                 value={currentIndex +1}
-                                className="h-[1px] w-full overflow-hidden bg-slate-100 [&::-webkit-progress-bar]:bg-slate-100 [&::-webkit-progress-value]:bg-идфсл"> 
+                                className="h-[1px] w-full overflow-hidden bg-slate-100 [&::-webkit-progress-bar]:bg-slate-100 [&::-webkit-progress-value]:bg-black"> 
                             </progress>
                         </div>
                     </div>
