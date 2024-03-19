@@ -141,7 +141,7 @@ function Cards() {
           </button>
         </div>
       </section>
-      {/* <Footer /> */}
+      <Footer />
     </>
   );
 }
