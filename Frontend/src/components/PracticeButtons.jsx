@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { UserStudySetsContext } from '../context/UserStudySetsContext';
 import mastered from "../assets/images/btn-mastered.svg";
 import needPractice from "../assets/images/btn-need-practice.svg";
@@ -11,7 +11,6 @@ function PracticeButtons({currentSet}) {
     const {getUserInfo, user} = useContext(AuthContext);
     const {id} = useParams();
     const {currentIndex, backendApiUrl, handleNextCard, setIsRoundFinished} = useContext(UserStudySetsContext);
-    const navigate = useNavigate();
     const currentCard = currentSet[currentIndex];
     const currentCardId = currentCard?._id;
 
