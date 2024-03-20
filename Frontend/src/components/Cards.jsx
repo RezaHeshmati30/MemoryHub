@@ -5,16 +5,16 @@ import { AuthContext } from "../context/AuthContext";
 import BackLink from "../components/BackLink";
 import arrow from "../assets/images/arrow-forward.svg";
 import "../components/css/cards.css";
-
 import "./css/cards.css";
 import Footer from "./Footer";
+import ModalWindow from "./ModalWindow";
 
 function Cards() {
   const [isFlipped, setIsFlipped] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimated, setAnimated] = useState(false);
-  const {user} = useContext(AuthContext);
-  const { addStudySetToUser, getStudyData, studyData, setModuleId, setTopicId, setStudySetId} = useContext(StudySetsContext);
+  const { user } = useContext(AuthContext);
+  const { addStudySetToUser, getStudyData, studyData, setModuleId, setTopicId, setStudySetId, setSuccesWindow, setErrorWindow} = useContext(StudySetsContext);
   const { hasToken, getUserInfo } = useContext(AuthContext);
   const {moduleId, topicId, studySetId} = useParams();
   
@@ -26,6 +26,8 @@ function Cards() {
     setModuleId(moduleId);
     setTopicId(topicId);
     setStudySetId(studySetId);
+    setSuccesWindow(false);
+    setErrorWindow(false);
   }, []);
 
   const currentTopic = studyData?.topics
@@ -71,7 +73,8 @@ function Cards() {
 
   return (
     <>
-      <section className='max-container padding-container'>
+      <section className='max-container padding-container relative'>
+      <ModalWindow />
         {currentCardsSet && (
           <div key={currentCardsSet._id}>
             <div className="flex justify-between flex-wrap md:flex-nowrap items-center">
