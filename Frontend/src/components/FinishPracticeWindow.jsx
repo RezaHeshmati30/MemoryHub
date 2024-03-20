@@ -29,13 +29,13 @@ function FinishPracticeWindow({correctAnswers, progress}) {
     return (
         <>
                 {studySet && (
-                    <div className={`${isRoundFinished ? "block" : "hidden"} bg-white z-30 absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[80%] w-[430px] p-[24px] border-[1px] rounded-[8px] border-[#BCC0C1] mx-auto`}>
+                    <div className={`${isRoundFinished ? "block" : "hidden"} bg-white z-30 absolute top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] min-w-[290px] p-[10px] sm:p-[24px] border-[1px] rounded-[8px] border-[#BCC0C1] mx-auto`}>
                         <div className='flex justify-between border-b-[#BCC0C1] border-b-[1px] py-[10px] mb-[24px]'>
                             <h2 className='text-[3.2em]'>Finish</h2>
                             <img onClick={onClickFinish} className='cursor-pointer' src={close} alt="finish" />
                         </div>
                         <h3 className={"block text-[2em] dm-sans-medium mb-[34px]"}>Number of rounds: {round}</h3>
-                        <div className={`${locate.pathname === `/user/${userId}/studySet/practice/${id}` ? "flex" : "hidden"} text-[1.7em] mb-[56px] flex-col gap-[27px]`}>
+                        <div className={`${locate.pathname === `/user/${userId}/studySet/practice/${id}` ? "flex" : "hidden"} text-[1.7em] mb-[20px] sm:mb-[35px] md:mb-[56px] flex-col gap-[27px]`}>
                             <div className="flex items-center gap-[8px]">
                                 <p>Mastered</p>
                                 <progress
