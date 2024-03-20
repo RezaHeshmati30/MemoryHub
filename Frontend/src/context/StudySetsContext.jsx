@@ -17,6 +17,8 @@ const StudySetsContextProvider = ({ children }) => {
   const [studyData, setStudyData] = useState([]);
   const [userStudySets, setUserStudySets] = useState({});
   const [userShortData, setUserShortData] = useState({});
+  const [succesWindow, setSuccesWindow] = useState(false);
+  const [errorWindow, setErrorWindow] = useState(false);
   
 
   // const backendApiUrl = "http://localhost:3001";
@@ -39,7 +41,6 @@ const StudySetsContextProvider = ({ children }) => {
     console.error('Error fetching module data:', error);
   }
 };
-
 
   const getStudyData = async () => {
     const response = await axios.get(`${backendApiUrl}/topics`);
@@ -69,10 +70,12 @@ const StudySetsContextProvider = ({ children }) => {
         studySetData
       );
       console.log(`studySetData ${studySetData} sent to user ${userId}`);
-      alert("Study set was added to your account");
+      // alert("Study set was added to your account");
+      setSuccesWindow(true);
     } catch (error) {
       console.log("error while logging in:", error);
-      alert("Study set already exists in your account");
+      // alert("Study set already exists in your account");
+      setErrorWindow(true);
     }
   };
 
@@ -209,7 +212,9 @@ const StudySetsContextProvider = ({ children }) => {
         deleteCard,
         getModulesData,
         modulesData, setModulesData,
-        moduleId, setModuleId
+        moduleId, setModuleId,
+        succesWindow, setSuccesWindow,
+        errorWindow, setErrorWindow
       }}
     >
       {children}

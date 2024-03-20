@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { UserStudySetsContext } from '../context/UserStudySetsContext';
 import mastered from "../assets/images/btn-mastered.svg";
 import needPractice from "../assets/images/btn-need-practice.svg";
@@ -11,7 +11,6 @@ function PracticeButtons({currentSet}) {
     const {getUserInfo, user} = useContext(AuthContext);
     const {id} = useParams();
     const {currentIndex, backendApiUrl, handleNextCard, setIsRoundFinished} = useContext(UserStudySetsContext);
-    const navigate = useNavigate();
     const currentCard = currentSet[currentIndex];
     const currentCardId = currentCard?._id;
 
@@ -20,7 +19,7 @@ function PracticeButtons({currentSet}) {
     }, [])
 
     const userId = user?._id;
-    const buttonStyle = "py-[17px] px-[27px] set-box-shadow border-[1px] border-[#BCC0C1] rounded-[8px] uppercase text-[1.2em] dm-sans-bold flex gap-[8px] items-center"
+    const buttonStyle = "w-[50%] whitespace-nowrap min-w-[160px] sm:basis-[30%] py-[17px] px-[27px] set-box-shadow border-[1px] border-[#BCC0C1] rounded-[8px] uppercase text-[1.2em] dm-sans-bold flex gap-[8px] items-center"
 
     const onClickHandler = async(status) => {
         try {
@@ -39,7 +38,7 @@ function PracticeButtons({currentSet}) {
     }
 
   return (
-    <div className='flex justify-center gap-[32px]'>
+    <div className='flex justify-center gap-[16px] md:gap-[32px] flex-wrap md:flex-nowrap'>
         <button onClick={() => onClickHandler("mastered")} className={`${buttonStyle} hover:border-[#69CA61]`}>
             <img src={mastered} alt="mastered button" />
             <p>mastered</p>
