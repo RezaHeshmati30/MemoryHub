@@ -90,7 +90,7 @@ function Cards() {
             <div
               className={`flip-container flex justify-center ${
                 isAnimated ? "animate" : ""
-              } mt-[40px] `}
+              } mt-[15px] sm:mt-[25px] md:mt-[40px]`}
               onClick={handleFlip}
             >
               <div className={`flip-card ${isFlipped ? "flipped " : ""} w-screen sm:w-[80vw] md:w-[60vw] min-h-[30vh] sm:min-h-[40vh] md:min-h-[50vh] next-card`}>

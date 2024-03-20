@@ -22,7 +22,6 @@ const StudySetsSearchBar = ({ value, onChange }) => {
           <img src={search} alt="" /> 
         </div>
       </form>
-      
     );
   }
 

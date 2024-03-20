@@ -20,7 +20,7 @@ function PracticeButtons({currentSet}) {
     }, [])
 
     const userId = user?._id;
-    const buttonStyle = "py-[17px] px-[27px] set-box-shadow border-[1px] border-[#BCC0C1] rounded-[8px] uppercase text-[1.2em] dm-sans-bold flex gap-[8px] items-center"
+    const buttonStyle = "w-[50%] whitespace-nowrap min-w-[160px] sm:basis-[30%] py-[17px] px-[27px] set-box-shadow border-[1px] border-[#BCC0C1] rounded-[8px] uppercase text-[1.2em] dm-sans-bold flex gap-[8px] items-center"
 
     const onClickHandler = async(status) => {
         try {
@@ -39,7 +39,7 @@ function PracticeButtons({currentSet}) {
     }
 
   return (
-    <div className='flex justify-center gap-[32px]'>
+    <div className='flex justify-center gap-[16px] md:gap-[32px] flex-wrap md:flex-nowrap'>
         <button onClick={() => onClickHandler("mastered")} className={`${buttonStyle} hover:border-[#69CA61]`}>
             <img src={mastered} alt="mastered button" />
             <p>mastered</p>

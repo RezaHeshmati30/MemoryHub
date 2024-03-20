@@ -83,7 +83,7 @@ function ForeignUserStudySet() {
             <div
               className={`flip-container flex justify-center ${
                 isAnimated ? "animate" : ""
-              } mt-[40px] `}
+              } mt-[15px] sm:mt-[25px] md:mt-[40px]`}
               onClick={handleFlip}
             >
               <div

@@ -28,6 +28,7 @@ function Practice() {
   const [currentCardsSet, setCurrentCardsSet] = useState([]);
   const [currentStudySet, setCurrentStudySet] = useState({});
   const [loading, setLoading] = useState(true);
+  const [isAnimated, setAnimated] = useState(false);
 
   useEffect(() => {
     if (hasToken) {
@@ -120,17 +121,17 @@ function Practice() {
         {hasToken && (
         <section className="max-container padding-container relative">
           <FinishPracticeWindow />
-          <div className="flex justify-between items-center mb-[32px]">
-              <div className="basis-[20%]">
-                <BackLink path={`/user/${userId}/studySet/${id}`} />
-              </div>
-              <p className='basis-[60%] text-center text-[3em] text-leading-[120%]'>{currentStudySet?.studySet?.title}</p>
-              <div className="basis-[20%] flex flex-col items-end">
-                <p className='text-right dm-sans-bold text-[1.7em]'>{currentStudySet?.topic?.title}</p>
-              </div>
+          <div className="flex justify-between flex-wrap md:flex-nowrap items-center mb-[20px] md:mb-[32px]">
+            <div className="md:basis-[20%]">
+              <BackLink path={`/user/${userId}/studySet/${id}`} />
+            </div>
+            <p className='basis-[100%] hidden md:block md:basis-[60%] text-center text-[2.4em] md:text-[3em] text-leading-[120%]'>{currentStudySet?.studySet?.title}</p>
+            <div className="md:basis-[20%] flex flex-col items-end">
+              <p className='text-right dm-sans-bold text-[1.4em] md:text-[1.7em]'>{currentStudySet?.topic?.title}</p>
+            </div>
           </div>
-          <div className="flex gap-[10px]">
-            <div className="flex flex-col items-start justify-start gap-[8px] w-[20vw] grow-0">
+          <div className="flex flex-wrap justify-center md:justify-start md:flex-nowrap gap-[10px]">
+            <div className="flex flex-col items-center md:items-start justify-start gap-[8px] w-full md:w-[20vw] grow-0 mb-[50px] md:mb-0">
               <p className="text-[1.7em] dm-sans-bold">Cards I want to learn</p>
               <CardFilter
                 filterStatus={filterStatus}
@@ -138,30 +139,33 @@ function Practice() {
                 handleFilterChange={handleFilterChange}
               />
             </div>
+            <p className='basis-[100%] md:hidden text-center text-[2.4em] text-leading-[120%]'>{currentStudySet?.studySet?.title}</p>
             {noCardsMessage && <p className="text-[1.6em] my-[8px]">{noCardsMessage}</p>}
             {currentCardsSet?.length > 0 && (
               <>
                 <div key={currentStudySet._id} className="shrink">
-                  <div
-                    className="flip-container flex justify-center"
-                    onClick={handleFlip}
-                  >
+                <div
+              className={`flip-container flex justify-center ${
+                isAnimated ? "animate" : ""
+              } `}
+              onClick={handleFlip}
+            >
                     <div
                       className={`flip-card ${
                         isFlipped ? "flipped" : ""
-                      } w-[55vw] min-h-[50vh]`}
+                      } w-full sm:w-[80vw] md:w-[70vw] lg:w-[55vw] min-h-[30vh] sm:min-h-[40vh] md:min-h-[50vh] next-card`}
                     >
                       <div className="flip-content flex flex-col justify-between pt-[40px] px-[20px] pb-[32px]">
                         <div className={filterStatus === "all" ? "flex items-center gap-[8px]" : "hidden"}>
                           <div className={`w-[13px] h-[13px] rounded-full ${circleBg(currentCard?.status)}`}></div>
-                          <p className="text-[1.7em]">{currentCard?.status}</p>
+                          <p className="text-[1.4em] md:text-[1.7em]">{currentCard?.status}</p>
                         </div>
-                        <p className="text-[4em] text-center text-leading-[100%]">{currentCard?.card?.question}</p>
+                        <p className="text-[2.4em] md:text-[4em] text-center text-leading-[100%]">{currentCard?.card?.question}</p>
                         <img src={currentCard?.card?.image} alt="" />
                         <p className="text-[1.4em] text-leading-[150%] self-center">Show the answer</p>
                       </div>
                       <div className="flip-content flex justify-center">
-                        <p className="text-[3em] text-center text-leading-[100%] p-[10px]">{currentCard?.card?.answer}</p>
+                        <p className="text-[2.4em] md:text-[3em] text-center text-leading-[100%] p-[10px]">{currentCard?.card?.answer}</p>
                       </div>
                     </div>
                   </div>
@@ -185,22 +189,15 @@ function Practice() {
                                 aria-label="loading"
                                 max={currentCardsSet.length}
                                 value={currentIndex +1}
-                                className="h-[1px] w-full overflow-hidden bg-slate-100 [&::-webkit-progress-bar]:bg-slate-100 [&::-webkit-progress-value]:bg-идфсл"> 
+                                className="h-[1px] w-full overflow-hidden bg-slate-100 [&::-webkit-progress-bar]:bg-slate-100 [&::-webkit-progress-value]:bg-black"> 
                             </progress>
                         </div>
                   <PracticeButtons currentSet={currentCardsSet} />
                 </div>
               </>
             )}
-            <div className="w-[20vw]"/>
+            <div className="hidden lg:block lg:w-[20vw]"/>
           </div>
-          {/* <button
-            className="bg-blue-400 p-[10px] rounded-md"
-            onClick={() => navigate(`/user/${user?._id}/studySets`)}
-          >
-            Back to Study Sets
-          </button> */}
-          
         </section>
         )}
       </div>
