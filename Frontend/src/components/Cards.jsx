@@ -74,7 +74,7 @@ function Cards() {
       <section className='max-container padding-container'>
         {currentCardsSet && (
           <div key={currentCardsSet._id}>
-            <div className="flex justify-between flex-wrap md:flex-nowrap items-start">
+            <div className="flex justify-between flex-wrap md:flex-nowrap items-center">
               <div className="basis-[30%] md:basis-[20%] order-1">
                 <BackLink path={`/module/${moduleId}`} />
               </div>

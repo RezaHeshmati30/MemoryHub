@@ -22,7 +22,7 @@ function FinishPracticeWindow({correctAnswers, progress}) {
     const studySetId = studySet?._id;
 
     const onClickFinish = () => {
-        navigate(`/user/${userId}/studySets/${studySetId}`);
+        navigate(`/user/${userId}/studySet/${studySetId}`);
         setRound(1);
     }
 
