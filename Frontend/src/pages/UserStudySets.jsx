@@ -3,7 +3,7 @@ import { AuthContext } from '../context/AuthContext';
 import { UserStudySetsContext } from '../context/UserStudySetsContext';
 import { useNavigate } from 'react-router-dom';
 import UserStudySetsSearchBar from '../components/UserStudySetsSearchBar';
-import arrow from "../assets/arrow-forward.svg";
+import arrow from "../assets/images/arrow-forward.svg";
 
 
 function UserStudySets() {

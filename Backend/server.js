@@ -9,7 +9,7 @@ import userRouter from "./routes/userRouter.js";
 
 
 
-const PORT = process.env.PORT || 3003;
+const PORT = process.env.PORT || 3001;
 
 await connectMongoose();
 const app = express();

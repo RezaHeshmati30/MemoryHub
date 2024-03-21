@@ -3,19 +3,19 @@ import image8 from "../assets/images/image8.png";
 import image9 from "../assets/images/image9.png";
 import image10 from "../assets/images/image10.jpeg";
 import imageStudent from "../assets/images/imageStudent.jpg";
-import forward from "../assets/forward.svg";
+import forward from "../assets/images/forward.svg";
 
 function HomeScrollImages() {
   const sliderRef = useRef(null);
   const slideLeft = () => {
     if (sliderRef.current) {
-      sliderRef.current.scrollLeft -= 500;
+      sliderRef.current.scrollLeft -= 300;
     }
   };
 
   const slideRight = () => {
     if (sliderRef.current) {
-      sliderRef.current.scrollLeft += 500;
+      sliderRef.current.scrollLeft += 300;
     }
   };
 
@@ -28,7 +28,7 @@ function HomeScrollImages() {
         <div className='flex flex-col items-start gap-2'>
           <img
             src={image8}
-            className='min-w-[548px] rounded-[8px] object-cover'
+            className='md:min-w-[548px] min-w-[262px] rounded-[8px] object-cover'
             alt='Image 1'
           />
           <div className='font-dm-sans font-bold text-[1.7em] leading-[25.5px] mb-6'>
@@ -40,15 +40,16 @@ function HomeScrollImages() {
             instead of drowning.
           </p>
         </div>
-        <div className='flex flex-col items-start gap-2 basis-1/2'>
+        <div className='flex flex-col items-start gap-2'>
           <img
             src={image9}
-            className='flex-shrink-0 min-w-[548px] rounded-[8px] object-cover'
+            className='md:min-w-[548px] min-w-[262px] md:h-[408px] h-[195px] rounded-[8px] object-cover'
           />
 
-          <p className='text-black font-dm-sans font-bold text-[1.7em] leading-[25.5px] whitespace-nowrap custom-scrollbar mb-6'>
+          <div className='font-dm-sans font-bold text-[1.7em] leading-[25.5px] mb-6'>
+            {" "}
             Luca, Ludwig Maximilian University of Munich, 21 y.o.
-          </p>
+          </div>
           <p className='text-gray-600 font-dm-sans font-normal text-[1.7em] leading-[25.5px] text-justify'>
             Memory Hub has truly revolutionized the way I study. The flashcard
             system is incredibly intuitive, allowing me to absorb information
@@ -56,10 +57,10 @@ function HomeScrollImages() {
             platform's user-friendly interface makes learning enjoyable.
           </p>
         </div>
-        <div className='flex flex-col basis-1/2 items-start gap-2'>
+        <div className='flex flex-col items-start gap-2'>
           <img
             src={image10}
-            className='flex-shrink-0 min-w-[548px] h-[408px] rounded-[8px] object-cover'
+            className='md:min-w-[548px] min-w-[262px] md:h-[408px] h-[195px] rounded-[8px] object-cover'
           />
 
           <p className='text-black font-dm-sans font-bold text-[1.7em] leading-[25.5px] mb-6'>
@@ -71,10 +72,10 @@ function HomeScrollImages() {
             and retain information effectively.
           </p>
         </div>
-        <div className='flex flex-col items-start gap-2 basis-1/2'>
+        <div className='flex flex-col items-start gap-2 '>
           <img
             src={imageStudent}
-            className='flex-shrink-0 min-w-[548px] h-[408px] rounded-[8px] object-cover'
+            className='md:min-w-[548px] min-w-[262px] md:h-[408px] h-[195px]  rounded-[8px] object-cover'
           />
           <p className='text-black font-dm-sans font-bold text-[1.7em] leading-[25.5px] mb-6'>
             Michael, Stanford University, 22 y.o.
