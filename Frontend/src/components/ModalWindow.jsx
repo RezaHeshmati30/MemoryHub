@@ -16,7 +16,7 @@ function ModalWindow() {
         <img className={(succesWindow || errorWindow) ? "block" : "hidden"} src={succesWindow ? success : error} alt="" />
         <p className={`${(succesWindow || errorWindow) ? "block text-[1.7em]" : "hidden"}`}>{succesWindow ? "Study set was added to your account!" : "Hey! You already have it in your study sets"}</p>
         <button onClick={closeWindowHandler} className={`${succesWindow ? "block bg-[#937DE2]" : errorWindow ? "block bg-[#FF5E5E]" : "hidden"} ${btnStyle}`}>OK</button>
-      </div>
+    </div>
   )
 }
 

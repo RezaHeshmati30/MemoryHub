@@ -36,7 +36,7 @@ function NavBar() {
     if (!hasToken) {
       return (
         <>
-          <li className='block '>
+          <li className='block'>
             <button
               onClick={onClickLoginHandler}
               className=' w-[45px] h-[18px] auth-button text-black font-dm-sans text-[1.2em] font-bold uppercase'

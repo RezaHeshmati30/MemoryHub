@@ -6,6 +6,7 @@ import cors from "cors"
 import authRouter from "./routes/authRouter.js";
 import studyDataRouter from "./routes/studyDataRouter.js"
 import userRouter from "./routes/userRouter.js";
+import bodyParser from 'body-parser';
 
 
 
@@ -22,6 +23,7 @@ app.use( cors({
 app.use(express.json({ limit: '5mb' })); // Adjust the limit as needed
 app.use( cookieParser() );
 
+app.use(bodyParser.json());
 
 app.use("/", authRouter)
 app.use("/", studyDataRouter)
