@@ -11,12 +11,17 @@ export const postLoginController = async (req, res) => {
     try {
         const loggedUser = await UserModel.findOne({email: email});
         if(!loggedUser) {
-            return res.status(404).send({success: false, error: 'User/Password Combination not found'});
+            return res.status(404).send({success: false, error: 'Invalid username or password combination'});
         }
         const isCorrectPassword = await bcrypt.compare(password, loggedUser.password);
         if(!isCorrectPassword) {
-            return res.status(404).send({success: false, error: 'User/Password Combination not found'})
+            return res.status(404).send({success: false, error: 'Invalid username or password combination'})
         } 
+
+        const isVerified = loggedUser.verified;
+        if(!isVerified) {
+            return res.status(404).send({success: false, error: 'Email is not confirmed'})
+        }
 
         const expiresInMs = 500 * 60 * 1000; 
         const expiresInDate = new Date( Date.now() + expiresInMs ); 

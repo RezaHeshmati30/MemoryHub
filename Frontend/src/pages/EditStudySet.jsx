@@ -3,12 +3,15 @@ import { useNavigate, useParams } from "react-router-dom";
 import { StudySetsContext } from "../context/StudySetsContext";
 import { AuthContext } from "../context/AuthContext";
 import { UserStudySetsContext } from "../context/UserStudySetsContext";
-import trash from "../assets/trash.png";
-import openIcon from "../assets/openForm.svg";
-import closeIcon from "../assets/closeForm.png";
+import trash from "../assets/images/trash.png";
+import openIcon from "../assets/images/openForm.svg";
+import closeIcon from "../assets/images/closeForm.png";
 import BackLink from "../components/BackLink";
-import group from "../assets/group.svg";
-import EditBtns from "../components/EditBtn";
+import group from "../assets/images/group.svg";
+import EditBtns from "../components/EditBtns";
+import MessageAlert from "../components/MessageAlert";
+import { get, set } from "mongoose";
+import Loader from "../components/Loader";
 
 const EditStudySet = () => {
   const { editStudySet, deleteCard } = useContext(StudySetsContext);
@@ -17,7 +20,9 @@ const EditStudySet = () => {
   const { userId, user, getUserInfo, hasToken } = useContext(AuthContext);
   const navigate = useNavigate();
   const [isOpen, setOpen] = useState(false);
-
+  const [messageShow, setmessageShow] = useState(false);
+  const [studySetDeleted, setStudySetDeleted] = useState(false);
+  const [loader, setLoader] = useState(false);
   const savedStudySet = user?.savedStudySets?.find(
     (studySet) => studySet._id === id
   );
@@ -86,8 +91,13 @@ const EditStudySet = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setLoader(true); 
+      setTimeout(() => {
+        setLoader(false);
+        setmessageShow(true);
+      }, 3000);
       topicIdFinder();
       await editStudySet(
         userId,
@@ -98,9 +108,21 @@ const EditStudySet = () => {
         formState.description,
         formState.cards
       );
-      getUserInfo();
-      alert("Study Set updated successfully");
-      navigate("/user/:id/studySets");
+      
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setLoader(true); 
+      setTimeout(() => {
+        setLoader(false);
+        setmessageShow(true);
+      }, 3000);
+      setFormState((prevFormState) => ({
+        ...prevFormState,
+        topicTitle: savedStudySet.topic?.title || "",
+        title: savedStudySet.studySet?.title || "",
+        description: savedStudySet.studySet?.description || "",
+        cards: cardsInfo,
+      }));
+     
     } catch (error) {
       console.log(error.message);
     }
@@ -122,7 +144,7 @@ const EditStudySet = () => {
           cardIndex === index ? { ...card, image: base64Data } : card
         ),
       }));
-      console.log("FORM", formState);
+      
     } catch (error) {
       console.error("Error uploading file:", error);
     }
@@ -144,17 +166,20 @@ const EditStudySet = () => {
     });
   };
 
-  const handleRemoveCard = (cardId) => {
-    deleteCard(userId, studySetId, cardId);
-    if (studySetId !== -1 && savedStudySet && cardsInfo) {
+  const handleRemoveCard = async (cardId) => {
+    try {
+      await deleteCard(userId, studySetId, cardId);
+      getUserInfo();
       setFormState((prevFormState) => ({
         ...prevFormState,
         topicTitle: savedStudySet.topic?.title || "",
         title: savedStudySet.studySet?.title || "",
         description: savedStudySet.studySet?.description || "",
-        cards: cardsInfo,
+        cards: cardsInfo.filter(card => card.id !== cardId), 
       }));
-      console.log("Card deleted successfully");
+ 
+    } catch (error) {
+      console.error("Error deleting card:", error);
     }
   };
   
@@ -165,11 +190,20 @@ const EditStudySet = () => {
   const setId = savedStudySet?.studySet?._id;
 
   return (
-    <div className='max-container padding-container  regal-blue flex flex-col'>
+    <div className=' max-container padding-container regal-blue flex flex-col '>
       <BackLink />
+      <Loader loader={loader} />
+      <MessageAlert
+        messageShow={messageShow}
+        userId={userId}
+        studySetDeleted={studySetDeleted}
+        message='The study set has been edited!'
+      />
       {hasToken && (
         <form
-          className='flex flex-col justify-center mx-auto md:w-[1128px] my-auto'
+          className={`relative flex flex-col justify-center text-[1.7em] mx-auto md:w-[1128px] my-auto ${
+            !messageShow && !studySetDeleted && !loader ? "display" : "blur"
+          }`}
           onSubmit={handleSubmit}
         >
           <h2 className='dm-sans-medium mb-6 text-[20px]'>Edit Study Set</h2>
@@ -195,7 +229,7 @@ const EditStudySet = () => {
             <div className='container max-h-[78px] min-h-[78px] basis-19/40 border border-solid border-gray-300 rounded-lg bg-white flex-shrink-0 pl-[40px]'>
               <div className='flex items-center'>
                 <div
-                  className={`dm-sans-regular w-full py-5 cursor-pointer mt-1 `}
+                  className={`dm-sans-regular w-full py-5 cursor-pointer mt-1 sm:text-[17px] sm:px-1 text-[14px] `}
                 >
                   Choose from already created topics
                 </div>
@@ -204,14 +238,14 @@ const EditStudySet = () => {
                     src={openIcon}
                     alt='click to hide options'
                     onClick={toggleList}
-                    className='cursor-pointer mx-5 mt-2'
+                    className='cursor-pointer mx-5 mt-1  '
                   />
                 ) : (
                   <img
                     src={closeIcon}
                     alt='click to show options'
                     onClick={toggleList}
-                    className='cursor-pointer mx-5 mt-2 '
+                    className='cursor-pointer mx-5 mt-2  '
                   />
                 )}
               </div>
@@ -248,6 +282,7 @@ const EditStudySet = () => {
           />
           <div className='mb-6'>
             <textarea
+              style={{ resize: "none", overflow: "auto" }}
               className='container h-[190px] mb-6 flex-shrink-0 border border-solid border-gray-300 rounded-lg bg-white pl-[40px] pt-[24px]'
               id='description'
               placeholder='Add description*'
@@ -271,9 +306,10 @@ const EditStudySet = () => {
                     onClick={() => handleRemoveCard(card.id)}
                   />
                 </div>
-                <div className='flex md:flex-row flex-col justify-evenly px-10 gap-9 py-5'>
+                <div className='container flex sm:flex-row flex-col justify-evenly px-10 gap-9 py-5'>
                   <div className='border-b-2 basis-2/6'>
                     <textarea
+                      style={{ resize: "none", overflow: "auto" }}
                       className='w-full h-[100px] custom-scrollbar'
                       id={`question${index}`}
                       type='text'
@@ -287,6 +323,7 @@ const EditStudySet = () => {
                   </div>
                   <div className='border-b-2 basis-2/6 '>
                     <textarea
+                      style={{ resize: "none", overflow: "auto" }}
                       className='w-full h-[100px] custom-scrollbar basis-2/6'
                       id={`answer${index}`}
                       type='text'
@@ -336,13 +373,18 @@ const EditStudySet = () => {
                 </div>
               </div>
             ))}
+
           <div
-            className='dm-sans-medium  hover:underline cursor-pointer flex justify-center py-[40px]'
+            className='container dm-sans-medium flex justify-center  cursor-pointer py-[40px] hover:underline '
             onClick={handleAddCard}
           >
             + Add new Card
           </div>
-          <EditBtns userId={userId} setId={setId} />
+          <EditBtns
+            userId={userId}
+            setId={setId}
+            setStudySetDeleted={setStudySetDeleted}
+          />
         </form>
       )}
     </div>

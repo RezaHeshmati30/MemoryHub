@@ -9,17 +9,14 @@ import check from "../assets/images/test-check.svg";
 import FinishPracticeWindow from '../components/FinishPracticeWindow';
 
 function LearnCards() {
-    const {currentIndex, setCurrentIndex, isRoundFinished, setIsRoundFinished, setRound, correctAnswers, setCorrectAnswers, wrongAnswers, setWrongAnswers, progress, setProgress} = useContext(UserStudySetsContext);
-    const { hasToken, getUserInfo, user, userId } = useContext(AuthContext);
+    const {currentIndex, setCurrentIndex, setIsRoundFinished, setRound, correctAnswers, setCorrectAnswers, setWrongAnswers, progress, setProgress} = useContext(UserStudySetsContext);
+    const { hasToken, getUserInfo, user } = useContext(AuthContext);
     const navigate = useNavigate();
-    const {id} = useParams();
+    const { userId,id} = useParams();
     const [answerOptions, setAnswerOptions] = useState([]);
     const [currentCard, setCurrentCard] = useState(null);
     const [currentCardsSet, setCurrentCardsSet] = useState(null);
     const [correctAnswer, setCorrectAnswer] =  useState(null);
-    // const [correctAnswers, setCorrectAnswers] = useState(0);
-    // const [wrongAnswers, setWrongAnswers] = useState(0);
-    // const [progress, setProgress] = useState(0);
     const [isCorrect, setIsCorrect] = useState(false);
     const [selectedAnswer, setSelectedAnswer] = useState(null);
     const [message, setMessage] = useState("");
@@ -46,7 +43,6 @@ function LearnCards() {
 
     useEffect(() => {
         const studySet = user?.savedStudySets?.find(studySet => studySet._id === id) || {};
-        console.log("studySET:", studySet)
         const currentCardsSet = studySet?.cards || [];
         const currentCard = currentCardsSet[currentIndex];
         setCurrentStudySet(studySet);
@@ -101,13 +97,6 @@ function LearnCards() {
         setCorrectAnswers(prevValue => prevValue + 1) : setWrongAnswers(prevValue => prevValue + 1);
     }
 
-    const onClickTryAgainHandler = () => {
-        navigate(`/user/${userId}/studySet/learn-cards/${id}`); 
-        setCurrentIndex(0);
-        setCorrectAnswers(0);
-        setWrongAnswers(0);
-    }
-
     const okButtonHandler = () => {
         if (currentIndex + 1 >= currentCardsSet?.length) {
             setIsRoundFinished(true);
@@ -117,7 +106,6 @@ function LearnCards() {
         }
     }
     
-
     const answerLetter = (index) => {
         if (index === 0) return "A";
         if (index === 1) return "B";
@@ -126,68 +114,58 @@ function LearnCards() {
     }
 
   return (
-    <div className='border-b-[8px] border-b-[#FFC2FF] h-[100vh]'>
-    {hasToken && (
-    <section className='max-container padding-container'>
-        <FinishPracticeWindow correctAnswers={correctAnswers} progress={progress}/>
-        {currentCardsSet && (
-        <div>
-            <div className="flex justify-between items-center mb-[32px]">
-              <div className="basis-[30%]">
-                <BackLink />
-              </div>
-              <p className='basis-[30%] text-center text-[3em] text-leading-[120%]'>{currentStudySet?.studySet?.title}</p>
-              <div className="basis-[30%] flex flex-col items-end">
-                <p className='text-right dm-sans-bold text-[1.7em]'>{currentStudySet?.topic?.title}</p>
-              </div>
-            </div>
-            <div className='w-[60vw] mx-auto'>
-                <div className='w-[100%] bg-[#FFF4FC] min-h-[30vh] rounded-[8px]  pt-[40px] px-[32px] pb-[32px] relative'>
-                    <p className="text-[2em] text-leading-[100%]">{currentCard?.card?.question}</p>
-                    <div className={`${showMessages ? "flex" : "hidden"} absolute z-30 top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] justify-center flex-col items-center gap-[15px] px-[24px] pt-[29px] pb-[40px] bg-white mt-[20px] w-[316px] border-[1px] rounded-[8px] border-[#BCC0C1]`}>
-                        <img src={isCorrect ? success : wrong} alt="" />
-                        <p className='text-[1.4em] text-leading-[150%]'>{isCorrect ? "Correct!" : <>Wrong! The right answer is: <br />"{correctAnswer}"</>}</p>
-                        <button onClick={okButtonHandler} className={`${isCorrect ? "bg-[#3EB655] hover:border-[#3EB655]" : "bg-[#FF5E5E] hover:border-[#FF5E5E]"} w-[100%] hover:bg-white text-white hover:text-black border-[1px] p-[6px] rounded-[5px]` }>OK</button>
+    <>
+        {hasToken && (
+            <section className='max-container padding-container'>
+                <FinishPracticeWindow correctAnswers={correctAnswers} progress={progress}/>
+                {currentCardsSet && (
+                <div>
+                    <div className="flex justify-between md:items-center mb-[20px] md:mb-[32px] flex-wrap md:flex-nowrap items-center">
+                    <div className="basis-[30%] md:basis-[20%] order-1 flex items-center">
+                        <BackLink path={`/user/${userId}/studySet/${id}`} />
                     </div>
-                </div>
-                <p className='text-[1.7em] dm-sans-bold text-center my-[21px]'>{currentIndex +1} / {currentCardsSet?.length}</p>
-                <div className='flex gap-[20px] justify-between flex-wrap mt-[40px] w-[100%]'>
-                    {answerOptions.map((option, index) => (
-                        <button onClick={() => onClickAnswerHandler(option)} className={`${
-                            showMessages &&
-                            (option === correctAnswer ? "border-[#69CA61] bg-[#69ca6133]" : "")
-                        } basis-[45%] rounded-[8px] border-[1px] p-[15px] text-[1.6em] border-[#BCC0C1] set-box-shadow hover:border-black flex justify-between `} key={index}><span className='dm-sans-medium mr-[13px]'>{answerLetter(index)}</span>
-                        <span className='text-left'>{option}</span>
-                        {showMessages && option === correctAnswer && (
-                            <img className="inline-block" src={check} alt="" />
-                        )}
-                        </button>
-                    ))}
-                </div>
-            </div>
-        </div>)} 
-         {/* : 
-        (
-             <div>
-                 <div>
-                     <p>You answered {correctAnswers} question of {currentCardsSet?.length}</p>
-                     <p>Your progress: {progress}%</p>
-                 </div>
-                 <div>
-                     <button onClick={onClickTryAgainHandler} className='bg-blue-400 p-[10px] rounded-md mt-[40px]'>Try again!</button>
-                 </div>
-                
-             </div> 
-         )}
-         <button
-             className='bg-blue-400 p-[10px] rounded-md mt-[40px]'
-             onClick={() => navigate(`/user/${user?._id}/studySets`)}
-             >
-             back to Study Sets
-         </button>  */}
-    </section>
-    )}
-    </div>
+                    <p className='basis-[100%] md:basis-[60%] order-3 md:order-2 text-center text-[2.4em] md:text-[3em] text-leading-[120%]'>{currentStudySet?.studySet?.title}</p>
+                    <div className="basis-[65%] md:basis-[20%] flex flex-col items-end order-2">
+                        <p className='text-right dm-sans-bold text-[1.4em] md:text-[1.7em]'>{currentStudySet?.topic?.title}</p>
+                    </div>
+                    </div>
+                    <div className='w-[60vw] mx-auto relative'>
+                        <div className='w-[100%] bg-[#FFF4FC] min-h-[30vh] rounded-[8px] p-[10px] flex flex-col justify-center'>
+                            <p className="text-[2.4em] sm:text-[3em] md:text-[4em] text-center text-leading-[100%]">{currentCard?.card?.question}</p>
+                            <div className={`${showMessages ? "flex" : "hidden"} absolute z-30 top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] justify-center flex-col items-center gap-[15px] px-[24px] pt-[29px] pb-[40px] bg-white mt-[20px] min-w-[300px] border-[1px] rounded-[8px] border-[#BCC0C1]`}>
+                                <img src={isCorrect ? success : wrong} alt="" />
+                                <p className='text-[1.4em] text-leading-[150%]'>{isCorrect ? "Correct!" : <>Wrong! The right answer is: <br />"{correctAnswer}"</>}</p>
+                                <button onClick={okButtonHandler} className={`${isCorrect ? "bg-[#3EB655] hover:border-[#3EB655]" : "bg-[#FF5E5E] hover:border-[#FF5E5E]"} w-[100%] hover:bg-white text-white hover:text-black border-[1px] p-[6px] rounded-[5px]` }>OK</button>
+                            </div>
+                        </div>
+                        <p className='text-[1.7em] dm-sans-bold text-center my-[21px]'>{currentIndex +1} / {currentCardsSet?.length}</p>
+                        <div className='mb-[24px]'>
+                                    <progress
+                                        aria-label="loading"
+                                        max={currentCardsSet.length}
+                                        value={currentIndex +1}
+                                        className="h-[1px] w-full overflow-hidden bg-slate-100 [&::-webkit-progress-bar]:bg-slate-100 [&::-webkit-progress-value]:bg-black"> 
+                                    </progress>
+                                </div>
+                        <div className='flex gap-[20px] justify-between flex-wrap mt-[40px] w-[100%]'>
+                            {answerOptions.map((option, index) => (
+                                <button disabled={showMessages ? true : false} onClick={() => onClickAnswerHandler(option)} className={`${
+                                    showMessages &&
+                                    (option === correctAnswer ? "border-[#69CA61] bg-[#69ca6133] justify-between" : "")
+                                } basis-[100%] md:basis-[45%] rounded-[8px] border-[1px] p-[15px] text-[1.6em] border-[#BCC0C1] set-box-shadow hover:border-black flex  `} key={index}>
+                                    <span className='dm-sans-medium mr-[13px]'>{answerLetter(index)}</span>
+                                    <span className='text-left'>{option}</span>
+                                    {showMessages && option === correctAnswer && (
+                                        <img className="inline-block" src={check} alt="" />
+                                    )}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                </div>)} 
+            </section>
+        )}
+    </>
   )
 }
 

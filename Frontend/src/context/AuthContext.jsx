@@ -26,6 +26,10 @@ const AuthContextProvider = ({ children }) => {
   const [userId, setUserId] = useState("");
   const [savedStudySets, setSavedStudySets] = useState([]);
   const [nickName, setNickName] = useState("");
+  const [successLoginWindow, setSuccessLoginWindow] = useState(false);
+  const [successSignUpWindow, setSuccessSignUpWindow] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
 
   const backendApiUrl = import.meta.env.VITE_SERVER_URL;
 
@@ -43,11 +47,36 @@ const AuthContextProvider = ({ children }) => {
     }
   };
 
+  // const signUpHandler = async (e) => {
+  //   e.preventDefault();
+
+  //   resetMessages();
+
+  //   try {
+  //     const resp = await axios.post(`${backendApiUrl}/register`, {
+  //       email: emailSignUp,
+  //       password: passwordSignUp,
+  //       firstName,
+  //       lastName,
+  //       nickName
+  //     });
+  //     console.log("Erfolgreich registriert:", resp.data);
+  //     setEmailSignUp("");
+  //     setPasswordSignUp("");
+  //     setMsg("Du hast dich erfolgreich registriert.");
+  //   } catch (error) {
+  //     setErrorMessages(error);
+  //     console.log("error while signing up:", error);
+  //   }
+  // };
+
   const signUpHandler = async (e) => {
     e.preventDefault();
-
     resetMessages();
-
+    setTimeout(() => {
+      setSuccessSignUpWindow(true);
+  }, 700); 
+    
     try {
       const resp = await axios.post(`${backendApiUrl}/register`, {
         email: emailSignUp,
@@ -60,6 +89,7 @@ const AuthContextProvider = ({ children }) => {
       setEmailSignUp("");
       setPasswordSignUp("");
       setMsg("Du hast dich erfolgreich registriert.");
+      setIsLoading(true);
     } catch (error) {
       setErrorMessages(error);
       console.log("error while signing up:", error);
@@ -90,7 +120,9 @@ const AuthContextProvider = ({ children }) => {
       setHasToken(true);
       setEmailLogin("");
       setPasswordLogin("");
+      setSuccessLoginWindow(true);
     } catch (error) {
+      setSuccessLoginWindow(true);
       setErrorMessages(error);
       console.log("error while logging in:", error);
     }
@@ -160,8 +192,6 @@ const AuthContextProvider = ({ children }) => {
       setUser(response.data);
       setUserId(response.data._id);
       setSavedStudySets(response.data.savedStudySets);
-
-      //console.log("user response", response.data);
     } catch (error) {
       setErrorMessages(error);
     }
@@ -203,7 +233,10 @@ const AuthContextProvider = ({ children }) => {
         setIsCreateCardsClicked,
         userId, setUserId,
         savedStudySets, setSavedStudySets,
-        nickName, setNickName
+        nickName, setNickName,
+        successLoginWindow, setSuccessLoginWindow,
+        successSignUpWindow, setSuccessSignUpWindow,
+        isLoading, setIsLoading
       }}
     >
       {children}

@@ -5,7 +5,6 @@ const ModuleSchema = new mongoose.Schema({
     type: String,
     unique: true,
   },
-  icon: {type: String},
   topics: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Topic' }],
 })
 

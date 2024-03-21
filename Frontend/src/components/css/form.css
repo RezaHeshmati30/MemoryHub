@@ -1,12 +1,10 @@
-form {
+<<<<<<< HEAD
+=======
+/* form {
     font-size: 1.7em
-}
+} */
+>>>>>>> dev
 
-input :placeholder-shown {
-    color: #000;
-    line-height: 150%;
-  }
-  
 .custom-scrollbar::-webkit-scrollbar {
     width: 6px;
     cursor: pointer;

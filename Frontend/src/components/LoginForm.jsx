@@ -1,6 +1,8 @@
-import { useContext } from "react";
-import { AuthContext } from "../context/AuthContext";
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 import close from "../assets/images/close.svg";
+import success from "../assets/images/success.svg";
+import errorIcon from "../assets/images/test-wrong.svg";
 
 function LoginForm() {
   const {
@@ -15,6 +17,7 @@ function LoginForm() {
     setShowSignUpForm,
     isCreateCardsClicked,
     setIsCreateCardsClicked,
+    error, successLoginWindow, setSuccessLoginWindow
   } = useContext(AuthContext);
 
   const onClickCloseHandler = () => {
@@ -26,6 +29,8 @@ function LoginForm() {
     setShowLoginForm(false);
     setShowSignUpForm(true);
   };
+
+  const btnStyle = "w-full py-[21px] rounded-[8px] text-white text-[1.2em]";
 
   return (
     <div className="max-container mx-auto ">
@@ -100,6 +105,8 @@ function LoginForm() {
         </form>
       </div>
     </div>
+    
+    
   );
 }
 

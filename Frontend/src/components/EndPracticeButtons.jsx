@@ -21,10 +21,10 @@ function EndPracticeButtons() {
         setRound(1);
     }
 
-    const btnStyle = "bg-black text-white py-[19px] px-[35px] rounded-[8px] uppercase text-[1.4em] dm-sans-bold border-[1px] border-transparent hover:bg-white hover:text-black hover:border-[1px] hover:border-black"
+    const btnStyle = "basis-[50%] min-w-[160px] whitespace-nowrap bg-black text-white py-[19px] px-[35px] rounded-[8px] uppercase text-[1.4em] dm-sans-bold border-[1px] border-transparent hover:bg-white hover:text-black hover:border-[1px] hover:border-black"
 
   return (
-    <div className='flex gap-[20px] p-[20px]'>
+    <div className='flex flex-wrap sm:flex-nowrap justify-center gap-[20px] '>
         <button className={btnStyle} onClick={onClickNextRound}>Next round</button>
         <button className={btnStyle} onClick={onClickFinish}>Finish</button>
     </div>

@@ -40,6 +40,7 @@ ul {
     @apply px-[40px] py-[25px];
   }
 
+  
 }
 
 .inter-bold {
@@ -193,4 +194,9 @@ ul {
   background-position-x: 160px;
 }
 
+@media (min-width: 768px) {
+  #statusFilter {
+    background-position-x: 120px;
+  }
+}
 

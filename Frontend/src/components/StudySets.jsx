@@ -5,6 +5,7 @@ import { AuthContext } from '../context/AuthContext';
 import StudySetsSearchBar from '../components/StudySetsSearchBar';
 import arrow from "../assets/images/arrow-forward.svg";
 import BackLink from './BackLink';
+import Footer from './Footer';
 
 function StudySets() {
   const { setStudySetId, setTopicId, getModulesData, modulesData, getModuleData, moduleData } = useContext(StudySetsContext);
@@ -80,7 +81,7 @@ if (!Array.isArray(studySets)) {
 
 
 const goToSetHandler = (topicId, studySetId) => {
-    navigate(`/studySet/${topicId}/${studySetId}`);
+    navigate(`/module/${moduleId}/studySet/${topicId}/${studySetId}`)
     setTopicId(topicId);
     setStudySetId(studySetId);
   };
@@ -107,31 +108,31 @@ const slideRight = () => {
 };
 
   return (
-    <section className='flex flex-col p-[20px] bg-[#F6F7FB] max-container padding-container'>
-        <BackLink />
-
-        <div className='flex flex-col items-center'>
+    <>
+    <section className='flex flex-col py-[20px] bg-[#F6F7FB] max-container padding-container'>
+        <BackLink path="/modules" />
+        <div className='flex flex-col items-center mb-[20px] sm:mb-[35px] lg:mb-[64px]'>
             <StudySetsSearchBar value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
         </div>
 
-        <h2 className='text-center text-[4em] mb-[1.6px]'>{location.pathname === "/all-study-sets" ? "All topics" : moduleData?.title}</h2>
-            <ul className='flex justify-center gap-[5em] mb-[5.6em]'>
+        <h2 className='text-center text-[2.4em] md:text-[4em] mb-[16px] sm:mb-[25px] lg:mb-[50px]'>{location.pathname === "/all-study-sets" ? "All topics" : moduleData?.title}</h2>
+            <ul className='flex justify-center flex-wrap gap-[10px] sm:gap-[20px] mb-[20px] md:mb-[50px]'>
                 {location.pathname === "/all-study-sets" ? (modulesData?.map(module => (
-                    <li className='text-center dm-sans-medium text-[1.7em]' key={module._id}>{module?.title}</li>
+                    <li className='text-center dm-sans-medium text-[1.4em] md:text-[1.7em]' key={module._id}>{module?.title}</li>
                 ))) : 
                 (moduleData?.topics?.map(topic => (
                     <li className='text-center dm-sans-medium text-[1.4em]' key={topic._id}>{topic?.title}</li>
                 )))}
             </ul>
         
-        <h2 className='text-[4em] mb-[56px]'>Popular study sets</h2>
+        <h2 className='text-[2.4em] md:text-[4em] text-center md:text-left mb-[20px] sm:mb-[30px] md:mb-[56px]'>Popular study sets</h2>
             <ul id='slider' className='w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide flex gap-[32px] mb-[40px]'>
                 {top6MostShared?.map((studySet, index) => (
                     <li key={studySet._id} onClick={() => goToSetHandler(studySet.topicId, studySet._id)} className={`cursor-pointer border-[1px] set-box-shadow-${index+1} border-[#BCC0C1] study-set-line-${index+1}-hover rounded-[8px] px-[16px] flex flex-col justify-between pt-[16px] pb-[21px] set-box-shadow`}>
                         <p className='dm-sans-medium text-[2em]'>{studySet.title}</p>
                         <div className={`study-set-line-${index+1} border-[2px] w-full mb-[8px]`}/>
-                        <p className='max-w-[300px] overflow-hidden text-ellipsis'>{studySet.description}</p>
-                        <div className='flex justify-between items-center'>
+                        <p className='min-w-[200px] max-w-[200px] md:max-w-[300px] overflow-hidden text-ellipsis'>{studySet.description}</p>
+                        <div className='flex justify-between items-center gap-[10px]'>
                             <p className='text-[#9A9A9A] text-leading-[150%]'>{studySet.cards.length} cards</p>
                             <div className='flex hover:underline items-center gap-[8px]'>
                                 <button className='dm-sans-bold text-[1.2em] uppercase' onClick={() => goToSetHandler(studySet.topicId, studySet._id)}>Go to set</button>
@@ -142,25 +143,21 @@ const slideRight = () => {
                 ))}
             </ul>
         <div className='flex items-center justify-between gap-[32px]'>
-            {/* <div className='container relative w-[100%]'>
-                <div id='scroll' className='absolute top-0 left-0 z-30 h-[1px] w-[50%] bg-black'/>
-                <div className='absolute top-0 left-0 h-[1px] w-full bg-[#BCC0C1]'/>
-            </div> */}
             <div className='h-[1px] basis-[90%] bg-[#BCC0C1]'/>
-            <div className='flex gap-[44px] justify-end items-center'>
+            <div className='flex gap-[10px] md:gap-[20px] lg:gap-[44px] justify-end items-center'>
                     <img src={arrow} className='cursor-pointer rotate-180' onClick={slideLeft} alt="" />
                     <img src={arrow} className='cursor-pointer' onClick={slideRight} alt="" />
             </div>
         </div>
 
-        <h2 className='text-[4em] mb-[56px]'>All study sets</h2>
-        <ul className='flex gap-[32px] flex-wrap justify-between'>
+        <h2 className='text-[2.4em] md:text-[4em] mb-[20px] sm:mb-[30px] md:mb-[56px]'>All study sets</h2>
+        <ul className='flex gap-[15px] md:gap-[25px] lg:gap-[32px] flex-wrap justify-between'>
             {filteredStudySets?.map((topic, topicIndex) => {
                 return topic?.studySets.map((studySet, studySetIndex) => {
                     const index = topicIndex * topic.studySets.length + studySetIndex;
                     const styleClass = `study-set-line-${(index % 6) + 1}`;
                     return (
-                        <li key={studySet._id} onClick={() => goToSetHandler(topic._id, studySet._id)} className={`cursor-pointer border-[1px] border-[#BCC0C1] ${styleClass}-hover rounded-[8px] basis-[100%] md:basis-[48%]  lg:basis-[30%] xl:basis-[23%] px-[16px] flex flex-col justify-between pt-[16px] pb-[21px] set-box-shadow `}>
+                        <li key={studySet._id} onClick={() => goToSetHandler(topic._id, studySet._id)} className={`cursor-pointer border-[1px] border-[#BCC0C1] ${styleClass}-hover rounded-[8px] basis-[100%] md:basis-[48%] lg:basis-[30%] xl:basis-[23%] px-[16px] flex flex-col justify-between pt-[16px] pb-[21px] set-box-shadow `}>
                             <p className='dm-sans-medium text-[2em]'>{studySet.title}</p>
                             <div className={`${styleClass} border-[2px] w-full mb-[8px]`}/>
                             <p className='text-[1.2em] text-leading-[150%] mb-[25px]'>{studySet.description}</p>
@@ -176,7 +173,10 @@ const slideRight = () => {
                 });
             })}
         </ul>
+        
     </section>
+    <Footer />
+    </>
   );
 }
 

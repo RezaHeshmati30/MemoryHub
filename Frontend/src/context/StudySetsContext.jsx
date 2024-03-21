@@ -7,6 +7,7 @@ const StudySetsContextProvider = ({ children }) => {
   const [moduleData, setModuleData] = useState({});
   const [modulesData, setModulesData] = useState([]);
   const [studySetId, setStudySetId] = useState("");
+  const [moduleId, setModuleId] = useState("");
   const [topicId, setTopicId] = useState("");
   const [question, setQuestion] = useState([]);
   const [answer, setAnswer] = useState([]);
@@ -16,6 +17,8 @@ const StudySetsContextProvider = ({ children }) => {
   const [studyData, setStudyData] = useState([]);
   const [userStudySets, setUserStudySets] = useState({});
   const [userShortData, setUserShortData] = useState({});
+  const [succesWindow, setSuccesWindow] = useState(false);
+  const [errorWindow, setErrorWindow] = useState(false);
   
 
   // const backendApiUrl = "http://localhost:3001";
@@ -38,7 +41,6 @@ const StudySetsContextProvider = ({ children }) => {
     console.error('Error fetching module data:', error);
   }
 };
-
 
   const getStudyData = async () => {
     const response = await axios.get(`${backendApiUrl}/topics`);
@@ -68,10 +70,12 @@ const StudySetsContextProvider = ({ children }) => {
         studySetData
       );
       console.log(`studySetData ${studySetData} sent to user ${userId}`);
-      alert("Study set was added to your account");
+      // alert("Study set was added to your account");
+      setSuccesWindow(true);
     } catch (error) {
       console.log("error while logging in:", error);
-      alert("Study set already exists in your account");
+      // alert("Study set already exists in your account");
+      setErrorWindow(true);
     }
   };
 
@@ -97,7 +101,6 @@ const StudySetsContextProvider = ({ children }) => {
         })),
       };
 
-      console.log("Request Payload in :", { ...savedStudySets });
       const response = await axios.post(
         `${backendApiUrl}/createSet/${userId}`,
         { ...savedStudySets }
@@ -137,7 +140,6 @@ const StudySetsContextProvider = ({ children }) => {
       }
       })
     }
-
       const response = await axios.patch(
         `${backendApiUrl}/editSet/${userId}/${topicId}/${studySetId}`,
         updatedStudySets,
@@ -147,15 +149,12 @@ const StudySetsContextProvider = ({ children }) => {
           },
         }
       );
-
-      console.log("Study set updated successfully!");
     } catch (error) {
       console.error("Error updating study set:", error.message);
 
       if (error.response) {
         console.log("Response Data from backend:", error.response.data);
       }
-
       throw error;
     }
   };
@@ -167,7 +166,7 @@ const StudySetsContextProvider = ({ children }) => {
       );
 
       if (response.status === 200) {
-        console.log("Card deleted successfully");
+        
         return true;
       } else {
         console.error("Error deleting card. Server response:", response);
@@ -213,6 +212,9 @@ const StudySetsContextProvider = ({ children }) => {
         deleteCard,
         getModulesData,
         modulesData, setModulesData,
+        moduleId, setModuleId,
+        succesWindow, setSuccesWindow,
+        errorWindow, setErrorWindow
       }}
     >
       {children}

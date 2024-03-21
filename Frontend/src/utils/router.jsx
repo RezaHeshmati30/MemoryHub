@@ -3,7 +3,6 @@ import Root from "../components/Root";
 import PageNotFound from "../pages/PageNotFound";
 import Home from "../pages/Home";
 import UserProfile from "../pages/UserProfile"
-import StudySets from "../pages/Module";
 import CreateSets from "../pages/CreateSets";
 import StudySet from "../pages/StudySet";
 import Contact from "../pages/Contact";
@@ -40,11 +39,9 @@ const router = createBrowserRouter([
       { path: '/modules', element: <Modules />},
       { path: '/module/:moduleId', element: <Module />},
       { path: '/all-study-sets', element: <AllStudySets />},
-      { path: '/studySet/:topicId/:studySetId', element: <StudySet />},
-      // { path: '/studySet/:studySetId', element: <StudySet />},
+      { path: '/module/:moduleId/studySet/:topicId/:studySetId', element: <StudySet />},
       { path: '/createSet/', element: <CreateSets />},
       { path: '/studySet/edit/:id', element: < EditStudySet/>},
-      // { path: '/studySet/practice/:id', element: <Practice />},
       { path: '/studySet/endPractice/:id', element: <EndPractice />},
       { path: '/contact', element: <Contact />},
       { path: '*', element: <PageNotFound />},
