@@ -8,6 +8,7 @@ import arrow from "../assets/images/arrow-forward.svg"
 import "../components/css/cards.css";
 import BackLink from "../components/BackLink";
 import Footer from "../components/Footer";
+import ModalWindow from "../components/ModalWindow";
 
 
 
@@ -69,6 +70,7 @@ function ForeignUserStudySet() {
   return (
     <>
       <section className='max-container padding-container'>
+        <ModalWindow />
         {currentCardsSet && (
           <div key={currentCardsSet._id}>
             <div className="flex justify-between items-center flex-wrap md:flex-nowrap">
