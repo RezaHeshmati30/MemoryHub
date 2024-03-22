@@ -1,7 +1,6 @@
-
-import React, { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
+import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 import arrow from "../assets/images/arrow.svg";
 import forward from "../assets/images/forward.svg";
 
@@ -16,7 +15,7 @@ function HomePageButtons() {
   };
 
   return (
-    <section className=' pt-[50px] gap-6 flex flex-row justify-center md:justify-start items-center '>
+    <section className=' sm:pt-[50px] pt-[10px] flex sm:flex-row flex-col sm:gap-6 gap-1 justify-start  '>
       <button
         onClick={() => navigate("/modules")}
         className='bg-[#000] w-36 h-12 md:h-16 md:w-56 md:rounded-[36px] rounded-[28px] flex justify-center items-center flex-shrink-0  text-white font-dm-sans font-bold text-base hover:bg-white hover:text-black  '
@@ -38,6 +37,3 @@ function HomePageButtons() {
 }
 
 export default HomePageButtons;
-
-
-

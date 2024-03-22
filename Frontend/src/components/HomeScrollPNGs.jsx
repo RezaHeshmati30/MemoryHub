@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import image3 from "../assets/images/image3.png";
 import image4 from "../assets/images/image4.png";
 import image5 from "../assets/images/image5.png";
@@ -6,6 +6,20 @@ import forward from "../assets/images/forward.svg";
 
 function HomeScrollPNGs() {
   const sliderRef = useRef(null);
+  const [isTabletOrSmaller, setIsTabletOrSmaller] = useState(false);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsTabletOrSmaller(window.innerWidth <= 1024); 
+    };
+
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+    return () => {
+      window.removeEventListener("resize", checkScreenSize);
+    };
+  }, []);
+
   const slideLeft = () => {
     if (sliderRef.current) {
       sliderRef.current.scrollLeft -= 300;
@@ -22,9 +36,9 @@ function HomeScrollPNGs() {
     <div>
       <div
         ref={sliderRef}
-        className="flex flex-row gap-10 justify-between overflow-x-scroll scrollbar-hide"
+        className={`flex flex-row gap-10 justify-between overflow-x-${isTabletOrSmaller ? "scroll" : "hidden"} scrollbar-hide`}
       >
-        <div className="  md:min-w-[432px] min-w-[262px] flex flex-col items-start gap-2 ">
+        <div className=" md:min-w-[432px] min-w-[262px] flex flex-col items-start gap-2 ">
           <img src={image3} className="rounded-[8px] object-cover" />
           <p className="font-dm-sans font-bold text-[1.7em] leading-[25.5px] mb-6">
             Easily craft custom flashcards from scratch with our intuitive tool
@@ -62,23 +76,25 @@ function HomeScrollPNGs() {
           </p>
         </div>
       </div>
-      <div className="flex items-center justify-between gap-[32px] mt-20">
-        <div className="h-[1px] basis-[90%] bg-[#BCC0C1]" />
-        <div className="flex gap-[44px] justify-end items-center">
-          <img
-            src={forward}
-            className="cursor-pointer rotate-180"
-            onClick={slideLeft}
-            alt="Scroll Left"
-          />
-          <img
-            src={forward}
-            className="cursor-pointer"
-            onClick={slideRight}
-            alt="Scroll Right"
-          />
+      {isTabletOrSmaller && (
+        <div className="flex items-center justify-between gap-[32px] mt-20">
+          <div className="h-[1px] basis-[90%] bg-[#BCC0C1]" />
+          <div className="flex gap-[44px] justify-end items-center">
+            <img
+              src={forward}
+              className="cursor-pointer rotate-180"
+              onClick={slideLeft}
+              alt="Scroll Left"
+            />
+            <img
+              src={forward}
+              className="cursor-pointer"
+              onClick={slideRight}
+              alt="Scroll Right"
+            />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

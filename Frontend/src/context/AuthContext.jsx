@@ -101,7 +101,7 @@ const AuthContextProvider = ({ children }) => {
     const email = emailLogin;
     const password = passwordLogin;
     resetMessages();
-
+   
     try {
       const resp = await axios.post(
         `${backendApiUrl}/login`,
@@ -113,6 +113,7 @@ const AuthContextProvider = ({ children }) => {
           withCredentials: true,
         }
       );
+   
       setMsg(`Erfolgreich eingeloggt: ${email}. JWT erhalten.`);
       console.log(`Erfolgreich eingeloggt: ${email}. JWT erhalten.`);
       // Token im Local Storage speichern
