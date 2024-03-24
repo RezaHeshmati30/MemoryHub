@@ -1,9 +1,7 @@
-import React, { useContext } from "react";
+import React from "react";
 import image6 from "../assets/images/image6.png";
 import image7 from "../assets/images/image7.png";
-import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
-import top from "../assets/images/closeForm.png";
+import top from "../assets/images/cf.png";
 import Footer from "../components/Footer";
 import HomeScrollImages from "../components/HomeScrollImages";
 import HomeHeader from "../components/HomeHeader";
@@ -12,14 +10,7 @@ import HomeScrollPNGs from "../components/HomeScrollPNGs";
 import HomeLastBody from "../components/HomeLastBody";
 
 function Home() {
-  const navigate = useNavigate();
-  const { hasToken, setShowLoginForm, setIsCreateCardsClicked } =
-    useContext(AuthContext);
 
-  const onClickHandler = () => {
-    hasToken ? navigate("/createSet") : setShowLoginForm(true);
-    setIsCreateCardsClicked(true);
-  };
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,

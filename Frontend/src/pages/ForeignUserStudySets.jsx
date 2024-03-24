@@ -17,25 +17,10 @@ function ForeignUserStudySets() {
         getUserShortData(userId);
     }, []);
 
-    console.log("userStudysets", userStudySets)
-
     useEffect(() => {
-        // if (userStudySets && userStudySets?.savedStudySets) {
-        //     const grouped = {};
-        //     userStudySets?.savedStudySets?.forEach(studySet => {
-        //         const topicTitle = studySet?.topic?.title; // Check if topic exists
-        //         if (!grouped[topicTitle]) {
-        //             grouped[topicTitle] = [];
-        //         }
-        //         grouped[topicTitle].push(studySet);
-        //     });
-        //     setGroupedStudySets(grouped);
-
-        // }
         const filteredStudySets = userStudySets?.savedStudySets?.reduce((acc, studySet) => {
             const topicTitle = studySet?.topic?.title;
-            const description = studySet?.studySet?.description || ''; // Consider empty string if description is undefined
-        
+            const description = studySet?.studySet?.description || ''; 
             if (
                 topicTitle?.toLowerCase().includes(searchQuery.toLowerCase()) ||
                 description?.toLowerCase().includes(searchQuery.toLowerCase())
@@ -47,41 +32,11 @@ function ForeignUserStudySets() {
                     acc.push({ title: topicTitle, studySets: [studySet] });
                 }
             }
-            return acc;
+            return acc; 
         }, []);
-        
         setGroupedStudySets(filteredStudySets);
-        
+    }, [searchQuery]);
 
-        // const filteredStudySets = userStudySets?.savedStudySets?.reduce((acc, studySet) => {
-        //     const topicTitle = studySet?.topic?.title;
-        //     const description = studySet?.studySet?.description || '';
-        
-        //     if (
-        //         topicTitle?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        //         description?.toLowerCase().includes(searchQuery.toLowerCase())
-        //     ) {
-        //         acc.push(studySet);
-        //     }
-        //     return acc;
-        // }, []);
-        
-        // setGroupedStudySets(filteredStudySets);
-        
-        
-        console.log('Search Query:', searchQuery);
-        
-    }, [userStudySets]);
-
-    console.log('Search Query:', searchQuery);
-    // const filteredStudySets = userStudySets?.topics?.reduce((acc, topic) => {
-    //     const filteredSets = topic.studySets.filter(studySet => studySet.title.toLowerCase().includes(searchQuery.toLowerCase()));
-    //     if (filteredSets.length) {
-    //       acc.push({ ...topic, studySets: filteredSets });
-    //     }
-    //     return acc;
-    //   }, []);
-    
     const onClickHandler = (topicId, studySetId) => {
         navigate(`/users/${userId}/topic/${topicId}/study-set/${studySetId}`);
       };

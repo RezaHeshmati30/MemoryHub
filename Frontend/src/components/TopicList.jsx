@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import openIcon from "../assets/images/openForm.svg";
-import closeIcon from "../assets/images/closeForm.png";
+import closeIcon from "../assets/images/cf.png";
 
 function TopicList({ onSelectTopic, mode }) {
   const { user } = useContext(AuthContext);

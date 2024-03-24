@@ -5,12 +5,11 @@ import { AuthContext } from "../context/AuthContext";
 import { UserStudySetsContext } from "../context/UserStudySetsContext";
 import trash from "../assets/images/trash.png";
 import openIcon from "../assets/images/openForm.svg";
-import closeIcon from "../assets/images/closeForm.png";
+import closeIcon from "../assets/images/cf.png";
 import BackLink from "../components/BackLink";
 import group from "../assets/images/group.svg";
 import EditBtns from "../components/EditBtns";
 import MessageAlert from "../components/MessageAlert";
-//import { get, set } from "mongoose";
 import Loader from "../components/Loader";
 
 const EditStudySet = () => {

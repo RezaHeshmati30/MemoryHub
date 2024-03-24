@@ -119,7 +119,7 @@ export const addStudySetToUser = async (req, res) => {
 export const deleteSavedStudySet = async (req, res) => {
   const userId = req.params.userId;
   const studySetId = req.params.setId;
-  console.log(userId, studySetId)
+  //console.log(userId, studySetId)
   try {
       await UserModel.findByIdAndUpdate(userId, {
         $pull: { savedStudySets: { _id: studySetId } }
@@ -137,10 +137,10 @@ export const updateCardStatus = async (req, res) => {
   const studySetId = req.params.studySetId;
   const cardId = req.params.cardId;
   const newStatus = req.body.newStatus;
-  console.log("USERId:", userId);
-  console.log("StudySet:", studySetId);
-  console.log("CardId:", cardId);
-  console.log("Nes Status:", newStatus);
+  // console.log("USERId:", userId);
+  // console.log("StudySet:", studySetId);
+  // console.log("CardId:", cardId);
+  // console.log("Nes Status:", newStatus);
 
   try {
     // Find the user by userId and update the card
@@ -162,7 +162,7 @@ export const updateCardStatus = async (req, res) => {
         arrayFilters: [{ "set._id": studySetId }, { "card._id": cardId }],
       }
     );
-    console.log("User:", updatedUser);
+    //console.log("User:", updatedUser);
     res.status(200).send(updatedUser);
   } catch (error) {
     console.error("Error retrieving user information:", error);
