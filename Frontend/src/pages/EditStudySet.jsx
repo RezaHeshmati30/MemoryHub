@@ -10,7 +10,7 @@ import BackLink from "../components/BackLink";
 import group from "../assets/images/group.svg";
 import EditBtns from "../components/EditBtns";
 import MessageAlert from "../components/MessageAlert";
-import { get, set } from "mongoose";
+//import { get, set } from "mongoose";
 import Loader from "../components/Loader";
 
 const EditStudySet = () => {
