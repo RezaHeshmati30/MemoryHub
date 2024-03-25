@@ -44,7 +44,7 @@ function SignUpForm() {
       <div
         className={`${
           showSignUpForm && !hasToken ? "flex" : "hidden"
-        } px-8  fixed top-[10%] right-0 left-0 z-50 mx-auto flex-col justify-center items-center md:w-[482px] h-[650px] w-[375px] rounded-[8px] border-2  bg-white`}
+        } px-8 fixed sm:top-[10%] right-0 left-0 z-50 mx-auto flex-col justify-center items-center sm:w-[482px] h-[650px] w-[375px] rounded-[8px] border-2  bg-white`}
       >
         <div className='w-full flex justify-between items-center px-6  '>
           <h2 className='font-sans text-[3em] leading-normal  '>

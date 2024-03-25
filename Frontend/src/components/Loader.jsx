@@ -5,7 +5,7 @@ function Loader(props) {
   return (
     <div>
       {props.loader && (
-        <div className='max-container padding-container flex flex-col justify-center absolute gap-2'>
+        <div className='container padding-container flex flex-col justify-center absolute gap-2'>
           <div className='mt-10 sm:mx-[30vw] z-50 flex flex-col justify-center items-center gap-5  w-[316px] h-[279px] mb-6 rounded-lg bg-white  border border-gray-300 '>
             <div className='typewriter'>
               <div className='slide'>

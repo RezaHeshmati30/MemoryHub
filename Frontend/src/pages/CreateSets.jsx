@@ -103,8 +103,8 @@ function CreateSets() {
   };
 
   return (
-    <div className=' max-container padding-container regal-blue flex flex-col relative '>
-      <BackLink />
+    <div className='sm:max-container container padding-container regal-blue relative '>
+      <BackLink path={`/`} />
       <Loader loader={loader} />
       <MessageAlert
         messageShow={messageShow}

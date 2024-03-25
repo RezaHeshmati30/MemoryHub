@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import image6 from "../assets/images/image6.png";
 import image7 from "../assets/images/image7.png";
 import top from "../assets/images/closeForm.png";
@@ -10,6 +10,23 @@ import HomeScrollPNGs from "../components/HomeScrollPNGs";
 import HomeLastBody from "../components/HomeLastBody";
 
 function Home() {
+  const [showScrollButton, setShowScrollButton] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 200) {
+        setShowScrollButton(true);
+      } else {
+        setShowScrollButton(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -19,21 +36,23 @@ function Home() {
   };
 
   return (
-    <div className="max-container padding-container">
-      <section className=" relative ">
+    <div className="max-container padding-container relative">
+      <section className="relative">
         <HomeHeader />
         <HomeFirstBody />
         <HomeScrollPNGs />
 
         <img
           src={image6}
-          className="lg:w-[1424px] lg:h-[700px] rounded-[8px] sm:w-[375px] h-[450px] object-cover mt-[10%] "
+          className="lg:w-[1424px] lg:h-[700px] rounded-[8px] sm:w-[375px] h-[450px] object-cover mt-[10%]"
+          alt="Image 6"
         />
 
         <div className="flex flex-col lg:flex-row items-start mt-[10%] ml-[5%]">
           <img
             src={image7}
             className="w-[358px] h-[464px] sm:w-[358px] sm:h-[464px] lg:w-[500px] lg:h-[600px] rounded-[8px] mb-4 lg:mb-0 lg:mr-4"
+            alt="Image 7"
           />
           <div className="flex flex-col lg:ml-[15%]">
             <p className="text-black font-bold text-[1.7em] font-sans whitespace-nowrap">
@@ -91,15 +110,12 @@ function Home() {
       <div className="flex flex-col gap-5">
         <HomeScrollImages />
         <HomeLastBody />
-        <div
-          className="flex justify-center items-center gap-5 "
-          onClick={scrollToTop}
-        >
-          <div className=" text-center font-bold cursor-pointer mt-5 text-[1.4em]">
-            back to top
+        {showScrollButton && (
+          <div className="fixed right-0 bottom-2 border border-solid border-gray-200 bg-white rounded-3xl p-2 shadow-lg cursor-pointer" onClick={scrollToTop}>
+            <img src={top} alt="Top" className="w-15 " />
+            <div className="text-xs font-semibold">top</div>
           </div>
-          <img src={top} alt="" className="w-5 h-5 mt-5" />
-        </div>
+        )}
         <div
           className="w-full bg-gray-400 h-px mt-[7%] mb-[5%]"
           style={{ maxWidth: "1360px" }}

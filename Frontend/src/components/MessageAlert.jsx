@@ -10,7 +10,7 @@ function MessageAlert(props) {
   return (
     <>
       {props.messageShow ? (
-        <div className='max-container padding-container flex justify-center absolute'>
+        <div className=' container flex justify-center items-center absolute left-0'>
           <div className='mt-10 sm:mx-[30vw] z-50 flex flex-col justify-center items-center gap-5  w-[316px] h-[279px] mb-6 rounded-lg bg-white  pl-[40px] border border-gray-300 '>
             <img src={success} alt='' className='w-20 h-20 mr-10 ' />
             <p className='text-center mr-10 dm-sans-medium text-[17px]'>{props.message}</p>

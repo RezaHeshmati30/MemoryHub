@@ -15,7 +15,7 @@ function HomePageButtons() {
   };
 
   return (
-    <section className=' sm:pt-[50px] pt-[10px] flex sm:flex-row flex-col sm:gap-6 gap-1 justify-start  '>
+    <section className=' sm:pt-[50px] pt-[10px] flex sm:gap-6 gap-2 justify-start  '>
       <button
         onClick={() => navigate("/modules")}
         className='bg-[#000] w-36 h-12 md:h-16 md:w-56 md:rounded-[36px] rounded-[28px] flex justify-center items-center flex-shrink-0  text-white font-dm-sans font-bold text-base hover:bg-white hover:text-black  '

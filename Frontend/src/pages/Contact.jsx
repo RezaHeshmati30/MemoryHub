@@ -33,7 +33,7 @@ const Contact = () => {
   return (
     <>
       <div className='max-container padding-container regal-blue flex flex-col mb-20'>
-        <BackLink />
+      <BackLink path={`/`} />
         <form
           className='dm-sans-medium mb-6 text-[16px] flex flex-col justify-center mx-auto md:w-[1128px] gap-3'
           onSubmit={handleSubmit}

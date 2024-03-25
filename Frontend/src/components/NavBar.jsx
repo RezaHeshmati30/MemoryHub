@@ -21,9 +21,15 @@ function NavBar() {
   const menuRef = useRef(null);
 
   useEffect(() => {
-    handleWindowResize();
+    const handleWindowResize = () => {
+      setIsSmallScreen(window.innerWidth < 640);
+    };
+
+    handleWindowResize(); // Check screen size initially
+
     window.addEventListener("resize", handleWindowResize);
     document.addEventListener("click", handleClickOutside);
+
     return () => {
       window.removeEventListener("resize", handleWindowResize);
       document.removeEventListener("click", handleClickOutside);
@@ -40,10 +46,6 @@ function NavBar() {
       document.removeEventListener("click", handleClickOutside);
     };
   }, [showMenu]);
-
-  const handleWindowResize = () => {
-    setIsSmallScreen(window.innerWidth < 640);
-  };
 
   const handleClickOutside = (event) => {
     if (menuRef.current && !menuRef.current.contains(event.target)) {

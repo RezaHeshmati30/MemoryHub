@@ -113,7 +113,7 @@ const EditStudySet = () => {
       setTimeout(() => {
         setLoader(false);
         setmessageShow(true);
-      }, 3000);
+      }, 2000);
       setFormState((prevFormState) => ({
         ...prevFormState,
         topicTitle: savedStudySet.topic?.title || "",
@@ -189,8 +189,8 @@ const EditStudySet = () => {
   const setId = savedStudySet?.studySet?._id;
 
   return (
-    <div className=' max-container padding-container regal-blue flex flex-col '>
-      <BackLink />
+    <div className=' sm:max-container container padding-container regal-blue relative '>
+      <BackLink path={`/user/${user.id}/all-study-sets`} />
       <Loader loader={loader} />
       <MessageAlert
         messageShow={messageShow}
