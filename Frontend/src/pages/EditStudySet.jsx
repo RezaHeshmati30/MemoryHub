@@ -190,7 +190,7 @@ const EditStudySet = () => {
 
   return (
     <div className=' sm:max-container container padding-container regal-blue relative '>
-      <BackLink path={`/user/${user.id}/all-study-sets`} />
+      <BackLink path={`/user/${userId}/studySets`} />
       <Loader loader={loader} />
       <MessageAlert
         messageShow={messageShow}
