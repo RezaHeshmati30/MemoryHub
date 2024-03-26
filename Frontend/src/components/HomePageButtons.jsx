@@ -24,9 +24,9 @@ function HomePageButtons() {
       </button>
       <button
         onClick={onClickHandler}
-        className='bg-[#FFF]  w-48 md:w-60 md:h-16 h-12 md:rounded-[36px] rounded-[28px]  flex justify-center items-center flex-shrink-0 text-black font-dm-sans font-bold text-base hover:bg-[#FFC2FF]'
+        className='bg-[#FFF]  w-48 md:w-56 md:h-16 h-12 md:rounded-[36px] rounded-[28px]  flex justify-center items-center flex-shrink-0 text-black font-dm-sans font-bold text-base hover:bg-[#FFC2FF]'
       >
-        CREATE CARDS
+        CREATE SET
         <svg onClick={() => navigate("/")} className='w-8 h-8 ml-2'>
           <image href={arrow} x='0' y='0' width='100%' height='100%' />
           <image href={forward} x='0' y='0' width='100%' height='100%' />
