@@ -225,7 +225,7 @@ function UserProfile() {
             </div>
           </div>
           <div
-            className={`w-full py-4 ${
+            className={`md:w-full py-4 ${
               tabSelected.currentTab === 3 ? "" : "hidden"
             }`}
             id="tab-panel-3a"
