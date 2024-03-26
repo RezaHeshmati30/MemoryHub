@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { StudySetsContext } from "../context/StudySetsContext";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext"; 
 import BackLink from "../components/BackLink";
 import arrow from "../assets/images/arrow-forward.svg";
@@ -23,7 +23,9 @@ function Cards() {
     console.log("Topic Id:", topicId);
     console.log("StudySet Id:", studySetId);
     getUserInfo();
-    setModuleId(moduleId);
+    if (moduleId) {
+      setModuleId(moduleId);
+    }
     setTopicId(topicId);
     setStudySetId(studySetId);
     setSuccesWindow(false);
@@ -79,7 +81,7 @@ function Cards() {
           <div key={currentCardsSet._id}>
             <div className="flex justify-between flex-wrap md:flex-nowrap items-center">
               <div className="basis-[30%] md:basis-[20%] order-1">
-                <BackLink path={`/module/${moduleId}`} />
+                <BackLink path={/\d/.test(moduleId) ? `/module/${moduleId}` : `/all-study-sets`} />
               </div>
               <p className='basis-[100%] md:basis-[60%] order-3 md:order-2 text-center text-[2.4em] md:text-[3em] text-leading-[120%]'>{currentCardsSet.title}</p>
               <div className="basis-[65%] md:basis-[20%] flex flex-col items-end order-2">

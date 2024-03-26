@@ -190,7 +190,7 @@ function UserProfile() {
                 {user?.firstName} {user?.lastName}
               </p>
               <p className="dm-sans-medium text-[2em] mt-4">Art of account</p>
-              <p className="dm-sans-regular text-[1.4em] text-gray-700">Student</p>
+              <p className="dm-sans-regular text-[1.4em] text-gray-700">{user?.artOfAccount}</p>
               <p className="dm-sans-medium text-[2em] mt-4">Email address</p>
               <p className="dm-sans-regular text-[1.4em] text-gray-700">{user?.email}</p>
               <div className="dm-sans-bold text-[1.2em] flex justify-end">
@@ -225,7 +225,7 @@ function UserProfile() {
             </div>
           </div>
           <div
-            className={`w-full py-4 ${
+            className={`md:w-full py-4 ${
               tabSelected.currentTab === 3 ? "" : "hidden"
             }`}
             id="tab-panel-3a"

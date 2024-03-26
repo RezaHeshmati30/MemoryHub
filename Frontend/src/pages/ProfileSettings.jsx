@@ -8,6 +8,9 @@ import { useNavigate } from "react-router-dom";
 import { UserStudySetsContext } from "../context/UserStudySetsContext";
 import AlertDismissibleSuccess from "../components/AlertDismissibleSuccess";
 import BackLink from '../components/BackLink';
+import success from "../assets/images/test-success.svg";
+import wrong from "../assets/images/test-wrong.svg";
+import { set } from "mongoose";
 
 function ProfileSettings() {
   const [firstName, setFirstName] = useState("");
@@ -22,6 +25,10 @@ function ProfileSettings() {
   const [photoUrl, setPhotoUrl] = useState("");
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const [message, setMessage] = useState("");
+  const [isCorrect, setIsCorrect] = useState(false);
+  const [showMessages, setShowMessages] = useState(false);
+  const [messageValue, setMessageValue] = useState("");
+  const [role, setRole] = useState("");
 
   const { readImageAsBase64 } = useContext(UserStudySetsContext);
 
@@ -82,6 +89,19 @@ function ProfileSettings() {
           setPhoto(photoUrl); // Aktualisiere das angezeigte Profilbild
         }
 
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          setShowMessages(true);
+          setMessageValue("Invalid email address");
+          return;
+        }
+
+        if (firstName.length > 20 || lastName.length > 20) {
+          setShowMessages(true);
+          setMessageValue("First name and last name must be less than 20 characters");
+          return;
+        }
+          
+
         await axios.patch(`${backendApiUrl}/user/${user._id}`, {
           firstName,
           lastName,
@@ -90,16 +110,19 @@ function ProfileSettings() {
         });
 
         // alert("Profile successfully updated");
-        handleShowAlert("Profile successfully updated");
-        setTimeout(() => {
-          navigate(`/user/${user._id}`);
-        }, 2000);
+        // handleShowAlert("Profile successfully updated");
+        setShowMessages(true);
+        setMessageValue("Profile successfully updated");
+        setIsCorrect(true);
+        
       } else {
         alert("No changes made");
       }
     } catch (error) {
       console.error("Error updating profile:", error);
-      alert("Error updating profile");
+      // alert("Error updating profile");
+      setShowMessages(true);
+      setMessageValue("Error updating profile");
     }
   };
 
@@ -113,6 +136,17 @@ function ProfileSettings() {
 
   const handlePasswordChange = async () => {
     try {
+      if (!oldPassword || !newPassword) {
+        alert("Please enter your old and new password");
+        return;
+      }
+      if (oldPassword === newPassword) {
+        // alert("Old and new password must be different");
+        setShowMessages(true);
+        setMessageValue("Old and new password must be different");
+        return;
+      }
+
       const response = await axios.post(
         `${backendApiUrl}/user/changePassword/${user._id}`,
         {
@@ -120,16 +154,20 @@ function ProfileSettings() {
           newPassword,
         }
       );
-
+      
       if (response.data.success) {
-        alert("Password successfully changed!");
+        setMessageValue("Password successfully changed!");
         setIsPasswordChangeOpen(false);
+        setShowMessages(true);
+        setIsCorrect(true);
       } else {
         alert("Password change failed: " + response.data.error);
       }
     } catch (error) {
       console.error("Error changing password:", error);
-      alert("Error changing password");
+      // alert("Error changing password");
+      setShowMessages(true);
+      setMessageValue("Error changing password");
     }
   };
 
@@ -163,12 +201,22 @@ function ProfileSettings() {
     setPhotoUrl(photoUrl);
   };
 
+  const okButtonHandler = () => {
+    setShowMessages(false);
+    setIsCorrect(false);
+    navigate(`/user/${user.id}`);
+  }
+
+  const handleRoleChange = (value) => {
+    setRole(value);
+  };
+  
   return (
-    <div>
+    <div className={`${showMessages ? 'overflow-hidden':''}`}>
       <div className="ml-4">
         <BackLink path={`/user/${user.id}`} />
       </div>
-    <div className="bg-[#F6F7FB] flex justify-center">
+    <div className={`bg-[#F6F7FB] flex justify-center ${showMessages ? 'blur pointer-events-none opacity-50:' : ''}`}>
       {hasToken && (
         <section className="max-w-4xl mx-auto my-8 p-2 md:mr-[80px] md:ml-[80px]">
           <form onSubmit={handleSubmit}>
@@ -326,6 +374,8 @@ function ProfileSettings() {
                         name="role"
                         value="teacher"
                         className="mr-2 size-4"
+                        checked={user?.artOfAccount === 'Teacher' || false}
+                        onChange={(e) => handleRoleChange(e.target.value)}
                       />
                       Teacher
                     </label>
@@ -336,6 +386,8 @@ function ProfileSettings() {
                         name="role"
                         value="student"
                         className="mr-2 size-4"
+                        checked={user?.artOfAccount === 'Student' || false}
+                        onChange={(e) => handleRoleChange(e.target.value)}
                       />
                       Student
                     </label>
@@ -440,6 +492,11 @@ function ProfileSettings() {
         </section>
       )}
     </div>
+    <div className={`${showMessages ? "flex" : "hidden"} fixed z-30 top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] justify-center flex-col items-center gap-[15px] px-[24px] pt-[29px] pb-[40px] bg-white mt-[20px] min-w-[300px] border-[1px] rounded-[8px] border-[#BCC0C1]`}>
+                  <img src={isCorrect ? success : wrong} alt="" />
+                  <p className='text-[1.4em] text-leading-[150%]'> {messageValue} </p>
+                  <button onClick={okButtonHandler} className={`${isCorrect ? "bg-[#3EB655] hover:border-[#3EB655]" : "bg-[#FF5E5E] hover:border-[#FF5E5E]"} w-[100%] hover:bg-white text-white hover:text-black border-[1px] p-[6px] rounded-[5px]` }>OK</button>
+              </div>
     </div>
   );
 }
