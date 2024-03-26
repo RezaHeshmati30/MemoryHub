@@ -35,9 +35,9 @@ function HomeLastBody() {
         </p>
         <button
           onClick={onClickHandler}
-          className="bg-[#FFF] rounded-[36px] w-60 h-16 flex justify-center items-center flex-shrink-0 text-black font-dm-sans font-bold text-base mt-[7%] gap-3 hover:bg-[#FFC2FF]"
+          className="bg-[#FFF] rounded-[36px] w-56 h-16 flex justify-center items-center flex-shrink-0 text-black font-dm-sans font-bold text-base mt-[7%] gap-3 hover:bg-[#FFC2FF]"
         >
-          CREATE CARDS
+          CREATE SET
           <svg onClick={() => navigate("/")} className="w-8 h-8 ml-2">
             <image href={arrow} x="0" y="0" width="100%" height="100%" />
             <image href={forward} x="0" y="0" width="100%" height="100%" />

@@ -28,6 +28,7 @@ function ProfileSettings() {
   const [isCorrect, setIsCorrect] = useState(false);
   const [showMessages, setShowMessages] = useState(false);
   const [messageValue, setMessageValue] = useState("");
+  const [role, setRole] = useState("");
 
   const { readImageAsBase64 } = useContext(UserStudySetsContext);
 
@@ -206,6 +207,10 @@ function ProfileSettings() {
     navigate(`/user/${user.id}`);
   }
 
+  const handleRoleChange = (value) => {
+    setRole(value);
+  };
+  
   return (
     <div className={`${showMessages ? 'overflow-hidden':''}`}>
       <div className="ml-4">
@@ -369,6 +374,8 @@ function ProfileSettings() {
                         name="role"
                         value="teacher"
                         className="mr-2 size-4"
+                        checked={user?.artOfAccount === 'Teacher' || false}
+                        onChange={(e) => handleRoleChange(e.target.value)}
                       />
                       Teacher
                     </label>
@@ -379,6 +386,8 @@ function ProfileSettings() {
                         name="role"
                         value="student"
                         className="mr-2 size-4"
+                        checked={user?.artOfAccount === 'Student' || false}
+                        onChange={(e) => handleRoleChange(e.target.value)}
                       />
                       Student
                     </label>
