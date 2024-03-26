@@ -64,7 +64,7 @@ function UserStudySets() {
                             <span className="ease absolute right-0 top-0 h-0 w-0 border-r-[3px] border-violet-600 transition-all duration-200 group-hover:h-full"></span>
                             <span className="ease absolute bottom-0 right-0 h-0 w-0 border-b-[3px] border-violet-600 transition-all duration-200 group-hover:w-full"></span>
                             <span className="ease absolute bottom-0 left-0 h-0 w-0 border-l-[3px] border-violet-600 transition-all duration-200 group-hover:h-full"></span>
-                            Create cards
+                            CREATE SET
                         </div>
                     </div>
                     <ul className='flex flex-col gap-[15px] '>

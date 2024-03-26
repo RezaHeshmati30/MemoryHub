@@ -3,15 +3,11 @@ function PasswordChangePopup({ onClose, onPasswordChange, oldPassword, setOldPas
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
   
-  
+  const isNewPasswordValid = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).{8,}$/.test(newPassword);
+  const newPasswordErrorMessage = isNewPasswordValid ? '' : 'Password must be at least 8 characters long and include at least one lowercase letter, one uppercase letter, one digit, and one special character.';
+
   return (
     <div className=" password-change-popup">
-      {/* <h2>Passwort ändern</h2> */}
-      {/* <input type="password" placeholder="Altes Passwort" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} className='border-2' />
-      <input type="password" placeholder="Neues Passwort" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} className='border-2'/>
-      <button onClick={onPasswordChange}className="flex mb-1 mt-1 bg-blue-500 text-white px-2 py-1 rounded-md hover:bg-blue-600">Passwort ändern</button>
-      <button onClick={onClose}className="  bg-blue-500 text-white px-2 py-1 rounded-md hover:bg-blue-600">Abbrechen</button>
-    //////////////////////////// */}
     <div className="relative my-6 mb-[30px] mx-[20px]">
             <input
               id="id-b14"
@@ -143,13 +139,10 @@ function PasswordChangePopup({ onClose, onPasswordChange, oldPassword, setOldPas
                 />
               </svg>
             )}
-            <small className="absolute flex w-[350px] justify-between px-4 py-1 text-xs text-black transition peer-invalid:text-pink-500">
-              {/* <span>Text field with helper text</span> */}
-              {/* <span className="text-slate-500">1/10</span> */}
-            </small>
+            {!isNewPasswordValid && <small className="text-pink-500 flex text-[1.3em] mt-2 mr-5">{newPasswordErrorMessage}</small>}
           </div>
-          <button onClick={onPasswordChange}className="bg-black text-white px-10 py-3 dm-sans-bold text-[1.2em] rounded-md mt-4">Passwort ändern</button>
-      <button onClick={onClose}className=" bg-black text-white px-10 py-3 dm-sans-bold text-[1.2em] rounded-md mt-4 mx-4 ">Abbrechen</button>
+          <button onClick={onPasswordChange} className={`bg-black text-white px-10 py-3 dm-sans-bold text-[1.2em] rounded-md mt-4 ${isNewPasswordValid ? '' : 'disabled:opacity-50 cursor-not-allowed'}`} disabled={!isNewPasswordValid}>Change Password</button>
+      <button onClick={onClose}className=" bg-black text-white px-10 py-3 dm-sans-bold text-[1.2em] rounded-md mt-4 mx-4 ">Cancel</button>
     </div>
   );
 }
