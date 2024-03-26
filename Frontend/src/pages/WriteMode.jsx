@@ -86,6 +86,9 @@ function WriteMode() {
         setAnswer("");
         setShowMessages(true);
         if (answer === correctAnswer) {
+            setIsCorrect(true);
+            console.log("answer", answer)
+            console.log("correct answer", correctAnswer)
             setMessage("Correct!");
             setCorrectAnswers(prevValue => prevValue + 1);
         } else {
@@ -100,6 +103,7 @@ function WriteMode() {
             setShowMessages(false);
         } else {
             setCurrentIndex(prevValue => prevValue + 1);
+            setIsCorrect(false);
         }
     }
 
@@ -132,6 +136,7 @@ function WriteMode() {
                             <div className='w-[60vw] mx-auto relative'>
                                 <div className='w-[100%] bg-[#FFF4FC] min-h-[30vh] rounded-[8px] p-[10px] flex flex-col justify-center'>
                                     <p className="text-[2.4em] sm:text-[3em] md:text-[4em] text-center text-leading-[100%]">{currentCard?.card?.question}</p>
+                                    <img src={currentCard?.card?.image} alt="" className="max-w-[20vw] max-h-[30vh] mx-auto" />
                                 </div>
                                 <div className={`${showMessages ? "flex" : "hidden"} absolute z-30 top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] justify-center flex-col items-center gap-[15px] px-[24px] pt-[29px] pb-[40px] bg-white mt-[20px] min-w-[300px] border-[1px] rounded-[8px] border-[#BCC0C1]`}>
                                     <img src={isCorrect ? success : wrong} alt="" />
