@@ -1,12 +1,14 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import BackLink from "../components/BackLink";
+import MessageAlert from "../components/MessageAlert";
 
 const Contact = () => {
   const { firstName, setFirstName, lastName, setLastName } =
     useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [messageShow, setmessageShow] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,6 +26,7 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setmessageShow(true);
     setFirstName("");
     setLastName("");
     setEmail("");
@@ -33,9 +36,15 @@ const Contact = () => {
   return (
     <>
       <div className='max-container padding-container regal-blue flex flex-col mb-20'>
-      <BackLink path={`/`} />
+        <BackLink path={`/`} />
+        <MessageAlert
+          messageShow={messageShow}
+          message=" We've just received your request, and rest assured, we're on it."
+        />
         <form
-          className='dm-sans-medium mb-6 text-[16px] flex flex-col justify-center mx-auto md:w-[1128px] gap-3'
+          className={`dm-sans-medium mb-6 text-[16px] flex flex-col justify-center mx-auto md:w-[1128px] gap-3 ${
+            !messageShow ? "display" : "blur"
+          }`}
           onSubmit={handleSubmit}
         >
           <h2 className='dm-sans-medium mb-6 text-[20px]'>Contact Us</h2>
@@ -66,7 +75,8 @@ const Contact = () => {
           />
           <span>Message</span>
           <textarea
-          rows="5" cols="15"
+            rows='5'
+            cols='15'
             name='message'
             value={message}
             onChange={handleChange}
