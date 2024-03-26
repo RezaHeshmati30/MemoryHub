@@ -177,10 +177,10 @@ function Practice() {
                               {currentCard?.status}
                             </p>
                           </div>
-                          <p className="text-[2.4em] md:text-[4em] text-center text-leading-[100%]">
+                          <p className="text-[2.4em] md:text-[4em] text-center text-leading-[100%] ">
                             {currentCard?.card?.question}
                           </p>
-                          <img src={currentCard?.card?.image} alt="" />
+                          <img src={currentCard?.card?.image} alt="" className="max-w-[20vw] max-h-[40vh]  mx-auto" />
                           <p className="text-[1.4em] text-leading-[150%] self-center">
                             Show the answer
                           </p>
