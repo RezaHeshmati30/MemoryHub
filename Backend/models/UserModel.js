@@ -18,6 +18,7 @@ const UserSchema = new mongoose.Schema({
   nickName: {type: String, unique: true},
   verificationToken: { type: String },
   verified: { type: Boolean, default: false },
+  artOfAccount: { type: String, default: "Student" },
   savedStudySets: [{
     topic: { type: mongoose.Schema.Types.ObjectId, ref: "Topic" },
     studySet: { type: mongoose.Schema.Types.ObjectId, ref: "StudySet" },

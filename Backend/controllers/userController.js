@@ -38,6 +38,7 @@ export const getUserInfo = async (req, res) => {
       _id: loggedUser._id,
       email: loggedUser.email,
       photo: loggedUser.photo,
+      artOfAccount: loggedUser.artOfAccount,
       savedStudySets: loggedUser.savedStudySets,
     });
   } catch (error) {
