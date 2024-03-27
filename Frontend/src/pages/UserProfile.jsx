@@ -160,7 +160,7 @@ function UserProfile() {
             </button>
           </li>
         </ul>
-        <div className="flex justify-center items-center">
+        <div className="flex flex-wrap md:flex-col justify-center items-center">
           <div
             className={` w-[600px] border-solid border-2 border-gray-300 rounded-3xl mt-[30px] p-4 shadow-lg ${
               tabSelected.currentTab === 1 ? "" : "hidden"
@@ -203,6 +203,16 @@ function UserProfile() {
               </div>
             </div>
           </div>
+          <img
+           className={` w-[500px] mt-40 ${
+            tabSelected.currentTab === 1 ? "" : "hidden"
+          }`}
+          id="tab-panel-1a"
+          aria-hidden={`${tabSelected.currentTab === 1 ? "true" : "false"}`}
+          role="tabpanel"
+          aria-labelledby="tab-label-1a"
+          tabIndex="-1" 
+           src="https://i.ibb.co/j4sqqH8/5251941.jpg" alt="" />
           <div
             className={`w-[600px] rounded-lg mt-[30px] ${
               tabSelected.currentTab === 2 ? "" : "hidden"
@@ -224,6 +234,16 @@ function UserProfile() {
               </div>
             </div>
           </div>
+          <img
+           className={` w-[500px] mt-40 ${
+            tabSelected.currentTab === 2 ? "" : "hidden"
+          }`}
+          id="tab-panel-1a"
+          aria-hidden={`${tabSelected.currentTab === 1 ? "true" : "false"}`}
+          role="tabpanel"
+          aria-labelledby="tab-label-1a"
+          tabIndex="-1" 
+           src="https://i.ibb.co/3fTQKw1/5527229.jpg" alt="" />
           <div
             className={`md:w-full py-4 ${
               tabSelected.currentTab === 3 ? "" : "hidden"
