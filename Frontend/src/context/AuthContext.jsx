@@ -122,6 +122,7 @@ const AuthContextProvider = ({ children }) => {
       setEmailLogin("");
       setPasswordLogin("");
       setSuccessLoginWindow(true);
+      console.log("resp.data:", resp.data);
     } catch (error) {
       setSuccessLoginWindow(true);
       setErrorMessages(error);
@@ -153,7 +154,7 @@ const AuthContextProvider = ({ children }) => {
     let JWTinfocookie = cookie.get("JWTinfo");
     console.log("JWTinfo cookie", JWTinfocookie); // => j:{"expires":"2024-01-25T09:26:05.444Z","email":"Anna@dci.org"}
     if (!JWTinfocookie) {
-      logoutHandler();
+      // logoutHandler();
       return;
     } 
     JWTinfocookie = JWTinfocookie.replace("j:", "");

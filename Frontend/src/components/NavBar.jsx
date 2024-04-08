@@ -54,6 +54,8 @@ function NavBar() {
   };
 
   const userId = user?._id;
+  console.log("UserId: ",userId);
+  console.log("User: ",user);
 
   const onClickLoginHandler = () => {
     setShowLoginForm(true);
