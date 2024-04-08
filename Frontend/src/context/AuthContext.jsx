@@ -152,7 +152,10 @@ const AuthContextProvider = ({ children }) => {
   const handleIfUserHasToken = () => {
     let JWTinfocookie = cookie.get("JWTinfo");
     console.log("JWTinfo cookie", JWTinfocookie); // => j:{"expires":"2024-01-25T09:26:05.444Z","email":"Anna@dci.org"}
-    if (!JWTinfocookie) return;
+    if (!JWTinfocookie) {
+      logoutHandler();
+      return;
+    } 
     JWTinfocookie = JWTinfocookie.replace("j:", "");
     const cookieValueObj = JSON.parse(JWTinfocookie);
     console.log("cookieValueObj", cookieValueObj);
