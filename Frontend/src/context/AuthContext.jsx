@@ -122,6 +122,7 @@ const AuthContextProvider = ({ children }) => {
       setEmailLogin("");
       setPasswordLogin("");
       setSuccessLoginWindow(true);
+      setUserId(resp.data.id);
       console.log("resp.data:", resp.data);
     } catch (error) {
       setSuccessLoginWindow(true);
@@ -153,17 +154,17 @@ const AuthContextProvider = ({ children }) => {
   const handleIfUserHasToken = () => {
     let JWTinfocookie = cookie.get("JWTinfo");
     console.log("JWTinfo cookie", JWTinfocookie); // => j:{"expires":"2024-01-25T09:26:05.444Z","email":"Anna@dci.org"}
-    if (!JWTinfocookie) {
-      // logoutHandler();
-      return;
-    } 
+    if (!JWTinfocookie) return;
     JWTinfocookie = JWTinfocookie.replace("j:", "");
     const cookieValueObj = JSON.parse(JWTinfocookie);
     console.log("cookieValueObj", cookieValueObj);
     const expirationInMs = new Date(cookieValueObj.expires) - new Date();
     console.log("JWT läuft ab in", expirationInMs / 1000, "Sekunden");
 
-    if (expirationInMs <= 0) return;
+    if (expirationInMs <= 0) {
+      logoutHandler();
+      return;
+    } 
 
     setHasToken(true);
     setUser({ email: cookieValueObj.email });
@@ -195,7 +196,7 @@ const AuthContextProvider = ({ children }) => {
         withCredentials: true,
       });
       setUser(response.data);
-      setUserId(response.data._id);
+      // setUserId(response.data._id);
       setSavedStudySets(response.data.savedStudySets);
     } catch (error) {
       setErrorMessages(error);

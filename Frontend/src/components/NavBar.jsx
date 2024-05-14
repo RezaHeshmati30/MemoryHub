@@ -14,12 +14,15 @@ function NavBar() {
     logoutHandler,
     getUserInfo,
     user,
+    userId,
   } = useContext(AuthContext);
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const menuRef = useRef(null);
-
+//   useEffect(() => {
+//     getUserInfo();
+// }, []);
   useEffect(() => {
     const handleWindowResize = () => {
       setIsSmallScreen(window.innerWidth < 640);
@@ -53,7 +56,7 @@ function NavBar() {
     }
   };
 
-  const userId = user?._id;
+  // const userId = user?._id;
   console.log("UserId: ",userId);
   console.log("User: ",user);
 
